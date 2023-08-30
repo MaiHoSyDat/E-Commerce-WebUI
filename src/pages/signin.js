@@ -1,7 +1,32 @@
 import React from 'react';
 import Footer from "../components/footer";
-
+import {useEffect, useState} from "react";
+import axios from "axios";
 const Signin = () => {
+    const [account, setAccount] = useState('');
+    const [token, setToken] = useState('');
+    const handleInputChange = (event) => {
+        const {name,value} = event.target;
+        setAccount((prevAccount) => ({
+            ...prevAccount,
+            [name]: value
+        }));
+    }
+    const handleLogin = () => {
+        axios.post('http://localhost:8080/login',{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).
+        then(response => {
+            setToken(response.data.token);
+            console.log("Login successful");
+            console.log(response.data)
+        }).catch(error => {
+            console.log(error)
+        });
+    }
+
     return (
         <>
             <div className="border-bottom shadow-sm">
@@ -46,7 +71,9 @@ const Signin = () => {
                                         <div className="col-12">
                                             {/* input */}
                                             <input
-                                                type="email"
+                                                type="text"
+                                                value={account.username}
+                                                onChange={handleInputChange}
                                                 className="form-control"
                                                 id="inputEmail4"
                                                 placeholder="Email"
@@ -58,6 +85,8 @@ const Signin = () => {
                                             <div className="password-field position-relative">
                                                 <input
                                                     type="password"
+                                                    value={account.password}
+                                                    onChange={handleInputChange}
                                                     id="fakePassword"
                                                     placeholder="Enter Password"
                                                     className="form-control"
@@ -92,7 +121,7 @@ const Signin = () => {
                                         </div>
                                         {/* btn */}
                                         <div className="col-12 d-grid">
-                                            <button type="submit" className="btn btn-primary">
+                                            <button type="submit" className="btn btn-primary" onChange={handleLogin}>
                                                 Sign In
                                             </button>
                                         </div>
