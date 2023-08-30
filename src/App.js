@@ -18,14 +18,30 @@ import DashboardReview from "./outlet/dashboard/dashboardReview";
 import ShopList from "./outlet/shop/shopList";
 import ShopSingle from "./outlet/shop/shopSingle";
 import Shop from "./pages/shop";
+import Product from "./pages/product";
+import ProductFilter from "./outlet/product/productFilter";
+import ProductDetail from "./outlet/product/productDetail";
+import ProductWishlist from "./outlet/product/productWishlist";
+import ProductCart from "./outlet/product/productCart";
+import Cart from "./pages/cart";
+import Checkout from "./pages/checkout";
+import ProductCheckout from "./outlet/product/productCheckout";
+import ShopInfomation from "./outlet/shop/shopInfomation";
+import About from "./pages/about";
+import Error404 from "./pages/error404";
+import Signin from "./pages/signin";
+import Signup from "./pages/signup";
+import ForgotPassword from "./pages/forgotPassword";
+import Customer from "./pages/customer";
+import CustomerOrder from "./outlet/customer/customerOrder";
+import CustomerSetting from "./outlet/customer/customerSetting";
+import CustomerAddress from "./outlet/customer/customerAddress";
+import CustomerPayment from "./outlet/customer/customerPayment";
+import CustomerNotification from "./outlet/customer/customerNotification";
 
 function App() {
   return (
     <>
-        {/*<Navbar></Navbar>*/}
-        {/*<main>*/}
-        {/*    <Slider></Slider>*/}
-        {/*</main>*/}
         <Routes>
             <Route path="dashboard" element={<Dashboard/>}>
                 <Route path="index" element={<DashboardIndex/>}/>
@@ -42,11 +58,32 @@ function App() {
             <Route path="shop" element={<Shop/>}>
                 <Route path="list" element={<ShopList/>}/>
                 <Route path="single" element={<ShopSingle/>}/>
-
+                <Route path="setting" element={<ShopInfomation/>}/>
             </Route>
-
+            <Route path="product" element={<Product/>}>
+                <Route path="filter" element={<ProductFilter/>}/>
+                <Route path="detail" element={<ProductDetail/>}/>
+                <Route path="wishlist" element={<ProductWishlist/>}/>
+            </Route>
+            <Route path="cart" element={<Cart/>}>
+                <Route path="" element={<ProductCart/>}/>
+            </Route>
+            <Route path="checkout" element={<Checkout/>}>
+                <Route path="" element={<ProductCheckout/>}/>
+            </Route>
+            <Route path="about" element={<About/>}></Route>
+            <Route path="error" element={<Error404/>}></Route>
+            <Route path="signin" element={<Signin/>}></Route>
+            <Route path="signup" element={<Signup/>}></Route>
+            <Route path="forgot-password" element={<ForgotPassword/>}></Route>
+            <Route path="account" element={<Customer/>}>
+                <Route path="order" element={<CustomerOrder/>}/>
+                <Route path="setting" element={<CustomerSetting/>}/>
+                <Route path="address" element={<CustomerAddress/>}/>
+                <Route path="payment" element={<CustomerPayment/>}/>
+                <Route path="notification" element={<CustomerNotification/>}/>
+            </Route>
         </Routes>
-
     </>
   );
 }
