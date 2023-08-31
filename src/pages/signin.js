@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from "../components/footer";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 const SignIn = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useState({
@@ -140,7 +140,7 @@ const SignIn = () => {
                                         </div>
                                         {/* link */}
                                         <div>
-                                            Don’t have an account? <a href="signup.html"> Sign Up</a>
+                                            Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
                                         </div>
                                     </div>
                             </div>
