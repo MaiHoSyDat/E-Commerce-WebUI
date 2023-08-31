@@ -9,12 +9,14 @@ const NavbarCustomer = () => {
                     <div className="container">
                         <div className="row w-100 align-items-center gx-lg-2 gx-0">
                             <div className="col-xxl-2 col-lg-3">
-                                <a className="navbar-brand d-none d-lg-block" href="/index">
+                                <Link to={"/index"}>
+                                <a className="navbar-brand d-none d-lg-block" href="">
                                     <img
                                         src="../assets/images/logo/freshcart-logo.svg"
                                         alt="eCommerce HTML Template"
                                     />
                                 </a>
+                                </Link>
                                 <div className="d-flex justify-content-between w-100 d-lg-none">
                                     <a className="navbar-brand" href="index.html">
                                         <img
@@ -165,6 +167,31 @@ const NavbarCustomer = () => {
                                         </a>
                                         </Link>
                                     </div>
+
+                                    <div className="list-inline-item me-5">
+                                        <Link to={"/signin"}>
+                                        <a
+                                            href="#!"
+                                            className="text-muted"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width={20}
+                                                height={20}
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth={2}
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="feather feather-user"
+                                            >
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                                <circle cx={12} cy={7} r={4} />
+                                            </svg>
+                                        </a>
+                                        </Link>
+                                    </div>
                                     <div className="list-inline-item">
                                         <a
                                             className="text-muted position-relative "
@@ -193,30 +220,6 @@ const NavbarCustomer = () => {
                                             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
                     1<span className="visually-hidden">unread messages</span>
                   </span>
-                                        </a>
-                                    </div>
-                                    <div className="list-inline-item me-5">
-                                        <a
-                                            href="#!"
-                                            className="text-muted"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#userModal"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width={20}
-                                                height={20}
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="feather feather-user"
-                                            >
-                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                <circle cx={12} cy={7} r={4} />
-                                            </svg>
                                         </a>
                                     </div>
 
