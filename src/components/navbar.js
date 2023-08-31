@@ -1,6 +1,11 @@
-import {Outlet} from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
+import React from "react";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const signin = ()=>{
+        navigate("/signin")
+    }
     return (
         <>
             <div className="border-bottom ">
@@ -8,12 +13,14 @@ const Navbar = () => {
                     <div className="container">
                         <div className="row w-100 align-items-center gx-lg-2 gx-0">
                             <div className="col-xxl-2 col-lg-3">
-                                <a className="navbar-brand d-none d-lg-block" href="index.html">
-                                    <img
-                                        src="../assets/images/logo/freshcart-logo.svg"
-                                        alt="eCommerce HTML Template"
-                                    />
-                                </a>
+                                <Link to={"/index"}>
+                                    <a className="navbar-brand d-none d-lg-block" href="">
+                                        <img
+                                            src="../assets/images/logo/freshcart-logo.svg"
+                                            alt="eCommerce HTML Template"
+                                        />
+                                    </a>
+                                </Link>
                                 <div className="d-flex justify-content-between w-100 d-lg-none">
                                     <a className="navbar-brand" href="index.html">
                                         <img
@@ -140,30 +147,6 @@ const Navbar = () => {
                                 <div className="list-inline">
                                     <div className="list-inline-item me-5">
                                         <a
-                                            href="pages/shop-wishlist.html"
-                                            className="text-muted position-relative"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width={20}
-                                                height={20}
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="feather feather-heart"
-                                            >
-                                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                            </svg>
-                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                    5<span className="visually-hidden">unread messages</span>
-                  </span>
-                                        </a>
-                                    </div>
-                                    <div className="list-inline-item me-5">
-                                        <a
                                             href="#!"
                                             className="text-muted"
                                             data-bs-toggle="modal"
@@ -184,36 +167,6 @@ const Navbar = () => {
                                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                                                 <circle cx={12} cy={7} r={4} />
                                             </svg>
-                                        </a>
-                                    </div>
-                                    <div className="list-inline-item">
-                                        <a
-                                            className="text-muted position-relative "
-                                            data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasRight"
-                                            href="#offcanvasExample"
-                                            role="button"
-                                            aria-controls="offcanvasRight"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width={20}
-                                                height={20}
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="feather feather-shopping-bag"
-                                            >
-                                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                                                <line x1={3} y1={6} x2={21} y2={6} />
-                                                <path d="M16 10a4 4 0 0 1-8 0" />
-                                            </svg>
-                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                    1<span className="visually-hidden">unread messages</span>
-                  </span>
                                         </a>
                                     </div>
                                 </div>
@@ -319,45 +272,60 @@ const Navbar = () => {
                     <rect x={3} y={14} width={7} height={7} />
                   </svg>
                 </span>{" "}
-                                        All Departments
+                                        All Categories
                                     </a>
                                     <div className="collapse mt-2" id="collapseExample">
                                         <div className="card card-body">
                                             <ul className="mb-0 list-unstyled">
                                                 <li>
-                                                    <a className="dropdown-item" href="pages/shop-grid.html">
-                                                        Dairy, Bread &amp; Eggs
-                                                    </a>
+                                                    <Link to={"/product/filter"}>
+                                                        <a className="dropdown-item" href="">
+                                                            Dairy, Bread &amp; Eggs
+                                                        </a>
+                                                    </Link>
+
                                                 </li>
                                                 <li>
-                                                    <a className="dropdown-item" href="pages/shop-grid.html">
-                                                        Snacks &amp; Munchies
-                                                    </a>
+                                                    <Link to={"/product/filter"}>
+                                                        <a className="dropdown-item" href="">
+                                                            Snacks &amp; Munchies
+                                                        </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a className="dropdown-item" href="pages/shop-grid.html">
-                                                        Fruits &amp; Vegetables
-                                                    </a>
+                                                    <Link to={"/product/filter"}>
+                                                        <a className="dropdown-item" href="">
+                                                            Fruits &amp; Vegetables
+                                                        </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a className="dropdown-item" href="pages/shop-grid.html">
-                                                        Cold Drinks &amp; Juices
-                                                    </a>
+                                                    <Link to={"/product/filter"}>
+                                                        <a className="dropdown-item" href="">
+                                                            Cold Drinks &amp; Juices
+                                                        </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a className="dropdown-item" href="pages/shop-grid.html">
-                                                        Breakfast &amp; Instant Food
-                                                    </a>
+                                                    <Link to={"/product/filter"}>
+                                                        <a className="dropdown-item" href="">
+                                                            Breakfast &amp; Instant Food
+                                                        </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a className="dropdown-item" href="pages/shop-grid.html">
-                                                        Bakery &amp; Biscuits
-                                                    </a>
+                                                    <Link to={"/product/filter"}>
+                                                        <a className="dropdown-item" href="">
+                                                            Bakery &amp; Biscuits
+                                                        </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a className="dropdown-item" href="pages/shop-grid.html">
-                                                        Chicken, Meat &amp; Fish
-                                                    </a>
+                                                    <Link to={"/product/filter"}>
+                                                        <a className="dropdown-item" href="">
+                                                            Chicken, Meat &amp; Fish
+                                                        </a>
+                                                    </Link>
                                                 </li>
                                             </ul>
                                         </div>
@@ -390,206 +358,85 @@ const Navbar = () => {
                     <rect x={3} y={14} width={7} height={7} />
                   </svg>
                 </span>{" "}
-                                        All Departments
+                                        All Categories
                                     </button>
                                     <ul
                                         className="dropdown-menu"
                                         aria-labelledby="dropdownMenuButton1"
                                     >
                                         <li>
-                                            <a className="dropdown-item" href="pages/shop-grid.html">
-                                                Dairy, Bread &amp; Eggs
-                                            </a>
+                                            <Link to={"/product/filter"}>
+                                                <a className="dropdown-item" href="">
+                                                    Dairy, Bread &amp; Eggs
+                                                </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="pages/shop-grid.html">
-                                                Snacks &amp; Munchies
-                                            </a>
+                                            <Link to={"/product/filter"}>
+                                                <a className="dropdown-item" href="">
+                                                    Snacks &amp; Munchies
+                                                </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="pages/shop-grid.html">
-                                                Fruits &amp; Vegetables
-                                            </a>
+                                            <Link to={"/product/filter"}>
+                                                <a className="dropdown-item" href="">
+                                                    Fruits &amp; Vegetables
+                                                </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="pages/shop-grid.html">
-                                                Cold Drinks &amp; Juices
-                                            </a>
+                                            <Link to={"/product/filter"}>
+                                                <a className="dropdown-item" href="">
+                                                    Cold Drinks &amp; Juices
+                                                </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="pages/shop-grid.html">
-                                                Breakfast &amp; Instant Food
-                                            </a>
+                                            <Link to={"/product/filter"}>
+                                                <a className="dropdown-item" href="">
+                                                    Breakfast &amp; Instant Food
+                                                </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="pages/shop-grid.html">
-                                                Bakery &amp; Biscuits
-                                            </a>
+                                            <Link to={"/product/filter"}>
+                                                <a className="dropdown-item" href="">
+                                                    Bakery &amp; Biscuits
+                                                </a>
+                                            </Link>
                                         </li>
                                         <li>
-                                            <a className="dropdown-item" href="pages/shop-grid.html">
-                                                Chicken, Meat &amp; Fish
-                                            </a>
+                                            <Link to={"/product/filter"}>
+                                                <a className="dropdown-item" href="">
+                                                    Chicken, Meat &amp; Fish
+                                                </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="">
                                     <ul className="navbar-nav align-items-center ">
-                                        <li className="nav-item dropdown w-100 w-lg-auto">
-                                            <a
-                                                className="nav-link dropdown-toggle"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Home
-                                            </a>
-                                            <ul className="dropdown-menu">
-                                                <li>
-                                                    <a className="dropdown-item" href="index.html">
-                                                        Home 1
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/index-2.html">
-                                                        Home 2
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/index-3.html">
-                                                        Home 3
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/index-4.html">
-                                                        Home 4
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/index-5.html">
-                                                        Home 5{" "}
-                                                        <span className="badge bg-light-info text-dark-info ms-1">
-                          New
-                        </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                        <li className="nav-item w-100 w-lg-auto">
+                                            <Link to={"/index"}>
+                                                <a className="nav-link" href="">
+                                                    Home
+                                                </a>
+                                            </Link>
                                         </li>
-                                        <li className="nav-item dropdown w-100 w-lg-auto">
-                                            <a
-                                                className="nav-link dropdown-toggle"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Shop
-                                            </a>
-                                            <ul className="dropdown-menu">
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/shop-grid.html">
-                                                        Shop Grid - Filter
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/shop-grid-3-column.html"
-                                                    >
-                                                        Shop Grid - 3 column
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/shop-list.html">
-                                                        Shop List - Filter
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/shop-filter.html"
-                                                    >
-                                                        Shop - Filter
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/shop-fullwidth.html"
-                                                    >
-                                                        Shop Wide
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/shop-single.html"
-                                                    >
-                                                        Shop Single
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/shop-single-2.html"
-                                                    >
-                                                        Shop Single v2
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/shop-wishlist.html"
-                                                    >
-                                                        Shop Wishlist
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/shop-cart.html">
-                                                        Shop Cart
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/shop-checkout.html"
-                                                    >
-                                                        Shop Checkout
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                        <li className="nav-item w-100 w-lg-auto">
+                                            <Link to={"/shop"}>
+                                                <a className="nav-link" href="">
+                                                    Vendors
+                                                </a>
+                                            </Link>
                                         </li>
-                                        <li className="nav-item dropdown w-100 w-lg-auto">
-                                            <a
-                                                className="nav-link dropdown-toggle"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Stores
-                                            </a>
-                                            <ul className="dropdown-menu">
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/store-list.html">
-                                                        Store List
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/store-grid.html">
-                                                        Store Grid
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/store-single.html"
-                                                    >
-                                                        Store Single
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                        <li className="nav-item w-100 w-lg-auto">
+                                            <Link to={"/product/filter"}>
+                                                <a className="nav-link" href="">
+                                                    Product
+                                                </a>
+                                            </Link>
                                         </li>
                                         <li className="nav-item dropdown w-100 w-lg-auto dropdown-fullwidth">
                                             <a
@@ -607,166 +454,215 @@ const Navbar = () => {
                                                         <h6 className="text-primary ps-3">
                                                             Dairy, Bread &amp; Eggs
                                                         </h6>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Butter
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Milk Drinks
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Curd &amp; Yogurt
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Eggs
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Buns &amp; Bakery
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Cheese
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Condensed Milk
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Dairy Products
-                                                        </a>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Butter
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Milk Drinks
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Curd &amp; Yogurt
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Eggs
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Buns &amp; Bakery
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Cheese
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Condensed Milk
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Dairy Products
+                                                            </a>
+                                                        </Link>
                                                     </div>
                                                     <div className="col-lg-3 col-12 mb-4 mb-lg-0">
                                                         <h6 className="text-primary ps-3">
                                                             Breakfast &amp; Instant Food
                                                         </h6>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Breakfast Cereal
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            {" "}
-                                                            Noodles, Pasta &amp; Soup
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Frozen Veg Snacks
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            {" "}
-                                                            Frozen Non-Veg Snacks
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            {" "}
-                                                            Vermicelli
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            {" "}
-                                                            Instant Mixes
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            {" "}
-                                                            Batter
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            {" "}
-                                                            Fruit and Juices
-                                                        </a>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Breakfast Cereal
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                {" "}
+                                                                Noodles, Pasta &amp; Soup
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Frozen Veg Snacks
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                {" "}
+                                                                Frozen Non-Veg Snacks
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                {" "}
+                                                                Vermicelli
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                {" "}
+                                                                Instant Mixes
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                {" "}
+                                                                Batter
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                {" "}
+                                                                Fruit and Juices
+                                                            </a>
+                                                        </Link>
                                                     </div>
                                                     <div className="col-lg-3 col-12 mb-4 mb-lg-0">
                                                         <h6 className="text-primary ps-3">
                                                             Cold Drinks &amp; Juices
                                                         </h6>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Soft Drinks
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Fruit Juices
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Coldpress
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Water &amp; Ice Cubes
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Soda &amp; Mixers
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Health Drinks
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Herbal Drinks
-                                                        </a>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href="pages/shop-grid.html"
-                                                        >
-                                                            Milk Drinks
-                                                        </a>
+
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Soft Drinks
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Fruit Juices
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Coldpress
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Water &amp; Ice Cubes
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Soda &amp; Mixers
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Health Drinks
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Herbal Drinks
+                                                            </a>
+                                                        </Link>
+                                                        <Link to={"/product/filter"}>
+                                                            <a
+                                                                className="dropdown-item"
+                                                                href=""
+                                                            >
+                                                                Milk Drinks
+                                                            </a>
+                                                        </Link>
                                                     </div>
                                                     <div className="col-lg-3 col-12 mb-4 mb-lg-0">
                                                         <div className="card border-0">
@@ -789,206 +685,12 @@ const Navbar = () => {
                                                 </div>
                                             </div>
                                         </li>
-                                        <li className="nav-item dropdown w-100 w-lg-auto">
-                                            <a
-                                                className="nav-link dropdown-toggle"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Pages
-                                            </a>
-                                            <ul className="dropdown-menu">
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/blog.html">
-                                                        Blog
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/blog-single.html"
-                                                    >
-                                                        Blog Single
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/blog-category.html"
-                                                    >
-                                                        Blog Category
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/about.html">
-                                                        About us
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/404error.html">
-                                                        404 Error
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/contact.html">
-                                                        Contact
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li className="nav-item dropdown w-100 w-lg-auto">
-                                            <a
-                                                className="nav-link dropdown-toggle"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Account
-                                            </a>
-                                            <ul className="dropdown-menu">
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/signin.html">
-                                                        Sign in
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="pages/signup.html">
-                                                        Signup
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="dropdown-item"
-                                                        href="pages/forgot-password.html"
-                                                    >
-                                                        Forgot Password
-                                                    </a>
-                                                </li>
-                                                <li className="dropdown-submenu dropend">
-                                                    <a
-                                                        className="dropdown-item dropdown-list-group-item dropdown-toggle"
-                                                        href="#"
-                                                    >
-                                                        My Account
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href="pages/account-orders.html"
-                                                            >
-                                                                Orders
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href="pages/account-settings.html"
-                                                            >
-                                                                Settings
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href="pages/account-address.html"
-                                                            >
-                                                                Address
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href="pages/account-payment-method.html"
-                                                            >
-                                                                Payment Method
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href="pages/account-notification.html"
-                                                            >
-                                                                Notification
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
                                         <li className="nav-item w-100 w-lg-auto">
-                                            <a className="nav-link" href="dashboard/index.html">
-                                                Dashboard
-                                            </a>
-                                        </li>
-                                        <li className="nav-item dropdown w-100 w-lg-auto dropdown-flyout">
-                                            <a
-                                                className="nav-link"
-                                                href="#"
-                                                id="navbarDropdownDocs"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                            >
-                                                Docs
-                                            </a>
-                                            <div
-                                                className="dropdown-menu dropdown-menu-lg"
-                                                aria-labelledby="navbarDropdownDocs"
-                                            >
-                                                <a
-                                                    className="dropdown-item align-items-start"
-                                                    href="docs/index.html"
-                                                >
-                                                    <div>
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width={24}
-                                                            height={24}
-                                                            fill="currentColor"
-                                                            className="bi bi-file-text text-primary"
-                                                            viewBox="0 0 16 16"
-                                                        >
-                                                            <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z" />
-                                                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
-                                                        </svg>
-                                                    </div>
-                                                    <div className="ms-3 lh-1">
-                                                        <h6 className="mb-1">Documentations</h6>
-                                                        <p className="mb-0 small">
-                                                            Browse the all documentation
-                                                        </p>
-                                                    </div>
+                                            <Link to={"/about"}>
+                                                <a className="nav-link" href="">
+                                                    AboutUs
                                                 </a>
-                                                <a
-                                                    className="dropdown-item align-items-start"
-                                                    href="docs/changelog.html"
-                                                >
-                                                    <div>
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width={24}
-                                                            height={24}
-                                                            fill="currentColor"
-                                                            className="bi bi-layers text-primary"
-                                                            viewBox="0 0 16 16"
-                                                        >
-                                                            <path d="M8.235 1.559a.5.5 0 0 0-.47 0l-7.5 4a.5.5 0 0 0 0 .882L3.188 8 .264 9.559a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882L12.813 8l2.922-1.559a.5.5 0 0 0 0-.882l-7.5-4zm3.515 7.008L14.438 10 8 13.433 1.562 10 4.25 8.567l3.515 1.874a.5.5 0 0 0 .47 0l3.515-1.874zM8 9.433 1.562 6 8 2.567 14.438 6 8 9.433z" />
-                                                        </svg>
-                                                    </div>
-                                                    <div className="ms-3 lh-1">
-                                                        <h6 className="mb-1">
-                                                            Changelog{" "}
-                                                            <span className="text-primary ms-1">v1.2.0</span>
-                                                        </h6>
-                                                        <p className="mb-0 small">See what's new</p>
-                                                    </div>
-                                                </a>
-                                            </div>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -1066,7 +768,12 @@ const Navbar = () => {
                             </form>
                         </div>
                         <div className="modal-footer border-0 justify-content-center">
-                            Already have an account? <a href="#">Sign in</a>
+
+                                <button onClick={signin} data-bs-dismiss="modal"  className="btn btn-link">
+                                    Already have an account? Sign in
+
+                                </button>
+
                         </div>
                     </div>
                 </div>

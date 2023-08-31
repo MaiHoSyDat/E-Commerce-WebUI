@@ -3,7 +3,7 @@ import Footer from "../components/footer";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-const Signin = () => {
+const SignIn = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useState({
         username: '',
@@ -154,4 +154,4 @@ const Signin = () => {
     );
 };
 
-export default Signin;
+export default SignIn;
