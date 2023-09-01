@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Footer from "../components/footer";
 import axios from "axios";
 import {logDOM} from "@testing-library/react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Signup = () => {
     const [account , setAccount] = useState({});
@@ -22,7 +22,7 @@ const Signup = () => {
                             />
                         </a>
                         <span className="navbar-text">
-          Already have an account? <a href="signin.html">Sign in</a>
+          Already have an account? <Link to={"/signin"}>Sign in</Link>
         </span>
                     </div>
                 </nav>
@@ -56,7 +56,7 @@ const Signup = () => {
                                         // Kiểm tra và xử lý lỗi cho các trường
 
                                         if (!values.name) {
-                                            errors.name = 'First name is required';
+                                            errors.name = 'Username is required';
                                         }
 
 
@@ -150,10 +150,10 @@ const Signup = () => {
                                             </div>
                                             <Field name="role" as="select">
                                                 <option value="" disabled> </option>
-                                                    <option value="1">
+                                                    <option value="2">
                                                         Customer
                                                     </option>
-                                                <option  value="2">
+                                                <option  value="3">
                                                         Shop
                                                     </option>
                                                 ))
