@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
 
 import Footer from "../components/footer";
 import axios from "axios";
@@ -7,7 +7,7 @@ import {logDOM} from "@testing-library/react";
 import {Link, useNavigate} from "react-router-dom";
 
 const Signup = () => {
-    const [account , setAccount] = useState({});
+    const [account, setAccount] = useState({});
     const navigate = useNavigate()
     return (
         <>
@@ -50,7 +50,7 @@ const Signup = () => {
                                 </div>
                                 {/* form */}
                                 <Formik
-                                    initialValues={{username:'', name: '', email: '', password: '',role: '1' , status :'3' }}
+                                    initialValues={{username: '', name: '', email: '', password: '', role: '2'}}
                                     validate={values => {
                                         const errors = {};
                                         // Kiểm tra và xử lý lỗi cho các trường
@@ -73,29 +73,35 @@ const Signup = () => {
                                         }
                                         return errors;
                                     }}
-                                    onSubmit={(values, { setSubmitting }) => {
+                                    onSubmit={(values, {setSubmitting}) => {
+                                        const PENDING = "3";
+                                        const SHOP_PENDING ="4";
+                                        let status = PENDING;
+                                        if (values.role != "2") {
+                                            status = SHOP_PENDING;
+                                        }
                                         let account = {
-                                            name:values.name,
-                                            email:values.email,
-                                            password:values.password,
-                                            username:values.username,
-                                            role:{
-                                                id:values.role
+                                            name: values.name,
+                                            email: values.email,
+                                            password: values.password,
+                                            username: values.username,
+                                            role: {
+                                                id: values.role
                                             },
-                                            status:{
-                                                id:values.status
+                                            status: {
+                                                id: status
                                             }
                                         }
-                                        axios.post("http://localhost:8080/register",account).
-                                        then((rep)=>{
-                                           navigate("/signin")
-                                        }).catch((err)=>{
+                                        console.log(account)
+                                        axios.post("http://localhost:8080/register", account).then((rep) => {
+                                            navigate("/signin")
+                                        }).catch((err) => {
                                             console.log(err)
                                             alert("Account already exists")
                                         })
 
 
-                                            setSubmitting(false);
+                                        setSubmitting(false);
                                     }}
                                 >
                                     <Form>
@@ -108,7 +114,7 @@ const Signup = () => {
                                                     required=""
                                                     name="username"
                                                 />
-                                                <ErrorMessage name="name" component="div" className="error-message" />
+                                                <ErrorMessage name="name" component="div" className="error-message"/>
                                             </div>
                                             <div className="col">
                                                 <Field
@@ -118,7 +124,7 @@ const Signup = () => {
                                                     required=""
                                                     name="name"
                                                 />
-                                                <ErrorMessage name="name" component="div" className="error-message" />
+                                                <ErrorMessage name="name" component="div" className="error-message"/>
                                             </div>
 
                                             <div className="col-12">
@@ -130,7 +136,7 @@ const Signup = () => {
                                                     required=""
                                                     name="email"
                                                 />
-                                                <ErrorMessage name="email" component="div" className="error-message" />
+                                                <ErrorMessage name="email" component="div" className="error-message"/>
                                             </div>
                                             <div className="col-12">
                                                 <div className="password-field position-relative">
@@ -143,22 +149,23 @@ const Signup = () => {
                                                         name="password"
                                                     />
                                                     <span>
-            <i id="passwordToggler" className="bi bi-eye-slash" />
+            <i id="passwordToggler" className="bi bi-eye-slash"/>
           </span>
                                                 </div>
-                                                <ErrorMessage name="password" component="div" className="error-message" />
+                                                <ErrorMessage name="password" component="div"
+                                                              className="error-message"/>
                                             </div>
                                             <Field name="role" as="select">
-                                                <option value="" disabled> </option>
-                                                    <option value="2">
-                                                        Customer
-                                                    </option>
-                                                <option  value="3">
-                                                        Shop
-                                                    </option>
+                                                <option value="" disabled></option>
+                                                <option value="2">
+                                                    Customer
+                                                </option>
+                                                <option value="3">
+                                                    Shop
+                                                </option>
                                                 ))
                                             </Field>
-                                            <ErrorMessage name="status" component="div" />
+                                            <ErrorMessage name="status" component="div"/>
                                             <div className="col-12 d-grid">
                                                 <button type="submit" className="btn btn-primary">
                                                     Register
@@ -166,12 +173,13 @@ const Signup = () => {
                                             </div>
                                             <p>
                                                 <small>
-                                                    By continuing, you agree to our <a href="#!"> Terms of Service</a> &amp;{" "}
+                                                    By continuing, you agree to our <a href="#!"> Terms of
+                                                    Service</a> &amp;{" "}
                                                     <a href="#!">Privacy Policy</a>
                                                 </small>
                                             </p>
                                         </div>
-                                        <ErrorMessage name="general" component="div" className="error-message" />
+                                        <ErrorMessage name="general" component="div" className="error-message"/>
                                     </Form>
                                 </Formik>
                             </div>
