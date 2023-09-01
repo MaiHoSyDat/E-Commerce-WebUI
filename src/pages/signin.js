@@ -39,7 +39,6 @@ const SignIn = () => {
         }
     }, []);
 
-    console.log(account);
     return (
         <>
             <div className="border-bottom shadow-sm">

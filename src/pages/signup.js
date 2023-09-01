@@ -86,7 +86,6 @@ const Signup = () => {
                                                 id:values.status
                                             }
                                         }
-                                        console.log(account)
                                         axios.post("http://localhost:8080/register",account).
                                         then((rep)=>{
                                            navigate("/signin")
