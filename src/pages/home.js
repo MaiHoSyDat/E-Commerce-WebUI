@@ -23,9 +23,6 @@ const Home = () => {
         }
     }, []);
 
-    const signin = () => {
-        navigate("/signin")
-    }
     return(
 
         <>
@@ -91,8 +88,8 @@ const Home = () => {
                                         account.status.id =1;
                                         localStorage.setItem("account" , JSON.stringify(account))
                                     }).catch((err)=>{
+                                        alert("Update failed")
                                         console.log(err)
-                                        alert("Account already exists")
                                     })
 
 
@@ -102,18 +99,6 @@ const Home = () => {
                                 {({ errors, touched, isSubmitting }) => (
                                     <Form>
                                         <div className="row g-3">
-
-                                            <div className="col-12">
-                                                <Field
-                                                    type="date"
-                                                    className="form-control"
-                                                    placeholder="Date of Birth"
-                                                    name="birthday"
-                                                />
-                                                {errors.birthday && touched.birthday && (
-                                                    <div className="error-message">{errors.birthday}</div>
-                                                )}
-                                            </div>
 
                                             <div className="col-12">
                                                 <Field
@@ -138,6 +123,18 @@ const Home = () => {
                                                     <div className="error-message">{errors.phone}</div>
                                                 )}
                                             </div>
+                                            <div className="col-12">
+                                                <p>Date of Birth</p>
+                                                <Field
+                                                    type="date"
+                                                    className="form-control"
+                                                    placeholder="Date of Birth"
+                                                    name="birthday"
+                                                />
+                                                {errors.birthday && touched.birthday && (
+                                                    <div className="error-message">{errors.birthday}</div>
+                                                )}
+                                            </div>
 
                                             <div className="col-12">
                                                 <div className="form-check form-check-inline">
@@ -160,23 +157,18 @@ const Home = () => {
                                                 </div>
                                             </div>
 
+
                                             <div className="col-12 d-grid">
                                                 <button
                                                     type="submit"
                                                     className="btn btn-primary"
                                                     disabled={isSubmitting}
                                                 >
-                                                    Register
+                                                    Update
                                                 </button>
                                             </div>
 
-                                            <p>
-                                                <small>
-                                                    By continuing, you agree to our{" "}
-                                                    <a href="#!">Terms of Service</a> &amp;{" "}
-                                                    <a href="#!">Privacy Policy</a>
-                                                </small>
-                                            </p>
+
 
                                         </div>
                                     </Form>
@@ -185,11 +177,6 @@ const Home = () => {
 
                         </div>
                         <div className="modal-footer border-0 justify-content-center">
-
-                            <button onClick={signin} data-bs-dismiss="modal" className="btn btn-link">
-                                Already have an account? Sign in
-
-                            </button>
 
                         </div>
                     </div>
