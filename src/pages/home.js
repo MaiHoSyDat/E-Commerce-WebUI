@@ -89,6 +89,7 @@ const Home = () => {
                                         localStorage.setItem("account" , JSON.stringify(account))
                                     }).catch((err)=>{
                                         alert("Update failed")
+                                        window.$("#statusModal").modal("show");
                                         console.log(err)
                                     })
 

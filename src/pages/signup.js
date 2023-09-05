@@ -3,11 +3,9 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 
 import Footer from "../components/footer";
 import axios from "axios";
-import {logDOM} from "@testing-library/react";
 import {Link, useNavigate} from "react-router-dom";
 
 const Signup = () => {
-    const [account, setAccount] = useState({});
     const navigate = useNavigate()
     return (
         <>
