@@ -28,7 +28,6 @@ import ProductCheckout from "./outlet/product/productCheckout";
 import ShopInfomation from "./outlet/shop/shopInfomation";
 import About from "./pages/about";
 import Error404 from "./pages/error404";
-import Signin from "./pages/signin";
 import Signup from "./pages/signup";
 import ForgotPassword from "./pages/forgotPassword";
 import Customer from "./pages/customer";
@@ -38,8 +37,14 @@ import CustomerAddress from "./outlet/customer/customerAddress";
 import CustomerPayment from "./outlet/customer/customerPayment";
 import CustomerNotification from "./outlet/customer/customerNotification";
 import Home from "./pages/home";
+import SignIn from "./pages/signin";
 
 function App() {
+    // xoá account khi tắt trang
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('account', null);
+        localStorage.setItem('token', null);
+    });
   return (
     <>
         <Routes>
@@ -74,8 +79,9 @@ function App() {
             <Route path="index" element={<Home/>}></Route>
             <Route path="" element={<Home/>}></Route>
             <Route path="about" element={<About/>}></Route>
+            <Route path="" element={<Home/>}></Route>
             <Route path="error" element={<Error404/>}></Route>
-            <Route path="signin" element={<Signin/>}></Route>
+            <Route path="signin" element={<SignIn/>}></Route>
             <Route path="signup" element={<Signup/>}></Route>
             <Route path="forgot-password" element={<ForgotPassword/>}></Route>
             <Route path="account" element={<Customer/>}>
