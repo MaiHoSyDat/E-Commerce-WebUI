@@ -25,6 +25,14 @@ export const getFilterProducts = createAsyncThunk(
         return res.data;
     }
 )
+// lấy ra tất cả sp theo shop
+export const getAllProductsByShop = createAsyncThunk(
+    "product/getAllProductsByShop",
+    async (idShop) => {
+        const res = await axios.get("http://localhost:8080/shops/" + idShop + "/products" );
+        return res.data;
+    }
+)
 export const createProduct = createAsyncThunk(
     "product/createProduct",
     async (newProduct) => {

@@ -1,8 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getAllProducts, getFilterProducts, getProduct} from "../../service/productService";
+import {getAllProducts, getAllProductsByShop, getFilterProducts, getProduct} from "../../service/productService";
 const initialState = {
     allProducts: [],
     filterProducts: [],
+    shopProducts: [],
     product: {}
 }
 const productSlice = createSlice({
@@ -18,6 +19,9 @@ const productSlice = createSlice({
         })
         builder.addCase(getProduct.fulfilled,(state,action) => {
             state.product = action.payload;
+        })
+        builder.addCase(getAllProductsByShop.fulfilled,(state,action) => {
+            state.shopProducts = action.payload;
         })
     }
 })

@@ -1,11 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {getShopByAccountLogin} from "../../service/shopService";
+import {getAllProductsByShop} from "../../service/productService";
 
-const ShopSingleFilter = () => {
+const ShopSingleFilterLogin = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
+    const dispatch = useDispatch();
+    const shopLogin = useSelector(state => {
+        return state.shop.shopLogin;
+    })
+    const shopProducts = useSelector(state => {
+        return state.product.shopProducts;
+    })
+    useEffect(() => {
+        dispatch(getShopByAccountLogin(account.id))
+        dispatch(getAllProductsByShop(shopLogin.id))
+    },[]);
     return (
         <>
             <div className="d-md-flex justify-content-between mb-3 align-items-center">
                 <div>
-                    <p className="mb-3 mb-md-0">24 Products found</p>
+                    <p className="mb-3 mb-md-0">{shopProducts.length} Products found</p>
                 </div>
                 <div className="d-flex justify-content-md-between align-items-center">
                     <div className="me-2">
@@ -27,6 +42,10 @@ const ShopSingleFilter = () => {
                             <option value="Avg. Rating">Avg. Rating</option>
                         </select>
                     </div>
+                    &ensp;
+                    <div>
+                        <button type="button" className="btn btn-success">Create New Product</button>
+                    </div>
                 </div>
             </div>
 
@@ -34,4 +53,4 @@ const ShopSingleFilter = () => {
     );
 };
 
-export default ShopSingleFilter;
+export default ShopSingleFilterLogin;
