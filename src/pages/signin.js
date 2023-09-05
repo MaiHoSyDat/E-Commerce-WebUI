@@ -3,6 +3,7 @@ import Footer from "../components/footer";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
+
 const SignIn = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useState({
@@ -11,8 +12,8 @@ const SignIn = () => {
     });
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setAccount({ ...account, [name]: value });
+        const {name, value} = event.target;
+        setAccount({...account, [name]: value});
     };
     const handleError = () => {
 
@@ -22,7 +23,7 @@ const SignIn = () => {
             .post('http://localhost:8080/login', account)
             .then((response) => {
 
-                localStorage.setItem('token',  response.data.token);
+                localStorage.setItem('token', response.data.token);
                 localStorage.setItem('account', JSON.stringify(response.data));
                 navigate("/index")
 
@@ -78,71 +79,71 @@ const SignIn = () => {
                                     <p>Welcome back to FreshCart! Enter your email to get started.</p>
                                 </div>
 
-                                    <div className="row g-3">
-                                        {/* row */}
-                                        <div className="col-12">
-                                            {/* input */}
+                                <div className="row g-3">
+                                    {/* row */}
+                                    <div className="col-12">
+                                        {/* input */}
+                                        <input
+                                            type="text"
+                                            name="username"
+                                            onChange={handleInputChange}
+                                            className="form-control"
+                                            id="inputEmail4"
+                                            placeholder="Email"
+                                            required=""
+                                        />
+                                    </div>
+                                    <div className="col-12">
+                                        {/* input */}
+                                        <div className="password-field position-relative">
                                             <input
-                                                type="text"
-                                                name= "username"
+                                                type="password"
+                                                name="password"
                                                 onChange={handleInputChange}
+                                                id="fakePassword"
+                                                placeholder="Enter Password"
                                                 className="form-control"
-                                                id="inputEmail4"
-                                                placeholder="Email"
                                                 required=""
                                             />
-                                        </div>
-                                        <div className="col-12">
-                                            {/* input */}
-                                            <div className="password-field position-relative">
-                                                <input
-                                                    type="password"
-                                                    name= "password"
-                                                    onChange={handleInputChange}
-                                                    id="fakePassword"
-                                                    placeholder="Enter Password"
-                                                    className="form-control"
-                                                    required=""
-                                                />
-                                                <span>
-                      <i id="passwordToggler" className="bi bi-eye-slash" />
+                                            <span>
+                      <i id="passwordToggler" className="bi bi-eye-slash"/>
                     </span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex justify-content-between">
-                                            {/* form check */}
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    defaultValue=""
-                                                    id="flexCheckDefault"
-                                                />
-                                                {/* label */}{" "}
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="flexCheckDefault"
-                                                >
-                                                    Remember me
-                                                </label>
-                                            </div>
-                                            <div>
-                                                {" "}
-                                                Forgot password? <a href="forgot-password.html">Reset It</a>
-                                            </div>
-                                        </div>
-                                        {/* btn */}
-                                        <div className="col-12 d-grid">
-                                            <button type="submit" className="btn btn-primary" onClick={handleLogin}>
-                                                Sign In
-                                            </button>
-                                        </div>
-                                        {/* link */}
-                                        <div>
-                                            Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
                                         </div>
                                     </div>
-                                </form>
+                                    <div className="d-flex justify-content-between">
+                                        {/* form check */}
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                defaultValue=""
+                                                id="flexCheckDefault"
+                                            />
+                                            {/* label */}{" "}
+                                            <label
+                                                className="form-check-label"
+                                                htmlFor="flexCheckDefault"
+                                            >
+                                                Remember me
+                                            </label>
+                                        </div>
+                                        <div>
+                                            {" "}
+                                            Forgot password? <a href="forgot-password.html">Reset It</a>
+                                        </div>
+                                    </div>
+                                    {/* btn */}
+                                    <div className="col-12 d-grid">
+                                        <button type="submit" className="btn btn-primary" onClick={handleLogin}>
+                                            Sign In
+                                        </button>
+                                    </div>
+                                    {/* link */}
+                                    <div>
+                                        Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -151,7 +152,7 @@ const SignIn = () => {
             <Footer></Footer>
         </>
 
-    );
+    )
 };
 
 export default SignIn;

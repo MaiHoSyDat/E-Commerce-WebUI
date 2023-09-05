@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 
-import React from 'react';
 import Footer from "../components/footer";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";

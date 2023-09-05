@@ -6,9 +6,9 @@ import NavbarCustomer from "../components/navbarCustomer";
 import NavbarAdmin from "../components/navbarAdmin";
 import NavbarShop from "../components/navbarShop";
 import NavbarEmployee from "../components/navbarEmployee";
-import { Field, Form, Formik} from "formik";
+import {Field, Form, Formik} from "formik";
 import axios from "axios";
-import { isAfter, isBefore, parse } from 'date-fns';
+import {isAfter, isBefore, parse} from 'date-fns';
 
 
 const Home = () => {
@@ -24,11 +24,10 @@ const Home = () => {
         }
     }, []);
 
-    return(
-       <>
+    return (
 
         <>
-           {/* Modal setting account*/}
+            {/* Modal setting account*/}
             <div
                 className="modal fade"
                 id="statusModal"
@@ -45,7 +44,7 @@ const Home = () => {
                         </div>
                         <div className="modal-body">
                             <Formik
-                                initialValues={{birthday:'', avatar: '', address: '', phone: '',gender: '1'  }}
+                                initialValues={{birthday: '', avatar: '', address: '', phone: '', gender: '1'}}
                                 validate={values => {
                                     const errors = {};
                                     // Kiểm tra các trường dữ liệu
@@ -71,25 +70,24 @@ const Home = () => {
 
                                     return errors;
                                 }}
-                                onSubmit={(values, { setSubmitting }) => {
-                                 let customer =  {
-                                     birthday: values.birthday,
-                                     avatar: values.avatar,
-                                     address: values.address,
-                                     phone: values.phone,
-                                     gender: values.gender,
-                                     account: {
-                                         id: account.id
-                                     }
-                                 }
+                                onSubmit={(values, {setSubmitting}) => {
+                                    let customer = {
+                                        birthday: values.birthday,
+                                        avatar: values.avatar,
+                                        address: values.address,
+                                        phone: values.phone,
+                                        gender: values.gender,
+                                        account: {
+                                            id: account.id
+                                        }
+                                    }
 
-                                    axios.post("http://localhost:8080/customer/save",customer).
-                                    then((rep)=>{
+                                    axios.post("http://localhost:8080/customer/save", customer).then((rep) => {
                                         window.$("#statusModal").modal("hide");
                                         alert("Update successful")
-                                        account.status.id =1;
-                                        localStorage.setItem("account" , JSON.stringify(account))
-                                    }).catch((err)=>{
+                                        account.status.id = 1;
+                                        localStorage.setItem("account", JSON.stringify(account))
+                                    }).catch((err) => {
                                         alert("Update failed")
                                         window.$("#statusModal").modal("show");
                                         console.log(err)
@@ -99,7 +97,7 @@ const Home = () => {
                                     setSubmitting(false);
                                 }}
                             >
-                                {({ errors, touched, isSubmitting }) => (
+                                {({errors, touched, isSubmitting}) => (
                                     <Form>
                                         <div className="row g-3">
 
@@ -172,7 +170,6 @@ const Home = () => {
                                             </div>
 
 
-
                                         </div>
                                     </Form>
                                 )}
@@ -186,7 +183,7 @@ const Home = () => {
                 </div>
             </div>
 
-       </>
+        </>
     )
 }
 export default Home;
