@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import {useEffect} from "react";
-import {fetchProducts} from "../../action/productAction";
-import {setPage} from "../../features/product/productSlice";
+import { useEffect } from "react";
+import { fetchProducts } from "../../action/productAction";
+import {setProducts} from "../../features/product/productSlice";
 
 const ProductFilterShow = () => {
-
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products.products);
     const currentPage = useSelector((state) => state.products.currentPage);
@@ -15,7 +14,7 @@ const ProductFilterShow = () => {
     }, [dispatch, currentPage]);
 
     const handlePageChange = (newPage) => {
-        dispatch(setPage(newPage, 12));
+        dispatch(fetchProducts(newPage, 12));
     };
 
     return (
@@ -23,7 +22,7 @@ const ProductFilterShow = () => {
 
             <div className="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
                 {/* col */}
-                {products.length && products.map( (product) =>
+                {products && products.length > 0 && products.map( (product) =>
                     <div key={product.id} className="col">
                         {/* card */}
                         <div className="card card-product">
@@ -144,9 +143,13 @@ const ProductFilterShow = () => {
                     {/* nav */}
                     <nav>
                         <ul className="pagination">
-                            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                            <li
+                                className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+                            >
                                 <a
-                                    className={`page-link mx-1 ${currentPage === currentPage ? "current-page" : ""}`}
+                                    className={`page-link mx-1 ${
+                                        currentPage === currentPage ? "current-page" : ""
+                                    }`}
                                     href="#"
                                     onClick={() => handlePageChange(currentPage - 1)}
                                     aria-label="Previous"
@@ -154,13 +157,24 @@ const ProductFilterShow = () => {
                                     <i className="feather-icon icon-chevron-left" />
                                 </a>
                             </li>
-                            <li className="page-item">
-                                <span className="page-link">{currentPage}</span>
-                            </li>
 
-                            <li className="page-item">
-                                <span className="page-link">{totalPages}</span>
-                            </li>
+                            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                                (page) => (
+                                    <li
+                                        key={page}
+                                        className={`page-item ${page === currentPage ? "active" : ""}`}
+                                    >
+                                        <a
+                                            className="page-link"
+                                            href="#"
+                                            onClick={() => handlePageChange(page)}
+                                        >
+                                            {page}
+                                        </a>
+                                    </li>
+                                )
+                            )}
+
                             <li
                                 className={`page-item ${
                                     currentPage === totalPages ? "disabled" : ""
@@ -180,8 +194,7 @@ const ProductFilterShow = () => {
                 </div>
             </div>
         </>
-
-    )
+    );
 };
 
 export default ProductFilterShow;
