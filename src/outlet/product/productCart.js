@@ -5,7 +5,11 @@ const ProductCart = () => {
     const [list, setList] = useState([]);
     const [total, setTotal] = useState(0);
     useEffect(() => {
-        axios.get('http://localhost:8080/cart').then(res => {
+        axios.get('http://localhost:8080/cart',{
+            headers: {
+                'Authorization':  localStorage.getItem('token')
+            },
+        }).then(res => {
             setList(res.data);
             let total = 0;
             res.data.map((item, index) => {
@@ -39,16 +43,24 @@ const ProductCart = () => {
             item.id !== id
         ))
         setList(updateList);
-        axios.post('http://localhost:8080/cart/deleteProductByCart?cartDetailId=' + id).then(res=>{
+        axios.post('http://localhost:8080/cart/deleteProductByCart?cartDetailId=' + id,{
+            headers: {
+                'Authorization':  localStorage.getItem('token')
+            },
+        }).then(res => {
             alert("ok")
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err)
         })
     }
     const handleUpdateCart = () => {
-        axios.post('http://localhost:8080/cart/updateCart', list).then(res=>{
+        axios.post('http://localhost:8080/cart/updateCart', list,{
+            headers: {
+                'Authorization':  localStorage.getItem('token')
+            },
+        }).then(res => {
             alert('ok')
-        }).catch(err =>{
+        }).catch(err => {
             console.log(err)
         })
     }
@@ -129,7 +141,7 @@ const ProductCart = () => {
                           </svg>
                         </span>
                                                             <span
-                                                                  style={{color: "red"}}>Remove</span>
+                                                                style={{color: "red"}}>Remove</span>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -178,7 +190,7 @@ const ProductCart = () => {
                                     <a href="#!" className="btn btn-primary">
                                         Continue Shopping
                                     </a>
-                                    <a href="#" className="btn btn-dark" onClick={()=>handleUpdateCart()}>
+                                    <a href="#" className="btn btn-dark" onClick={() => handleUpdateCart()}>
                                         Update Cart
                                     </a>
                                 </div>
