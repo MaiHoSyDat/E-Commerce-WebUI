@@ -1,20 +1,22 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 
-const initialState = {
-    products: [], // Danh sách sản phẩm
-};
-
 const productSlice = createSlice({
     name: "products",
-    initialState,
+    initialState: {
+        products: [],
+        currentPage: 1,
+        totalPages: 1,
+    },
     reducers: {
         setProducts: (state, action) => {
-            state.products = action.payload;
+            state.products = action.payload.content;
+            state.currentPage = action.payload.number +1;
+            state.totalPages = action.payload.totalPages;
         },
     },
 });
 
-export const { setProducts } = productSlice.actions;
+export const {setProducts, setPage} = productSlice.actions;
 
 export default productSlice.reducer;

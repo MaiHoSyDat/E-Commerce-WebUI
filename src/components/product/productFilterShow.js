@@ -1,16 +1,22 @@
 import { useSelector, useDispatch } from "react-redux";
 import {useEffect} from "react";
 import {fetchProducts} from "../../action/productAction";
+import {setPage} from "../../features/product/productSlice";
 
 const ProductFilterShow = () => {
 
-    const products = useSelector((state) => state.products.products);
     const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.products);
+    const currentPage = useSelector((state) => state.products.currentPage);
+    const totalPages = useSelector((state) => state.products.totalPages);
 
     useEffect(() => {
-        // Khi component được tải, gọi action để lấy danh sách sản phẩm
-        dispatch(fetchProducts());
-    }, [dispatch]);
+        dispatch(fetchProducts(currentPage, 12));
+    }, [dispatch, currentPage]);
+
+    const handlePageChange = (newPage) => {
+        dispatch(setPage(newPage, 12));
+    };
 
     return (
         <>
@@ -138,34 +144,35 @@ const ProductFilterShow = () => {
                     {/* nav */}
                     <nav>
                         <ul className="pagination">
-                            <li className="page-item disabled">
-                                <a className="page-link  mx-1 " href="#" aria-label="Previous">
-                                    <i className="feather-icon icon-chevron-left"/>
-                                </a>
-                            </li>
-                            <li className="page-item ">
-                                <a className="page-link  mx-1 active" href="#">
-                                    1
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    2
+                            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                                <a
+                                    className={`page-link mx-1 ${currentPage === currentPage ? "current-page" : ""}`}
+                                    href="#"
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    aria-label="Previous"
+                                >
+                                    <i className="feather-icon icon-chevron-left" />
                                 </a>
                             </li>
                             <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    ...
-                                </a>
+                                <span className="page-link">{currentPage}</span>
                             </li>
+
                             <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    12
-                                </a>
+                                <span className="page-link">{totalPages}</span>
                             </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#" aria-label="Next">
-                                    <i className="feather-icon icon-chevron-right"/>
+                            <li
+                                className={`page-item ${
+                                    currentPage === totalPages ? "disabled" : ""
+                                }`}
+                            >
+                                <a
+                                    className="page-link mx-1"
+                                    href="#"
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    aria-label="Next"
+                                >
+                                    <i className="feather-icon icon-chevron-right" />
                                 </a>
                             </li>
                         </ul>
@@ -174,7 +181,7 @@ const ProductFilterShow = () => {
             </div>
         </>
 
-    );
+    )
 };
 
 export default ProductFilterShow;
