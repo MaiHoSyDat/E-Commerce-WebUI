@@ -18,6 +18,7 @@ const Home = () => {
 
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem('account'))
+        console.log(account)
         if (account && account.status.id === 3) {
             window.$("#statusModal").modal("show");
         }
