@@ -15,22 +15,23 @@ import {storage} from "../../firebase";
 const ShopSingleFilter = () => {
     const [imageUpload, setImageUpload] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
+    let account = JSON.parse(localStorage.getItem("account"));
 
     const imagesListRef = ref(storage, "product/");
-    const uploadFile = () => {
-        if (imageUpload == null) return;
-        for (let i = 0; i < imageUpload.length; i++) {
-            console.log(imageUpload[i])
-
-            const imageRef = ref(storage, `product/${imageUpload[i].name + v4()}`);
-            uploadBytes(imageRef, imageUpload[i]).then((snapshot) => {
-                getDownloadURL(snapshot.ref).then((url) => {
-                    setImageUrls((prev) => [...prev, url]);
-                });
-            });
-
-        }
-    };
+    // const uploadFile = () => {
+    //     if (imageUpload == null) return;
+    //     for (let i = 0; i < imageUpload.length; i++) {
+    //         console.log(imageUpload[i])
+    //
+    //         const imageRef = ref(storage, `product/${imageUpload[i].name + v4()}`);
+    //         uploadBytes(imageRef, imageUpload[i]).then((snapshot) => {
+    //             getDownloadURL(snapshot.ref).then((url) => {
+    //                 setImageUrls((prev) => [...prev, url]);
+    //             });
+    //         });
+    //
+    //     }
+    // };
 
     useEffect(() => {
         listAll(imagesListRef).then((response) => {
@@ -114,11 +115,9 @@ const ShopSingleFilter = () => {
                                     price: '',
                                     quantity: '',
                                     description: '',
-                                    thumbnail: [],
                                     unit: '',
                                     category: '',
                                     shop: '',
-                                    status: '',
                                 }}
                                 validationSchema={Yup.object().shape({
                                     name: Yup.string().required('Name is required'),
@@ -137,8 +136,35 @@ const ShopSingleFilter = () => {
                                 })}
                                 onSubmit={(values, {setSubmitting}) => {
                                     // Handle form submission
+                                    if (imageUpload !== null) {
+                                        for (let i = 0; i < imageUpload.length; i++) {
+                                            const imageRef = ref(storage, `product/${imageUpload[i].name + v4()}`);
+                                            uploadBytes(imageRef, imageUpload[i]).then((snapshot) => {
+                                                getDownloadURL(snapshot.ref).then((url) => {
+                                                    setImageUrls((prev) => [...prev, url]);
+                                                });
+                                            });
+
+                                        }
+                                    }
+                                    let product = {
+                                        name: values.name,
+                                        price: values.price,
+                                        quantity: values.quantity,
+                                        description: values.description,
+                                        thumbnail: imageUrls[0],
+                                        unit: values.unit,
+                                        category: {
+                                            id:"1"
+                                        },
+                                        shop: {
+                                            id: account.id
+                                        },
+                                        images: imageUrls
+                                    }
+                                    setImageUrls([])
                                     axios
-                                        .post('/api/submit', values)
+                                        .post('http://localhost:8080/shops/'+account.id+'/products/create',product)
                                         .then(response => {
                                             // Handle success
                                             console.log(response);
@@ -152,7 +178,7 @@ const ShopSingleFilter = () => {
                                         });
                                 }}
                             >
-                                {({errors, touched, setFieldValue, isSubmitting}) => (
+                                {({errors, touched, isSubmitting}) => (
                                     <Form>
                                         <div className="row g-3">
                                             <div className="col-12">
@@ -237,13 +263,16 @@ const ShopSingleFilter = () => {
                                                 {imageUpload.length > 0 && (
                                                     <div>
                                                         <h5>Selected Images:</h5>
-                                                        <div style={{ display: 'flex' }}>
+                                                        <div style={{display: 'flex'}}>
                                                             {imageUpload.map((file, index) => (
-                                                                <div key={index} style={{ marginRight: '10px', position: 'relative' }}>
+                                                                <div key={index} style={{
+                                                                    marginRight: '10px',
+                                                                    position: 'relative'
+                                                                }}>
                                                                     <img
                                                                         src={URL.createObjectURL(file)}
                                                                         alt={`Selected Image ${index}`}
-                                                                        style={{ width: '100px', height: 'auto' }}
+                                                                        style={{width: '100px', height: 'auto'}}
                                                                     />
                                                                     <button
                                                                         onClick={() => removeImage(index)}
@@ -255,7 +284,8 @@ const ShopSingleFilter = () => {
                                                                             cursor: 'pointer',
                                                                         }}
                                                                     >
-                                                                        <i className="fa fa-trash" style={{color:"red"}}></i>
+                                                                        <i className="fa fa-trash"
+                                                                           style={{color: "red"}}></i>
                                                                     </button>
                                                                 </div>
                                                             ))}

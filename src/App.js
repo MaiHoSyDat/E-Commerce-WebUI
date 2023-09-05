@@ -41,10 +41,10 @@ import SignIn from "./pages/signin";
 
 function App() {
     // xoá account khi tắt trang
-    window.addEventListener('beforeunload', () => {
-        localStorage.setItem('account', null);
-        localStorage.setItem('token', null);
-    });
+    // window.addEventListener('beforeunload', () => {
+    //     localStorage.setItem('account', null);
+    //     localStorage.setItem('token', null);
+    // });
   return (
     <>
         <Routes>
