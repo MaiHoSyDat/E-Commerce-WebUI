@@ -1,26 +1,6 @@
 .App {
   text-align: center;
 }
-select {
-  width: 200px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-}
-
-/* CSS cho các phần tử option */
-select option {
-  padding: 5px;
-  font-size: 14px;
-}
-
-/* CSS cho phần tử option được chọn */
-select option:checked {
-  background-color: #f0f0f0;
-  font-weight: bold;
-}
 
 .App-logo {
   height: 40vmin;

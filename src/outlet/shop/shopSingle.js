@@ -5,6 +5,7 @@ import ShopSingleSearch from "../../components/shop/shopSingleSearch";
 import ShopSingleView from "../../components/shop/shopSingleView";
 import ShopSingleFilter from "../../components/shop/shopSingleFilter";
 import ShopSingleFilterView from "../../components/shop/shopSingleFilterView";
+import ShopSingleFilterViewLogin from "../../components/shop/shopSingleFilterViewLogin";
 
 const ShopSingle = () => {
     return (
@@ -22,7 +23,7 @@ const ShopSingle = () => {
                                 <ShopSingleView></ShopSingleView>
                             </div>
                             <ShopSingleFilter></ShopSingleFilter>
-                            <ShopSingleFilterView></ShopSingleFilterView>
+                            <ShopSingleFilterViewLogin></ShopSingleFilterViewLogin>
                         </div>
 
                     </div>
