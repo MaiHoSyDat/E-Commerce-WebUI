@@ -1,7 +1,13 @@
+import React, {useState} from 'react';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+
 import React from 'react';
 import Footer from "../components/footer";
+import axios from "axios";
+import {Link, useNavigate} from "react-router-dom";
 
 const Signup = () => {
+    const navigate = useNavigate()
     return (
         <>
             <div className="border-bottom shadow-sm">
@@ -15,7 +21,7 @@ const Signup = () => {
                             />
                         </a>
                         <span className="navbar-text">
-          Already have an account? <a href="signin.html">Sign in</a>
+          Already have an account? <Link to={"/signin"}>Sign in</Link>
         </span>
                     </div>
                 </nav>
@@ -42,69 +48,139 @@ const Signup = () => {
                                     <p>Welcome to FreshCart! Enter your email to get started.</p>
                                 </div>
                                 {/* form */}
-                                <form>
-                                    <div className="row g-3">
-                                        {/* col */}
-                                        <div className="col">
-                                            {/* input */}
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="First name"
-                                                aria-label="First name"
-                                                required=""
-                                            />
-                                        </div>
-                                        <div className="col">
-                                            {/* input */}
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Last name"
-                                                aria-label="Last name"
-                                                required=""
-                                            />
-                                        </div>
-                                        <div className="col-12">
-                                            {/* input */}
-                                            <input
-                                                type="email"
-                                                className="form-control"
-                                                id="inputEmail4"
-                                                placeholder="Email"
-                                                required=""
-                                            />
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="password-field position-relative">
-                                                <input
-                                                    type="password"
-                                                    id="fakePassword"
-                                                    placeholder="Enter Password"
+                                <Formik
+                                    initialValues={{username: '', name: '', email: '', password: '', role: '2'}}
+                                    validate={values => {
+                                        const errors = {};
+                                        // Kiểm tra và xử lý lỗi cho các trường
+
+                                        if (!values.name) {
+                                            errors.name = 'Username is required';
+                                        }
+
+
+                                        if (!values.email) {
+                                            errors.email = 'Email is required';
+                                        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                                            errors.email = 'Invalid email address';
+                                        }
+
+                                        if (!values.password) {
+                                            errors.password = 'Password is required';
+                                        } else if (values.password.length < 6) {
+                                            errors.password = 'Password must be at least 6 characters long';
+                                        }
+                                        return errors;
+                                    }}
+                                    onSubmit={(values, {setSubmitting}) => {
+                                        const PENDING = "3";
+                                        const SHOP_PENDING ="4";
+                                        let status = PENDING;
+                                        if (values.role != "2") {
+                                            status = SHOP_PENDING;
+                                        }
+                                        let account = {
+                                            name: values.name,
+                                            email: values.email,
+                                            password: values.password,
+                                            username: values.username,
+                                            role: {
+                                                id: values.role
+                                            },
+                                            status: {
+                                                id: status
+                                            }
+                                        }
+                                        console.log(account)
+                                        axios.post("http://localhost:8080/register", account).then((rep) => {
+                                            navigate("/signin")
+                                        }).catch((err) => {
+                                            console.log(err)
+                                            alert("Account already exists")
+                                        })
+
+
+                                        setSubmitting(false);
+                                    }}
+                                >
+                                    <Form>
+                                        <div className="row g-3">
+                                            <div className="col">
+                                                <Field
+                                                    type="text"
                                                     className="form-control"
+                                                    placeholder="Username"
                                                     required=""
+                                                    name="username"
                                                 />
-                                                <span>
-                      <i id="passwordToggler" className="bi bi-eye-slash" />
-                    </span>
+                                                <ErrorMessage name="name" component="div" className="error-message"/>
                                             </div>
+                                            <div className="col">
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="Name"
+                                                    required=""
+                                                    name="name"
+                                                />
+                                                <ErrorMessage name="name" component="div" className="error-message"/>
+                                            </div>
+
+                                            <div className="col-12">
+                                                <Field
+                                                    type="email"
+                                                    className="form-control"
+                                                    id="inputEmail4"
+                                                    placeholder="Email"
+                                                    required=""
+                                                    name="email"
+                                                />
+                                                <ErrorMessage name="email" component="div" className="error-message"/>
+                                            </div>
+                                            <div className="col-12">
+                                                <div className="password-field position-relative">
+                                                    <Field
+                                                        type="password"
+                                                        id="fakePassword"
+                                                        placeholder="Enter Password"
+                                                        className="form-control"
+                                                        required=""
+                                                        name="password"
+                                                    />
+                                                    <span>
+            <i id="passwordToggler" className="bi bi-eye-slash"/>
+          </span>
+                                                </div>
+                                                <ErrorMessage name="password" component="div"
+                                                              className="error-message"/>
+                                            </div>
+                                            <Field name="role" as="select">
+                                                <option value="" disabled></option>
+                                                <option value="2">
+                                                    Customer
+                                                </option>
+                                                <option value="3">
+                                                    Shop
+                                                </option>
+                                                ))
+                                            </Field>
+                                            <ErrorMessage name="status" component="div"/>
+                                            <div className="col-12 d-grid">
+                                                <button type="submit" className="btn btn-primary">
+                                                    Register
+                                                </button>
+                                            </div>
+                                            <p>
+                                                <small>
+                                                    By continuing, you agree to our <a href="#!"> Terms of
+                                                    Service</a> &amp;{" "}
+                                                    <a href="#!">Privacy Policy</a>
+                                                </small>
+                                            </p>
                                         </div>
-                                        {/* btn */}
-                                        <div className="col-12 d-grid">
-                                            <button type="submit" className="btn btn-primary">
-                                                Register
-                                            </button>
-                                        </div>
-                                        {/* text */}
-                                        <p>
-                                            <small>
-                                                By continuing, you agree to our{" "}
-                                                <a href="#!"> Terms of Service</a> &amp;{" "}
-                                                <a href="#!">Privacy Policy</a>
-                                            </small>
-                                        </p>
-                                    </div>
-                                </form>
+                                        <ErrorMessage name="general" component="div" className="error-message"/>
+                                    </Form>
+                                </Formik>
                             </div>
                         </div>
                     </div>

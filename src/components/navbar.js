@@ -1,7 +1,16 @@
 import {Link, Outlet} from "react-router-dom";
 import React from "react";
+import {Link, Outlet, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+
+
+    const signin = () => {
+        navigate("/signin")
+    }
     return (
         <>
             <div className="border-bottom ">
@@ -764,7 +773,12 @@ const Navbar = () => {
                             </form>
                         </div>
                         <div className="modal-footer border-0 justify-content-center">
-                            Already have an account? <a href="#">Sign in</a>
+
+                                <button onClick={signin} data-bs-dismiss="modal"  className="btn btn-link">
+                                    Already have an account? Sign in
+
+                                </button>
+
                         </div>
                     </div>
                 </div>
