@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Navbar from "../components/navbar";
 import {Outlet} from "react-router-dom";
 import Footer from "../components/footer";
@@ -8,13 +8,13 @@ import NavbarShop from "../components/navbarShop";
 import NavbarEmployee from "../components/navbarEmployee";
 
 const Product = () => {
-    let account = localStorage.getItem("account");
+    let account =JSON.parse(localStorage.getItem("account"));
+
     return (
         <>
-            {account.role.name == "ROLE_CUSTOMER" && <NavbarCustomer></NavbarCustomer>}
-            {account.role.name == "ROLE_ADMIN" && <NavbarAdmin></NavbarAdmin>}
-            {account.role.name == "ROLE_SHOP" && <NavbarShop></NavbarShop>}
-
+            {account.role.name === "ROLE_CUSTOMER" && <NavbarCustomer></NavbarCustomer>}
+            {account.role.name === "ROLE_ADMIN" && <NavbarAdmin></NavbarAdmin>}
+            {account.role.name === "ROLE_SHOP" && <NavbarShop></NavbarShop>}
             <main>
                 <Outlet></Outlet>
             </main>

@@ -1,4 +1,4 @@
-import {setProducts} from "../features/product/productSlice";
+import {setProducts} from "../features/product/productPageSlice";
 
 export const fetchProducts = (page, size) => {
     return async (dispatch) => {

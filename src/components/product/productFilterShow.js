@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { fetchProducts } from "../../action/productAction";
-import {setProducts} from "../../features/product/productSlice";
+import {useEffect} from "react";
+import { fetchProducts } from "../../action/productPageAction";
+import {Link} from "react-router-dom";
 
 const ProductFilterShow = () => {
     const dispatch = useDispatch();
@@ -32,14 +32,14 @@ const ProductFilterShow = () => {
                                     <div className=" position-absolute top-0 start-0">
                                         <span className="badge bg-danger">Sale</span>
                                     </div>
-                                    <a href="shop-single.html">
+                                    <Link to={`/product/detail/${product.id}`}>
                                         {/* img */}
                                         <img
                                             src={product.thumbnail}
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
-                                    </a>
+                                    </Link>
                                     {/* action btn */}
                                     <div className="card-product-action">
                                         <a
