@@ -1,7 +1,14 @@
-import {Link, Outlet} from "react-router-dom";
-import React from "react";
+import {Link, Outlet, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+
+
+    const signin = () => {
+        navigate("/signin")
+    }
     return (
         <>
             <div className="border-bottom ">
@@ -45,8 +52,8 @@ const Navbar = () => {
                                                         strokeLinejoin="round"
                                                         className="feather feather-user"
                                                     >
-                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                        <circle cx={12} cy={7} r={4} />
+                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                                        <circle cx={12} cy={7} r={4}/>
                                                     </svg>
                                                 </a>
                                             </div>
@@ -71,11 +78,12 @@ const Navbar = () => {
                                                         strokeLinejoin="round"
                                                         className="feather feather-shopping-bag"
                                                     >
-                                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                                                        <line x1={3} y1={6} x2={21} y2={6} />
-                                                        <path d="M16 10a4 4 0 0 1-8 0" />
+                                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                        <line x1={3} y1={6} x2={21} y2={6}/>
+                                                        <path d="M16 10a4 4 0 0 1-8 0"/>
                                                     </svg>
-                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                                    <span
+                                                        className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
                         1
                         <span className="visually-hidden">unread messages</span>
                       </span>
@@ -99,7 +107,8 @@ const Navbar = () => {
                                                 className="bi bi-text-indent-left text-primary"
                                                 viewBox="0 0 16 16"
                                             >
-                                                <path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708zM7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                                <path
+                                                    d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708zM7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
                                             </svg>
                                         </button>
                                     </div>
@@ -130,8 +139,8 @@ const Navbar = () => {
                         strokeLinejoin="round"
                         className="feather feather-search"
                     >
-                      <circle cx={11} cy={11} r={8} />
-                      <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                      <circle cx={11} cy={11} r={8}/>
+                      <line x1={21} y1={21} x2="16.65" y2="16.65"/>
                     </svg>
                   </button>
                 </span>
@@ -160,8 +169,8 @@ const Navbar = () => {
                                                 strokeLinejoin="round"
                                                 className="feather feather-user"
                                             >
-                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                <circle cx={12} cy={7} r={4} />
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                                <circle cx={12} cy={7} r={4}/>
                                             </svg>
                                         </a>
                                     </div>
@@ -221,8 +230,8 @@ const Navbar = () => {
                           strokeLinejoin="round"
                           className="feather feather-search"
                       >
-                        <circle cx={11} cy={11} r={8} />
-                        <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                        <circle cx={11} cy={11} r={8}/>
+                        <line x1={21} y1={21} x2="16.65" y2="16.65"/>
                       </svg>
                     </button>
                   </span>
@@ -235,7 +244,7 @@ const Navbar = () => {
                                             data-bs-toggle="modal"
                                             data-bs-target="#locationModal"
                                         >
-                                            <i className="feather-icon icon-map-pin me-2" />
+                                            <i className="feather-icon icon-map-pin me-2"/>
                                             Pick Location
                                         </button>
                                     </div>
@@ -262,10 +271,10 @@ const Navbar = () => {
                       strokeLinejoin="round"
                       className="feather feather-grid"
                   >
-                    <rect x={3} y={3} width={7} height={7} />
-                    <rect x={14} y={3} width={7} height={7} />
-                    <rect x={14} y={14} width={7} height={7} />
-                    <rect x={3} y={14} width={7} height={7} />
+                    <rect x={3} y={3} width={7} height={7}/>
+                    <rect x={14} y={3} width={7} height={7}/>
+                    <rect x={14} y={14} width={7} height={7}/>
+                    <rect x={3} y={14} width={7} height={7}/>
                   </svg>
                 </span>{" "}
                                         All Categories
@@ -348,10 +357,10 @@ const Navbar = () => {
                       strokeLinejoin="round"
                       className="feather feather-grid"
                   >
-                    <rect x={3} y={3} width={7} height={7} />
-                    <rect x={14} y={3} width={7} height={7} />
-                    <rect x={14} y={14} width={7} height={7} />
-                    <rect x={3} y={14} width={7} height={7} />
+                    <rect x={3} y={3} width={7} height={7}/>
+                    <rect x={14} y={3} width={7} height={7}/>
+                    <rect x={14} y={14} width={7} height={7}/>
+                    <rect x={3} y={14} width={7} height={7}/>
                   </svg>
                 </span>{" "}
                                         All Categories
@@ -669,7 +678,7 @@ const Navbar = () => {
                                                             />
                                                             <div className="position-absolute ps-6 mt-8">
                                                                 <h5 className=" mb-0 ">
-                                                                    Dont miss this <br />
+                                                                    Dont miss this <br/>
                                                                     offer today.
                                                                 </h5>
                                                                 <a href="#" className="btn btn-primary btn-sm mt-3">
@@ -695,7 +704,9 @@ const Navbar = () => {
                     </div>
                 </nav>
             </div>
-            {/* Modal */}
+
+
+            {/* Modal signUp */}
             <div
                 className="modal fade"
                 id="userModal"
@@ -764,7 +775,12 @@ const Navbar = () => {
                             </form>
                         </div>
                         <div className="modal-footer border-0 justify-content-center">
-                            Already have an account? <a href="#">Sign in</a>
+
+                            <button onClick={signin} data-bs-dismiss="modal" className="btn btn-link">
+                                Already have an account? Sign in
+
+                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -839,10 +855,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -922,10 +939,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -1009,10 +1027,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -1097,10 +1116,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -1184,10 +1204,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>

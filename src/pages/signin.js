@@ -1,7 +1,47 @@
 import React from 'react';
 import Footer from "../components/footer";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {Link, useNavigate} from "react-router-dom";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
+const SignIn = () => {
+    const navigate = useNavigate();
+    const [account, setAccount] = useState({
+        username: '',
+        password: '',
+    });
 
-const Signin = () => {
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setAccount({ ...account, [name]: value });
+    };
+    const handleError = () => {
+
+    }
+    const handleLogin = () => {
+        axios
+            .post('http://localhost:8080/login', account)
+            .then((response) => {
+
+                localStorage.setItem('token',  response.data.token);
+                localStorage.setItem('account', JSON.stringify(response.data));
+                navigate("/index")
+
+            })
+            .catch((error) => {
+                console.log(error);
+                Swal.fire('Invalid username or password')
+
+            });
+    };
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+        }
+    }, []);
+
     return (
         <>
             <div className="border-bottom shadow-sm">
@@ -40,13 +80,15 @@ const Signin = () => {
                                     <h1 className="mb-1 h2 fw-bold">Sign in to FreshCart</h1>
                                     <p>Welcome back to FreshCart! Enter your email to get started.</p>
                                 </div>
-                                <form>
+
                                     <div className="row g-3">
                                         {/* row */}
                                         <div className="col-12">
                                             {/* input */}
                                             <input
-                                                type="email"
+                                                type="text"
+                                                name= "username"
+                                                onChange={handleInputChange}
                                                 className="form-control"
                                                 id="inputEmail4"
                                                 placeholder="Email"
@@ -58,6 +100,8 @@ const Signin = () => {
                                             <div className="password-field position-relative">
                                                 <input
                                                     type="password"
+                                                    name= "password"
+                                                    onChange={handleInputChange}
                                                     id="fakePassword"
                                                     placeholder="Enter Password"
                                                     className="form-control"
@@ -92,16 +136,15 @@ const Signin = () => {
                                         </div>
                                         {/* btn */}
                                         <div className="col-12 d-grid">
-                                            <button type="submit" className="btn btn-primary">
+                                            <button type="submit" className="btn btn-primary" onClick={handleLogin}>
                                                 Sign In
                                             </button>
                                         </div>
                                         {/* link */}
                                         <div>
-                                            Don’t have an account? <a href="signup.html"> Sign Up</a>
+                                            Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
                                         </div>
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -113,4 +156,4 @@ const Signin = () => {
     );
 };
 
-export default Signin;
+export default SignIn;
