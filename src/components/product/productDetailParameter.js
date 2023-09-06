@@ -1,6 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from "axios";
 
 const ProductDetailParameter = () => {
+    const [quantity,setQuantity] = useState(1);
+    const handleChangeQuantity = (num) =>{
+        if (num ===1) {
+            setQuantity(quantity - 1)
+        }else if (num === 2)
+            setQuantity(quantity + 1)
+    }
+    const handleAddToCart = (productId,quantity) => {
+        let token = localStorage.getItem("token");
+        axios.post('http://localhost:8080/cart/addToCart?productId=' + productId +'&quantity=' + quantity,{
+            headers: {
+                'Authorization':  token
+            },
+        }).then(res=>{
+            alert('ok')
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
     return (
         <>
             <div className="col-md-6">
@@ -57,12 +77,13 @@ const ProductDetailParameter = () => {
                                 defaultValue="-"
                                 className="button-minus  btn  btn-sm "
                                 data-field="quantity"
+                                onClick={()=>handleChangeQuantity(1)}
                             />
                             <input
                                 type="number"
                                 step={1}
                                 max={10}
-                                defaultValue={1}
+                                value={quantity}
                                 name="quantity"
                                 className="quantity-field form-control-sm form-input   "
                             />
@@ -71,6 +92,7 @@ const ProductDetailParameter = () => {
                                 defaultValue="+"
                                 className="button-plus btn btn-sm "
                                 data-field="quantity"
+                                onClick={()=>handleChangeQuantity(2)}
                             />
                         </div>
                     </div>
@@ -78,7 +100,9 @@ const ProductDetailParameter = () => {
                         <div className="col-xxl-4 col-lg-4 col-md-5 col-5 d-grid">
                             {/* button */}
                             {/* btn */}
-                            <button type="button" className="btn btn-primary">
+                            <button type="button" className="btn btn-primary"
+                                    // onClick={()=>handleAddToCart(a,quantity)}
+                            >
                                 <i className="feather-icon icon-shopping-bag me-2" />
                                 Add to cart
                             </button>

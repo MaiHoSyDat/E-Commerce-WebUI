@@ -42,10 +42,10 @@ import SignIn from "./pages/signin";
 
 function App() {
     // xoá account khi tắt trang
-    window.addEventListener('beforeunload', () => {
-        localStorage.setItem('account', null);
-        localStorage.setItem('token', null);
-    });
+    // window.addEventListener('beforeunload', () => {
+    //     localStorage.setItem('account', null);
+    //     localStorage.setItem('token', null);
+    // });
   return (
     <>
         <Routes>
@@ -78,7 +78,7 @@ function App() {
                 <Route path="" element={<ProductCheckout/>}/>
             </Route>
             <Route path="about" element={<About/>}></Route>
-            <Route path="" element={<Home/>}></Route>
+            <Route path="index" element={<Home/>}></Route>
             <Route path="error" element={<Error404/>}></Route>
             <Route path="signin" element={<Signin/>}></Route>
             <Route path="signup" element={<Signup/>}></Route>
