@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 const ProductCart = () => {
     const [list, setList] = useState([]);
     const [total, setTotal] = useState(0);
     useEffect(() => {
-        axios.get('http://localhost:8080/cart',{
+        axios.get('http://localhost:8080/cart', {
             headers: {
-                'Authorization':  localStorage.getItem('token')
+                'Authorization': localStorage.getItem('token')
             },
         }).then(res => {
             setList(res.data);
@@ -38,25 +40,59 @@ const ProductCart = () => {
         );
         setTotal(updatedTotalAmount);
     };
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
     const handleRemove = (id) => {
-        const updateList = list.filter((item) => (
-            item.id !== id
-        ))
-        setList(updateList);
-        axios.post('http://localhost:8080/cart/deleteProductByCart?cartDetailId=' + id,{
-            headers: {
-                'Authorization':  localStorage.getItem('token')
-            },
-        }).then(res => {
-            alert("ok")
-        }).catch(err => {
-            console.log(err)
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const updateList = list.filter((item) => (
+                    item.id !== id
+                ))
+                setList(updateList);
+                swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                axios.post('http://localhost:8080/cart/deleteProductByCart?cartDetailId=' + id, {
+                    headers: {
+                        'Authorization': localStorage.getItem('token')
+                    },
+                }).then(res => {
+                    console.log(res);
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+            }
         })
     }
     const handleUpdateCart = () => {
-        axios.post('http://localhost:8080/cart/updateCart', list,{
+        axios.post('http://localhost:8080/cart/updateCart', list, {
             headers: {
-                'Authorization':  localStorage.getItem('token')
+                'Authorization': localStorage.getItem('token')
             },
         }).then(res => {
             alert('ok')

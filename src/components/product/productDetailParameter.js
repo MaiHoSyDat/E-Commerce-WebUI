@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import axios from "axios";
-
+import {useParams} from "react-router-dom";
+import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.css';
 const ProductDetailParameter = () => {
+    const {productId} = useParams();
     const [quantity,setQuantity] = useState(1);
     const handleChangeQuantity = (num) =>{
         if (num ===1) {
@@ -16,7 +19,11 @@ const ProductDetailParameter = () => {
                 'Authorization':  token
             },
         }).then(res=>{
-            alert('ok')
+            Swal.fire(
+                'Good job!',
+                'You clicked the button!',
+                'success'
+            )
         }).catch(err =>{
             console.log(err)
         })
