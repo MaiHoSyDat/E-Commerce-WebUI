@@ -13,25 +13,32 @@ import {v4} from "uuid";
 import {storage} from "../../firebase";
 
 const ShopSingleFilter = () => {
+    const modal = document.getElementById('sproductModal');
+
     const [imageUpload, setImageUpload] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
     let account = JSON.parse(localStorage.getItem("account"));
-
     const imagesListRef = ref(storage, "product/");
-    // const uploadFile = () => {
-    //     if (imageUpload == null) return;
-    //     for (let i = 0; i < imageUpload.length; i++) {
-    //         console.log(imageUpload[i])
-    //
-    //         const imageRef = ref(storage, `product/${imageUpload[i].name + v4()}`);
-    //         uploadBytes(imageRef, imageUpload[i]).then((snapshot) => {
-    //             getDownloadURL(snapshot.ref).then((url) => {
-    //                 setImageUrls((prev) => [...prev, url]);
-    //             });
-    //         });
-    //
-    //     }
-    // };
+
+
+    const [categoryOptions, setCategoryOptions] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/categories',{
+                headers: {
+                    'Authorization':  localStorage.getItem('token')
+                },
+            })
+            .then((data) => {
+                setCategoryOptions(data.data)
+            })
+            .catch((err) => {
+                console.log(err)
+
+            })
+    }, []);
+
 
     useEffect(() => {
         listAll(imagesListRef).then((response) => {
@@ -99,7 +106,7 @@ const ShopSingleFilter = () => {
                     <div className="modal-content p-4">
                         <div className="modal-header border-0">
                             <h5 className="modal-title fs-3 fw-bold" id="userModalLabel">
-                                Personal information
+                                Create new product
                             </h5>
                             <button
                                 type="button"
@@ -115,8 +122,8 @@ const ShopSingleFilter = () => {
                                     price: '',
                                     quantity: '',
                                     description: '',
-                                    unit: '',
-                                    category: '',
+                                    unit: 'kg',
+                                    category: "1",
                                     shop: '',
                                 }}
                                 validationSchema={Yup.object().shape({
@@ -134,7 +141,7 @@ const ShopSingleFilter = () => {
                                         .min(1, 'Please select at least one image')
                                         .nullable(),
                                 })}
-                                onSubmit={(values, {setSubmitting}) => {
+                                onSubmit={(values, {setSubmitting , resetForm}) => {
                                     // Handle form submission
                                     if (imageUpload !== null) {
                                         for (let i = 0; i < imageUpload.length; i++) {
@@ -155,7 +162,7 @@ const ShopSingleFilter = () => {
                                         thumbnail: imageUrls[0],
                                         unit: values.unit,
                                         category: {
-                                            id:"1"
+                                            id: values.category
                                         },
                                         shop: {
                                             id: account.id
@@ -164,10 +171,20 @@ const ShopSingleFilter = () => {
                                     }
                                     setImageUrls([])
                                     axios
-                                        .post('http://localhost:8080/shops/'+account.id+'/products/create',product)
+                                        .post('http://localhost:8080/shops/' + account.id + '/products/create', product,
+                                            {
+                                                headers: {
+                                                    'Authorization':  localStorage.getItem('token')
+                                                },
+                                            })
+
                                         .then(response => {
-                                            // Handle success
-                                            console.log(response);
+                                            console.log("ok")
+                                            resetForm();
+                                            setImageUpload([]);
+                                            alert("Create successful products")
+
+
                                         })
                                         .catch(error => {
                                             // Handle error
@@ -216,15 +233,19 @@ const ShopSingleFilter = () => {
                                             </div>
                                             <div className="col-2">
                                                 <Field
-                                                    type="text"
+                                                    as="select"
                                                     className="form-control"
                                                     placeholder="Unit"
                                                     name="unit"
-                                                />
+                                                >
+                                                    <option>Unit</option>
+                                                    <option value="kg">kg</option>
+                                                    <option value="piece">piece</option>
+
+                                                </Field>
                                                 {errors.unit && touched.unit && (
                                                     <div className="error-message">{errors.unit}</div>
-                                                )}
-                                            </div>
+                                                )}                                            </div>
                                             <div className="col-12">
                                                 <Field
                                                     as="textarea"
@@ -237,17 +258,24 @@ const ShopSingleFilter = () => {
                                                 )}
                                             </div>
 
+
                                             <div className="col-12">
                                                 <Field
-                                                    type="text"
+                                                    as="select"
                                                     className="form-control"
                                                     placeholder="Category"
                                                     name="category"
-                                                />
+                                                >
+                                                    <option > Category </option>
+                                                    {categoryOptions.map((category) => (
+                                                        <option key={category.id} value={category.id}>
+                                                            {category.name}
+                                                        </option>
+                                                    ))}
+                                                </Field>
                                                 {errors.category && touched.category && (
                                                     <div className="error-message">{errors.category}</div>
-                                                )}
-                                            </div>
+                                                )}                                            </div>
                                             <div className="col-12">
                                                 <input
                                                     type="file"
