@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 import Navbar from "./components/navbar";
 import Slider from "./components/slider";
-import Home from "./pages/home";
 import Dashboard from "./pages/dashboard";
 import {Route, Routes} from "react-router-dom";
 import DashboardIndex from "./outlet/dashboard/dashboardIndex";
@@ -37,6 +36,7 @@ import CustomerSetting from "./outlet/customer/customerSetting";
 import CustomerAddress from "./outlet/customer/customerAddress";
 import CustomerPayment from "./outlet/customer/customerPayment";
 import CustomerNotification from "./outlet/customer/customerNotification";
+import Home from "./pages/home";
 import SignIn from "./pages/signin";
 
 function App() {
@@ -76,6 +76,8 @@ function App() {
             <Route path="checkout" element={<Checkout/>}>
                 <Route path="" element={<ProductCheckout/>}/>
             </Route>
+            <Route path="index" element={<Home/>}></Route>
+            <Route path="" element={<Home/>}></Route>
             <Route path="about" element={<About/>}></Route>
             <Route path="" element={<Home/>}></Route>
             <Route path="error" element={<Error404/>}></Route>
