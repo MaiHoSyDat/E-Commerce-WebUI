@@ -188,6 +188,8 @@ const ShopSingleFilter = () => {
                                         })
                                         .catch(error => {
                                             // Handle error
+                                            alert("Please review the information")
+
                                             console.error(error);
                                         })
                                         .finally(() => {
