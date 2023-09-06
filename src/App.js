@@ -77,7 +77,7 @@ function App() {
                 <Route path="" element={<ProductCheckout/>}/>
             </Route>
             <Route path="about" element={<About/>}></Route>
-            <Route path="" element={<Home/>}></Route>
+            <Route path="index" element={<Home/>}></Route>
             <Route path="error" element={<Error404/>}></Route>
             <Route path="signin" element={<SignIn/>}></Route>
             <Route path="signup" element={<Signup/>}></Route>

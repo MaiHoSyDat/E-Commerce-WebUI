@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from "../components/navbar";
 import {Outlet} from "react-router-dom";
 import Footer from "../components/footer";
 import CustomerMenu from "../components/customer/customerMenu";
 
+
+
 const Customer = () => {
+
     return (
         <>
             <Navbar></Navbar>
