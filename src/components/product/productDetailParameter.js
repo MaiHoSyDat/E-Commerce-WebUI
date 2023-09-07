@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import axios from "axios";
-import {useParams} from "react-router-dom";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.css';
+import {useDispatch} from "react-redux";
+import {createProductsToCartByAccount} from "../../service/cartService";
 const ProductDetailParameter = () => {
-    const {productId} = useParams();
+    const dispatch = useDispatch();
     const [quantity,setQuantity] = useState(1);
     const handleChangeQuantity = (num) =>{
         if (num ===1) {
@@ -13,15 +13,10 @@ const ProductDetailParameter = () => {
             setQuantity(quantity + 1)
     }
     const handleAddToCart = (productId,quantity) => {
-        let token = localStorage.getItem("token");
-        axios.post('http://localhost:8080/cart/addToCart?productId=' + productId +'&quantity=' + quantity,{
-            headers: {
-                'Authorization':  token
-            },
-        }).then(res=>{
+        dispatch(createProductsToCartByAccount(productId,quantity)).then(res=>{
             Swal.fire(
-                'Good job!',
-                'You clicked the button!',
+                'Success!',
+                'Add to cart successfully!',
                 'success'
             )
         }).catch(err =>{

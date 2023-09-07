@@ -4,7 +4,6 @@ import {Outlet, useNavigate} from "react-router-dom";
 import Footer from "../components/footer";
 import NavbarCustomer from "../components/navbarCustomer";
 import NavbarAdmin from "../components/navbarAdmin";
-import NavbarCustomer from "../components/navbarCustomer";
 import NavbarShop from "../components/navbarShop";
 import NavbarEmployee from "../components/navbarEmployee";
 import { Field, Form, Formik} from "formik";

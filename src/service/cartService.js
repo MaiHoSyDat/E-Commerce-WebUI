@@ -8,25 +8,54 @@ export const getAllProductsFromCartByAccount = createAsyncThunk(
         return res.data;
     }
 )
-export const UpdateProductFromCartByAccount = createAsyncThunk(
-    "cart/updateProduct",
-    async () => {
-        const res = await axios.post("");
+export const updateProductFromCartByAccount = createAsyncThunk(
+    'cart/updateProduct',
+    async (list) => {
+        const res = await axios.post('http://localhost:8080/cart/updateCart', list, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
-)
+);
 export const createProductsToCartByAccount = createAsyncThunk(
     "cart/createProduct",
-    async () => {
-        const res = await axios.post("");
+    async (productId,quantity) => {
+        const res = await  axios.post('http://localhost:8080/cart/addToCart?productId=' + productId +'&quantity=' + quantity,{
+            headers: {
+                'Authorization':  localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const deleteProductFromCartByAccount = createAsyncThunk(
     "cart/deleteProduct",
-    async () => {
-        const res = await axios.get("");
+    async (id) => {
+        const res = await axios.post('http://localhost:8080/cart/deleteProductByCart?cartDetailId=' + id, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            },
+        });
         return res.data;
+    }
+)
+export const getProductByAccount = createAsyncThunk(
+    "cart",
+    async () => {
+        const res = await axios.get('http://localhost:8080/cart', {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            },
+        })
+        return res.data;
+    }
+)
+export const updateCartByStore = createAsyncThunk(
+    "cartByStore",
+    async (newCart) => {
+        return newCart;
     }
 )
 

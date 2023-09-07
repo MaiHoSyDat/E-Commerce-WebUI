@@ -1,40 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
+import {useDispatch, useSelector} from "react-redux";
+import {
+    deleteProductFromCartByAccount,
+    getProductByAccount, updateCartByStore,
+    updateProductFromCartByAccount
+} from "../../service/cartService";
 
 const ProductCart = () => {
-    const [list, setList] = useState([]);
-    const [total, setTotal] = useState(0);
+    const dispatch = useDispatch();
+    let cart = useSelector(state => {
+        return state.cart.allProductsFromCart
+    })
     useEffect(() => {
-        axios.get('http://localhost:8080/cart', {
-            headers: {
-                'Authorization': localStorage.getItem('token')
-            },
-        }).then(res => {
-            setList(res.data);
-            let total = 0;
-            res.data.map((item, index) => {
-                total += item.product.price * item.quantity;
-            })
-            setTotal(total)
-        }).catch(error => {
-            console.error('Error retrieving cart data:', error);
-        });
+        dispatch(getProductByAccount())
     }, [])
+
+    const [total, setTotal] = useState(0);
+
     const handleOnClick = (num, id) => {
-        const updatedList = list.map(item => {
+        const updatedCart = cart.map(item => {
             if (item.id === id) {
-                if (num === 1) {
+                if (num === 1 && item.quantity > 1) {
                     return {...item, quantity: item.quantity - 1};
                 } else if (num === 2) {
                     return {...item, quantity: item.quantity + 1};
                 }
+
             }
             return item;
         });
-        setList(updatedList);
-        const updatedTotalAmount = updatedList.reduce(
+        dispatch(updateCartByStore(updatedCart));
+        const updatedTotalAmount = updatedCart.reduce(
             (total, item) => total + item.product.price * item.quantity,
             0
         );
@@ -59,26 +57,17 @@ const ProductCart = () => {
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                const updateList = list.filter((item) => (
+                const updateList = cart.filter((item) => (
                     item.id !== id
                 ))
-                setList(updateList);
+                cart(updateList);
                 swalWithBootstrapButtons.fire(
                     'Deleted!',
                     'Your file has been deleted.',
                     'success'
                 )
-                axios.post('http://localhost:8080/cart/deleteProductByCart?cartDetailId=' + id, {
-                    headers: {
-                        'Authorization': localStorage.getItem('token')
-                    },
-                }).then(res => {
-                    console.log(res);
-                }).catch(err => {
-                    console.log(err)
-                })
+                dispatch(deleteProductFromCartByAccount(id));
             } else if (
-                /* Read more about handling dismissals below */
                 result.dismiss === Swal.DismissReason.cancel
             ) {
                 swalWithBootstrapButtons.fire(
@@ -90,12 +79,12 @@ const ProductCart = () => {
         })
     }
     const handleUpdateCart = () => {
-        axios.post('http://localhost:8080/cart/updateCart', list, {
-            headers: {
-                'Authorization': localStorage.getItem('token')
-            },
-        }).then(res => {
-            alert('ok')
+        dispatch(updateProductFromCartByAccount(cart)).then(res => {
+            Swal.fire(
+                'Success!',
+                'You have successfully updated your shopping cart!',
+                'success'
+            )
         }).catch(err => {
             console.log(err)
         })
@@ -129,7 +118,7 @@ const ProductCart = () => {
                                     </a>
                                 </div>
                                 <ul className="list-group list-group-flush">
-                                    {list.map((item, index) => (
+                                    {cart.map((item, index) => (
                                         <li className="list-group-item py-3 py-lg-0 px-0" key={item.id}>
                                             {/* row */}
                                             <div className="row align-items-center">
@@ -247,7 +236,7 @@ const ProductCart = () => {
                                                 <div className="me-auto">
                                                     <div>Items</div>
                                                 </div>
-                                                <span>{list.length}</span>
+                                                <span>{cart.length}</span>
                                             </li>
 
                                             <li className="list-group-item d-flex justify-content-between align-items-start">

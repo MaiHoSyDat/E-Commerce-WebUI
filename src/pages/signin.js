@@ -24,7 +24,7 @@ const SignIn = () => {
             .post('http://localhost:8080/login', account)
             .then((response) => {
 
-                localStorage.setItem('token',  response.data.token);
+                localStorage.setItem('token', 'Bearer ' + response.data.token);
                 localStorage.setItem('account', JSON.stringify(response.data));
                 navigate("/index")
 
