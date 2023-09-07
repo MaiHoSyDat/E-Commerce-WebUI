@@ -3,6 +3,8 @@ import Footer from "../components/footer";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 const SignIn = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useState({
@@ -22,14 +24,15 @@ const SignIn = () => {
             .post('http://localhost:8080/login', account)
             .then((response) => {
 
-                localStorage.setItem('token',  response.data.token);
+                localStorage.setItem('token', 'Bearer ' + response.data.token);
                 localStorage.setItem('account', JSON.stringify(response.data));
                 navigate("/index")
 
             })
             .catch((error) => {
                 console.log(error);
-                navigate("/error")
+                Swal.fire('Invalid username or password')
+
             });
     };
 

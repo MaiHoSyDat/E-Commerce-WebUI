@@ -37,13 +37,19 @@ import CustomerSetting from "./outlet/customer/customerSetting";
 import CustomerAddress from "./outlet/customer/customerAddress";
 import CustomerPayment from "./outlet/customer/customerPayment";
 import CustomerNotification from "./outlet/customer/customerNotification";
-import SignIn from "./pages/signin";
+import Signin from "./pages/signin";
 
 function App() {
+    // xoá account khi tắt trang
+    // window.addEventListener('beforeunload', () => {
+    //     localStorage.setItem('account', null);
+    //     localStorage.setItem('token', null);
+    // });
   return (
     <>
         <Routes>
             <Route path="dashboard" element={<Dashboard/>}>
+                <Route path="" element={<DashboardIndex/>}/>
                 <Route path="index" element={<DashboardIndex/>}/>
                 <Route path="products" element={<DashboardProduct/>}/>
                 <Route path="category" element={<DashboardCategory/>}/>
@@ -57,11 +63,14 @@ function App() {
             </Route>
             <Route path="shop" element={<Shop/>}>
                 <Route path="list" element={<ShopList/>}/>
+                <Route path="" element={<ShopList/>}/>
                 <Route path="single" element={<ShopSingle/>}/>
                 <Route path="setting" element={<ShopInfomation/>}/>
             </Route>
             <Route path="product" element={<Product/>}>
                 <Route path="filter" element={<ProductFilter/>}/>
+                <Route path="detail/:productId" element={<ProductDetail/>}/>
+                <Route path="" element={<ProductFilter/>}/>
                 <Route path="detail" element={<ProductDetail/>}/>
                 <Route path="wishlist" element={<ProductWishlist/>}/>
             </Route>
@@ -71,10 +80,11 @@ function App() {
             <Route path="checkout" element={<Checkout/>}>
                 <Route path="" element={<ProductCheckout/>}/>
             </Route>
+            <Route path="" element={<Home/>}></Route>
             <Route path="about" element={<About/>}></Route>
             <Route path="index" element={<Home/>}></Route>
             <Route path="error" element={<Error404/>}></Route>
-            <Route path="signin" element={<SignIn/>}></Route>
+            <Route path="signin" element={<Signin/>}></Route>
             <Route path="signup" element={<Signup/>}></Route>
             <Route path="forgot-password" element={<ForgotPassword/>}></Route>
             <Route path="account" element={<Customer/>}>
