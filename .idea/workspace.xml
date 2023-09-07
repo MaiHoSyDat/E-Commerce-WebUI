@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="92932c45-7d35-4b0c-9bb6-94e2fe1c4e42" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/product/productDetailParameter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productDetailParameter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/outlet/product/productCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/product/productCart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducer/cartSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/cartSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/cartService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/cartService.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2UjaqO43ObfI51Hg94ZRVoIN6A6" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/HP/Module 5/testDeThi/test_de_thi",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="92932c45-7d35-4b0c-9bb6-94e2fe1c4e42" name="Changes" comment="" />
+      <created>1693455634091</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1693455634091</updated>
+      <workItem from="1693455635251" duration="1345000" />
+      <workItem from="1693457239685" duration="46000" />
+      <workItem from="1693457418701" duration="10000" />
+      <workItem from="1693459990104" duration="12000" />
+      <workItem from="1693557628370" duration="8505000" />
+      <workItem from="1693578018838" duration="516000" />
+      <workItem from="1693706781156" duration="2536000" />
+      <workItem from="1693877227405" duration="1184000" />
+      <workItem from="1693878438481" duration="6344000" />
+      <workItem from="1693925648875" duration="435000" />
+      <workItem from="1693962808734" duration="347000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

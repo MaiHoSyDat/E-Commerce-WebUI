@@ -1,13 +1,35 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
+import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.css';
+import {createProductsToCartByAccount} from "../../service/cartService";
+import  {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProductDetail} from "../../action/productDetailActions";
 import {useParams} from "react-router-dom";
 
 const ProductDetailParameter = () => {
+    const dispatch = useDispatch();
+    const [quantity,setQuantity] = useState(1);
+    const handleChangeQuantity = (num) =>{
+        if (num ===1) {
+            setQuantity(quantity - 1)
+        }else if (num === 2)
+            setQuantity(quantity + 1)
+    }
+    const handleAddToCart = (productId,quantity) => {
+        dispatch(createProductsToCartByAccount(productId,quantity)).then(res=>{
+            Swal.fire(
+                'Success!',
+                'Add to cart successfully!',
+                'success'
+            )
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
 
     const { productId } = useParams();
 
-    const dispatch = useDispatch();
     const product = useSelector(state => state.productDetail.product);
     const loading = useSelector(state => state.productDetail.loading);
     const error = useSelector(state => state.productDetail.error);
@@ -84,12 +106,13 @@ const ProductDetailParameter = () => {
                                 defaultValue="-"
                                 className="button-minus  btn  btn-sm "
                                 data-field="quantity"
+                                onClick={()=>handleChangeQuantity(1)}
                             />
                             <input
                                 type="number"
                                 step={1}
-                                max={100}
-                                defaultValue={1}
+                                max={10}
+                                value={quantity}
                                 name="quantity"
                                 className="quantity-field form-control-sm form-input   "
                             />
@@ -98,6 +121,7 @@ const ProductDetailParameter = () => {
                                 defaultValue="+"
                                 className="button-plus btn btn-sm "
                                 data-field="quantity"
+                                onClick={()=>handleChangeQuantity(2)}
                             />
                         </div>
                     </div>
@@ -105,7 +129,9 @@ const ProductDetailParameter = () => {
                         <div className="col-xxl-4 col-lg-4 col-md-5 col-5 d-grid">
                             {/* button */}
                             {/* btn */}
-                            <button type="button" className="btn btn-primary">
+                            <button type="button" className="btn btn-primary"
+                                    // onClick={()=>handleAddToCart(a,quantity)}
+                            >
                                 <i className="feather-icon icon-shopping-bag me-2" />
                                 Add to cart
                             </button>
