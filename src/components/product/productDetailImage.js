@@ -33,41 +33,21 @@ const ProductDetailImage = () => {
                 {/* list img */}
                 <div className="product-tools">
                     <div className="thumbnails row g-3" id="productThumbnails">
+
+                            {product.images.map((img)=>(
+                                <div className="col-3">
+                                    <div className="thumbnails-img">
+                                        {/* img */}
+                                        <img
+                                            src={img}
+                                            alt=""
+                                        />
+                                    </div>
+                                </div>
+                                )
+                            )}
+
                         <div className="col-3">
-                            <div className="thumbnails-img">
-                                {/* img */}
-                                <img
-                                    src={product.thumbnail}
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                        <div className="col-3">
-                            <div className="thumbnails-img">
-                                {/* img */}
-                                <img
-                                    src={product.thumbnail}
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                        <div className="col-3">
-                            <div className="thumbnails-img">
-                                {/* img */}
-                                <img
-                                    src={product.thumbnail}
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                        <div className="col-3">
-                            <div className="thumbnails-img">
-                                {/* img */}
-                                <img
-                                    src={product.thumbnail}
-                                    alt=""
-                                />
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -43,10 +43,9 @@ const ProductFilterShow = () => {
                                     </Link>
                                     {/* action btn */}
                                     <div className="card-product-action">
-                                        <a
-                                            href="#!"
+                                        <Link
+                                            to={`/product/detail/${product.id}`}
                                             className="btn-action"
-                                            data-bs-toggle="modal"
                                             data-bs-target="#quickViewModal"
                                         >
                                             <i
@@ -55,7 +54,7 @@ const ProductFilterShow = () => {
                                                 data-bs-html="true"
                                                 title="Quick View"
                                             />
-                                        </a>
+                                        </Link>
                                         <a
                                             href="shop-wishlist.html"
                                             className="btn-action"

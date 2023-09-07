@@ -13,6 +13,7 @@ const ProductDetailParameter = () => {
     const product = useSelector(state => state.productDetail.product);
     const loading = useSelector(state => state.productDetail.loading);
     const error = useSelector(state => state.productDetail.error);
+    console.log(product)
 
     const dispatch = useDispatch();
     const [quantity,setQuantity] = useState(1);
@@ -83,22 +84,14 @@ const ProductDetailParameter = () => {
                         <span className="fw-bold text-dark">$ {product.price}</span>{" "}
                         {/*<span className="text-decoration-line-through text-muted">$35</span>*/}
                         <span>
-        {/*<small className="fs-6 ms-2 text-danger">26% Off</small>*/}
       </span>
                     </div>
                     {/* hr */}
                     <hr className="my-6" />
                     <div className="mb-5">
-                        {/*<button type="button" className="btn btn-outline-secondary">*/}
-                        {/*    250g*/}
-                        {/*</button>*/}
-                        {/*/!* btn *!/*/}
-                        {/*<button type="button" className="btn btn-outline-secondary">*/}
-                        {/*    500g*/}
-                        {/*</button>*/}
-                        {/*/!* btn *!/*/}
+
                         <button type="button" className="btn btn-outline-secondary">
-                            {product.unit} Kg
+                            {product.unit}
                         </button>
                     </div>
                     <div>

@@ -150,11 +150,8 @@ const Navbar = () => {
                             <div className="col-md-2 col-xxl-2 text-end d-none d-lg-block">
                                 <div className="list-inline">
                                     <div className="list-inline-item me-5">
-                                        <a
-                                            href="#!"
-                                            className="text-muted"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#userModal"
+                                        <Link
+                                           to={"/signin"}
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +168,7 @@ const Navbar = () => {
                                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                                                 <circle cx={12} cy={7} r={4} />
                                             </svg>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -703,85 +700,7 @@ const Navbar = () => {
                     </div>
                 </nav>
             </div>
-            {/* Modal */}
-            <div
-                className="modal fade"
-                id="userModal"
-                tabIndex={-1}
-                aria-labelledby="userModalLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content p-4">
-                        <div className="modal-header border-0">
-                            <h5 className="modal-title fs-3 fw-bold" id="userModalLabel">
-                                Sign Up
-                            </h5>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            />
-                        </div>
-                        <div className="modal-body">
-                            <form>
-                                <div className="mb-3">
-                                    <label htmlFor="fullName" className="form-label">
-                                        Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="fullName"
-                                        placeholder="Enter Your Name"
-                                        required=""
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">
-                                        Email address
-                                    </label>
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        id="email"
-                                        placeholder="Enter Email address"
-                                        required=""
-                                    />
-                                </div>
-                                <div className="mb-5">
-                                    <label htmlFor="password" className="form-label">
-                                        Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        id="password"
-                                        placeholder="Enter Password"
-                                        required=""
-                                    />
-                                    <small className="form-text">
-                                        By Signup, you agree to our <a href="#!">Terms of Service</a>{" "}
-                                        &amp; <a href="#!">Privacy Policy</a>
-                                    </small>
-                                </div>
-                                <button type="submit" className="btn btn-primary">
-                                    Sign Up
-                                </button>
-                            </form>
-                        </div>
-                        <div className="modal-footer border-0 justify-content-center">
 
-                                <button onClick={signin} data-bs-dismiss="modal"  className="btn btn-link">
-                                    Already have an account? Sign in
-
-                                </button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
             {/* ShopSingle Cart */}
             <div
                 className="offcanvas offcanvas-end"
