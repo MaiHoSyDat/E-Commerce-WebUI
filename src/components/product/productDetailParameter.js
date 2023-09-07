@@ -89,7 +89,7 @@ const ProductDetailParameter = () => {
                                 type="number"
                                 step={1}
                                 max={100}
-                                defaultValue={10}
+                                defaultValue={1}
                                 name="quantity"
                                 className="quantity-field form-control-sm form-input   "
                             />
@@ -143,8 +143,10 @@ const ProductDetailParameter = () => {
                                 <td>FBB00255</td>
                             </tr>
                             <tr>
-                                <td>Availability:</td>
-                                <td>In Stock: {product.quantity}</td>
+                                <td>
+                                    {product.quantity > 0 ? "In Stock" : "Sold Out"}
+                                </td>
+                                <td>{product.quantity}</td>
                             </tr>
                             <tr>
                                 <td>Category:</td>
