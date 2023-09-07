@@ -37,7 +37,7 @@ import CustomerSetting from "./outlet/customer/customerSetting";
 import CustomerAddress from "./outlet/customer/customerAddress";
 import CustomerPayment from "./outlet/customer/customerPayment";
 import CustomerNotification from "./outlet/customer/customerNotification";
-import SignIn from "./pages/signin";
+import Signin from "./pages/signin";
 
 function App() {
     // xoá account khi tắt trang

@@ -2,7 +2,7 @@ import {
     fetchProductDetailRequest,
     fetchProductDetailSuccess,
     fetchProductDetailFailure,
-} from "../features/product/productDetailSlice";
+} from "../redux/reducer/productDetailSlice";
 
 export const fetchProductDetail = (productId) => async (dispatch) => {
         try {

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import {useEffect} from "react";
-import { fetchProducts } from "../../action/productPageAction";
+import { getProductPage} from "../../service/productPageAction";
 import {Link} from "react-router-dom";
 
 const ProductFilterShow = () => {
@@ -9,12 +9,13 @@ const ProductFilterShow = () => {
     const currentPage = useSelector((state) => state.products.currentPage);
     const totalPages = useSelector((state) => state.products.totalPages);
 
+
     useEffect(() => {
-        dispatch(fetchProducts(currentPage, 12));
+        dispatch(getProductPage(currentPage));
     }, [dispatch, currentPage]);
 
     const handlePageChange = (newPage) => {
-        dispatch(fetchProducts(newPage, 12));
+        dispatch(getProductPage(newPage));
     };
 
     return (

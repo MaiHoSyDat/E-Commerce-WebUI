@@ -10,7 +10,7 @@ import {
 
 const ProductCart = () => {
     const dispatch = useDispatch();
-    let cart = useSelector(state => {
+    const cart = useSelector(state => {
         return state.cart.allProductsFromCart
     })
     useEffect(() => {
@@ -60,7 +60,7 @@ const ProductCart = () => {
                 const updateList = cart.filter((item) => (
                     item.id !== id
                 ))
-                cart(updateList);
+                dispatch(updateCartByStore(updateList));
                 swalWithBootstrapButtons.fire(
                     'Deleted!',
                     'Your file has been deleted.',

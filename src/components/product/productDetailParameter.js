@@ -4,10 +4,16 @@ import 'sweetalert2/dist/sweetalert2.css';
 import {createProductsToCartByAccount} from "../../service/cartService";
 import  {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchProductDetail} from "../../action/productDetailActions";
+import {fetchProductDetail} from "../../service/productDetailActions";
 import {useParams} from "react-router-dom";
 
 const ProductDetailParameter = () => {
+    const { productId } = useParams();
+
+    const product = useSelector(state => state.productDetail.product);
+    const loading = useSelector(state => state.productDetail.loading);
+    const error = useSelector(state => state.productDetail.error);
+
     const dispatch = useDispatch();
     const [quantity,setQuantity] = useState(1);
     const handleChangeQuantity = (num) =>{
@@ -16,8 +22,11 @@ const ProductDetailParameter = () => {
         }else if (num === 2)
             setQuantity(quantity + 1)
     }
-    const handleAddToCart = (productId,quantity) => {
-        dispatch(createProductsToCartByAccount(productId,quantity)).then(res=>{
+
+    const handleAddToCart = (productId) => {
+        let product = [productId,quantity]
+        dispatch(createProductsToCartByAccount(product))
+            .then(res=>{
             Swal.fire(
                 'Success!',
                 'Add to cart successfully!',
@@ -27,12 +36,6 @@ const ProductDetailParameter = () => {
             console.log(err)
         })
     }
-
-    const { productId } = useParams();
-
-    const product = useSelector(state => state.productDetail.product);
-    const loading = useSelector(state => state.productDetail.loading);
-    const error = useSelector(state => state.productDetail.error);
 
     useEffect(() => {
         dispatch(fetchProductDetail(productId));
@@ -130,7 +133,7 @@ const ProductDetailParameter = () => {
                             {/* button */}
                             {/* btn */}
                             <button type="button" className="btn btn-primary"
-                                    // onClick={()=>handleAddToCart(a,quantity)}
+                                    onClick={()=>handleAddToCart(productId)}
                             >
                                 <i className="feather-icon icon-shopping-bag me-2" />
                                 Add to cart

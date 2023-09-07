@@ -1,22 +1,29 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {
+    createProductsToCartByAccount,
+    deleteProductFromCartByAccount,
+    getProductByAccount, updateCartByStore,
+    updateProductFromCartByAccount
+} from "../../service/cartService";
+import {getProductPage} from "../../service/productPageAction";
 
-
+const initialState = {
+    products: [],
+    currentPage: 0,
+    totalPages: 1,
+}
 const productPageSlice = createSlice({
     name: "products",
-    initialState: {
-        products: [],
-        currentPage: 1,
-        totalPages: 1,
-    },
-    reducers: {
-        setProducts: (state, action) => {
-            state.products = action.payload.content;
-            state.currentPage = action.payload.number +1;
-            state.totalPages = action.payload.totalPages;
-        },
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(getProductPage.fulfilled, (state, action) => {
+            state.products = action.payload;
+        });
+
     },
 });
 
-export const {setProducts} = productPageSlice.actions;
+// export const {setProducts} = productPageSlice.actions;
 
 export default productPageSlice.reducer;
