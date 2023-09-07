@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getShopByAccountLogin} from "../../service/shopService";
 import {getAllProductsByShop} from "../../service/productService";
+import axios from "axios";
+import async from "async";
 
 const ShopSingleFilterViewLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -13,9 +15,13 @@ const ShopSingleFilterViewLogin = () => {
         return state.product.shopProducts;
     })
     useEffect(() => {
-        dispatch(getShopByAccountLogin(account.id))
-        dispatch(getAllProductsByShop(shopLogin.id))
+        dispatch(getShopByAccountLogin(account.id));
     },[]);
+    useEffect(() => {
+        dispatch(getAllProductsByShop(shopLogin.id));
+    },[shopLogin])
+
+
     return (
         <>
             <div className="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
@@ -181,7 +187,15 @@ const ShopSingleFilterViewLogin = () => {
 
                                 </div>
                                 <div>
-                                    <button className="btn" data-toggle="modal" data-target="#myModal"><i className="fa fa-pencil" style={{color:"blue"}}></i></button>
+
+                                    <button
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#sproductModal"
+                                        className="btn"
+                                    >
+                                        <i className="fa fa-pencil" style={{color:"blue"}}></i>
+                                    </button>
                                     <button className="btn" data-toggle="modal" data-target="#myModal"><i className="fa fa-trash" style={{color:"red"}}></i></button>
                                 </div>
                             </div>
@@ -229,75 +243,6 @@ const ShopSingleFilterViewLogin = () => {
                     </nav>
                 </div>
             </div>
-            {/* Modal */}
-            <div className="modal fade" id="myModal" role="dialog">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content p-4">
-                        <div className="modal-header border-0">
-                            <h5 className="modal-title fs-3 fw-bold" id="userModalLabel">
-                                Sign Up
-                            </h5>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            />
-                        </div>
-                        <div className="modal-body">
-                            <form>
-                                <div className="mb-3">
-                                    <label htmlFor="fullName" className="form-label">
-                                        Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="fullName"
-                                        placeholder="Enter Your Name"
-                                        required=""
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">
-                                        Email address
-                                    </label>
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        id="email"
-                                        placeholder="Enter Email address"
-                                        required=""
-                                    />
-                                </div>
-                                <div className="mb-5">
-                                    <label htmlFor="password" className="form-label">
-                                        Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        id="password"
-                                        placeholder="Enter Password"
-                                        required=""
-                                    />
-                                    <small className="form-text">
-                                        By Signup, you agree to our <a href="#!">Terms of Service</a>{" "}
-                                        &amp; <a href="#!">Privacy Policy</a>
-                                    </small>
-                                </div>
-                                <button type="submit" className="btn btn-primary">
-                                    Sign Up
-                                </button>
-                            </form>
-                        </div>
-                        <div className="modal-footer border-0 justify-content-center">
-                            Already have an account? <a href="#">Sign in</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
 
 
