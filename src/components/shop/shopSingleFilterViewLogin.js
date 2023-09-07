@@ -9,11 +9,9 @@ const ShopSingleFilterViewLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const shopLogin = useSelector(state => {
-        console.log(state)
         return state.shop.shopLogin;
     })
     const shopProducts = useSelector(state => {
-        console.log(state.product.shopProducts)
         return state.product.shopProducts;
     })
     useEffect(() => {
