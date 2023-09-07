@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Navbar from "../components/navbar";
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import Footer from "../components/footer";
 import NavbarCustomer from "../components/navbarCustomer";
 import NavbarAdmin from "../components/navbarAdmin";
@@ -9,7 +9,6 @@ import NavbarEmployee from "../components/navbarEmployee";
 
 const Product = () => {
     let account = JSON.parse(localStorage.getItem('account'));
-    const navigate = useNavigate();
     return (
         <>
             {account === null && <Navbar></Navbar>}

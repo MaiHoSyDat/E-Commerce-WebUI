@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getFilterProducts} from "../../service/productService";
+import {Link} from "react-router-dom";
 
 const ProductFilterShow = () => {
     const numbers = [1, 2, 3, 4, 5]
@@ -30,21 +31,18 @@ const ProductFilterShow = () => {
                                     <div className=" position-absolute top-0 start-0">
                                         {dto.product.status && <span className="badge bg-danger">{dto.product.status.name}</span>}
                                     </div>
-                                    <a href="shop-single.html">
-                                        {/* img */}
+                                    <Link to={"/product/detail/" + dto.product.id}>
                                         <img
                                             src={dto.product.thumbnail}
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
-                                    </a>
+                                    </Link>
                                     {/* action btn */}
                                     <div className="card-product-action">
-                                        <a
-                                            href="#!"
+                                        <Link
+                                            to={"/product/detail/" + dto.product.id}
                                             className="btn-action"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#quickViewModal"
                                         >
                                             <i
                                                 className="bi bi-eye"
@@ -52,7 +50,7 @@ const ProductFilterShow = () => {
                                                 data-bs-html="true"
                                                 title="Quick View"
                                             />
-                                        </a>
+                                        </Link>
                                         <a
                                             href="shop-wishlist.html"
                                             className="btn-action"

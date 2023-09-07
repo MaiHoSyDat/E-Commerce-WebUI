@@ -177,7 +177,7 @@ const NavbarCustomer = () => {
                                     </div>
 
                                     <div className="list-inline-item me-5">
-                                        <Link to={"/signIn"}>
+                                        <Link to={"/signin"}>
                                         <a
                                             href="#!"
                                             className="text-muted"
