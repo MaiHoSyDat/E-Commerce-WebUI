@@ -32,15 +32,21 @@ const DashboardCustomer = () => {
 
     const handleStatus = (idAccount, event) => {
         const idStatus = event.target.value;
-        axios.post("http://localhost:8080/admin/blockOrActive?accountId="+idAccount + "&statusId=" +idStatus)
+        axios.post("http://localhost:8080/admin/blockOrActive?accountId=" + idAccount + "&statusId=" + idStatus)
             .then(response => {
+                const newAccounts = account.map(item => {
+                    if (item.id === idAccount) {
+                        item.setStatus(idStatus);
+                    }
+                    return item;
+                });
+                setAccount(newAccounts);
                 console.log(response);
             })
             .catch(function (err) {
                 console.log(err);
             });
     };
-
 
 
     return (

@@ -1,6 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
 
 const DashboardProduct = () => {
+    const [product, setProduct] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/customer')
+            .then((response) => {
+                setProduct(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     return (
         <>
             <div className="container">
@@ -88,661 +101,85 @@ const DashboardProduct = () => {
                                             <th>Category</th>
                                             <th>Status</th>
                                             <th>Price</th>
+                                            <th>Shop manage</th>
                                             <th>Create at</th>
                                             <th />
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productOne"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productOne"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-1.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Haldiram's Sev Bhujia
-                                                </a>
-                                            </td>
-                                            <td>Snack &amp; Munchies</td>
-                                            <td>
+                                        {product.map((p) => {
+                                            return(
+                                                <>
+                                                    <tr>
+                                                        <td>
+                                                            <div className="form-check">
+                                                                <input
+                                                                    className="form-check-input"
+                                                                    type="checkbox"
+                                                                    defaultValue=""
+                                                                    id="productOne"
+                                                                />
+                                                                <label
+                                                                    className="form-check-label"
+                                                                    htmlFor="productOne"
+                                                                ></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#!">
+                                                                {" "}
+                                                                <img
+                                                                    src={p.thumbnail}
+                                                                    alt=""
+                                                                    className="icon-shape icon-md"
+                                                                />
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" className="text-reset">
+                                                                {p.name}
+                                                            </a>
+                                                        </td>
+                                                        <td>{p.category.name}</td>
+                                                        <td>
                     <span className="badge bg-light-primary text-dark-primary">
                       Active
                     </span>
-                                            </td>
-                                            <td>$18.00</td>
-                                            <td>24 Nov 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productTwo"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productTwo"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-2.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    NutriChoice Digestive
-                                                </a>
-                                            </td>
-                                            <td>Bakery &amp; Biscuits</td>
-                                            <td>
-                    <span className="badge bg-light-primary text-dark-primary">
-                      Active
-                    </span>
-                                            </td>
-                                            <td>$24.00</td>
-                                            <td>20 Nov 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productThree"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productThree"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-3.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Cadbury 5 Star Chocolate
-                                                </a>
-                                            </td>
-                                            <td>Snack &amp; Munchies</td>
-                                            <td>
-                    <span className="badge bg-light-primary text-dark-primary">
-                      Active
-                    </span>
-                                            </td>
-                                            <td>$3.00</td>
-                                            <td>14 Nov 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productFour"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productFour"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-4.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Onion Flavour Potato
-                                                </a>
-                                            </td>
-                                            <td>Snack &amp; Munchies</td>
-                                            <td>
-                    <span className="badge bg-light-warning text-dark-warning">
-                      Draft
-                    </span>
-                                            </td>
-                                            <td>$13.00</td>
-                                            <td>08 Nov 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productFive"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productFive"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-5.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Salted Instant Popcorn
-                                                </a>
-                                            </td>
-                                            <td>Instant Food</td>
-                                            <td>
-                    <span className="badge bg-light-warning text-dark-warning">
-                      Draft
-                    </span>
-                                            </td>
-                                            <td>$9.00</td>
-                                            <td>09 Nov 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productSix"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productSix"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-6.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Blueberry Greek Yogurt
-                                                </a>
-                                            </td>
-                                            <td>Dairy, Bread &amp; Eggs</td>
-                                            <td>
-                    <span className="badge bg-light-danger text-dark-danger">
-                      Deactive
-                    </span>
-                                            </td>
-                                            <td>$11.00</td>
-                                            <td>02 Nov 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productSeven"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productSeven"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-7.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Britannia Cheese Slices
-                                                </a>
-                                            </td>
-                                            <td>Dairy, Bread &amp; Eggs</td>
-                                            <td>
-                    <span className="badge bg-light-success text-dark-success">
-                      Active
-                    </span>
-                                            </td>
-                                            <td>$24.00</td>
-                                            <td>15 Oct 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productEight"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productEight"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-8.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Blueberry Greek Yogurt
-                                                </a>
-                                            </td>
-                                            <td>Instant Food</td>
-                                            <td>
-                    <span className="badge bg-light-danger text-dark-danger">
-                      Deactive
-                    </span>
-                                            </td>
-                                            <td>$12.00</td>
-                                            <td>24 Oct 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productNine"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productNine"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-9.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Slurrp Millet Chocolate
-                                                </a>
-                                            </td>
-                                            <td>Instant Food</td>
-                                            <td>
-                    <span className="badge bg-light-primary text-dark-primary">
-                      Active
-                    </span>
-                                            </td>
-                                            <td>$8.00</td>
-                                            <td>08 Oct 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="productTen"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="productTen"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="#!">
-                                                    {" "}
-                                                    <img
-                                                        src="../assets/images/products/product-img-10.jpg"
-                                                        alt=""
-                                                        className="icon-shape icon-md"
-                                                    />
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#" className="text-reset">
-                                                    Amul Butter - 500 g
-                                                </a>
-                                            </td>
-                                            <td>Instant Food</td>
-                                            <td>
-                    <span className="badge bg-light-primary text-dark-primary">
-                      Active
-                    </span>
-                                            </td>
-                                            <td>$8.00</td>
-                                            <td>09 Oct 2022</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                        </td>
+                                                        <td>{p.price}</td>
+                                                        <td>{p.shop.name}</td>
+                                                        <td>{p.create_at}</td>
+                                                        <td>
+                                                            <div className="dropdown">
+                                                                <a
+                                                                    href="#"
+                                                                    className="text-reset"
+                                                                    data-bs-toggle="dropdown"
+                                                                    aria-expanded="false"
+                                                                >
+                                                                    <i className="feather-icon icon-more-vertical fs-5" />
+                                                                </a>
+                                                                <ul className="dropdown-menu">
+                                                                    <li>
+                                                                        <a className="dropdown-item" href="#">
+                                                                            <i className="bi bi-trash me-3" />
+                                                                            Delete
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a className="dropdown-item" href="#">
+                                                                            <i className="bi bi-pencil-square me-3 " />
+                                                                            Edit
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </>
+                                            )
+                                        })}
+
                                         </tbody>
                                     </table>
                                 </div>
