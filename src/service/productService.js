@@ -21,7 +21,7 @@ export const getProduct = createAsyncThunk(
 export const getFilterProducts = createAsyncThunk(
     "product/getFilterProducts",
     async (filterParam) => {
-        const res = await axios.get("" + filterParam);
+        const res = await axios.post("http://localhost:8080/products/filter" , filterParam);
         return res.data;
     }
 )
@@ -30,6 +30,22 @@ export const getAllProductsByShop = createAsyncThunk(
     "product/getAllProductsByShop",
     async (idShop) => {
         const res = await axios.get("http://localhost:8080/shops/" + idShop + "/products" );
+        return res.data;
+    }
+)
+// lấy ra 10 sp theo index
+export const getTenProductsToIndex = createAsyncThunk(
+    "product/getTenProductsToIndex",
+    async (idShop) => {
+        const res = await axios.get("http://localhost:8080/index/tenNewProducts" );
+        return res.data;
+    }
+)
+// lấy ra 3 sp theo maxRating
+export const getThreeProductsMaxRating = createAsyncThunk(
+    "product/getThreeProductsMaxRating",
+    async (idShop) => {
+        const res = await axios.get("http://localhost:8080/index/threeProductsMaxRating" );
         return res.data;
     }
 )

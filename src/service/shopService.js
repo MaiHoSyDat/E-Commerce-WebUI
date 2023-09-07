@@ -4,7 +4,7 @@ import axios from "axios";
 export const getAllShops = createAsyncThunk(
     "shop/getAllShops",
     async () => {
-        const res = await axios.get("");
+        const res = await axios.get("http://localhost:8080/shops");
         return res.data;
     }
 )

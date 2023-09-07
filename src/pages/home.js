@@ -9,6 +9,7 @@ import NavbarEmployee from "../components/navbarEmployee";
 import { Field, Form, Formik} from "formik";
 import axios from "axios";
 import { isAfter, isBefore, parse } from 'date-fns';
+import Index from "../outlet/index";
 
 
 const Home = () => {
@@ -18,7 +19,6 @@ const Home = () => {
 
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem('account'))
-        console.log(account)
         if (account && account.status.id === 3) {
             window.$("#statusModal").modal("show");
         }
@@ -190,7 +190,7 @@ const Home = () => {
         {account && account.role.name === "ROLE_SHOP" && <NavbarShop></NavbarShop>}
         {account && account.role.name === "ROLE_EMPLOYEE" && <NavbarEmployee></NavbarEmployee>}
         <main>
-            <Outlet></Outlet>
+            <Index></Index>
         </main>
         <Footer></Footer>
     </>

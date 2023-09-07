@@ -6,7 +6,7 @@ const DashboardMenu = () => {
             <nav className="navbar-vertical-nav d-none d-xl-block ">
                 <div className="navbar-vertical">
                     <div className="px-4 py-5">
-                        <a href="/dashboard/index" className="navbar-brand">
+                        <a href="/index" className="navbar-brand">
                             <img src="../assets/images/logo/freshcart-logo.svg" alt="" />
                         </a>
                     </div>

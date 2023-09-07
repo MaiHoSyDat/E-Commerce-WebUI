@@ -49,6 +49,7 @@ function App() {
     <>
         <Routes>
             <Route path="dashboard" element={<Dashboard/>}>
+                <Route path="" element={<DashboardIndex/>}/>
                 <Route path="index" element={<DashboardIndex/>}/>
                 <Route path="products" element={<DashboardProduct/>}/>
                 <Route path="category" element={<DashboardCategory/>}/>
@@ -62,11 +63,13 @@ function App() {
             </Route>
             <Route path="shop" element={<Shop/>}>
                 <Route path="list" element={<ShopList/>}/>
+                <Route path="" element={<ShopList/>}/>
                 <Route path="single" element={<ShopSingle/>}/>
                 <Route path="setting" element={<ShopInfomation/>}/>
             </Route>
             <Route path="product" element={<Product/>}>
                 <Route path="filter" element={<ProductFilter/>}/>
+                <Route path="" element={<ProductFilter/>}/>
                 <Route path="detail" element={<ProductDetail/>}/>
                 <Route path="wishlist" element={<ProductWishlist/>}/>
             </Route>

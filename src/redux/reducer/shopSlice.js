@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {} from "../../service/productService";
-import {getShop, getShopByAccountLogin} from "../../service/shopService";
+import {getAllShops, getShop, getShopByAccountLogin} from "../../service/shopService";
 const initialState = {
+    allShops: [],
     shopLogin: {},
     shop: {}
 }
@@ -15,6 +15,9 @@ const shopSlice = createSlice({
         })
         builder.addCase(getShop.fulfilled,(state,action) => {
             state.shop = action.payload;
+        })
+        builder.addCase(getAllShops.fulfilled,(state,action) => {
+            state.allShops = action.payload;
         })
     }
 })
