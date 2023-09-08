@@ -127,90 +127,66 @@ const DashboardCustomer = () => {
                                         <tbody>
                                         {
                                             account.map((a) => {
-                                            return(
-                                               <>
-                                                   <tr>
-                                                       <td>
-                                                           <div className="form-check">
-                                                               <input
-                                                                   className="form-check-input"
-                                                                   type="checkbox"
-                                                                   defaultValue=""
-                                                                   id="customerOne"
-                                                               />
-                                                               <label
-                                                                   className="form-check-label"
-                                                                   htmlFor="customerOne"
-                                                               ></label>
-                                                           </div>
-                                                       </td>
-                                                       <td>
-                                                           <div className="d-flex align-items-center">
-                                                               <img
-                                                                   src="../assets/images/avatar/avatar-1.jpg"
-                                                                   alt=""
-                                                                   className="avatar avatar-xs rounded-circle"
-                                                               />
-                                                               <div className="ms-2">
-                                                                   <a href="#" className="text-inherit">
-                                                                       {a.username}
-                                                                   </a>
-                                                               </div>
-                                                           </div>
-                                                       </td>
-                                                       <td>{a.name}</td>
-                                                       <td>{a.email}</td>
-                                                       <td>
-                                                           {a.role.name}
-                                                       </td>
-                                                       <td>$49.00</td>
-                                                       <td> <select
-                                                           key={a.id}
-                                                           name="status"
-                                                           onChange={(event) => handleStatus(a.id, event)}
-                                                           value={a.status.id}
-                                                       >
-                                                           {status.map((s) => (
-                                                               <option key={s.id} value={s.id}>
-                                                                   {s.name}
-                                                               </option>
-                                                           ))}
-                                                       </select></td>
-                                                       <td>
-                                                           <div className="dropdown">
-                                                               <a
-                                                                   href="#"
-                                                                   className="text-reset"
-                                                                   data-bs-toggle="dropdown"
-                                                                   aria-expanded="false"
-                                                               >
-                                                                   <i className="feather-icon icon-more-vertical fs-5" />
-                                                               </a>
-                                                               <ul className="dropdown-menu">
-                                                                   <li>
-                                                                       <a className="dropdown-item" href="#">
-                                                                           <i className="bi bi-trash me-3" />
-                                                                           Delete
-                                                                       </a>
-                                                                   </li>
-                                                                   <li>
-                                                                       <a className="dropdown-item" href="#">
-                                                                           <i className="bi bi-pencil-square me-3 " />
-                                                                           Edit
-                                                                       </a>
-                                                                   </li>
-                                                               </ul>
-                                                           </div>
-                                                       </td>
-                                                   </tr>
-                                               </>
-                                            )})
+                                                return(
+                                                    <>
+                                                        <tr>
+                                                            <td>
+                                                                <div className="form-check">
+                                                                    <input
+                                                                        className="form-check-input"
+                                                                        type="checkbox"
+                                                                        defaultValue=""
+                                                                        id="customerOne"
+                                                                    />
+                                                                    <label
+                                                                        className="form-check-label"
+                                                                        htmlFor="customerOne"
+                                                                    ></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className="d-flex align-items-center">
+                                                                    <img
+                                                                        src="../assets/images/avatar/avatar-1.jpg"
+                                                                        alt=""
+                                                                        className="avatar avatar-xs rounded-circle"
+                                                                    />
+                                                                    <div className="ms-2">
+                                                                        <a href="#" className="text-inherit">
+                                                                            {a.username}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>{a.name}</td>
+                                                            <td>{a.email}</td>
+                                                            <td>
+                                                                {a.role.name}
+                                                            </td>
+                                                            <td>$49.00</td>
+                                                            <td> <select
+                                                                key={a.id}
+                                                                name="status"
+                                                                onChange={(event) => handleStatus(a.id, event)}
+                                                                value={a.status.id}
+                                                            >
+                                                                {status.map((s) => (
+                                                                    <option key={s.id} value={s.id}>
+                                                                        {s.name}
+                                                                    </option>
+                                                                ))}
+                                                            </select></td>
+
+                                                        </tr>
+                                                    </>
+                                                )})
                                         }
 
 
                                         </tbody>
                                     </table>
                                 </div>
+                                {/*phân trang*/}
                                 <div className="border-top d-md-flex justify-content-between align-items-center p-6">
                                     <span>Showing 1 to 8 of 12 entries</span>
                                     <nav className="mt-2 mt-md-0">
