@@ -21,7 +21,7 @@ const DashboardCustomer = () => {
     }, [status]);
     useEffect(() => {
         axios
-            .get('http://localhost:8080/admin/roles')
+            .get('http://localhost:8080/admin/customerRoles')
             .then((response) => {
                 setStatus(response.data);
             })
@@ -67,11 +67,6 @@ const DashboardCustomer = () => {
                                     </ol>
                                 </nav>
                             </div>
-                            <div>
-                                <a href="#!" className="btn btn-primary">
-                                    Add New Customer
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -97,20 +92,6 @@ const DashboardCustomer = () => {
                                     <table className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
                                         <thead className="bg-light">
                                         <tr>
-                                            <th>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="checkAll"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="checkAll"
-                                                    ></label>
-                                                </div>
-                                            </th>
                                             <th>Username</th>
                                             <th>Name</th>
                                             <th>Email</th>
@@ -127,26 +108,8 @@ const DashboardCustomer = () => {
                                                     <>
                                                         <tr>
                                                             <td>
-                                                                <div className="form-check">
-                                                                    <input
-                                                                        className="form-check-input"
-                                                                        type="checkbox"
-                                                                        defaultValue=""
-                                                                        id="customerOne"
-                                                                    />
-                                                                    <label
-                                                                        className="form-check-label"
-                                                                        htmlFor="customerOne"
-                                                                    ></label>
-                                                                </div>
-                                                            </td>
-                                                            <td>
                                                                 <div className="d-flex align-items-center">
-                                                                    <img
-                                                                        src="../assets/images/avatar/avatar-1.jpg"
-                                                                        alt=""
-                                                                        className="avatar avatar-xs rounded-circle"
-                                                                    />
+
                                                                     <div className="ms-2">
                                                                         <a href="#" className="text-inherit">
                                                                             {a.username}
@@ -178,8 +141,6 @@ const DashboardCustomer = () => {
                                                     </>
                                                 )})
                                         }
-
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -196,16 +157,6 @@ const DashboardCustomer = () => {
                                             <li className="page-item">
                                                 <a className="page-link active" href="#!">
                                                     1
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
-                                                    3
                                                 </a>
                                             </li>
                                             <li className="page-item">

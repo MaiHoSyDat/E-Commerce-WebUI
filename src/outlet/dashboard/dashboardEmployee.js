@@ -11,9 +11,9 @@ const DashboardEmployee = () => {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/admin/employee')
+            .get('http://localhost:8080/admin/getAccountByRole?id=4')
             .then((response) => {
-                setEmployee(response.data);
+                setEmployee(response.data.content);
             })
             .catch((err) => {
                 console.log(err);
@@ -59,7 +59,7 @@ const DashboardEmployee = () => {
                     <div className="col-md-12">
                         <div className="d-md-flex justify-content-between align-items-center">
                             <div>
-                                <h2>Customers</h2>
+                                <h2>Employees</h2>
                                 {/* breacrumb */}
                                 <nav aria-label="breadcrumb">
                                     <ol className="breadcrumb mb-0">
@@ -69,7 +69,7 @@ const DashboardEmployee = () => {
                                             </a>
                                         </li>
                                         <li className="breadcrumb-item active" aria-current="page">
-                                            Customers
+                                            Employee
                                         </li>
                                     </ol>
                                 </nav>
@@ -112,25 +112,10 @@ const DashboardEmployee = () => {
                                     <table className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
                                         <thead className="bg-light">
                                         <tr>
-                                            <th>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="checkAll"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="checkAll"
-                                                    ></label>
-                                                </div>
-                                            </th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Date create</th>
-                                            <th>Phone</th>
-                                            <th>Salary</th>
+                                            <th>Role</th>
+                                            <th>Status</th>
                                             <th />
                                         </tr>
                                         </thead>
@@ -141,37 +126,17 @@ const DashboardEmployee = () => {
                                                     <>
                                                         <tr>
                                                             <td>
-                                                                <div className="form-check">
-                                                                    <input
-                                                                        className="form-check-input"
-                                                                        type="checkbox"
-                                                                        defaultValue=""
-                                                                        id="customerOne"
-                                                                    />
-                                                                    <label
-                                                                        className="form-check-label"
-                                                                        htmlFor="customerOne"
-                                                                    ></label>
-                                                                </div>
-                                                            </td>
-                                                            <td>
                                                                 <div className="d-flex align-items-center">
-                                                                    <img
-                                                                        src= {e[2].avatar}
-                                                                        alt=""
-                                                                        className="avatar avatar-xs rounded-circle"
-                                                                    />
                                                                     <div className="ms-2">
                                                                         <a href="#" className="text-inherit">
-                                                                            {e[0]}
+                                                                            {e.name}
                                                                         </a>
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            <td>{e[1]}</td>
-                                                            <td>{e[2].date_create}</td>
-                                                            <td>{e[2].phone}</td>
-                                                            <td>$ {e[2].salary}</td>
+                                                            <td>{e.email}</td>
+                                                            <td>{e.role.name}</td>
+                                                            <td>{e.status.name}</td>
                                                             <td>
                                                                 <div className="dropdown">
                                                                     <a
@@ -194,13 +159,14 @@ const DashboardEmployee = () => {
                                                                                 <i className="bi bi-pencil-square me-3 " />
                                                                                 Edit
                                                                             </a>
+
                                                                         </li>
                                                                     </ul>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <div>
-                                                            {/* Modal */}
+                                                            {/* Modal add*/}
                                                             <div className={`modal fade ${showModal ? 'show' : ''}`} id="addCustomerModal" tabIndex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden={!showModal}>
                                                                 <div className="modal-dialog">
                                                                     <div className="modal-content">
@@ -229,6 +195,7 @@ const DashboardEmployee = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     </>
                                                 )
                                             })
@@ -251,16 +218,6 @@ const DashboardEmployee = () => {
                                             <li className="page-item">
                                                 <a className="page-link active" href="#!">
                                                     1
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
-                                                    3
                                                 </a>
                                             </li>
                                             <li className="page-item">
