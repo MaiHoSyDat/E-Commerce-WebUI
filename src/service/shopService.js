@@ -24,3 +24,18 @@ export const getShopByAccountLogin = createAsyncThunk(
         return res.data;
     }
 )
+// tìm shop DTO
+export const getShopDTO = createAsyncThunk(
+    "shop/getShopDTO",
+    async (idShop) => {
+        const res = await axios.get("http://localhost:8080/shops/dto/"+ idShop);
+        return res.data;
+    }
+)
+export const getShopDTOByAccountLogin = createAsyncThunk(
+    "shop/getShopDTOLogin",
+    async (idAccount) => {
+        const res = await axios.get("http://localhost:8080/shops/login/dto/"+ idAccount);
+        return res.data;
+    }
+)

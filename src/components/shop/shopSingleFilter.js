@@ -27,10 +27,6 @@ const ShopSingleFilter = () => {
                             <option value="Avg. Rating">Avg. Rating</option>
                         </select>
                     </div>
-                    &ensp;
-                    <div>
-                        <button type="button" className="btn btn-success">Create New Product</button>
-                    </div>
                 </div>
             </div>
 

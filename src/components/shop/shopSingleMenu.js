@@ -1,6 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {getAllCategories} from "../../service/categoryService";
+import {setFilterCategory} from "../../service/inputService";
 
 const ShopSingleMenu = () => {
+    const dispatch = useDispatch();
+    const allCategories = useSelector(state => {
+        return state.category.allCategories;
+    })
+    useEffect(() => {
+        dispatch(getAllCategories())
+    },[]);
     return (
         <>
             <hr />
@@ -61,130 +71,19 @@ const ShopSingleMenu = () => {
                 <ul className="nav flex-column nav-links">
                     {/* nav item */}
                     <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Produce
-                        </a>
+                        <button className="nav-link" onClick={()=>{dispatch(setFilterCategory("All Categories"))}}>
+                            All Categories
+                        </button>
                     </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Dairy &amp; Eggs
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Beverages
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Meat &amp; Seafood
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Snacks &amp; Candy
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Frozen
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Bakery
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Prepared Foods
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Alcohol
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Dry Goods &amp; Pasta
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Condiments &amp; Sauces
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Canned Goods &amp; Soups
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Breakfast
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Household
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Baking Essentials
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Oils, Vinegars, &amp; Spices
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Health Care
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Personal Care
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Kitchen Supplies
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Floral
-                        </a>
-                    </li>
-                    {/* nav item */}
-                    <li className="nav-item">
-                        <a href="#!" className="nav-link">
-                            Party &amp; Gift Supplies
-                        </a>
-                    </li>
+                    {allCategories && allCategories.map(category => (
+                        <li className="nav-item">
+                            <button className="nav-link" onClick={()=>{dispatch(setFilterCategory(category.name))}}>
+                                {category.name}
+                            </button>
+                        </li>
+                    ))}
+
+
                 </ul>
             </div>
         </>

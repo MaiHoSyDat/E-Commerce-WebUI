@@ -1,8 +1,14 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    setFilterCategory, setFilterCheckedRating,
+    setFilterCategory,
+    setFilterCheckedRating,
     setFilterCheckedShops,
-    setFilterNameProduct, setFilterPrice, setFilterQuantityShow, setFilterSortShow, setFilterUnCheckedRating,
+    setFilterNameProduct, setFilterParam,
+    setFilterPrice,
+    setFilterQuantityShow,
+    setFilterShopSingle,
+    setFilterSortShow,
+    setFilterUnCheckedRating,
     setFilterUnCheckedShops
 } from "../../service/inputService";
 const initialState = {
@@ -37,12 +43,12 @@ const inputSlice = createSlice({
             state.filterParam.idShops = arr;
         })
         builder.addCase(setFilterCheckedRating.fulfilled,(state,action) => {
-            let arr = [...state.filterParam.rating, Number(action.payload)];
-            state.filterParam.rating = arr;
+            let arr = [...state.filterParam.ratings, Number(action.payload)];
+            state.filterParam.ratings = arr;
         })
         builder.addCase(setFilterUnCheckedRating.fulfilled,(state,action) => {
-            let arr = state.filterParam.rating.filter(element => element != Number(action.payload));
-            state.filterParam.rating = arr;
+            let arr = state.filterParam.ratings.filter(element => element != Number(action.payload));
+            state.filterParam.ratings = arr;
         })
         builder.addCase(setFilterPrice.fulfilled,(state,action) => {
             if (action.payload == "") {
@@ -59,6 +65,20 @@ const inputSlice = createSlice({
         })
         builder.addCase(setFilterSortShow.fulfilled,(state,action) => {
             state.filterParam.sort = action.payload;
+        })
+        builder.addCase(setFilterShopSingle.fulfilled,(state,action) => {
+            state.filterParam.idShops = [];
+            state.filterParam.idShops.push(Number(action.payload));
+        })
+        builder.addCase(setFilterParam.fulfilled,(state,action) => {
+            state.filterParam.nameProduct = "";
+            state.filterParam.category = "All Products";
+            state.filterParam.idShops = [];
+            state.filterParam.minPrice = "";
+            state.filterParam.maxPrice = "";
+            state.filterParam.ratings = [];
+            state.filterParam.sort = "";
+            state.filterParam.quantity = "";
         })
 
     }

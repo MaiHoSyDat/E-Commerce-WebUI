@@ -54,3 +54,15 @@ export const setFilterSortShow = createAsyncThunk(
         return input;
     }
 )
+export const setFilterShopSingle = createAsyncThunk(
+    "input/inputFilterShopSingle",
+    async (input) => {
+        return input;
+    }
+)
+export const setFilterParam = createAsyncThunk(
+    "input/setFilterParam",
+    async () => {
+        return null;
+    }
+)

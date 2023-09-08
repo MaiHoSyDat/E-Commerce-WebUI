@@ -1,10 +1,11 @@
 import React from 'react';
-import ShopSingleDetail from "../../components/shop/shopSingleDetail";
+
 import ShopSingleMenu from "../../components/shop/shopSingleMenu";
 import ShopSingleSearch from "../../components/shop/shopSingleSearch";
 import ShopSingleView from "../../components/shop/shopSingleView";
-import ShopSingleFilterViewLogin from "../../components/shop/shopSingleFilterViewLogin";
-import ShopSingleFilterLogin from "../../components/shop/shopSingleFilterLogin";
+import ShopSingleFilterView from "../../components/shop/shopSingleFilterView";
+import ShopSingleFilter from "../../components/shop/shopSingleFilter";
+import ShopSingleDetail from "../../components/shop/shopSingleDetail";
 
 const ShopSingle = () => {
     return (
@@ -21,8 +22,8 @@ const ShopSingle = () => {
                                 <ShopSingleSearch></ShopSingleSearch>
                                 <ShopSingleView></ShopSingleView>
                             </div>
-                            <ShopSingleFilterLogin></ShopSingleFilterLogin>
-                            <ShopSingleFilterViewLogin></ShopSingleFilterViewLogin>
+                            <ShopSingleFilter></ShopSingleFilter>
+                            <ShopSingleFilterView></ShopSingleFilterView>
                         </div>
 
                     </div>

@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getFilterProducts} from "../../service/productService";
+import {getAllProductsByShop, getFilterProducts} from "../../service/productService";
 import {Link} from "react-router-dom";
+import {setFilterShopSingle} from "../../service/inputService";
 
 const ProductFilterShow = () => {
     const numbers = [1, 2, 3, 4, 5]
@@ -16,6 +17,11 @@ const ProductFilterShow = () => {
     })
 
     useEffect(() => {
+        // const fetchData = async () => {
+        //     await dispatch(getAllProductsByShop(shopLogin.id));
+        //     await dispatch(setFilterShopSingle(shopLogin.id));
+        // };
+        // fetchData();
         dispatch(getFilterProducts(filterParam))
     },[filterParam]);
     return (

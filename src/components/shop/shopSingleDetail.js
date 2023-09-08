@@ -1,17 +1,6 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {getShopByAccountLogin} from "../../service/shopService";
+import React from 'react';
 
 const ShopSingleDetail = () => {
-    let account = JSON.parse(localStorage.getItem("account"));
-    const dispatch = useDispatch();
-    const shopLogin = useSelector(state => {
-        return state.shop.shopLogin;
-    })
-    useEffect(() => {
-        dispatch(getShopByAccountLogin(account.id))
-    },[]);
-
     return (
         <>
             <div className="d-flex flex-column">
@@ -19,14 +8,14 @@ const ShopSingleDetail = () => {
                     {/* img */}
                     {/* img */}
                     <img
-                        src={shopLogin.logo}
+                        src="logo"
                         alt=""
                         className="rounded-circle icon-shape icon-xxl"
                     />
                 </div>
                 {/* heading */}
                 <div className="mt-4">
-                    <h1 className="mb-1 h4">{shopLogin.name}</h1>
+                    <h1 className="mb-1 h4">name</h1>
                     <div className="small text-muted">
                         <span>Everyday store prices </span>
                     </div>
@@ -47,7 +36,7 @@ const ShopSingleDetail = () => {
                             <i className="bi bi-star-fill" />
                             <i className="bi bi-star-half" />
                         </small>
-                        <span className="ms-2">{shopLogin.rating}</span>
+                        <span className="ms-2">rating</span>
                         {/* text */}
                         <span className="text-muted ms-1">(3,400 reviews)</span>
                     </div>

@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getTenProductsToIndex, getThreeProductsMaxRating} from "../../service/productService";
-import Star from "../../components/star";
 
 const Index = () => {
     const dispatch = useDispatch();
@@ -443,9 +442,6 @@ const Index = () => {
                                             <div className="d-flex justify-content-between align-items-center mt-3">
                                                 <div>
                                                     <span className="text-dark">${dto.product.price}</span>{" "}
-                                                    <span className="text-decoration-line-through text-muted">
-                      $18
-                    </span>
                                                 </div>
                                                 <div>
                                                     {" "}
