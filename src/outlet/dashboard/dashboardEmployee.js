@@ -1,16 +1,57 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import axios from "axios";
+
 
 const DashboardEmployee = () => {
     const [employee, setEmployee] = useState([]);
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [showModal, setShowModal] = useState(false);
+
     useEffect(() => {
-        axios.get("http://localhost:8080/admin/employee").
-        then((response) => {
-            setEmployee(response.data);
-        }).catch((err) => {
-            console.log(err);
-        })
-    },[])
+        axios
+            .get('http://localhost:8080/admin/employee')
+            .then((response) => {
+                setEmployee(response.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        axios
+            .post('http://localhost:8080/admin', {
+                name,
+                username,
+                email,
+            })
+            .then((response) => {
+                console.log(response.data);
+
+                axios
+                    .get('http://localhost:8080/admin/employee')
+                    .then((response) => {
+                        setEmployee(response.data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+
+                setName('');
+                setUsername('');
+                setEmail('');
+                setShowModal(false);
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
         <>
             <div className="container">
@@ -34,9 +75,17 @@ const DashboardEmployee = () => {
                                 </nav>
                             </div>
                             <div>
-                                <a href="#!" className="btn btn-primary">
-                                    Add New Customer
-                                </a>
+                                {/*<a href="#!"  className="btn btn-primary">*/}
+                                <button
+                                    type="button"
+                                    button onClick={() => setShowModal(true)}
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addCustomerModal"
+                                >
+                                    Add Customer
+                                </button>
+                                {/*</a>*/}
                             </div>
                         </div>
                     </div>
@@ -87,72 +136,102 @@ const DashboardEmployee = () => {
                                         </thead>
                                         <tbody>
                                         {
-                                          employee.map((e) => {
-                                              return(
-                                                  <>
-                                                      <tr>
-                                                          <td>
-                                                              <div className="form-check">
-                                                                  <input
-                                                                      className="form-check-input"
-                                                                      type="checkbox"
-                                                                      defaultValue=""
-                                                                      id="customerOne"
-                                                                  />
-                                                                  <label
-                                                                      className="form-check-label"
-                                                                      htmlFor="customerOne"
-                                                                  ></label>
-                                                              </div>
-                                                          </td>
-                                                          <td>
-                                                              <div className="d-flex align-items-center">
-                                                                  <img
-                                                                      src= {e[2].avatar}
-                                                                      alt=""
-                                                                      className="avatar avatar-xs rounded-circle"
-                                                                  />
-                                                                  <div className="ms-2">
-                                                                      <a href="#" className="text-inherit">
-                                                                          {e[0]}
-                                                                      </a>
-                                                                  </div>
-                                                              </div>
-                                                          </td>
-                                                          <td>{e[1]}</td>
-                                                          <td>{e[2].date_create}</td>
-                                                          <td>{e[2].phone}</td>
-                                                          <td>$ {e[2].salary}</td>
-                                                          <td>
-                                                              <div className="dropdown">
-                                                                  <a
-                                                                      href="#"
-                                                                      className="text-reset"
-                                                                      data-bs-toggle="dropdown"
-                                                                      aria-expanded="false"
-                                                                  >
-                                                                      <i className="feather-icon icon-more-vertical fs-5" />
-                                                                  </a>
-                                                                  <ul className="dropdown-menu">
-                                                                      <li>
-                                                                          <a className="dropdown-item" href="#">
-                                                                              <i className="bi bi-trash me-3" />
-                                                                              Delete
-                                                                          </a>
-                                                                      </li>
-                                                                      <li>
-                                                                          <a className="dropdown-item" href="#">
-                                                                              <i className="bi bi-pencil-square me-3 " />
-                                                                              Edit
-                                                                          </a>
-                                                                      </li>
-                                                                  </ul>
-                                                              </div>
-                                                          </td>
-                                                      </tr>
-                                                  </>
-                                              )
-                                          })
+                                            employee.map((e) => {
+                                                return(
+                                                    <>
+                                                        <tr>
+                                                            <td>
+                                                                <div className="form-check">
+                                                                    <input
+                                                                        className="form-check-input"
+                                                                        type="checkbox"
+                                                                        defaultValue=""
+                                                                        id="customerOne"
+                                                                    />
+                                                                    <label
+                                                                        className="form-check-label"
+                                                                        htmlFor="customerOne"
+                                                                    ></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className="d-flex align-items-center">
+                                                                    <img
+                                                                        src= {e[2].avatar}
+                                                                        alt=""
+                                                                        className="avatar avatar-xs rounded-circle"
+                                                                    />
+                                                                    <div className="ms-2">
+                                                                        <a href="#" className="text-inherit">
+                                                                            {e[0]}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>{e[1]}</td>
+                                                            <td>{e[2].date_create}</td>
+                                                            <td>{e[2].phone}</td>
+                                                            <td>$ {e[2].salary}</td>
+                                                            <td>
+                                                                <div className="dropdown">
+                                                                    <a
+                                                                        href="#"
+                                                                        className="text-reset"
+                                                                        data-bs-toggle="dropdown"
+                                                                        aria-expanded="false"
+                                                                    >
+                                                                        <i className="feather-icon icon-more-vertical fs-5" />
+                                                                    </a>
+                                                                    <ul className="dropdown-menu">
+                                                                        <li>
+                                                                            <a className="dropdown-item" href="#">
+                                                                                <i className="bi bi-trash me-3" />
+                                                                                Delete
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a className="dropdown-item" href="#">
+                                                                                <i className="bi bi-pencil-square me-3 " />
+                                                                                Edit
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <div>
+                                                            {/* Modal */}
+                                                            <div className={`modal fade ${showModal ? 'show' : ''}`} id="addCustomerModal" tabIndex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden={!showModal}>
+                                                                <div className="modal-dialog">
+                                                                    <div className="modal-content">
+                                                                        <div className="modal-header">
+                                                                            <h5 className="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+                                                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                                                        </div>
+                                                                        <div className="modal-body">
+                                                                            <form onSubmit={handleSubmit}>
+                                                                                <div className="mb-3">
+                                                                                    <label htmlFor="name" className="form-label">Name</label>
+                                                                                    <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+                                                                                </div>
+                                                                                <div className="mb-3">
+                                                                                    <label htmlFor="username" className="form-label">Username</label>
+                                                                                    <input type="text" className="form-control" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                                                                                </div>
+                                                                                <div className="mb-3">
+                                                                                    <label htmlFor="email" className="form-label">Email</label>
+                                                                                    <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                                                                                </div>
+                                                                                <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </>
+                                                )
+                                            })
 
                                         }
 
