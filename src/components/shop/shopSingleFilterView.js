@@ -32,7 +32,7 @@ const ShopSingleFilterView = () => {
                                     </div>
                                     <Link to={"/product/detail/" + dto.product.id}>
                                         <img
-                                            src={"/" + dto.product.thumbnail}
+                                            src={dto.product.thumbnail}
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
