@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {getShopByAccountLogin} from "../../service/shopService";
 
 const ShopSingleSearch = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
+    const dispatch = useDispatch();
+    const shopLogin = useSelector(state => {
+        return state.shop.shopLogin;
+    })
+    useEffect(() => {
+        dispatch(getShopByAccountLogin(account.id))
+    },[]);
     return (
         <>
             <div className="align-self-center p-8">
                 <div className="mb-3">
-                    <h5 className="mb-0 fw-bold">E-Grocery Super Market</h5>
+                    <h5 className="mb-0 fw-bold">{shopLogin.name}</h5>
                     <p className="mb-0 text-muted">
                         Whatever the occasion, we've got you covered.
                     </p>
@@ -15,7 +25,7 @@ const ShopSingleSearch = () => {
                         type="email"
                         className="form-control"
                         id="exampleFormControlInput1"
-                        placeholder="Search E-Grocery Super Market"
+                        placeholder= {"Search" + shopLogin.name}
                     />
                     <span className="position-absolute end-0 top-0 mt-2 me-3">
       <svg

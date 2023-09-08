@@ -1,28 +1,46 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {getAllShops} from "../../service/shopService";
+import {
+    setFilterQuantityShow,
+    setFilterSortShow,
+} from "../../service/inputService";
+import {getAllCategories} from "../../service/categoryService";
+import {getFilterProducts} from "../../service/productService";
 
 const ProductFilterSort = () => {
+    const dispatch = useDispatch();
+    const filterProducts = useSelector(state => {
+        console.log(state.product.filterProducts)
+        return state.product.filterProducts;
+    })
+    const filterParam = useSelector(state => {
+        console.log(state.inputFilter.filterParam)
+        return state.inputFilter.filterParam;
+    })
+
+    useEffect(() => {
+        dispatch(getFilterProducts(filterParam))
+    },[filterParam]);
+    const handleInputChangeQuantityShow = () => {
+        let num = document.getElementById("quantity").value;
+        dispatch((setFilterQuantityShow(num)))
+    }
+    const handleInputChangeSortShow = () => {
+        let sort = document.getElementById("sort").value;
+        dispatch((setFilterSortShow(sort)))
+    }
     return (
         <>
             <div className="d-lg-flex justify-content-between align-items-center">
                 <div className="mb-3 mb-lg-0">
                     <p className="mb-0">
-                        <span className="text-dark">24 </span> Products found{" "}
+                        <span className="text-dark">{filterProducts.length} </span> Products found{" "}
                     </p>
                 </div>
                 {/* icon */}
                 <div className="d-md-flex justify-content-between align-items-center">
                     <div className="d-flex align-items-center justify-content-between">
-                        <div>
-                            <a href="shop-list.html" className="text-muted me-3">
-                                <i className="bi bi-list-ul" />
-                            </a>
-                            <a href="shop-grid.html" className=" me-3 active">
-                                <i className="bi bi-grid" />
-                            </a>
-                            <a href="shop-grid-3-column.html" className="me-3 text-muted">
-                                <i className="bi bi-grid-3x3-gap" />
-                            </a>
-                        </div>
                         <div className="ms-2 d-lg-none">
                             <a
                                 className="btn btn-outline-gray-400 text-muted"
@@ -52,21 +70,21 @@ const ProductFilterSort = () => {
                     <div className="d-flex mt-2 mt-lg-0">
                         <div className="me-2 flex-grow-1">
                             {/* select option */}
-                            <select className="form-select">
-                                <option selected="">Show: 50</option>
-                                <option value={10}>10</option>
-                                <option value={20}>20</option>
-                                <option value={30}>30</option>
+                            <select className="form-select" id="quantity" onClick={handleInputChangeQuantityShow}>
+                                <option  value={10000000} selected="" >Show: All</option>
+                                <option value={10} >10</option>
+                                <option value={20} >20</option>
+                                <option value={30} >30</option>
                             </select>
                         </div>
                         <div>
                             {/* select option */}
-                            <select className="form-select">
-                                <option selected="">Sort by: Featured</option>
-                                <option value="Low to High">Price: Low to High</option>
-                                <option value="High to Low"> Price: High to Low</option>
-                                <option value="Release Date"> Release Date</option>
-                                <option value="Avg. Rating"> Avg. Rating</option>
+                            <select className="form-select" id="sort" onClick={handleInputChangeSortShow}>
+                                <option selected=""  value="">Sort by: Normal</option>
+                                <option value="Low to High" >Price: Low to High</option>
+                                <option value="High to Low" > Price: High to Low</option>
+                                <option value="Release Date" > Release Date</option>
+                                <option value="Avg. Rating" > Avg. Rating</option>
                             </select>
                         </div>
                     </div>

@@ -23,10 +23,8 @@ const SignIn = () => {
         axios
             .post('http://localhost:8080/login', account)
             .then((response) => {
-                const token = response.data.token;
-                const bearerToken = `Bearer ${token}`;
 
-                localStorage.setItem('token',  bearerToken);
+                localStorage.setItem('token', 'Bearer ' + response.data.token);
                 localStorage.setItem('account', JSON.stringify(response.data));
                 navigate("/index")
 

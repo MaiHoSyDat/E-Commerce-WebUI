@@ -18,7 +18,7 @@ const ProductFilterFreshImage = () => {
                 {/* Banner Image */}
                 {/* img */}
                 <img
-                    src="../assets/images/banner/assortment-citrus-fruits.png"
+                    src="/assets/images/banner/assortment-citrus-fruits.png"
                     alt=""
                     className="img-fluid rounded "
                 />
