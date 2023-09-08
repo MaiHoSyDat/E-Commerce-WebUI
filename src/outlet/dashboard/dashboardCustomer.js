@@ -7,6 +7,8 @@ const DashboardCustomer = () => {
     const [status, setStatus] = useState([]);
     const [account, setAccount] = useState([]);
 
+
+
     useEffect(() => {
         axios
             .get('http://localhost:8080/admin/getAccountByRole?id=2')
@@ -16,7 +18,7 @@ const DashboardCustomer = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }, [status]);
     useEffect(() => {
         axios
             .get('http://localhost:8080/admin/roles')
@@ -34,13 +36,7 @@ const DashboardCustomer = () => {
         const idStatus = event.target.value;
         axios.post("http://localhost:8080/admin/blockOrActive?accountId=" + idAccount + "&statusId=" + idStatus)
             .then(response => {
-                const newAccounts = account.map(item => {
-                    if (item.id === idAccount) {
-                        item.setStatus(idStatus);
-                    }
-                    return item;
-                });
-                setAccount(newAccounts);
+                document.getElementById("status").value = idStatus;
                 console.log(response);
             })
             .catch(function (err) {
@@ -167,6 +163,7 @@ const DashboardCustomer = () => {
                                                             <td> <select
                                                                 key={a.id}
                                                                 name="status"
+                                                                id="status"
                                                                 onChange={(event) => handleStatus(a.id, event)}
                                                                 value={a.status.id}
                                                             >
