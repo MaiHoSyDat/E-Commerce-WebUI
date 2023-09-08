@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import ShopSingleMenu from "../../components/shop/shopSingleMenu";
 import ShopSingleSearch from "../../components/shop/shopSingleSearch";
@@ -6,8 +6,22 @@ import ShopSingleView from "../../components/shop/shopSingleView";
 import ShopSingleFilterView from "../../components/shop/shopSingleFilterView";
 import ShopSingleFilter from "../../components/shop/shopSingleFilter";
 import ShopSingleDetail from "../../components/shop/shopSingleDetail";
+import {useParams} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {getShopDTO} from "../../service/shopService";
+import {setFilterShopSingle} from "../../service/inputService";
 
 const ShopSingle = () => {
+    const {idShop} = useParams();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const fetchData = async () => {
+            await dispatch(getShopDTO(idShop));
+            await dispatch(setFilterShopSingle(idShop));
+        };
+        fetchData();
+        // dispatch(setFilterShopSingle(shopLogin.id));
+    },[]);
     return (
         <>
             <section className="mb-lg-14 mb-8 mt-8">

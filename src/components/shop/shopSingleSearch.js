@@ -1,19 +1,28 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getShopByAccountLogin} from "../../service/shopService";
+import {getShopByAccountLogin, getShopDTO} from "../../service/shopService";
 import {setFilterNameProduct} from "../../service/inputService";
+import {useParams} from "react-router-dom";
 
 const ShopSingleSearch = () => {
     const dispatch = useDispatch();
+    const {idShop} = useParams();
+    const shopDTO = useSelector(state => {
+        console.log(state)
+        return state.shop.shopDTO;
+    })
+    useEffect(() => {
+        dispatch(getShopDTO(idShop));
+    }, []);
     const handleInputChangeNameProduct = (e) => {
         dispatch(setFilterNameProduct(e.target.value));
     };
 
     return (
         <>
-            <div className="align-self-center p-8">
+            {shopDTO !== undefined && <div className="align-self-center p-8">
                 <div className="mb-3">
-                    <h5 className="mb-0 fw-bold">name</h5>
+                    <h5 className="mb-0 fw-bold">{shopDTO.shop.name}</h5>
                     <p className="mb-0 text-muted">
                         Whatever the occasion, we've got you covered.
                     </p>
@@ -23,7 +32,7 @@ const ShopSingleSearch = () => {
                         type="text"
                         className="form-control"
                         id="exampleFormControlInput1"
-                        placeholder= {"Search name" }
+                        placeholder= {"Search " + shopDTO.shop.name}
                         onChange={handleInputChangeNameProduct}
                     />
                     <span className="position-absolute end-0 top-0 mt-2 me-3">
@@ -44,7 +53,7 @@ const ShopSingleSearch = () => {
       </svg>
     </span>
                 </div>
-            </div>
+            </div>}
 
         </>
     );

@@ -66,7 +66,7 @@ function App() {
                 <Route path="list" element={<ShopList/>}/>
                 <Route path="" element={<ShopList/>}/>
                 <Route path="single" element={<ShopSingleLogin/>}/>
-                <Route path="single/aa" element={<ShopSingle/>}/>
+                <Route path="single/:idShop" element={<ShopSingle/>}/>
                 <Route path="setting" element={<ShopInfomation/>}/>
             </Route>
             <Route path="product" element={<Product/>}>

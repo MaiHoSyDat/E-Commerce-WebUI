@@ -1,21 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
+import {getShopDTO, getShopDTOByAccountLogin} from "../../service/shopService";
 
 const ShopSingleDetail = () => {
+    const numbers = [1, 2, 3, 4, 5]
+    const dispatch = useDispatch();
+    const {idShop} = useParams();
+    const shopDTO = useSelector(state => {
+        return state.shop.shopDTO;
+    })
+    useEffect(() => {
+        dispatch(getShopDTO(idShop));
+    }, []);
     return (
         <>
-            <div className="d-flex flex-column">
+            {shopDTO !== undefined && <div className="d-flex flex-column">
                 <div>
                     {/* img */}
                     {/* img */}
                     <img
-                        src="logo"
+                        src={"/" + shopDTO.shop.logo}
                         alt=""
                         className="rounded-circle icon-shape icon-xxl"
                     />
                 </div>
                 {/* heading */}
                 <div className="mt-4">
-                    <h1 className="mb-1 h4">name</h1>
+                    <h1 className="mb-1 h4">{shopDTO.shop.name}</h1>
                     <div className="small text-muted">
                         <span>Everyday store prices </span>
                     </div>
@@ -30,18 +42,24 @@ const ShopSingleDetail = () => {
                     <div className="mt-2">
                         {/* rating */}
                         <small className="text-warning">
-                            <i className="bi bi-star-fill" />
-                            <i className="bi bi-star-fill" />
-                            <i className="bi bi-star-fill" />
-                            <i className="bi bi-star-fill" />
-                            <i className="bi bi-star-half" />
+                            {!shopDTO.average_rating && <>
+                                <i className="bi bi-star"/>
+                                <i className="bi bi-star"/>
+                                <i className="bi bi-star"/>
+                                <i className="bi bi-star"/>
+                                <i className="bi bi-star"/>
+                            </>}
+                            {shopDTO.average_rating && numbers.map((i) => (
+                                i <= Math.floor(shopDTO.average_rating) ? (<i className="bi bi-star-fill"/>) : (
+                                    <i className="bi bi-star"/>)
+                            ))}
                         </small>
-                        <span className="ms-2">rating</span>
+                        <span className="ms-2">{shopDTO.average_rating}</span>
                         {/* text */}
-                        <span className="text-muted ms-1">(3,400 reviews)</span>
+                        <span className="text-muted ms-1">({shopDTO.total_reviews} reviews)</span>
                     </div>
                 </div>
-            </div>
+            </div>}
 
         </>
     );

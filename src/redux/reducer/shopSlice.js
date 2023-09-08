@@ -9,7 +9,7 @@ import {
 const initialState = {
     allShops: [],
     shopLogin: {},
-    shopDTO: {},
+    shopDTO: undefined,
     shopDTOLogin: undefined,
     shop: {}
 }

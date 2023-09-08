@@ -26,7 +26,7 @@ const Navbar = () => {
                                 <Link to={"/index"}>
                                     <a className="navbar-brand d-none d-lg-block" href="">
                                         <img
-                                            src="../assets/images/logo/freshcart-logo.svg"
+                                            src="../../assets/images/logo/freshcart-logo.svg"
                                             alt="eCommerce HTML Template"
                                         />
                                     </a>
