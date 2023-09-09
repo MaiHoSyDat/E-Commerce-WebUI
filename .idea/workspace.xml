@@ -22,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -38,6 +43,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Git.Branch.Popup.ShowAllRemotes&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -54,7 +60,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="92932c45-7d35-4b0c-9bb6-94e2fe1c4e42" name="Changes" comment="" />
+      <changelist id="2ad92f58-5606-454d-aaad-5533bb2a7a9c" name="Changes" comment="" />
       <created>1693455634091</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -71,6 +77,8 @@
       <workItem from="1693925648875" duration="435000" />
       <workItem from="1693962808734" duration="347000" />
       <workItem from="1694049537604" duration="8540000" />
+      <workItem from="1694168500251" duration="410000" />
+      <workItem from="1694253123619" duration="2717000" />
     </task>
     <servers />
   </component>

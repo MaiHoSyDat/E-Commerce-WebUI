@@ -1,5 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import axios from "axios";
+import {handleStatus} from "./dashboardCustomer";
+
 
 
 const DashboardEmployee = () => {
@@ -8,6 +10,8 @@ const DashboardEmployee = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [status, setStatus] = useState([]);
+
 
     useEffect(() => {
         axios
@@ -28,18 +32,18 @@ const DashboardEmployee = () => {
                 name,
                 username,
                 email,
-            })
+            },)
             .then((response) => {
                 console.log(response.data);
 
-                axios
-                    .get('http://localhost:8080/admin/employee')
-                    .then((response) => {
-                        setEmployee(response.data);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
+                // axios
+                //     .get('http://localhost:8080/admin/employee')
+                //     .then((response) => {
+                //         setEmployee(response.data);
+                //     })
+                //     .catch((err) => {
+                //         console.log(err);
+                //     });
 
                 setName('');
                 setUsername('');
@@ -51,6 +55,16 @@ const DashboardEmployee = () => {
                 console.log(err);
             });
     };
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/admin/customerRoles')
+            .then((response) => {
+                setStatus(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     return (
         <>
@@ -136,7 +150,19 @@ const DashboardEmployee = () => {
                                                             </td>
                                                             <td>{e.email}</td>
                                                             <td>{e.role.name}</td>
-                                                            <td>{e.status.name}</td>
+                                                            <td><select
+                                                                key={e.id}
+                                                                name="status"
+                                                                id="status"
+                                                                onChange={(event) => handleStatus(e.id, event)}
+                                                                value={e.status.id}
+                                                            >
+                                                                {status.map((s) => (
+                                                                    <option key={s.id} value={s.id}>
+                                                                        {s.name}
+                                                                    </option>
+                                                                ))}
+                                                            </select></td>
                                                             <td>
                                                                 <div className="dropdown">
                                                                     <a
