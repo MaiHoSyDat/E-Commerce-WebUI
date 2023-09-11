@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getAllCategories} from "../../service/categoryService";
+import {getAllCategories, getTenCategoriesPage} from "../../service/categoryService";
 import {setFilterCategory} from "../../service/inputService";
 
 const ShopSingleMenu = () => {
@@ -8,9 +8,27 @@ const ShopSingleMenu = () => {
     const allCategories = useSelector(state => {
         return state.category.allCategories;
     })
+    const tenCategoriesPage = useSelector(state => {
+        return state.category.tenCategoriesPage;
+    })
+    let [count, setCount] = useState(0);
     useEffect(() => {
-        dispatch(getAllCategories())
-    },[]);
+        const fetchData = async () => {
+            await dispatch(getAllCategories());
+            await dispatch(getTenCategoriesPage(count));
+        };
+        fetchData();
+    },[count]);
+    const previousPage = () => {
+        if (count > 0) {
+            setCount(count - 10);
+        }
+    }
+    const nextPage = () => {
+        if ((count + 10) < allCategories.length) {
+            setCount(count + 10);
+        }
+    }
     return (
         <>
             <hr />
@@ -75,15 +93,24 @@ const ShopSingleMenu = () => {
                             All Categories
                         </button>
                     </li>
-                    {allCategories && allCategories.map(category => (
+                    {tenCategoriesPage && tenCategoriesPage.map(category => (
                         <li className="nav-item">
                             <button className="nav-link" onClick={()=>{dispatch(setFilterCategory(category.name))}}>
                                 {category.name}
                             </button>
                         </li>
                     ))}
-
-
+                    <li className="nav-item" style={{ display: "flex" }}>
+                        <button type="button" className="page-link"  style={{ background: "#33FFCC", borderRadius: 5, color: "black" }} onClick={previousPage}>
+                            Previous
+                        </button>
+                        &nbsp;
+                        <a className="page-link">&lt;---&gt;</a>
+                        &nbsp;
+                        <button type="button" className="page-link"  style={{ background: "#33FFCC", borderRadius: 5, color: "black" }} onClick={nextPage}>
+                            Next
+                        </button>
+                    </li>
                 </ul>
             </div>
         </>

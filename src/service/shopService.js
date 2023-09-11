@@ -8,6 +8,13 @@ export const getAllShops = createAsyncThunk(
         return res.data;
     }
 )
+export const getFiveShopsPage = createAsyncThunk(
+    "shop/getFiveShopsPage",
+    async (offset) => {
+        const res = await axios.get("http://localhost:8080/shops/page/" + offset);
+        return res.data;
+    }
+)
 // tìm shop theo id
 export const getShop = createAsyncThunk(
     "shop/getShop",

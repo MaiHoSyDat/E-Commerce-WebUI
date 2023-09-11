@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
-    getAllShops,
+    getAllShops, getFiveShopsPage,
     getShop,
     getShopByAccountLogin,
     getShopDTO,
@@ -8,6 +8,7 @@ import {
 } from "../../service/shopService";
 const initialState = {
     allShops: [],
+    fiveShopsPage: [],
     shopLogin: {},
     shopDTO: undefined,
     shopDTOLogin: undefined,
@@ -32,6 +33,9 @@ const shopSlice = createSlice({
         })
         builder.addCase(getAllShops.fulfilled,(state,action) => {
             state.allShops = action.payload;
+        })
+        builder.addCase(getFiveShopsPage.fulfilled,(state,action) => {
+            state.fiveShopsPage = action.payload;
         })
     }
 })
