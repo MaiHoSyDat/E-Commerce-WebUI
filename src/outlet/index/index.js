@@ -246,7 +246,7 @@ const Index = () => {
                                                 <div className=" position-absolute top-0 start-0">
                                                     {dto.product.status && <span className="badge bg-danger">{dto.product.status.name}</span>}
                                                 </div>
-                                                <a href="#!">
+                                                <a href="#">
                                                     {" "}
                                                     <img
                                                         src={dto.product.thumbnail}
@@ -255,33 +255,35 @@ const Index = () => {
                                                     />
                                                 </a>
                                                 <div className="card-product-action">
+                                                    <Link to={"/product/detail/" + dto.product.id}>
                                                     <a
-                                                        href="#!"
+                                                        href=""
                                                         className="btn-action"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#quickViewModal"
+                                                        data-bs-toggle=""
+                                                        data-bs-target=""
                                                     >
                                                         <i
                                                             className="bi bi-eye"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-html="true"
+                                                            data-bs-toggle=""
+                                                            data-bs-html=""
                                                             title="Quick View"
                                                         />
                                                     </a>
+                                                    </Link>
                                                     <a
-                                                        href="#!"
+                                                        href="#"
                                                         className="btn-action"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-html="true"
+                                                        data-bs-toggle=""
+                                                        data-bs-html=""
                                                         title="Wishlist"
                                                     >
                                                         <i className="bi bi-heart" />
                                                     </a>
                                                     <a
-                                                        href="#!"
+                                                        href="#"
                                                         className="btn-action"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-html="true"
+                                                        data-bs-toggle=""
+                                                        data-bs-html=""
                                                         title="Compare"
                                                     >
                                                         <i className="bi bi-arrow-left-right" />
@@ -294,12 +296,14 @@ const Index = () => {
                                                 </a>
                                             </div>
                                             <h2 className="fs-6">
+                                                <Link to={"/product/detail/" + dto.product.id}>
                                                 <a
-                                                    href="pages/shop-single.html"
+                                                    href=""
                                                     className="text-inherit text-decoration-none"
                                                 >
                                                     {dto.product.name}
                                                 </a>
+                                                </Link>
                                             </h2>
                                             <div>
                                                 {" "}
@@ -393,24 +397,26 @@ const Index = () => {
                                                     />
                                                 </a>
                                                 <div className="card-product-action">
+                                                    <Link to={"/product/detail/" + dto.product.id}>
                                                     <a
-                                                        href="#!"
+                                                        href="#"
                                                         className="btn-action"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#quickViewModal"
+                                                        data-bs-toggle=""
+                                                        data-bs-target=""
                                                     >
                                                         <i
                                                             className="bi bi-eye"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-html="true"
+                                                            data-bs-toggle=""
+                                                            data-bs-html=""
                                                             title="Quick View"
                                                         />
                                                     </a>
+                                                    </Link>
                                                     <a
-                                                        href="#!"
+                                                        href="#"
                                                         className="btn-action"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-html="true"
+                                                        data-bs-toggle=""
+                                                        data-bs-html=""
                                                         title="Wishlist"
                                                     >
                                                         <i className="bi bi-heart" />
@@ -418,8 +424,8 @@ const Index = () => {
                                                     <a
                                                         href="#!"
                                                         className="btn-action"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-html="true"
+                                                        data-bs-toggle=""
+                                                        data-bs-html=""
                                                         title="Compare"
                                                     >
                                                         <i className="bi bi-arrow-left-right" />
@@ -432,12 +438,14 @@ const Index = () => {
                                                 </a>
                                             </div>
                                             <h2 className="fs-6">
+                                                <Link to={"/product/detail/" + dto.product.id}>
                                                 <a
-                                                    href="pages/shop-single.html"
+                                                    href=""
                                                     className="text-inherit text-decoration-none"
                                                 >
                                                     {dto.product.name}
                                                 </a>
+                                                </Link>
                                             </h2>
                                             <div className="d-flex justify-content-between align-items-center mt-3">
                                                 <div>

@@ -52,8 +52,8 @@ const ProductFilterShow = () => {
                                         >
                                             <i
                                                 className="bi bi-eye"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-html="true"
+                                                data-bs-toggle=""
+                                                data-bs-html=""
                                                 title="Quick View"
                                             />
                                         </Link>
@@ -84,12 +84,14 @@ const ProductFilterShow = () => {
                                     </a>
                                 </div>
                                 <h2 className="fs-6">
+                                    <Link to={"/product/detail/" + dto.product.id}>
                                     <a
-                                        href="shop-single.html"
+                                        href=""
                                         className="text-inherit text-decoration-none"
                                     >
                                         {dto.product.name}
                                     </a>
+                                    </Link>
                                 </h2>
                                 <div>
                                     {" "}
