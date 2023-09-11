@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {useParams} from "react-router-dom";
-import StarRating from "./starRating";
+
 import RatingProgressBar from "./RatingProgressBar";
+import StarRating from "./starRating";
 
 const ProductDetailInformation = ({product}) => {
     const {productId} = useParams();
