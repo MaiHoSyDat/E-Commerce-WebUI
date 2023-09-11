@@ -6,6 +6,8 @@ import shopReducer from "./reducer/shopSlice";
 import categoryReducer from "./reducer/categorySlice";
 import inputReducer from "./reducer/inputSlice";
 import productDetailReducer from "./reducer/productDetailSlice";
+import wishlistReducer from "./reducer/wishlistSlice";
+import customerReducer from "./reducer/customerSlice";
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +17,8 @@ export const store = configureStore({
         inputFilter: inputReducer,
         shop: shopReducer,
         productDetail: productDetailReducer,
-        products: productPageReducer
+        products: productPageReducer,
+        wishlist: wishlistReducer,
+        customer: customerReducer
     }
 })

@@ -2,9 +2,22 @@ import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getTenProductsToIndex, getThreeProductsMaxRating} from "../../service/productService";
+import {getCustomerByAccountLogin} from "../../service/customerService";
+import {getWishlistByCustomerId, updateWishlist} from "../../service/wishlistService";
+import Swal from "sweetalert2";
 
 const Index = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const customerLogin = useSelector(state => {
+        console.log(state.customer.customerLogin)
+        return state.customer.customerLogin;
+    })
+    const wishlistByCustomer = useSelector(state => {
+        console.log(state)
+        return state.wishlist.wishlistByCustomer;
+    })
+
     const numbers = [1, 2, 3, 4, 5]
     const indexProducts = useSelector(state => {
         return state.product.indexProducts;
@@ -13,9 +26,39 @@ const Index = () => {
         return state.product.indexProductsMaxRating;
     })
     useEffect(() => {
+        const fetchData = async () => {
+            await dispatch(getCustomerByAccountLogin(account.id));
+            await dispatch(getWishlistByCustomerId(customerLogin.id));
+        }
+        fetchData()
         dispatch(getTenProductsToIndex())
         dispatch(getThreeProductsMaxRating())
-    },[]);
+    },[customerLogin]);
+    const handleAddProductToWishlist = (idProduct) => {
+        let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
+        let newProducts = [...wishlistByCustomer.products]
+        if (!checkId) {
+            newProducts.push({id:idProduct});
+            let newWishlist = {
+                id: wishlistByCustomer.id,
+                products: newProducts,
+                account: {id: customerLogin.id}
+            }
+            dispatch(updateWishlist(newWishlist))
+                .then(res => {
+                    Swal.fire(
+                        'Success!',
+                        'Add to Wishlist successfully!',
+                        'success'
+                    )
+                })
+                .catch(err => {
+                console.log(err)})
+        } else {
+            Swal.fire('The product already exists in the wishlist!')
+        }
+
+    }
     return (
         <main>
             <section className="mt-8">
@@ -270,24 +313,15 @@ const Index = () => {
                                                         />
                                                     </a>
                                                     </Link>
-                                                    <a
-                                                        href="#"
+                                                    <button style={{ border: "none" }}
                                                         className="btn-action"
                                                         data-bs-toggle=""
                                                         data-bs-html=""
                                                         title="Wishlist"
+                                                            onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
                                                     >
                                                         <i className="bi bi-heart" />
-                                                    </a>
-                                                    <a
-                                                        href="#"
-                                                        className="btn-action"
-                                                        data-bs-toggle=""
-                                                        data-bs-html=""
-                                                        title="Compare"
-                                                    >
-                                                        <i className="bi bi-arrow-left-right" />
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div className="text-small mb-1">
@@ -412,24 +446,16 @@ const Index = () => {
                                                         />
                                                     </a>
                                                     </Link>
-                                                    <a
-                                                        href="#"
+                                                    <button style={{ border: "none" }}
+                                                        onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
                                                         className="btn-action"
                                                         data-bs-toggle=""
                                                         data-bs-html=""
                                                         title="Wishlist"
+
                                                     >
                                                         <i className="bi bi-heart" />
-                                                    </a>
-                                                    <a
-                                                        href="#!"
-                                                        className="btn-action"
-                                                        data-bs-toggle=""
-                                                        data-bs-html=""
-                                                        title="Compare"
-                                                    >
-                                                        <i className="bi bi-arrow-left-right" />
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div className="text-small mb-1">
