@@ -13,11 +13,20 @@ const ProductCart = () => {
     const cart = useSelector(state => {
         return state.cart.allProductsFromCart
     })
+    const [total, setTotal] = useState(0);
+
     useEffect(() => {
         dispatch(getProductByAccount())
+        const calculateTotalAmount = () => {
+            let total = 0;
+            cart.forEach((cart) => {
+                total += cart.quantity * cart.product.price;
+            });
+            setTotal(total);
+        };
+        calculateTotalAmount();
     }, [])
-
-    const [total, setTotal] = useState(0);
+    console.log(cart)
 
     const handleOnClick = (num, id) => {
         const updatedCart = cart.map(item => {
@@ -25,7 +34,15 @@ const ProductCart = () => {
                 if (num === 1 && item.quantity > 1) {
                     return {...item, quantity: item.quantity - 1};
                 } else if (num === 2) {
-                    return {...item, quantity: item.quantity + 1};
+                    if (item.quantity < item.product.quantity) {
+                        return {...item, quantity: item.quantity + 1};
+                    } else {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Oops...',
+                            text: 'Quantity is not enough!',
+                        })
+                    }
                 }
 
             }
@@ -259,40 +276,40 @@ const ProductCart = () => {
                                         </button>
                                     </div>
                                     {/* text */}
-                                    <p>
-                                        <small>
-                                            By placing your order, you agree to be bound by the Freshcart{" "}
-                                            <a href="#!">Terms of Service</a>
-                                            and <a href="#!">Privacy Policy.</a>{" "}
-                                        </small>
-                                    </p>
-                                    {/* heading */}
-                                    <div className="mt-8">
-                                        <h2 className="h5 mb-3">Add Promo or Gift Card</h2>
-                                        <form>
-                                            <div className="mb-2">
-                                                {/* input */}
-                                                <label htmlFor="giftcard" className="form-label sr-only">
-                                                    Email address
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="giftcard"
-                                                    placeholder="Promo or Gift Card"
-                                                />
-                                            </div>
-                                            {/* btn */}
-                                            <div className="d-grid">
-                                                <button type="submit" className="btn btn-outline-dark mb-1">
-                                                    Redeem
-                                                </button>
-                                            </div>
-                                            <p className="text-muted mb-0">
-                                                <small>Terms &amp; Conditions apply</small>
-                                            </p>
-                                        </form>
-                                    </div>
+                                    {/*<p>*/}
+                                    {/*    <small>*/}
+                                    {/*        By placing your order, you agree to be bound by the Freshcart{" "}*/}
+                                    {/*        <a href="#!">Terms of Service</a>*/}
+                                    {/*        and <a href="#!">Privacy Policy.</a>{" "}*/}
+                                    {/*    </small>*/}
+                                    {/*</p>*/}
+                                    {/*/!* heading *!/*/}
+                                    {/*<div className="mt-8">*/}
+                                    {/*    <h2 className="h5 mb-3">Add Promo or Gift Card</h2>*/}
+                                    {/*    <form>*/}
+                                    {/*        <div className="mb-2">*/}
+                                    {/*            /!* input *!/*/}
+                                    {/*            <label htmlFor="giftcard" className="form-label sr-only">*/}
+                                    {/*                Email address*/}
+                                    {/*            </label>*/}
+                                    {/*            <input*/}
+                                    {/*                type="text"*/}
+                                    {/*                className="form-control"*/}
+                                    {/*                id="giftcard"*/}
+                                    {/*                placeholder="Promo or Gift Card"*/}
+                                    {/*            />*/}
+                                    {/*        </div>*/}
+                                    {/*        /!* btn *!/*/}
+                                    {/*        <div className="d-grid">*/}
+                                    {/*            <button type="submit" className="btn btn-outline-dark mb-1">*/}
+                                    {/*                Redeem*/}
+                                    {/*            </button>*/}
+                                    {/*        </div>*/}
+                                    {/*        <p className="text-muted mb-0">*/}
+                                    {/*            <small>Terms &amp; Conditions apply</small>*/}
+                                    {/*        </p>*/}
+                                    {/*    </form>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                         </div>

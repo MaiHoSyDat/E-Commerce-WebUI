@@ -9,7 +9,7 @@ const PayCart = () => {
     const [payAmount, setPayAmount] = useState({});
     const [totalAmount, setTotalAmount] = useState(0);
     const [totalAmountReduced, setTotalAmountReduced] = useState(0);
-
+    const [totalAmountPaid, setTotalAmountPaid] = useState(0);
     useEffect(() => {
         // Lấy ra tất cả hóa đơn:
         axios.get("http://localhost:8080/customer/unpaidOrders", {
@@ -30,7 +30,13 @@ const PayCart = () => {
             setTotalAmount(total);
         };
         calculateTotalAmount();
-    }, [list]);
+        // Tính tổng số tiền đã giảm
+        let totalReduced = 0;
+        Object.values(reducedAmount).forEach((amount) => {
+            totalReduced += amount;
+        });
+        setTotalAmountReduced(totalReduced);
+    }, [list, reducedAmount]);
     const handleAmountIsReduced = (value, id, totalAmount) => {
         const reducedAmountValue = value * totalAmount;
         const payAmountValue = totalAmount - reducedAmountValue;
@@ -44,13 +50,9 @@ const PayCart = () => {
             [id]: payAmountValue,
         }));
 
-        // Tính tổng số tiền đã giảm
-        let totalReduced = 0;
-        Object.values(reducedAmount).forEach((amount) => {
-            totalReduced += amount;
-        });
-        setTotalAmountReduced(totalReduced);
+
     };
+
     return (
         <main>
             {/* section */}
@@ -76,6 +78,22 @@ const PayCart = () => {
                                     <div className="alert alert-danger p-2" role="alert" key={order.id}>
                                         <ul className="list-group list-group-flush">
                                             <li className="list-group-item py-3 py-lg-0 px-0">
+
+                                                <div className="row align-items-center" style={{marginBottom: "5px"}}>
+
+                                                    <div className="col-8 col-md-3">
+                                                        <img
+                                                            src={order.logo}
+                                                            alt="Ecommerce"
+                                                            style={{maxWidth: "40%"}}
+                                                            class="img-thumbnail"
+                                                        />
+                                                        <strong>{order.shopName}</strong>
+
+                                                    </div>
+
+                                                </div>
+                                                <div style={{borderBottom: "1px dashed red"}}></div>
                                                 {order.orderDetails.map((od) => (
                                                     <div className="row align-items-center"
                                                          style={{marginBottom: "5px"}}>
@@ -103,6 +121,7 @@ const PayCart = () => {
                                                         </div>
                                                     </div>
                                                 ))}
+                                                <div style={{borderBottom: "1px dashed red"}}></div><br/>
                                                 <div className="row align-items-center"
                                                      style={{marginBottom: "5px"}}>
                                                     <div className="col-7 col-md-5">
@@ -196,12 +215,13 @@ const PayCart = () => {
                                                 <div className="me-auto">
                                                     <div className="fw-bold">Total amount is reduced :</div>
                                                 </div>
-                                                <span className="fw-bold">{totalAmountReduced}</span>
+                                                <span className="fw-bold">${totalAmountReduced}</span>
 
                                             </li>
-                                            <li className="list-group-item d-flex justify-content-between align-items-start">
+                                            <li className="list-group-item d-flex justify-content-between align-items-start"
+                                                style={{color: "red"}}>
                                                 <div className="me-auto">
-                                                    <div className="fw-bold" style={{color:"red"}}>Total amount to be paid :</div>
+                                                    <div className="fw-bold">Total amount to be paid :</div>
                                                 </div>
                                                 <span className="fw-bold">
 
