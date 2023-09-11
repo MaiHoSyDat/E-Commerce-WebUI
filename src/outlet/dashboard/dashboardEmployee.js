@@ -4,6 +4,7 @@ import {handleStatus} from "./dashboardCustomer";
 
 
 
+
 const DashboardEmployee = () => {
     const [employee, setEmployee] = useState([]);
     const [name, setName] = useState('');
@@ -35,7 +36,6 @@ const DashboardEmployee = () => {
             },)
             .then((response) => {
                 console.log(response.data);
-
                 // axios
                 //     .get('http://localhost:8080/admin/employee')
                 //     .then((response) => {
@@ -44,11 +44,11 @@ const DashboardEmployee = () => {
                 //     .catch((err) => {
                 //         console.log(err);
                 //     });
-
                 setName('');
                 setUsername('');
                 setEmail('');
                 setShowModal(false);
+                setEmployee([...employee, response.data]);
 
             })
             .catch((err) => {
@@ -97,7 +97,7 @@ const DashboardEmployee = () => {
                                     data-bs-toggle="modal"
                                     data-bs-target="#addCustomerModal"
                                 >
-                                    Add Customer
+                                    Add Employee
                                 </button>
                                 {/*</a>*/}
                             </div>

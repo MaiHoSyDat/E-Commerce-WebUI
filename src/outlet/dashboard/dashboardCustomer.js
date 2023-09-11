@@ -36,6 +36,7 @@ const DashboardCustomer = () => {
             .get('http://localhost:8080/admin/customerRoles')
             .then((response) => {
                 setStatus(response.data);
+
             })
             .catch((error) => {
                 console.log(error);
