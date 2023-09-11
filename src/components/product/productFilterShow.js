@@ -29,12 +29,8 @@ const ProductFilterShow = () => {
         return state.inputFilter.filterParam;
     })
     useEffect(() => {
-        const fetchData = async () => {
-            await dispatch(getCustomerByAccountLogin(account.id));
-            await dispatch(getWishlistByCustomerId(customerLogin.id));
-        }
-        fetchData()
-    },[customerLogin]);
+        dispatch(getCustomerByAccountLogin(account.id));
+    },[]);
 
     useEffect(() => {
         // const fetchData = async () => {
@@ -42,8 +38,9 @@ const ProductFilterShow = () => {
         //     await dispatch(setFilterShopSingle(shopLogin.id));
         // };
         // fetchData();
+        dispatch(getWishlistByCustomerId(customerLogin.id));
         dispatch(getFilterProducts(filterParam))
-    },[filterParam]);
+    },[filterParam,customerLogin]);
     const handleAddProductToWishlist = (idProduct) => {
         let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
         let newProducts = [...wishlistByCustomer.products]
@@ -54,18 +51,30 @@ const ProductFilterShow = () => {
                 products: newProducts,
                 account: {id: customerLogin.id}
             }
-            dispatch(updateWishlist(newWishlist))
+            const fetchData = async () => {
+                await dispatch(updateWishlist(newWishlist));
+                await dispatch(getWishlistByCustomerId(customerLogin.id))
+                    .then(res => {
+                        Swal.fire(
+                            'Success!',
+                            'Add to Wishlist successfully!',
+                            'success'
+                        )
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            }
+            fetchData();
+
+        } else {
+            dispatch(getWishlistByCustomerId(customerLogin.id))
                 .then(res => {
-                    Swal.fire(
-                        'Success!',
-                        'Add to Wishlist successfully!',
-                        'success'
-                    )
+                    Swal.fire('The product already exists in the wishlist!')
                 })
                 .catch(err => {
                     console.log(err)})
-        } else {
-            Swal.fire('The product already exists in the wishlist!')
+
         }
 
     }

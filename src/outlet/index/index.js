@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getTenProductsToIndex, getThreeProductsMaxRating} from "../../service/productService";
+import {getFilterProducts, getTenProductsToIndex, getThreeProductsMaxRating} from "../../service/productService";
 import {getCustomerByAccountLogin} from "../../service/customerService";
 import {getWishlistByCustomerId, updateWishlist} from "../../service/wishlistService";
 import Swal from "sweetalert2";
@@ -26,13 +26,12 @@ const Index = () => {
         return state.product.indexProductsMaxRating;
     })
     useEffect(() => {
-        const fetchData = async () => {
-            await dispatch(getCustomerByAccountLogin(account.id));
-            await dispatch(getWishlistByCustomerId(customerLogin.id));
-        }
-        fetchData()
-        dispatch(getTenProductsToIndex())
-        dispatch(getThreeProductsMaxRating())
+        dispatch(getCustomerByAccountLogin(account.id));
+    },[]);
+    useEffect(() => {
+        dispatch(getWishlistByCustomerId(customerLogin.id));
+        dispatch(getTenProductsToIndex());
+        dispatch(getThreeProductsMaxRating());
     },[customerLogin]);
     const handleAddProductToWishlist = (idProduct) => {
         let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
@@ -44,18 +43,30 @@ const Index = () => {
                 products: newProducts,
                 account: {id: customerLogin.id}
             }
-            dispatch(updateWishlist(newWishlist))
+            const fetchData = async () => {
+                await dispatch(updateWishlist(newWishlist));
+                await dispatch(getWishlistByCustomerId(customerLogin.id))
+                    .then(res => {
+                        Swal.fire(
+                            'Success!',
+                            'Add to Wishlist successfully!',
+                            'success'
+                        )
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            }
+            fetchData();
+
+        } else {
+            dispatch(getWishlistByCustomerId(customerLogin.id))
                 .then(res => {
-                    Swal.fire(
-                        'Success!',
-                        'Add to Wishlist successfully!',
-                        'success'
-                    )
+                    Swal.fire('The product already exists in the wishlist!')
                 })
                 .catch(err => {
-                console.log(err)})
-        } else {
-            Swal.fire('The product already exists in the wishlist!')
+                    console.log(err)})
+
         }
 
     }

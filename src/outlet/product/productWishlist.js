@@ -22,7 +22,7 @@ const ProductWishlist = () => {
             await dispatch(getWishlistByCustomerId(customerLogin.id));
         }
         fetchData()
-    },[customerLogin])
+    },[])
     const handleDeleteProductFromWishlist = (idProduct) => {
         let newProducts = wishlistByCustomer.products.filter(product => product.id != idProduct);
         let newWishlist = {
@@ -43,7 +43,7 @@ const ProductWishlist = () => {
                             <div className="mb-8">
                                 {/* heading */}
                                 <h1 className="mb-1">My Wishlist</h1>
-                                <p>There are {wishlistByCustomer.products.length} products in this wishlist.</p>
+                                {wishlistByCustomer.products && <p>There are {wishlistByCustomer.products.length} products in this wishlist.</p>}
                             </div>
                             <div>
                                 {/* table */}
