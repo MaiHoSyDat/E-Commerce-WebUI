@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {getAllProducts, getAllProductsByShop, getFilterProducts, getProduct} from "../../service/productService";
+
 const initialState = {
     allProducts: [],
     filterProducts: [],

@@ -149,6 +149,7 @@ const ProductFilterShow = () => {
                             >
                                 <a
                                     className={`page-link mx-1 ${
+                                        // eslint-disable-next-line no-self-compare
                                         currentPage === currentPage ? "current-page" : ""
                                     }`}
                                     href="#"

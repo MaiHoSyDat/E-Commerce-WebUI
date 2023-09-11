@@ -6,10 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="92932c45-7d35-4b0c-9bb6-94e2fe1c4e42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/product/productDetailInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productDetailInformation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/product/productFilterShow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productFilterShow.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterLogin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterViewLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterViewLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopSingle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopSingle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducer/productPageSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/productPageSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/reducer/productSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/productSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/productPageAction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/productPageAction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/productService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/productService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,13 +44,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/E-Commerce-WebUI",
+    "last_opened_file_path": "C:/Users/Asus/Desktop/BT-CODE-GYM/BT_QUAN/candy-fe",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2022.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -70,6 +74,10 @@
       <workItem from="1693925648875" duration="435000" />
       <workItem from="1693962808734" duration="347000" />
       <workItem from="1694049537604" duration="8540000" />
+      <workItem from="1694096243300" duration="12068000" />
+      <workItem from="1694135902642" duration="26445000" />
+      <workItem from="1694338998984" duration="22903000" />
+      <workItem from="1694395950397" duration="7627000" />
     </task>
     <servers />
   </component>

@@ -84,7 +84,7 @@ const ProductDetailInformation = () => {
                         <div className="my-8">
                             <div className="mb-5">
                                 {/* text */}
-                                <h4 className="mb-1">Nutrient Value &amp; Benefits</h4>
+                                <h4 className="mb-1">Description</h4>
                                 <p className="mb-0">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisi,
                                     tellus iaculis urna bibendum in lacus, integer. Id imperdiet vitae
@@ -107,11 +107,11 @@ const ProductDetailInformation = () => {
                             {/* content */}
                             <div className="mb-5">
                                 <h5 className="mb-1">Unit</h5>
-                                <p className="mb-0">3 units</p>
+                                <p className="mb-0">1 units</p>
                             </div>
                             <div className="mb-5">
                                 <h5 className="mb-1">Seller</h5>
-                                <p className="mb-0">DMart Pvt. LTD</p>
+                                <p className="mb-0">Tên Shop</p>
                             </div>
                             <div>
                                 <h5 className="mb-1">Disclaimer</h5>

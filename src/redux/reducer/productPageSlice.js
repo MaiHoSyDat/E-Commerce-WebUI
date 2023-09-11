@@ -1,16 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {
-    createProductsToCartByAccount,
-    deleteProductFromCartByAccount,
-    getProductByAccount, updateCartByStore,
-    updateProductFromCartByAccount
-} from "../../service/cartService";
+
 import {getProductPage} from "../../service/productPageAction";
 
 const initialState = {
     products: [],
     currentPage: 0,
-    totalPages: 1,
+    totalPages: 2,
 }
 const productPageSlice = createSlice({
     name: "products",
@@ -23,7 +18,5 @@ const productPageSlice = createSlice({
 
     },
 });
-
-// export const {setProducts} = productPageSlice.actions;
 
 export default productPageSlice.reducer;
