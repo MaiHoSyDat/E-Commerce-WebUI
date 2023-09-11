@@ -8,30 +8,44 @@ import {Field} from "formik";
 const DashboardCustomer = () => {
     const [status, setStatus] = useState([]);
     const [account, setAccount] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
 
 
     useEffect(() => {
-        axios
-            .get('http://localhost:8080/admin/getAccountByRole?id=2')
-            .then((response) => {
-                setAccount(response.data.content);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [status]);
+        fetchData();
+    }, [currentPage]);
+
     useEffect(() => {
         axios
             .get('http://localhost:8080/admin/customerRoles')
             .then((response) => {
                 setStatus(response.data);
-
             })
             .catch((error) => {
                 console.log(error);
             });
     }, []);
+
+    const fetchData = () => {
+        axios
+            .get('http://localhost:8080/admin/getAccountByRole', {
+                params: {
+                    page: currentPage - 1,
+                    id: 2
+                },
+            })
+            .then((response) => {
+                const { content, totalPages } = response.data;
+                setAccount(content);
+                setTotalPages(totalPages);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     const handleStatus = (idAccount, event) => {
         const idStatus = event.target.value;
         axios
@@ -57,6 +71,18 @@ const DashboardCustomer = () => {
                 console.log(err);
             });
     };
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
 
 
 
@@ -162,21 +188,37 @@ const DashboardCustomer = () => {
                                 </div>
                                 {/*phân trang*/}
                                 <div className="border-top d-md-flex justify-content-between align-items-center p-6">
-                                    <span>Showing 1 to 8 of 12 entries</span>
+        <span>
+                    Showing {account.length} to {account.length} of {totalPages * 10} entries
+
+        </span>
                                     <nav className="mt-2 mt-md-0">
                                         <ul className="pagination mb-0 ">
-                                            <li className="page-item disabled">
-                                                <a className="page-link " href="#!">
+                                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                                <a className="page-link" href="#!" onClick={handlePreviousPage}>
                                                     Previous
                                                 </a>
                                             </li>
-                                            <li className="page-item">
-                                                <a className="page-link active" href="#!">
-                                                    1
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
+                                            {Array.from({ length: totalPages }, (_, i) => (
+                                                <li
+                                                    key={i + 1}
+                                                    className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
+                                                >
+                                                    <a
+                                                        className="page-link"
+                                                        href="#!"
+                                                        onClick={() => setCurrentPage(i + 1)}
+                                                    >
+                                                        {i + 1}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                            <li
+                                                className={`page-item ${
+                                                    currentPage === totalPages ? 'disabled' : ''
+                                                }`}
+                                            >
+                                                <a className="page-link" href="#!" onClick={handleNextPage}>
                                                     Next
                                                 </a>
                                             </li>

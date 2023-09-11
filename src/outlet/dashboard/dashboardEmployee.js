@@ -12,18 +12,32 @@ const DashboardEmployee = () => {
     const [email, setEmail] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [status, setStatus] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
 
     useEffect(() => {
+        fetchData();
+    }, [currentPage]);
+
+    const fetchData = () => {
         axios
-            .get('http://localhost:8080/admin/getAccountByRole?id=4')
+            .get('http://localhost:8080/admin/getAccountByRole', {
+                params: {
+                    page: currentPage - 1, // Trừ 1 vì API đếm từ 0
+                    id: 4
+                }
+            })
             .then((response) => {
-                setEmployee(response.data.content);
+                const { content, totalPages } = response.data;
+                setEmployee(content);
+                setTotalPages(totalPages);
             })
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    };
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -36,18 +50,12 @@ const DashboardEmployee = () => {
             },)
             .then((response) => {
                 console.log(response.data);
-                // axios
-                //     .get('http://localhost:8080/admin/employee')
-                //     .then((response) => {
-                //         setEmployee(response.data);
-                //     })
-                //     .catch((err) => {
-                //         console.log(err);
-                //     });
                 setName('');
                 setUsername('');
                 setEmail('');
                 setShowModal(false);
+                setTotalPages(Math.ceil((employee.length + 1) / 10));
+                setCurrentPage(Math.ceil((employee.length + 1) / 10));
                 setEmployee([...employee, response.data]);
 
             })
@@ -89,6 +97,17 @@ const DashboardEmployee = () => {
             .catch(function (err) {
                 console.log(err);
             });
+    };
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     return (
@@ -258,21 +277,36 @@ const DashboardEmployee = () => {
                                     </table>
                                 </div>
                                 <div className="border-top d-md-flex justify-content-between align-items-center p-6">
-                                    <span>Showing 1 to 8 of 12 entries</span>
+        <span>
+          Showing {employee.length} to {employee.length} of {totalPages * 10} entries
+        </span>
                                     <nav className="mt-2 mt-md-0">
                                         <ul className="pagination mb-0 ">
-                                            <li className="page-item disabled">
-                                                <a className="page-link " href="#!">
+                                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                                <a className="page-link" href="#!" onClick={handlePreviousPage}>
                                                     Previous
                                                 </a>
                                             </li>
-                                            <li className="page-item">
-                                                <a className="page-link active" href="#!">
-                                                    1
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
+                                            {Array.from({ length: totalPages }, (_, i) => (
+                                                <li
+                                                    key={i + 1}
+                                                    className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
+                                                >
+                                                    <a
+                                                        className="page-link"
+                                                        href="#!"
+                                                        onClick={() => setCurrentPage(i + 1)}
+                                                    >
+                                                        {i + 1}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                            <li
+                                                className={`page-item ${
+                                                    currentPage === totalPages ? 'disabled' : ''
+                                                }`}
+                                            >
+                                                <a className="page-link" href="#!" onClick={handleNextPage}>
                                                     Next
                                                 </a>
                                             </li>
