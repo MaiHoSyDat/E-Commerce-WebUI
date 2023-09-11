@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import axios from "axios";
-import {handleStatus} from "./dashboardCustomer";
+// import {handleStatus} from "./dashboardCustomer";
 
 
 
@@ -65,6 +65,31 @@ const DashboardEmployee = () => {
                 console.log(error);
             });
     }, []);
+    const handleStatus = (idAccount, event) => {
+        const idStatus = event.target.value;
+        axios
+            .post(
+                "http://localhost:8080/admin/blockOrActive?accountId=" +
+                idAccount +
+                "&statusId=" +
+                idStatus
+            )
+            .then((response) => {
+                // Cập nhật lại trạng thái của tài khoản sau khi cập nhật thành công
+                const updatedEmployee = employee.map((a) => {
+                    if (a.id === idAccount) {
+                        return { ...a, status: { id: idStatus } };
+                    }
+                    return a;
+                });
+                setEmployee(updatedEmployee);
+
+                console.log(response);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    };
 
     return (
         <>

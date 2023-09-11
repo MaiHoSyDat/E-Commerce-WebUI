@@ -3,17 +3,7 @@ import { useParams} from "react-router-dom";
 import axios from "axios";
 import {Field} from "formik";
 
-const handleStatus = (idAccount, event) => {
-    const idStatus = event.target.value;
-    axios.post("http://localhost:8080/admin/blockOrActive?accountId=" + idAccount + "&statusId=" + idStatus)
-        .then(response => {
-            document.getElementById("status").value = idStatus;
-            console.log(response);
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
-};
+
 
 const DashboardCustomer = () => {
     const [status, setStatus] = useState([]);
@@ -42,8 +32,31 @@ const DashboardCustomer = () => {
                 console.log(error);
             });
     }, []);
+    const handleStatus = (idAccount, event) => {
+        const idStatus = event.target.value;
+        axios
+            .post(
+                "http://localhost:8080/admin/blockOrActive?accountId=" +
+                idAccount +
+                "&statusId=" +
+                idStatus
+            )
+            .then((response) => {
+                // Cập nhật lại trạng thái của tài khoản sau khi cập nhật thành công
+                const updatedAccount = account.map((a) => {
+                    if (a.id === idAccount) {
+                        return { ...a, status: { id: idStatus } };
+                    }
+                    return a;
+                });
+                setAccount(updatedAccount);
 
-
+                console.log(response);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    };
 
 
 
@@ -181,4 +194,4 @@ const DashboardCustomer = () => {
 };
 
 export default DashboardCustomer;
-export {handleStatus}
+// export {handleStatus}
