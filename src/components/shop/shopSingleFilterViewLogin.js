@@ -6,7 +6,7 @@ import {getAllProductsByShop, getFilterProducts} from "../../service/productServ
 import {setFilterShopSingle} from "../../service/inputService";
 import {Link} from "react-router-dom";
 
-const ShopSingleFilterViewLogin = () => {
+const ShopSingleFilterViewLogin = ( { onEditProduct }) => {
     const numbers = [1, 2, 3, 4, 5]
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
@@ -14,17 +14,17 @@ const ShopSingleFilterViewLogin = () => {
         return state.shop.shopLogin;
     })
     const filterProducts = useSelector(state => {
-        console.log(state.product.filterProducts)
         return state.product.filterProducts;
     })
     const filterParam = useSelector(state => {
-        console.log(state.inputFilter.filterParam)
         return state.inputFilter.filterParam;
     })
     useEffect(() => {
         dispatch(getFilterProducts(filterParam));
     },[filterParam])
-
+    const handleEditProduct = (product) => {
+        onEditProduct(product); // Gọi callback function và truyền đối tượng product
+    };
 
     return (
         <>
@@ -110,24 +110,20 @@ const ShopSingleFilterViewLogin = () => {
                                     </div>
                                     {/* btn */}
                                     <div>
-                                        <a href="#!" className="btn btn-primary btn-sm">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width={16}
-                                                height={16}
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="feather feather-plus"
+                                        <div>
+                                            <button
+                                                type="button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#sproductModal"
+                                                className="btn btn-light"
+                                                onClick={() => handleEditProduct(dto.product)}
+
                                             >
-                                                <line x1={12} y1={5} x2={12} y2={19} />
-                                                <line x1={5} y1={12} x2={19} y2={12} />
-                                            </svg>
-                                            Add
-                                        </a>
+                                                <i className="fa fa-pencil" style={{color: "blue"}}></i>
+                                            </button>
+                                            <button className="btn btn-light" data-toggle="modal" data-target="#myModal"><i
+                                                className="fa fa-trash" style={{color: "red"}}></i></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

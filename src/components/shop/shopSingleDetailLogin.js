@@ -8,7 +8,6 @@ const ShopSingleDetailLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const shopDTOLogin = useSelector(state => {
-        console.log(state)
         return state.shop.shopDTOLogin;
     })
     useEffect(() => {

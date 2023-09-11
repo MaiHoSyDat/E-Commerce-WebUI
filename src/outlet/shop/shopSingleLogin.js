@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import ShopSingleDetailLogin from "../../components/shop/shopSingleDetailLogin";
 import ShopSingleMenu from "../../components/shop/shopSingleMenu";
 import ShopSingleFilterViewLogin from "../../components/shop/shopSingleFilterViewLogin";
@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 const ShopSingleLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const [product , setProduct] = useState({})
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
     })
@@ -26,6 +27,9 @@ const ShopSingleLogin = () => {
         fetchData();
         // dispatch(setFilterShopSingle(shopLogin.id));
     },[shopLogin.id]);
+    const handleEditProduct = (product) => {
+        setProduct(product)
+    };
     return (
         <>
             <section className="mb-lg-14 mb-8 mt-8">
@@ -40,9 +44,9 @@ const ShopSingleLogin = () => {
                                 <ShopSingleSearchLogin></ShopSingleSearchLogin>
                                 <ShopSingleViewLogin></ShopSingleViewLogin>
                             </div>
-                            <ShopSingleFilterLogin></ShopSingleFilterLogin>
-                            <ShopSingleFilterViewLogin></ShopSingleFilterViewLogin>
-                        </div>
+                            <ShopSingleFilterLogin product={product} />
+                            <ShopSingleFilterViewLogin onEditProduct={handleEditProduct} />
+                            </div>
 
                     </div>
                 </div>

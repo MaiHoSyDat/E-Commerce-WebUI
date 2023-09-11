@@ -15,32 +15,24 @@ import {v4} from "uuid";
 import {storage} from "../../firebase";
 import {setFilterQuantityShow, setFilterSortShow} from "../../service/inputService";
 
-const ShopSingleFilterLogin = () => {
+const ShopSingleFilterLogin = ({product}) => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
     })
-    const shopProducts = useSelector(state => {
-        return state.product.shopProducts;
-    })
     const filterProducts = useSelector(state => {
-        console.log(state.product.filterProducts)
         return state.product.filterProducts;
     })
     const filterParam = useSelector(state => {
-        console.log(state.inputFilter.filterParam)
         return state.inputFilter.filterParam;
     })
     useEffect(() => {
-        // dispatch(getShopByAccountLogin(account.id))
-        // dispatch(getAllProductsByShop(shopLogin.id))
         dispatch(getFilterProducts(filterParam));
     }, [filterParam]);
 
     const [imageUpload, setImageUpload] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
-    const imagesListRef = ref(storage, "product/");
 
 
     const [categoryOptions, setCategoryOptions] = useState([]);
@@ -70,7 +62,6 @@ const ShopSingleFilterLogin = () => {
         updatedImages.splice(index, 1);
         setImageUpload(updatedImages);
     };
-    console.log("imageUrls top :>>" + imageUrls)
     useEffect(() => {
 
         if (imageUpload !== null) {
@@ -95,7 +86,24 @@ const ShopSingleFilterLogin = () => {
         dispatch((setFilterSortShow(sort)))
     }
 
+    const [productD, setProductD] = useState({
+        id: '',
+        name: '',
+        price: 0,
+        quantity: 0,
+        description: '',
+        unit: '',
+        category: '',
+        shop: ''
+    });
 
+    const handleChange1 = (event) => {
+        const { name, value } = event.target;
+        setProductD((prevProduct) => ({
+            ...prevProduct,
+            [name]: value
+        }));
+    };
     return (
         <>
             <div className="d-md-flex justify-content-between mb-3 align-items-center">
@@ -156,6 +164,7 @@ const ShopSingleFilterLogin = () => {
                         <div className="modal-body">
                             <Formik
                                 initialValues={{
+                                    id:product.id||0,
                                     name: '',
                                     price: '',
                                     quantity: '',
@@ -182,6 +191,7 @@ const ShopSingleFilterLogin = () => {
                                 onSubmit={(values, {setSubmitting, resetForm}) => {
                                     // Handle form submission
                                     let product = {
+                                        id:values.id,
                                         name: values.name,
                                         price: values.price,
                                         quantity: values.quantity,
@@ -196,7 +206,7 @@ const ShopSingleFilterLogin = () => {
                                         },
                                         images: imageUrls
                                     }
-                                    console.log(product)
+
                                     axios
                                         .post('http://localhost:8080/shops/' + account.id + '/products/create', product,
                                             {
@@ -210,9 +220,7 @@ const ShopSingleFilterLogin = () => {
                                             document.getElementById("image").value = null
                                             dispatch(getAllProductsByShop(shopLogin.id));
                                             resetForm();
-                                            alert("Create successful products")
-                                            console.log("imageUrls :>>>>" + imageUrls)
-
+                                            alert(" successful products")
 
                                         })
                                         .catch(error => {
@@ -226,7 +234,7 @@ const ShopSingleFilterLogin = () => {
                                         });
                                 }}
                             >
-                                {({errors, touched, isSubmitting}) => (
+                                {({ errors, touched, isSubmitting}) => (
                                     <Form>
                                         <div className="row g-3">
                                             <div className="col-12">
