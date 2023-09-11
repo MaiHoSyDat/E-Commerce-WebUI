@@ -16,7 +16,7 @@ import DashboardEmployee from "./outlet/dashboard/dashboardEmployee";
 import DashboardCustomer from "./outlet/dashboard/dashboardCustomer";
 import DashboardReview from "./outlet/dashboard/dashboardReview";
 import ShopList from "./outlet/shop/shopList";
-import ShopSingle from "./outlet/shop/shopSingle";
+import ShopSingleLogin from "./outlet/shop/shopSingleLogin";
 import Shop from "./pages/shop";
 import Product from "./pages/product";
 import ProductFilter from "./outlet/product/productFilter";
@@ -38,6 +38,7 @@ import CustomerAddress from "./outlet/customer/customerAddress";
 import CustomerPayment from "./outlet/customer/customerPayment";
 import CustomerNotification from "./outlet/customer/customerNotification";
 import Signin from "./pages/signin";
+import ShopSingle from "./outlet/shop/shopSingle";
 
 function App() {
     // xoá account khi tắt trang
@@ -64,7 +65,8 @@ function App() {
             <Route path="shop" element={<Shop/>}>
                 <Route path="list" element={<ShopList/>}/>
                 <Route path="" element={<ShopList/>}/>
-                <Route path="single" element={<ShopSingle/>}/>
+                <Route path="single" element={<ShopSingleLogin/>}/>
+                <Route path="single/:idShop" element={<ShopSingle/>}/>
                 <Route path="setting" element={<ShopInfomation/>}/>
             </Route>
             <Route path="product" element={<Product/>}>

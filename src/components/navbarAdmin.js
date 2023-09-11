@@ -538,7 +538,7 @@ const NavbarAdmin = () => {
                     </div>
                 </div>
             </div>
-            {/* ShopSingle Cart */}
+            {/* ShopSingleLogin Cart */}
             <div
                 className="offcanvas offcanvas-end"
                 tabIndex={-1}

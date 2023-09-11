@@ -8,3 +8,10 @@ export const getAllCategories = createAsyncThunk(
         return res.data;
     }
 )
+export const getTenCategoriesPage = createAsyncThunk(
+    "category/getTenCategoriesPage",
+    async (offset) => {
+        const res = await axios.get("http://localhost:8080/categories/" + offset);
+        return res.data;
+    }
+)

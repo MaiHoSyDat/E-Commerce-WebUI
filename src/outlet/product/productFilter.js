@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ProductFilterCategory from "../../components/product/productFilterCategory";
 import ProductFilterShop from "../../components/product/productFilterShop";
 import ProductFilterPrice from "../../components/product/productFilterPrice";
@@ -7,8 +7,15 @@ import ProductFilterFreshImage from "../../components/product/productFilterFresh
 import ProductFilterCategoryView from "../../components/product/productFilterCategoryView";
 import ProductFilterSort from "../../components/product/productFilterSort";
 import ProductFilterShow from "../../components/product/productFilterShow";
+import {useDispatch} from "react-redux";
+import {setFilterParam} from "../../service/inputService";
 
 const ProductFilter = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(setFilterParam());
+    },[]);
+
     return (
         <main>
             <div className=" mt-8 mb-lg-14 mb-8">
