@@ -4,7 +4,7 @@ import axios from "axios";
 const DashboardShop = () => {
     const [status, setStatus] = useState([]);
     const [shop, setShop] = useState([]);
-
+//lấy ra tất cả các shop
     useEffect(() => {
         axios
             .get('http://localhost:8080/shops')
@@ -15,9 +15,10 @@ const DashboardShop = () => {
                 console.log(error);
             });
     }, []);
+    //lấy ra tất cả các status của shop
     useEffect(() => {
         axios
-            .get('http://localhost:8080/admin/shopRoles')
+            .get('http://localhost:8080/admin/customerRoles')
             .then((response) => {
                 setStatus(response.data);
             })
@@ -25,21 +26,27 @@ const DashboardShop = () => {
                 console.log(error);
             });
     }, []);
-    const handleStatusChange = (idAccount, event) => {
+    //thay đổi trạng thái của shop
+    const handleStatus = (idShop, event) => {
         const idStatus = event.target.value;
         axios
-            .post(`http://localhost:8080/admin/shop/blockOrActive?shopId=${idAccount}&statusId=${idStatus}`)
+            .post(
+                "http://localhost:8080/admin/shop/blockOrActiveShop?shopId=" + idShop  +"&statusId=" + idStatus
+            )
             .then((response) => {
-                const updatedShops = shop.map((s) => {
-                    if (s.id === idAccount) {
-                        return { ...s, status: { id: parseInt(idStatus) } };
+                // Cập nhật lại trạng thái của shop sau khi cập nhật thành công
+                const updatedEmployee = shop.map((a) => {
+                    if (a.id === idShop) {
+                        return {...a, status: {id: idStatus}};
                     }
-                    return s;
+                    return a;
                 });
-                setShop(updatedShops);
+                setShop(updatedEmployee);
+
+                console.log(response);
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(function (err) {
+                console.log(err);
             });
     };
     return (
@@ -157,45 +164,19 @@ const DashboardShop = () => {
                                                         </td>
                                                         <td>{s.name}</td>
                                                         <td>
-                                                            {status.map((st) => {
-                                                                if (st.id === s.status.id) {
-                                                                    if (st.id === 3) {
-                                                                        return (
-                                                                            <>
-                                                                                <button
-                                                                                    className="btn btn-success me-2"
-                                                                                    onClick={() => handleStatusChange(s.id, {target: {value: 1}})}
-                                                                                >
-                                                                                    <i className="bi bi-check"/>
-                                                                                </button>
-                                                                                <button
-                                                                                    className="btn btn-danger"
-                                                                                    onClick={() => handleStatusChange(s.id, {target: {value: 2}})}
-                                                                                >
-                                                                                    <i className="bi bi-x"/>
-                                                                                </button>
-                                                                            </>
-                                                                        );
-                                                                    } else {
-                                                                        return (
                                                                             <select
+                                                                                key={s.id}
                                                                                 name="status"
                                                                                 id="status"
+                                                                                onChange={(event) => handleStatus(s.id, event)}
                                                                                 value={s.status.id}
-                                                                                onChange={(e) => handleStatusChange(s.id, e)}
                                                                             >
-                                                                                {status.map((option) => (
-                                                                                    <option key={option.id}
-                                                                                            value={option.id}>
-                                                                                        {option.name}
+                                                                                {status.map((s) => (
+                                                                                    <option key={s.id} value={s.id}>
+                                                                                        {s.name}
                                                                                     </option>
                                                                                 ))}
                                                                             </select>
-                                                                        );
-                                                                    }
-                                                                }
-                                                                return null;
-                                                            })}
                                                         </td>
                                                         <td>{s.dateCreate}</td>
                                                         <td>
