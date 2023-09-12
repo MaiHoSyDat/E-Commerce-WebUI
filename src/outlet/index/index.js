@@ -35,6 +35,10 @@ const Index = () => {
     },[customerLogin]);
     const handleAddProductToWishlist = (idProduct) => {
         let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
+        // let checkId = () => {
+        //     if (wishlistByCustomer.length) return wishlistByCustomer.products.some(product => product.id == idProduct);
+        //     else return false;
+        // }
         let newProducts = [...wishlistByCustomer.products]
         if (!checkId) {
             newProducts.push({id:idProduct});

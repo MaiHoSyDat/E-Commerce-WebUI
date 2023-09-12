@@ -15,14 +15,13 @@ const ProductWishlist = () => {
         console.log(state)
         return state.wishlist.wishlistByCustomer;
     })
+    useEffect(() => {
+        dispatch(getCustomerByAccountLogin(account.id));
+    },[])
 
     useEffect(() => {
-        const fetchData = async () => {
-            await dispatch(getCustomerByAccountLogin(account.id));
-            await dispatch(getWishlistByCustomerId(customerLogin.id));
-        }
-        fetchData()
-    },[])
+        dispatch(getWishlistByCustomerId(customerLogin.id));
+    },[customerLogin])
     const handleDeleteProductFromWishlist = (idProduct) => {
         let newProducts = wishlistByCustomer.products.filter(product => product.id != idProduct);
         let newWishlist = {
@@ -30,7 +29,11 @@ const ProductWishlist = () => {
             products: newProducts,
             account: {id: customerLogin.id}
         }
-        dispatch(updateWishlist(newWishlist));
+        const fetchData = async () => {
+            await dispatch(updateWishlist(newWishlist));;
+            await dispatch(getWishlistByCustomerId(customerLogin.id));
+        }
+        fetchData()
     }
     return (
         <main>

@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getCustomerByAccountLogin} from "../../service/customerService";
-import {getAllOrdersByCustomer, getOrderById} from "../../service/orderService";
 import {Link, useParams} from "react-router-dom";
+import {getOrderById} from "../../service/orderService";
 import {getAllOrderDetailsByOrder} from "../../service/orderDetailService";
 
-const CustomerOrderDetail = () => {
+const ShopOrderDetail = () => {
     const dispatch = useDispatch();
     const {idOrder} = useParams();
     const order = useSelector(state => {
+        console.log(state.order.order)
         return state.order.order;
     })
     const orderDetailsByOrder = useSelector(state => {
@@ -27,8 +27,8 @@ const CustomerOrderDetail = () => {
                     <div className="row">
                         <div className="col-6"><h2 className="mb-6">Orders Detail </h2></div>
                         <div className="col-6">
-                            <Link to={"/customer/order"}>
-                            <button type="button" className="btn btn-success">Back to Orders</button>
+                            <Link to={"/shop-manager/order"}>
+                                <button type="button" className="btn btn-success">Back to Orders</button>
                             </Link>
                         </div>
                     </div>
@@ -127,4 +127,4 @@ const CustomerOrderDetail = () => {
     );
 };
 
-export default CustomerOrderDetail;
+export default ShopOrderDetail;

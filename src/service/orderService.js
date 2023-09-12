@@ -15,6 +15,13 @@ export const getAllOrdersByCustomer = createAsyncThunk(
         return res.data;
     }
 )
+export const getAllOrdersByShop = createAsyncThunk(
+    "order/getAllOrdersByShop",
+    async (idShop) => {
+        const res = await axios.get("http://localhost:8080/shop/" + idShop + "/orders");
+        return res.data;
+    }
+)
 export const getOrderById = createAsyncThunk(
     "order/getOrderById",
     async (idOrder) => {
