@@ -14,6 +14,7 @@ import {
 import {v4} from "uuid";
 import {storage} from "../../firebase";
 import {setFilterQuantityShow, setFilterSortShow} from "../../service/inputService";
+import {fetchProductDetail} from "../../service/productDetailActions";
 
 const ShopSingleFilterLogin = ({product}) => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -76,7 +77,7 @@ const ShopSingleFilterLogin = ({product}) => {
             }
             setImageUrls(newImageUrls)
         }
-    },[imageUpload])
+    }, [imageUpload])
     const handleInputChangeQuantityShow = () => {
         let num = document.getElementById("quantity").value;
         dispatch((setFilterQuantityShow(num)))
@@ -85,24 +86,32 @@ const ShopSingleFilterLogin = ({product}) => {
         let sort = document.getElementById("sort").value;
         dispatch((setFilterSortShow(sort)))
     }
+    const [productDetail, setProductDetail] = useState({})
+    const [category , setCategory] = useState('')
 
-    const [productD, setProductD] = useState({
-        id: '',
-        name: '',
-        price: 0,
-        quantity: 0,
-        description: '',
-        unit: '',
-        category: '',
-        shop: ''
-    });
+    const productState = useSelector(state => state.productDetail.product);
 
-    const handleChange1 = (event) => {
-        const { name, value } = event.target;
-        setProductD((prevProduct) => ({
-            ...prevProduct,
-            [name]: value
-        }));
+    useEffect(() => {
+        dispatch(fetchProductDetail(product.id));
+    }, [product]);
+
+    useEffect(()=>{
+        if (productState){
+            setProductDetail(productState)
+        }
+    },[productState])
+
+    const handleCreateProduct = () => {
+       setProductDetail({
+           id: 0,
+           name: '',
+           price:0,
+           quantity:0,
+           description:'',
+           unit:'kg',
+           category:"1",
+           shop: account.id,
+       }) ;
     };
     return (
         <>
@@ -113,19 +122,19 @@ const ShopSingleFilterLogin = ({product}) => {
                 <div className="d-flex justify-content-md-between align-items-center">
                     <div className="me-2">
                         <select className="form-select" id="quantity" onClick={handleInputChangeQuantityShow}>
-                            <option  value={10000000} selected="" >Show: All</option>
-                            <option value={10} >10</option>
-                            <option value={20} >20</option>
-                            <option value={30} >30</option>
+                            <option value={10000000} selected="">Show: All</option>
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={30}>30</option>
                         </select>
                     </div>
                     <div>
                         <select className="form-select" id="sort" onClick={handleInputChangeSortShow}>
-                            <option selected=""  value="">Sort by: Normal</option>
-                            <option value="Low to High" >Price: Low to High</option>
-                            <option value="High to Low" > Price: High to Low</option>
-                            <option value="Release Date" > Release Date</option>
-                            <option value="Avg. Rating" > Avg. Rating</option>
+                            <option selected="" value="">Sort by: Normal</option>
+                            <option value="Low to High">Price: Low to High</option>
+                            <option value="High to Low"> Price: High to Low</option>
+                            <option value="Release Date"> Release Date</option>
+                            <option value="Avg. Rating"> Avg. Rating</option>
                         </select>
                     </div>
                     &ensp;
@@ -135,6 +144,8 @@ const ShopSingleFilterLogin = ({product}) => {
                             data-bs-toggle="modal"
                             data-bs-target="#sproductModal"
                             className="btn btn-success"
+                            onClick={handleCreateProduct}
+
                         >
                             Create New Product
                         </button>
@@ -161,16 +172,16 @@ const ShopSingleFilterLogin = ({product}) => {
                                 aria-label="Close"
                             />
                         </div>
-                        <div className="modal-body">
-                            <Formik
+                         <div className="modal-body">
+                            {productDetail && <Formik
                                 initialValues={{
-                                    id:product.id||0,
-                                    name: '',
-                                    price: '',
-                                    quantity: '',
-                                    description: '',
-                                    unit: 'kg',
-                                    category: "1",
+                                    id: productDetail.id||0,
+                                    name: productDetail.name||'',
+                                    price: productDetail.price||0,
+                                    quantity: productDetail.quantity||0,
+                                    description: productDetail.description||'',
+                                    unit: productDetail.unit||'kg',
+                                    category: category||"1",
                                     shop: '',
                                 }}
                                 validationSchema={Yup.object().shape({
@@ -184,14 +195,11 @@ const ShopSingleFilterLogin = ({product}) => {
                                         .required('Quantity is required')
                                         .min(0, 'Quantity must be a non-negative number'),
                                     description: Yup.string().required('Description is required'),
-                                    thumbnail: Yup.array()
-                                        .min(1, 'Please select at least one image')
-                                        .nullable(),
                                 })}
                                 onSubmit={(values, {setSubmitting, resetForm}) => {
                                     // Handle form submission
                                     let product = {
-                                        id:values.id,
+                                        id: values.id,
                                         name: values.name,
                                         price: values.price,
                                         quantity: values.quantity,
@@ -233,6 +241,7 @@ const ShopSingleFilterLogin = ({product}) => {
                                             setSubmitting(false);
                                         });
                                 }}
+                                enableReinitialize={true}
                             >
                                 {({ errors, touched, isSubmitting}) => (
                                     <Form>
@@ -243,6 +252,8 @@ const ShopSingleFilterLogin = ({product}) => {
                                                     className="form-control"
                                                     placeholder="Name"
                                                     name="name"
+
+
                                                 />
                                                 {errors.name && touched.name && (
                                                     <div className="error-message">{errors.name}</div>
@@ -371,7 +382,7 @@ const ShopSingleFilterLogin = ({product}) => {
                                         </div>
                                     </Form>
                                 )}
-                            </Formik>
+                            </Formik>}
                         </div>
                     </div>
                 </div>
