@@ -33,8 +33,8 @@ const ShopInfomation = () => {
         setLogoUpload(updateLogo);
     };
     console.log("imageUrls top :>>" + logoUrls)
-    useEffect(() => {
 
+    useEffect(() => {
         if (logoUpload !== null) {
             const newLogoUrls = [];
             for (let i = 0; i < logoUpload.length; i++) {
@@ -93,7 +93,6 @@ const ShopInfomation = () => {
                                             id: account.id
                                         }
                                     }
-                                    console.log(shopInformation)
                                     axios.post("http://localhost:8080/shops/save?id=" + account.id, shopInformation)
                                         .then((rep) => {
                                             alert("Update successful")

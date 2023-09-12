@@ -18,7 +18,6 @@ import {v4} from "uuid";
 
 const Home = () => {
     let account = JSON.parse(localStorage.getItem('account'));
-    const navigate = useNavigate();
 
     const [logoUpload, setLogoUpload] = useState([]);
     const [logoUrls, setLogoUrls] = useState([]);
@@ -26,18 +25,22 @@ const Home = () => {
 
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem('account'))
-        console.log(account)
+
         if (account && account.status.id === 3 && account.role.name === "ROLE_CUSTOMER") {
             window.$("#statusModal").modal("show");
         }
+        if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
+            window.$("#shopInformationModal").modal("show");
+        }
     }, [])
 
-    const updateLogo = (index) => {
+    const remoteImg = (index) => {
         const updateLogo = [...logoUpload];
         updateLogo.splice(index, 1);
         setLogoUpload(updateLogo);
     };
     console.log("imageUrls top :>>" + logoUrls)
+
     useEffect(() => {
 
         if (logoUpload !== null) {
@@ -67,13 +70,13 @@ const Home = () => {
                 className="modal fade"
                 id="statusModal"
                 tabIndex={-1}
-                aria-labelledby="userModalLabel"
+                aria-labelledby="userCustomerModal"
                 aria-hidden="true"
             >
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content p-4">
                         <div className="modal-header border-0">
-                            <h5 className="modal-title fs-3 fw-bold" id="userModalLabel">
+                            <h5 className="modal-title fs-3 fw-bold" id="userCustomerModal">
                                 Personal information
                             </h5>
                         </div>
@@ -162,7 +165,7 @@ const Home = () => {
                                                                         style={{width: '100px', height: 'auto'}}
                                                                     />
                                                                     <button
-                                                                        onClick={() => updateLogo(index)}
+                                                                        onClick={() => remoteImg(index)}
                                                                         style={{
                                                                             position: 'absolute',
                                                                             right: '0px',
@@ -265,17 +268,17 @@ const Home = () => {
                 className="modal fade"
                 id="shopInformationModal"
                 tabIndex={-1}
-                aria-labelledby="userModalLabel"
+                aria-labelledby="useShopInformationModal"
                 aria-hidden="true"
             >
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content p-4">
                         <div className="modal-header border-0">
-                            <h5 className="modal-title fs-3 fw-bold" id="userModalLabel">
+                            <h5 className="modal-title fs-3 fw-bold" id="useShopInformationModal">
                                 Shop Information
                             </h5>
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body-shop">
                             <Formik
                                 initialValues={{
                                     logo: '',
@@ -307,12 +310,14 @@ const Home = () => {
                                         address: values.address,
                                         phone: values.phone,
                                         name: values.name,
+                                        status: {
+                                            id: 1
+                                        },
                                         account: {
                                             id: account.id
                                         }
                                     }
-                                    console.log(shop)
-                                    axios.post("http://localhost:8080/shops/save", shop)
+                                    axios.post("http://localhost:8080/shops/save?id=" + account.id, shop)
                                         .then((rep) => {
                                             window.$("#shopInformationModal").modal("hide");
                                             alert("Update successful")
@@ -358,7 +363,7 @@ const Home = () => {
                                                                         style={{width: '100px', height: 'auto'}}
                                                                     />
                                                                     <button
-                                                                        onClick={() => updateLogo(index)}
+                                                                        onClick={() => remoteImg(index)}
                                                                         style={{
                                                                             position: 'absolute',
                                                                             right: '0px',
