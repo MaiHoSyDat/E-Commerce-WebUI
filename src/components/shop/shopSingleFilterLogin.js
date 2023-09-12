@@ -121,7 +121,6 @@ const ShopSingleFilterLogin = () => {
         setCategory(product.category.id)
     }
 
-
     useEffect(() => {
         if (editProduct && currentCategory) {
             setInitialData({
