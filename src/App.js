@@ -38,7 +38,6 @@ import CustomerAddress from "./outlet/customer/customerAddress";
 import CustomerPayment from "./outlet/customer/customerPayment";
 import CustomerNotification from "./outlet/customer/customerNotification";
 import Signin from "./pages/signin";
-import PayCart from "./outlet/product/payCart";
 
 function App() {
     // xoá account khi tắt trang
@@ -73,7 +72,6 @@ function App() {
             </Route>
             <Route path="cart" element={<Cart/>}>
                 <Route path="" element={<ProductCart/>}/>
-                <Route path={"payCart"} element={<PayCart/>}/>
             </Route>
             <Route path="checkout" element={<Checkout/>}>
                 <Route path="" element={<ProductCheckout/>}/>

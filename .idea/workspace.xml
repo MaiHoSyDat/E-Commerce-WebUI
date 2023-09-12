@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="92932c45-7d35-4b0c-9bb6-94e2fe1c4e42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/product/payCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/product/payCart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/outlet/product/payCart.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/outlet/product/productCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/product/productCart.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,13 +39,13 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/TMDT/E-Commerce-WebUI/src/outlet/product&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/Module 5/testDeThi/test_de_thi&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\HP\\AppData\\Local\\JetBrains\\WebStorm 2022.3.4\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -76,6 +77,8 @@
       <workItem from="1694135004386" duration="14619000" />
       <workItem from="1694335597827" duration="1213000" />
       <workItem from="1694396187479" duration="12157000" />
+      <workItem from="1694435848035" duration="24863000" />
+      <workItem from="1694500090879" duration="6258000" />
     </task>
     <servers />
   </component>
