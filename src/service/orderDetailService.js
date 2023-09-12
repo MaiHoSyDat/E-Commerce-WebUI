@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 export const getAllOrderDetailsByOrder = createAsyncThunk(
-    "order/getAllOrderDetailsByOrder",
+    "orderDetail/getAllOrderDetailsByOrder",
     async (idOrder) => {
         const res = await axios.get("http://localhost:8080/customer/orderDetail/" + idOrder);
         return res.data;

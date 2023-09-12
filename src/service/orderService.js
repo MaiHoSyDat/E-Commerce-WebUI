@@ -31,8 +31,8 @@ export const getOrderById = createAsyncThunk(
 )
 export const updateOrder = createAsyncThunk(
     "order/updateOrder",
-    async ({idOrder, updateOrder}) => {
-        const res = await axios.post("" + idOrder, updateOrder);
+    async ([idOrder, updateOrder]) => {
+        const res = await axios.post("http://localhost:8080/order/" + idOrder, updateOrder);
         return res.data;
     }
 )

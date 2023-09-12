@@ -1,6 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {deleteOrder, getAllOrdersByShop, updateOrder} from "../../service/orderService";
+import {getShopByAccountLogin} from "../../service/shopService";
+import {Link} from "react-router-dom";
+import Swal from "sweetalert2";
+import {getAllStatusOrder} from "../../service/statusService";
 
 const ShopOrder = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
+    const dispatch = useDispatch();
+    const shopLogin = useSelector(state => {
+        return state.shop.shopLogin;
+    })
+    const ordersByShop = useSelector(state => {
+        console.log(state)
+        return state.order.ordersByShop;
+    })
+    const statusOrder = useSelector(state => {
+        return state.status.statusOrder;
+    })
+    useEffect(() => {
+        dispatch(getAllStatusOrder())
+        dispatch(getShopByAccountLogin(account.id));
+    },[])
+    useEffect(() => {
+        dispatch(getAllOrdersByShop(shopLogin.id));
+    },[shopLogin])
     return (
         <>
             <div className="col-lg-9 col-md-8 col-12">
@@ -14,303 +39,70 @@ const ShopOrder = () => {
                             <thead className="bg-light">
                             <tr>
                                 <th>&nbsp;</th>
-                                <th>Product</th>
                                 <th>Order</th>
                                 <th>Date</th>
-                                <th>Items</th>
                                 <th>Status</th>
                                 <th>Amount</th>
-                                <th />
                                 <th />
                             </tr>
                             </thead>
                             <tbody>
-                            {/* Table body */}
-                            <tr>
-                                <td className="align-middle border-top-0 w-0">
-                                    <a href="#">
-                                        {" "}
-                                        <img
-                                            src="../assets/images/products/product-img-1.jpg"
-                                            alt="Ecommerce"
-                                            className="icon-shape icon-xl"
-                                        />
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="fw-semi-bold text-inherit">
-                                        <h6 className="mb-0">Haldiram's Nagpur Aloo Bhujia</h6>
-                                    </a>
-                                    <span>
-                <small className="text-muted">400g</small>
-              </span>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="text-inherit">
-                                        #14899
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">March 5, 2023</td>
-                                <td className="align-middle border-top-0">1</td>
-                                <td className="align-middle border-top-0">
-                                    <span className="badge bg-warning">Processing</span>
-                                </td>
-                                <td className="align-middle border-top-0">$15.00</td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="View"
-                                    >
-                                        <i className="feather-icon icon-eye" />
-                                    </a>
-                                </td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="Delete"
-                                    >
-                                        <i className="feather-icon icon-trash-2" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="align-middle border-top-0 w-0">
-                                    <a href="#">
-                                        {" "}
-                                        <img
-                                            src="../assets/images/products/product-img-2.jpg"
-                                            alt="Ecommerce"
-                                            className="icon-shape icon-xl"
-                                        />
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="fw-semi-bold text-inherit">
-                                        <h6 className="mb-0">Nutri Choise Biscuit</h6>
-                                    </a>
-                                    <span>
-                <small className="text-muted">2 Pkt</small>
-              </span>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="text-inherit">
-                                        #14658
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">July 9, 2023</td>
-                                <td className="align-middle border-top-0">2</td>
-                                <td className="align-middle border-top-0">
-                                    <span className="badge bg-success">Completed</span>
-                                </td>
-                                <td className="align-middle border-top-0">$45.00</td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="View"
-                                    >
-                                        <i className="feather-icon icon-eye" />
-                                    </a>
-                                </td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="Delete"
-                                    >
-                                        <i className="feather-icon icon-trash-2" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="align-middle border-top-0 w-0">
-                                    <a href="#">
-                                        {" "}
-                                        <img
-                                            src="../assets/images/products/product-img-3.jpg"
-                                            alt="Ecommerce"
-                                            className="icon-shape icon-xl"
-                                        />
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="text-inherit">
-                                        <h6 className="mb-0">Cadbury Dairy Milk 5 Star Bites </h6>
-                                        <span>
-                  <small className="text-muted">202 g</small>
-                </span>
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="text-inherit">
-                                        #13778
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">Oct 03, 2023</td>
-                                <td className="align-middle border-top-0">4</td>
-                                <td className="align-middle border-top-0">
-                                    <span className="badge bg-success">Completed</span>
-                                </td>
-                                <td className="align-middle border-top-0">$99.00</td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="View"
-                                    >
-                                        <i className="feather-icon icon-eye" />
-                                    </a>
-                                </td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="Delete"
-                                    >
-                                        <i className="feather-icon icon-trash-2" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="align-middle border-top-0 w-0">
-                                    <a href="#">
-                                        {" "}
-                                        <img
-                                            src="../assets/images/products/product-img-4.jpg"
-                                            alt="Ecommerce"
-                                            className="icon-shape icon-xl"
-                                        />
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="fw-semi-bold text-inherit">
-                                        <h6 className="mb-0">Onion Flavour Potato </h6>
-                                    </a>
-                                    <span>
-                <small className="text-muted">100 g</small>
-              </span>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="text-inherit">
-                                        #13746
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">March 5, 2023</td>
-                                <td className="align-middle border-top-0">1</td>
-                                <td className="align-middle border-top-0">
-                                    <span className="badge bg-success">Completed</span>
-                                </td>
-                                <td className="align-middle border-top-0">$12.00</td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="View"
-                                    >
-                                        <i className="feather-icon icon-eye" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="align-middle border-top-0 w-0">
-                                    <a href="#">
-                                        {" "}
-                                        <img
-                                            src="../assets/images/products/product-img-5.jpg"
-                                            alt="Ecommerce"
-                                            className="icon-shape icon-xl"
-                                        />
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="fw-semi-bold text-inherit">
-                                        <h6 className="mb-0">Salted Instant Popcorn </h6>
-                                    </a>
-                                    <span>
-                <small className="text-muted">500 g</small>
-              </span>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="text-inherit">
-                                        #13566
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">July 9, 2023</td>
-                                <td className="align-middle border-top-0">2</td>
-                                <td className="align-middle border-top-0">
-                                    <span className="badge bg-danger">Cancel</span>
-                                </td>
-                                <td className="align-middle border-top-0">$6.00</td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="View"
-                                    >
-                                        <i className="feather-icon icon-eye" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="align-middle border-top-0 w-0">
-                                    <a href="#">
-                                        {" "}
-                                        <img
-                                            src="../assets/images/products/product-img-6.jpg"
-                                            alt="Ecommerce"
-                                            className="icon-shape icon-xl"
-                                        />
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="fw-semi-bold text-inherit">
-                                        <h6 className="mb-0">Blueberry Greek Yogurt </h6>
-                                    </a>
-                                    <span>
-                <small className="text-muted">500 g</small>
-              </span>
-                                </td>
-                                <td className="align-middle border-top-0">
-                                    <a href="#" className="text-inherit">
-                                        #12094
-                                    </a>
-                                </td>
-                                <td className="align-middle border-top-0">Oct 03, 2023</td>
-                                <td className="align-middle border-top-0">4</td>
-                                <td className="align-middle border-top-0">
-                                    <span className="badge bg-success">Completed</span>
-                                </td>
-                                <td className="align-middle border-top-0">$18.00</td>
-                                <td className="text-muted align-middle border-top-0">
-                                    <a
-                                        href="#"
-                                        className="text-inherit"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        data-bs-title="View"
-                                    >
-                                        <i className="feather-icon icon-eye" />
-                                    </a>
-                                </td>
-                            </tr>
+                            {ordersByShop && ordersByShop.map(order => (
+                                <tr>
+                                    <td className="align-middle border-top-0 w-0">
+                                        <i className="feather-icon icon-clipboard" style={{ color: "blue" }} />
+                                    </td>
+                                    <td className="align-middle border-top-0">
+                                        <a href="#" className="text-inherit">
+                                            {order.id}
+                                        </a>
+                                    </td>
+                                    <td className="align-middle border-top-0">{order.date_create}</td>
+                                    <td className="align-middle border-top-0">
+                                        <select className="form-select" aria-label="Default select example" id="statusOrder" onClick={() => {
+                                            //change status
+                                            let idStatus = document.getElementById("statusOrder").value;
+                                            if (idStatus != order.status.id) {
+                                                let newOrder = {...order, status:{id: idStatus}}
+                                                const fetchData = async () => {
+                                                    await dispatch(updateOrder([order.id, newOrder]));
+                                                    await dispatch(getAllOrdersByShop(shopLogin.id))
+                                                        .then(Swal.fire(
+                                                            'Success!',
+                                                            'Status change successful!',
+                                                            'success'))
+                                                }
+                                                fetchData()
+                                            }
+
+                                        }}>
+                                            {statusOrder && statusOrder.map(status => (
+                                                <>
+                                                    {status.name == order.status.name && <option value={status.id} selected >{status.name}</option>}
+                                                    {status.name != order.status.name && <option value={status.id} >{status.name}</option>}
+                                                </>
+                                            ))}
+
+                                        </select>
+                                    </td>
+                                    <td className="align-middle border-top-0">${order.totalAmount}</td>
+                                    <td className="text-muted align-middle border-top-0">
+                                        <Link to={"/shop-manager/order-detail/" + order.id}>
+                                            <a
+                                                href="#"
+                                                className="text-inherit"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="top"
+                                                data-bs-title="View"
+                                            >
+                                                <i className="feather-icon icon-eye" />
+                                            </a>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+
+
                             </tbody>
                         </table>
                     </div>
