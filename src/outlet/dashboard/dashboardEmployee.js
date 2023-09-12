@@ -3,8 +3,6 @@ import axios from "axios";
 // import {handleStatus} from "./dashboardCustomer";
 
 
-
-
 const DashboardEmployee = () => {
     const [employee, setEmployee] = useState([]);
     const [name, setName] = useState('');
@@ -29,7 +27,7 @@ const DashboardEmployee = () => {
                 }
             })
             .then((response) => {
-                const { content, totalPages } = response.data;
+                const {content, totalPages} = response.data;
                 setEmployee(content);
                 setTotalPages(totalPages);
             })
@@ -86,7 +84,7 @@ const DashboardEmployee = () => {
                 // Cập nhật lại trạng thái của tài khoản sau khi cập nhật thành công
                 const updatedEmployee = employee.map((a) => {
                     if (a.id === idAccount) {
-                        return { ...a, status: { id: idStatus } };
+                        return {...a, status: {id: idStatus}};
                     }
                     return a;
                 });
@@ -167,20 +165,21 @@ const DashboardEmployee = () => {
                             </div>
                             <div className="card-body p-0 ">
                                 <div className="table-responsive">
-                                    <table className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
+                                    <table
+                                        className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
                                         <thead className="bg-light">
                                         <tr>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Role</th>
                                             <th>Status</th>
-                                            <th />
+                                            <th/>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {
                                             employee.map((e) => {
-                                                return(
+                                                return (
                                                     <>
                                                         <tr>
                                                             <td>
@@ -215,18 +214,18 @@ const DashboardEmployee = () => {
                                                                         data-bs-toggle="dropdown"
                                                                         aria-expanded="false"
                                                                     >
-                                                                        <i className="feather-icon icon-more-vertical fs-5" />
+                                                                        <i className="feather-icon icon-more-vertical fs-5"/>
                                                                     </a>
                                                                     <ul className="dropdown-menu">
                                                                         <li>
                                                                             <a className="dropdown-item" href="#">
-                                                                                <i className="bi bi-trash me-3" />
+                                                                                <i className="bi bi-trash me-3"/>
                                                                                 Delete
                                                                             </a>
                                                                         </li>
                                                                         <li>
                                                                             <a className="dropdown-item" href="#">
-                                                                                <i className="bi bi-pencil-square me-3 " />
+                                                                                <i className="bi bi-pencil-square me-3 "/>
                                                                                 Edit
                                                                             </a>
 
@@ -237,28 +236,54 @@ const DashboardEmployee = () => {
                                                         </tr>
                                                         <div>
                                                             {/* Modal add*/}
-                                                            <div className={`modal fade ${showModal ? 'show' : ''}`} id="addCustomerModal" tabIndex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden={!showModal}>
+                                                            <div className={`modal fade ${showModal ? 'show' : ''}`}
+                                                                 id="addCustomerModal" tabIndex="-1"
+                                                                 aria-labelledby="addCustomerModalLabel"
+                                                                 aria-hidden={!showModal}>
                                                                 <div className="modal-dialog">
                                                                     <div className="modal-content">
                                                                         <div className="modal-header">
-                                                                            <h5 className="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
-                                                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                                                            <h5 className="modal-title"
+                                                                                id="addCustomerModalLabel">Add New
+                                                                                Customer</h5>
+                                                                            <button type="button" className="btn-close"
+                                                                                    data-bs-dismiss="modal"
+                                                                                    aria-label="Close"></button>
                                                                         </div>
                                                                         <div className="modal-body">
                                                                             <form onSubmit={handleSubmit}>
                                                                                 <div className="mb-3">
-                                                                                    <label htmlFor="name" className="form-label">Name</label>
-                                                                                    <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+                                                                                    <label htmlFor="name"
+                                                                                           className="form-label">Name</label>
+                                                                                    <input type="text"
+                                                                                           className="form-control"
+                                                                                           id="name" value={name}
+                                                                                           onChange={(e) => setName(e.target.value)}
+                                                                                           required/>
                                                                                 </div>
                                                                                 <div className="mb-3">
-                                                                                    <label htmlFor="username" className="form-label">Username</label>
-                                                                                    <input type="text" className="form-control" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                                                                                    <label htmlFor="username"
+                                                                                           className="form-label">Username</label>
+                                                                                    <input type="text"
+                                                                                           className="form-control"
+                                                                                           id="username"
+                                                                                           value={username}
+                                                                                           onChange={(e) => setUsername(e.target.value)}
+                                                                                           required/>
                                                                                 </div>
                                                                                 <div className="mb-3">
-                                                                                    <label htmlFor="email" className="form-label">Email</label>
-                                                                                    <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                                                                                    <label htmlFor="email"
+                                                                                           className="form-label">Email</label>
+                                                                                    <input type="email"
+                                                                                           className="form-control"
+                                                                                           id="email" value={email}
+                                                                                           onChange={(e) => setEmail(e.target.value)}
+                                                                                           required/>
                                                                                 </div>
-                                                                                <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">Submit</button>
+                                                                                <button type="submit"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        className="btn btn-primary">Submit
+                                                                                </button>
                                                                             </form>
                                                                         </div>
                                                                     </div>
@@ -287,7 +312,7 @@ const DashboardEmployee = () => {
                                                     Previous
                                                 </a>
                                             </li>
-                                            {Array.from({ length: totalPages }, (_, i) => (
+                                            {Array.from({length: totalPages}, (_, i) => (
                                                 <li
                                                     key={i + 1}
                                                     className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}

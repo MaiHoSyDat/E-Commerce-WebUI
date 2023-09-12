@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import axios from "axios";
 import {Field} from "formik";
-
 
 
 const DashboardCustomer = () => {
@@ -10,7 +9,6 @@ const DashboardCustomer = () => {
     const [account, setAccount] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-
 
 
     useEffect(() => {
@@ -37,7 +35,7 @@ const DashboardCustomer = () => {
                 },
             })
             .then((response) => {
-                const { content, totalPages } = response.data;
+                const {content, totalPages} = response.data;
                 setAccount(content);
                 setTotalPages(totalPages);
             })
@@ -59,7 +57,7 @@ const DashboardCustomer = () => {
                 // Cập nhật lại trạng thái của tài khoản sau khi cập nhật thành công
                 const updatedAccount = account.map((a) => {
                     if (a.id === idAccount) {
-                        return { ...a, status: { id: idStatus } };
+                        return {...a, status: {id: idStatus}};
                     }
                     return a;
                 });
@@ -82,9 +80,6 @@ const DashboardCustomer = () => {
             setCurrentPage(currentPage + 1);
         }
     };
-
-
-
 
 
     return (
@@ -131,7 +126,8 @@ const DashboardCustomer = () => {
                             </div>
                             <div className="card-body p-0 ">
                                 <div className="table-responsive">
-                                    <table className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
+                                    <table
+                                        className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
                                         <thead className="bg-light">
                                         <tr>
                                             <th>Username</th>
@@ -146,7 +142,7 @@ const DashboardCustomer = () => {
                                         <tbody>
                                         {
                                             account.map((a) => {
-                                                return(
+                                                return (
                                                     <>
                                                         <tr>
                                                             <td>
@@ -165,7 +161,7 @@ const DashboardCustomer = () => {
                                                                 {a.role.name}
                                                             </td>
                                                             <td>$49.00</td>
-                                                            <td> <select
+                                                            <td><select
                                                                 key={a.id}
                                                                 name="status"
                                                                 id="status"
@@ -181,7 +177,8 @@ const DashboardCustomer = () => {
 
                                                         </tr>
                                                     </>
-                                                )})
+                                                )
+                                            })
                                         }
                                         </tbody>
                                     </table>
@@ -199,7 +196,7 @@ const DashboardCustomer = () => {
                                                     Previous
                                                 </a>
                                             </li>
-                                            {Array.from({ length: totalPages }, (_, i) => (
+                                            {Array.from({length: totalPages}, (_, i) => (
                                                 <li
                                                     key={i + 1}
                                                     className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
