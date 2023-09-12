@@ -17,7 +17,7 @@ const DashboardShop = () => {
     }, []);
     useEffect(() => {
         axios
-            .get('http://localhost:8080/admin/shopRoles')
+            .get('http://localhost:8080/admin/shopStatus')
             .then((response) => {
                 setStatus(response.data);
             })
