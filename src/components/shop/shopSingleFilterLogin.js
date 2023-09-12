@@ -33,8 +33,8 @@ const ShopSingleFilterLogin = () => {
         return state.inputFilter.filterParam;
     })
     useEffect(() => {
-        // dispatch(getShopByAccountLogin(account.id))
-        // dispatch(getAllProductsByShop(shopLogin.id))
+        dispatch(getShopByAccountLogin(account.id))
+        dispatch(getAllProductsByShop(shopLogin.id))
         dispatch(getFilterProducts(filterParam));
     }, [filterParam]);
 
@@ -60,6 +60,7 @@ const ShopSingleFilterLogin = () => {
 
             })
     }, []);
+
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
         setImageUpload(files);
@@ -86,6 +87,7 @@ const ShopSingleFilterLogin = () => {
             setImageUrls(newImageUrls)
         }
     },[imageUpload])
+
     const handleInputChangeQuantityShow = () => {
         let num = document.getElementById("quantity").value;
         dispatch((setFilterQuantityShow(num)))
@@ -306,7 +308,9 @@ const ShopSingleFilterLogin = () => {
                                                 </Field>
                                                 {errors.category && touched.category && (
                                                     <div className="error-message">{errors.category}</div>
-                                                )}                                            </div>
+                                                )}
+                                            </div>
+
                                             <div className="col-12">
                                                 <Field
                                                     name="files"
@@ -352,6 +356,7 @@ const ShopSingleFilterLogin = () => {
                                                 )}
                                             </div>
                                         </div>
+
                                         <div className="mt-3">
                                             <button
                                                 type="submit"

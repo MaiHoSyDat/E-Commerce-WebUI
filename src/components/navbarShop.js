@@ -457,7 +457,7 @@ const NavbarShop = () => {
                                             </Link>
                                         </li>
                                         <li className="nav-item w-100 w-lg-auto">
-                                            <Link to={"/setting"}>
+                                            <Link to={"/shop/setting"}>
                                                 <a className="nav-link" href="">
                                                     Setting
                                                 </a>
