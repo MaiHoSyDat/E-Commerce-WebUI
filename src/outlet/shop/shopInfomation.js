@@ -17,12 +17,6 @@ const ShopInfomation = () => {
         dispatch(getShopByAccountLogin(account.id))
     }, []);
 
-    useEffect(() => {
-        let account = JSON.parse(localStorage.getItem('account'))
-        if (account && account.status.id === 3 && account.role.name === "ROLE_SHOP") {
-
-        }
-    }, [])
 
     const [logoUpload, setLogoUpload] = useState([]);
     const [logoUrls, setLogoUrls] = useState([]);
@@ -53,7 +47,7 @@ const ShopInfomation = () => {
             }
             setLogoUrls(newLogoUrls)
         }
-    },[logoUpload])
+    }, [logoUpload])
 
     return (
         <main>
@@ -69,30 +63,32 @@ const ShopInfomation = () => {
                                     phone: ''
 
                                 }}
-                                validation={ values => {
+                                validation={values => {
                                     const errors = {};
                                     // Kiểm tra các trường dữ liệu
 
                                     if (!values.address) {
-                                    errors.address = 'Please enter your address';
-                                }
+                                        errors.address = 'Please enter your address';
+                                    }
 
                                     if (!values.phone) {
-                                    errors.phone = 'Please enter the phone number';
-                                }
+                                        errors.phone = 'Please enter the phone number';
+                                    }
 
                                     if (!values.name) {
-                                    errors.name = 'Please enter the shop name';
-                                }
+                                        errors.name = 'Please enter the shop name';
+                                    }
                                     return errors;
-                            }}
+                                }}
                                 onSubmit={(values, {setSubmitting}) => {
                                     let shopInformation = {
                                         logo: values.logo,
                                         name: values.name,
                                         address: values.address,
                                         phone: values.phone,
-                                        status: {id: 1},
+                                        status: {
+                                            id: 1
+                                        },
                                         account: {
                                             id: account.id
                                         }
@@ -106,7 +102,7 @@ const ShopInfomation = () => {
                                         }).catch((err) => {
                                         alert("Update failed")
                                         console.log(err)
-                                })
+                                    })
                                     setSubmitting(false);
                                 }}
                             >
@@ -125,7 +121,7 @@ const ShopInfomation = () => {
                                             />
                                             {errors.logo && touched.logo && (
                                                 <div className="error-message">{errors.logo}</div>
-                                                )}
+                                            )}
                                             {logoUpload.length > 0 && (
                                                 <div>
                                                     <h5>Shop Logo:</h5>
