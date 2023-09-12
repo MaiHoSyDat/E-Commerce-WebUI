@@ -508,16 +508,16 @@ const NavbarCustomer = () => {
                                             </Link>
                                         </li>
                                         <li className="nav-item w-100 w-lg-auto">
-                                            <Link to={"/order"}>
+                                            <Link to={"/customer/order"}>
                                                 <a className="nav-link" href="">
                                                     Order
                                                 </a>
                                             </Link>
                                         </li>
                                         <li className="nav-item w-100 w-lg-auto">
-                                            <Link to={"/setting"}>
+                                            <Link to={"/customer"}>
                                                 <a className="nav-link" href="">
-                                                    Setting
+                                                    Manager
                                                 </a>
                                             </Link>
                                         </li>

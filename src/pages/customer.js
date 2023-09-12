@@ -3,11 +3,20 @@ import Navbar from "../components/navbar";
 import {Outlet} from "react-router-dom";
 import Footer from "../components/footer";
 import CustomerMenu from "../components/customer/customerMenu";
+import NavbarCustomer from "../components/navbarCustomer";
+import NavbarAdmin from "../components/navbarAdmin";
+import NavbarShop from "../components/navbarShop";
+import NavbarEmployee from "../components/navbarEmployee";
 
 const Customer = () => {
+    let account = JSON.parse(localStorage.getItem('account'));
     return (
         <>
-            <Navbar></Navbar>
+            {account === null && <Navbar></Navbar>}
+            {account && account.role.name === "ROLE_CUSTOMER" && <NavbarCustomer></NavbarCustomer>}
+            {account && account.role.name === "ROLE_ADMIN" && <NavbarAdmin></NavbarAdmin>}
+            {account && account.role.name === "ROLE_SHOP" && <NavbarShop></NavbarShop>}
+            {account && account.role.name === "ROLE_EMPLOYEE" && <NavbarEmployee></NavbarEmployee>}
             <main>
                 {/* section */}
                 <section>
@@ -18,7 +27,7 @@ const Customer = () => {
                             <div className="col-12">
                                 <div className="d-flex justify-content-between align-items-center d-md-none py-4">
                                     {/* heading */}
-                                    <h3 className="fs-5 mb-0">Account Setting</h3>
+                                    <h3 className="fs-5 mb-0">Customer Setting</h3>
                                     {/* button */}
                                     <button
                                         className="btn btn-outline-gray-400 text-muted d-md-none btn-icon btn-sm ms-3 "

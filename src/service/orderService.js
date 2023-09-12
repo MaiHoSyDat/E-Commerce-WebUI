@@ -8,17 +8,17 @@ export const getAllOrders = createAsyncThunk(
         return res.data;
     }
 )
-export const getAllOrdersByAccount = createAsyncThunk(
-    "order/getAllOrdersByAccount",
-    async () => {
-        const res = await axios.get("");
+export const getAllOrdersByCustomer = createAsyncThunk(
+    "order/getAllOrdersByCustomer",
+    async (idCustomer) => {
+        const res = await axios.get("http://localhost:8080/customer/" + idCustomer + "/orders");
         return res.data;
     }
 )
-export const getAllOrdersByShop = createAsyncThunk(
-    "order/getAllOrdersByShop",
-    async () => {
-        const res = await axios.get("");
+export const getOrderById = createAsyncThunk(
+    "order/getOrderById",
+    async (idOrder) => {
+        const res = await axios.get("http://localhost:8080/order/" + idOrder);
         return res.data;
     }
 )
@@ -26,6 +26,13 @@ export const updateOrder = createAsyncThunk(
     "order/updateOrder",
     async ({idOrder, updateOrder}) => {
         const res = await axios.post("" + idOrder, updateOrder);
+        return res.data;
+    }
+)
+export const deleteOrder = createAsyncThunk(
+    "order/deleteOrder",
+    async (idOrder) => {
+        const res = await axios.get("http://localhost:8080/order/delete/" + idOrder);
         return res.data;
     }
 )

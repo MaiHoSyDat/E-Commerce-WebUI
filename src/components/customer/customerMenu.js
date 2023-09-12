@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const CustomerMenu = () => {
     return (
@@ -10,38 +11,49 @@ const CustomerMenu = () => {
                         {/* nav item */}
                         <li className="nav-item">
                             {/* nav link */}
-                            <a className="nav-link " aria-current="page" href="account-orders.html">
+                            <Link to={"/customer/order"}>
+                            <a className="nav-link " aria-current="page" href="">
                                 <i className="feather-icon icon-shopping-bag me-2" />
-                                Your Orders
+                                Orders
                             </a>
+                            </Link>
+
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
-                            <a className="nav-link " href="account-settings.html">
+                            <Link to={"/customer/setting"}>
+                            <a className="nav-link " href="">
                                 <i className="feather-icon icon-settings me-2" />
                                 Settings
                             </a>
+                            </Link>
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
-                            <a className="nav-link active" href="account-address.html">
+                            <Link to={"/customer/address"}>
+                            <a className="nav-link " href="">
                                 <i className="feather-icon icon-map-pin me-2" />
                                 Address
                             </a>
+                            </Link>
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
-                            <a className="nav-link" href="account-payment-method.html">
+                            <Link to={"/customer/payment"}>
+                            <a className="nav-link" href="">
                                 <i className="feather-icon icon-credit-card me-2" />
                                 Payment Method
                             </a>
+                            </Link>
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
-                            <a className="nav-link" href="account-notification.html">
+                            <Link to={"/customer/notification"}>
+                            <a className="nav-link" href="">
                                 <i className="feather-icon icon-bell me-2" />
                                 Notification
                             </a>
+                            </Link>
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
@@ -49,10 +61,12 @@ const CustomerMenu = () => {
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
-                            <a className="nav-link " href="../index.html">
+                            <Link to={"/index"}>
+                            <a className="nav-link " href="">
                                 <i className="feather-icon icon-log-out me-2" />
                                 Log out
                             </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

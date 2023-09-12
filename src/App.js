@@ -26,7 +26,6 @@ import ProductCart from "./outlet/product/productCart";
 import Cart from "./pages/cart";
 import Checkout from "./pages/checkout";
 import ProductCheckout from "./outlet/product/productCheckout";
-import ShopInfomation from "./outlet/shop/shopInfomation";
 import About from "./pages/about";
 import Error404 from "./pages/error404";
 import Signup from "./pages/signup";
@@ -39,6 +38,12 @@ import CustomerPayment from "./outlet/customer/customerPayment";
 import CustomerNotification from "./outlet/customer/customerNotification";
 import Signin from "./pages/signin";
 import ShopSingle from "./outlet/shop/shopSingle";
+import ShopSetting from "./outlet/shop/shopSetting";
+import ShopOrder from "./outlet/shop/shopOrder";
+import ShopAddress from "./outlet/shop/shopAddress";
+import ShopNotification from "./outlet/shop/shopNotification";
+import ShopManager from "./pages/shopManager";
+import CustomerOrderDetail from "./outlet/customer/customerOrderDetail";
 
 function App() {
     // xoá account khi tắt trang
@@ -67,7 +72,7 @@ function App() {
                 <Route path="" element={<ShopList/>}/>
                 <Route path="single" element={<ShopSingleLogin/>}/>
                 <Route path="single/:idShop" element={<ShopSingle/>}/>
-                <Route path="setting" element={<ShopInfomation/>}/>
+                <Route path="setting" element={<ShopSetting/>}/>
             </Route>
             <Route path="product" element={<Product/>}>
                 <Route path="filter" element={<ProductFilter/>}/>
@@ -89,12 +94,19 @@ function App() {
             <Route path="signin" element={<Signin/>}></Route>
             <Route path="signup" element={<Signup/>}></Route>
             <Route path="forgot-password" element={<ForgotPassword/>}></Route>
-            <Route path="account" element={<Customer/>}>
+            <Route path="customer" element={<Customer/>}>
                 <Route path="order" element={<CustomerOrder/>}/>
+                <Route path="order-detail/:idOrder" element={<CustomerOrderDetail/>}/>
                 <Route path="setting" element={<CustomerSetting/>}/>
                 <Route path="address" element={<CustomerAddress/>}/>
                 <Route path="payment" element={<CustomerPayment/>}/>
                 <Route path="notification" element={<CustomerNotification/>}/>
+            </Route>
+            <Route path="shop-manager" element={<ShopManager/>}>
+                <Route path="order" element={<ShopOrder/>}/>
+                <Route path="order-detail/:idOrder" element={<ShopOrder/>}/>
+                <Route path="address" element={<ShopAddress/>}/>
+                <Route path="notification" element={<ShopNotification/>}/>
             </Route>
         </Routes>
     </>

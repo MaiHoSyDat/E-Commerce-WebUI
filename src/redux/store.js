@@ -8,6 +8,8 @@ import inputReducer from "./reducer/inputSlice";
 import productDetailReducer from "./reducer/productDetailSlice";
 import wishlistReducer from "./reducer/wishlistSlice";
 import customerReducer from "./reducer/customerSlice";
+import orderReducer from "./reducer/orderSilce";
+import orderDetailReducer from "./reducer/orderDetailSlice";
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +21,8 @@ export const store = configureStore({
         productDetail: productDetailReducer,
         products: productPageReducer,
         wishlist: wishlistReducer,
-        customer: customerReducer
+        customer: customerReducer,
+        order: orderReducer,
+        orderDetail: orderDetailReducer
     }
 })
