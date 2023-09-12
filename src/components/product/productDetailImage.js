@@ -5,7 +5,6 @@ import {fetchProductDetail} from "../../service/productDetailActions";
 import axios from "axios";
 
 const ProductDetailImage = ({product}) => {
-    console.log(product)
     return (
         <>
             <div className="col-md-6">
