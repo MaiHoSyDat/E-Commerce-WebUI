@@ -10,7 +10,7 @@ const DashboardShopPending = () => {
     useEffect(() => {
         fetchData();
         fetchStatus();
-    }, [currentPage]);
+    }, [currentPage,account]);
 //lấy ra tất cả các status
     const fetchStatus = () => {
         axios
