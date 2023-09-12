@@ -11,7 +11,7 @@ const DashboardCategory = () => {
         }).catch(function (err){
             console.log(err)
         })
-    })
+    },[])
     return (
         <>
             <div className="container">
