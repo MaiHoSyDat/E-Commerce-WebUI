@@ -18,20 +18,25 @@ import {setFilterQuantityShow, setFilterSortShow} from "../../service/inputServi
 const ShopSingleFilterLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
     })
+
     const shopProducts = useSelector(state => {
         return state.product.shopProducts;
     })
+
     const filterProducts = useSelector(state => {
         console.log(state.product.filterProducts)
         return state.product.filterProducts;
     })
+
     const filterParam = useSelector(state => {
         console.log(state.inputFilter.filterParam)
         return state.inputFilter.filterParam;
     })
+
     useEffect(() => {
         dispatch(getShopByAccountLogin(account.id))
         dispatch(getAllProductsByShop(shopLogin.id))
@@ -96,7 +101,6 @@ const ShopSingleFilterLogin = () => {
         let sort = document.getElementById("sort").value;
         dispatch((setFilterSortShow(sort)))
     }
-
 
     return (
         <>
@@ -198,7 +202,6 @@ const ShopSingleFilterLogin = () => {
                                         },
                                         images: imageUrls
                                     }
-                                    console.log(product)
                                     axios
                                         .post('http://localhost:8080/shops/' + account.id + '/products/create', product,
                                             {

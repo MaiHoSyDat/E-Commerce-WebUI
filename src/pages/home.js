@@ -1,6 +1,5 @@
 import Navbar from "../components/navbar";
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
 import Footer from "../components/footer";
 import NavbarCustomer from "../components/navbarCustomer";
 import NavbarAdmin from "../components/navbarAdmin";
@@ -13,6 +12,7 @@ import Index from "../outlet/index";
 import {storage} from "../firebase";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {v4} from "uuid";
+import * as Yup from "yup";
 
 
 
@@ -62,6 +62,14 @@ const Home = () => {
         setLogoUpload(files);
     };
 
+    const validation=Yup.object().shape({
+        logo: Yup.array()
+            .min(1, 'Please select at least one image')
+            .nullable(),
+        address: Yup.string().required('Address is required'),
+        phone: Yup.string().required('Phone is required'),
+        name: Yup.string().required('Name is required'),
+    })
 
     return (
         <>
@@ -141,10 +149,9 @@ const Home = () => {
 
                                             <div className="col-12">
                                                 <Field
-                                                    name="files"
+                                                    name="avatar"
                                                     type="file"
                                                     id="image"
-                                                    multiple
                                                     onChange={handleFileChange}
                                                 />
                                                 {errors.avatar && touched.avatar && (
@@ -286,27 +293,15 @@ const Home = () => {
                                     phone: '',
                                     name: ''
                                 }}
-                                validate={values => {
-                                    const errors = {};
-                                    // Kiểm tra các trường dữ liệu
-
-                                    if (!values.address) {
-                                        errors.address = 'Please enter your address';
-                                    }
-
-                                    if (!values.phone) {
-                                        errors.phone = 'Please enter the phone number';
-                                    }
-
-                                    if (!values.name) {
-                                        errors.name = 'Please enter the shop name';
-                                    }
-
-                                    return errors;
-                                }}
+                                validationSchema={validation}
                                 onSubmit={(values, {setSubmitting}) => {
+                                    if (!logoUrls[0]) {
+                                        alert("Please select an image for the logo");
+                                        setSubmitting(false);
+                                        return;
+                                    }
                                     let shop = {
-                                        logo: values.logo,
+                                        logo: logoUrls[0],
                                         address: values.address,
                                         phone: values.phone,
                                         name: values.name,
@@ -339,7 +334,7 @@ const Home = () => {
 
                                             <div className="col-12">
                                                 <Field
-                                                    name="files"
+                                                    name="logo"
                                                     type="file"
                                                     id="image"
                                                     multiple

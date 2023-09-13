@@ -1,26 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {getShopByAccountLogin} from "../../service/shopService";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "../../firebase";
 import {v4} from "uuid";
 import {Field, Form, Formik} from "formik";
 import axios from "axios";
+import * as Yup from 'yup';
 
 
 const ShopInfomation = () => {
     let account = JSON.parse(localStorage.getItem('account'));
-
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getShopByAccountLogin(account.id))
-    }, []);
-
 
     const [logoUpload, setLogoUpload] = useState([]);
     const [logoUrls, setLogoUrls] = useState([]);
     const imagesListRef = ref(storage, "shop/");
+
+    const shop = useSelector((state) => {
+        return state.shop.shopLogin
+    })
+
+    useEffect(() => {
+        dispatch(getShopByAccountLogin(account.id))
+    }, []);
 
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
@@ -32,8 +35,6 @@ const ShopInfomation = () => {
         updateLogo.splice(index, 1);
         setLogoUpload(updateLogo);
     };
-    console.log("imageUrls top :>>" + logoUrls)
-
     useEffect(() => {
         if (logoUpload !== null) {
             const newLogoUrls = [];
@@ -49,6 +50,16 @@ const ShopInfomation = () => {
         }
     }, [logoUpload])
 
+    const validation=Yup.object().shape({
+        name: Yup.string().required('Name is required'),
+        address: Yup.string().required('Address is required'),
+        phone: Yup.string().required('Phone is required'),
+        description: Yup.string().required('Description is required'),
+        logo: Yup.array()
+            .min(1, 'Please select at least one image')
+            .nullable(),
+    })
+
     return (
         <main>
             <section className="my-lg-14 my-8">
@@ -57,32 +68,21 @@ const ShopInfomation = () => {
                         <div className="offset-lg-2 col-lg-8 col-12">
                             <Formik
                                 initialValues={{
-                                    logo: '',
-                                    name: '',
-                                    address: '',
-                                    phone: ''
-
+                                    logo: shop.logo,
+                                    name: shop.name,
+                                    address: shop.address,
+                                    phone: shop.phone
                                 }}
-                                validation={values => {
-                                    const errors = {};
-                                    // Kiểm tra các trường dữ liệu
-
-                                    if (!values.address) {
-                                        errors.address = 'Please enter your address';
-                                    }
-
-                                    if (!values.phone) {
-                                        errors.phone = 'Please enter the phone number';
-                                    }
-
-                                    if (!values.name) {
-                                        errors.name = 'Please enter the shop name';
-                                    }
-                                    return errors;
-                                }}
+                                validation={validation}
                                 onSubmit={(values, {setSubmitting}) => {
+                                    if (!logoUrls[0]) {
+                                        alert("Please select an image for the logo");
+                                        setSubmitting(false);
+                                        return;
+                                    }
                                     let shopInformation = {
-                                        logo: values.logo,
+                                        id: shop.id,
+                                        logo: logoUrls[0],
                                         name: values.name,
                                         address: values.address,
                                         phone: values.phone,
@@ -93,8 +93,10 @@ const ShopInfomation = () => {
                                             id: account.id
                                         }
                                     }
-                                    axios.post("http://localhost:8080/shops/save?id=" + account.id, shopInformation)
+                                    const shopUrl = "http://localhost:8080/shops/save?id=" + shop.id;
+                                    axios.post(shopUrl, shopInformation)
                                         .then((rep) => {
+
                                             alert("Update successful")
                                             account.status.id = 1;
                                             localStorage.setItem("account", JSON.stringify(account))
@@ -104,6 +106,7 @@ const ShopInfomation = () => {
                                     })
                                     setSubmitting(false);
                                 }}
+                                enableReinitialize={true}
                             >
                                 {({errors, touched, isSubmitting}) => (
                                     <Form>
@@ -112,10 +115,10 @@ const ShopInfomation = () => {
                                                 Logo<span className="text-danger">*</span>
                                             </label>
                                             <Field
+                                                name="file"
                                                 type="file"
-                                                name="logo"
                                                 id="logo"
-                                                className="form-control"
+
                                                 onChange={handleFileChange}
                                             />
                                             {errors.logo && touched.logo && (
@@ -158,19 +161,19 @@ const ShopInfomation = () => {
                                         <div className="col-md-6 mb-3">
                                             <div className="d-flex justify-content-between">
                                                 <label className="form-label" htmlFor="status">
-                                                    Status:
+                                                   <p>Status:</p>
                                                 </label>
                                             </div>
 
                                             <div className="d-flex justify-content-between">
                                                 <label className="form-label" htmlFor="dataCreate">
-                                                    Date Create:
+                                                   <p>Date Create: {shop.dateCreate}</p>
                                                 </label>
                                             </div>
 
                                             <div className="d-flex justify-content-between">
                                                 <label className="form-label" htmlFor="rating">
-                                                    Rating:
+                                                   <p>Rating:</p>
                                                 </label>
                                             </div>
                                         </div>
