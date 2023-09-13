@@ -10,8 +10,8 @@ export const getAllCustomers = createAsyncThunk(
 )
 export const getCustomer = createAsyncThunk(
     "customer/getCustomer",
-    async () => {
-        const res = await axios.get("");
+    async (id) => {
+        const res = await axios.get("http://localhost:8080/customer/customerDetail/"+id);
         return res.data;
     }
 )

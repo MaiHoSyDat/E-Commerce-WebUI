@@ -5,31 +5,46 @@ import axios from "axios";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "../../firebase";
 import {v4} from "uuid";
+import {getCustomer} from "../../service/customerService";
+import {useDispatch} from "react-redux";
 
 const CustomerSetting = () => {
+    let account = JSON.parse(localStorage.getItem('account'));
 
-    const [imageUpload, setImageUpload] = useState([]);
-    const [imageUrls, setImageUrls] = useState([]);
+    const [imageUpload, setImageUpload] = useState('');
+    const [image1, setImage1] = useState('');
+    const [imageUrls, setImageUrls] = useState('');
+    const [customer, setCustomer] = useState({});
     const handleFileChange = (event) => {
-        const files = Array.from(event.target.files);
-        setImageUpload(files);
-
+        const file = event.target.files[0];
+        setImage1(URL.createObjectURL(file));
+        setImageUpload(file)
     };
-   
-    useEffect(() => {
+    useEffect(()=>{
+        axios .get("http://localhost:8080/customer/customerDetail/"+account.id,  {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            },
+        }).then((resp)=>{
+            setCustomer(resp.data)
+            setImage1(resp.data.avatar)
+        }).catch((err)=>{
+            console.log(err)
+        })
 
+    },[])
+    console.log(image1)
+
+    useEffect(() => {
         if (imageUpload !== null) {
-            const newImageUrls = [];
-            for (let i = 0; i < imageUpload.length; i++) {
-                const imageRef = ref(storage, `product/${imageUpload[i].name + v4()}`);
-                uploadBytes(imageRef, imageUpload[i]).then((snapshot) => {
+                const imageRef = ref(storage, `customer/${imageUpload.name + v4()}`);
+                uploadBytes(imageRef, imageUpload).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then((url) => {
-                        newImageUrls.push(url);
+                        setImageUrls(url)
                     });
                 });
             }
-            setImageUrls(newImageUrls)
-        }
+
     }, [imageUpload])
 
     return (
@@ -56,7 +71,13 @@ const CustomerSetting = () => {
                             <div className="col-lg-6">
                                 {/* form */}
                                 <Formik
-                                    initialValues={{birthday: '', avatar: '', address: '', phone: '', gender: '1'}}
+                                    initialValues={{
+                                        birthday: customer.birthday,
+                                        avatar: customer.avatar,
+                                        address: customer.address,
+                                        phone: customer.phone,
+                                        gender: customer.gender
+                                }}
                                     validate={values => {
                                         const errors = {};
                                         // Kiểm tra các trường dữ liệu
@@ -83,18 +104,19 @@ const CustomerSetting = () => {
                                         return errors;
                                     }}
                                     onSubmit={(values, {setSubmitting}) => {
-                                        let customer = {
+                                        let newCustomer = {
+                                            id:customer.id,
                                             birthday: values.birthday,
-                                            avatar: values.avatar,
+                                            avatar: imageUrls,
                                             address: values.address,
                                             phone: values.phone,
                                             gender: values.gender,
-                                            account: {
-                                                id: 0
-                                            }
-                                        }
 
-                                        axios.post("http://localhost:8080/customer/save", customer).then((rep) => {
+                                        }
+                                        console.log(newCustomer)
+                                        console.log(newCustomer.avatar)
+
+                                        axios.post("http://localhost:8080/customer/edit", newCustomer).then((rep) => {
                                             window.$("#statusModal").modal("hide");
                                             alert("Update successful")
                                         }).catch((err) => {
@@ -106,6 +128,7 @@ const CustomerSetting = () => {
 
                                         setSubmitting(false);
                                     }}
+                                    enableReinitialize={true}
                                 >
                                     {({errors, touched, isSubmitting}) => (
                                         <Form>
@@ -172,7 +195,7 @@ const CustomerSetting = () => {
                                                         <Field
                                                             name="files"
                                                             type="file"
-                                                            id="image"
+                                                            id="avatar"
                                                             onChange={handleFileChange}
                                                         />
                                                         {errors.thumbnail && touched.thumbnail && (
@@ -198,25 +221,22 @@ const CustomerSetting = () => {
                                 </Formik>
                             </div>
                             <div className='col-2'></div>
-                            {imageUpload.length > 0 && (
                                 <div className='col-4' style={{textAlign :"center"}}>
                                     <br/>
                                     <div style={{display: 'flex'}}>
-                                        {imageUpload.map((file, index) => (
-                                            <div key={index} style={{
+                                            <div  style={{
                                                 marginRight: '10px',
                                                 position: 'relative'
                                             }}>
                                                 <img
-                                                    src={URL.createObjectURL(file)}
-                                                    alt={`Selected Image ${index}`}
-                                                    style={{width: '250px', height: 'auto'}}
+                                                    src={image1}
+                                                    alt={`Selected Image `}
+                                                    style={{width: '200px', height: 'auto'}}
                                                 />
                                             </div>
-                                        ))}
                                     </div>
                                 </div>
-                            )}
+
 
                         </div>
 
@@ -225,36 +245,102 @@ const CustomerSetting = () => {
                     <div className="pe-lg-14">
                         {/* heading */}
                         <h5 className="mb-4">Password</h5>
-                        <form className=" row row-cols-1 row-cols-lg-2">
-                            {/* input */}
-                            <div className="mb-3 col">
-                                <label className="form-label">New Password</label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    placeholder="**********"
-                                />
-                            </div>
-                            {/* input */}
-                            <div className="mb-3 col">
-                                <label className="form-label">Current Password</label>
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    placeholder="**********"
-                                />
-                            </div>
-                            {/* input */}
-                            <div className="col-12">
-                                <p className="mb-4">
-                                    Can’t remember your current password?
-                                    <a href="#"> Reset your password.</a>
-                                </p>
-                                <a href="#" className="btn btn-primary">
-                                    Save Password
-                                </a>
-                            </div>
-                        </form>
+                        <div className='col-6'>
+                        <Formik
+                            initialValues={{
+                                youPass: '',
+                                newPass: '',
+                                currentPass: '',
+
+                            }}
+                            validate={values => {
+                                const errors = {};
+                                // Kiểm tra các trường dữ liệu
+
+                                if (!values.youPass) {
+                                    errors.youPass = 'You password is required';
+                                }
+
+                                if (!values.newPass) {
+                                    errors.newPass = 'New password is required';
+                                }else if (values.newPass.length < 6) {
+                                    errors.newPass = 'New password must be at least 6 characters long';
+                                }
+
+                                if (!values.currentPass) {
+                                    errors.currentPass = 'Current password is required';
+                                }
+                                if (values.newPass !== values.currentPass) {
+                                    errors.currentPass = 'Re-type new password does not match new password';
+                                }
+
+                                return errors;
+                            }}
+                            onSubmit={(values, {setSubmitting}) => {
+
+
+                                setSubmitting(false);
+                            }}
+                            enableReinitialize={true}
+                        >
+                            {({errors, touched, isSubmitting}) => (
+                                <Form className=" row row-cols-1 row-cols-lg-1">
+
+
+                                    {/* input */}
+                                    <div className="mb-3  col">
+                                        <label className="form-label">You Password</label>
+                                        <Field
+                                            type="password"
+                                            className="form-control"
+                                            placeholder="**********"
+                                            name='youPass'
+                                        />
+                                        {errors.youPass && touched.youPass && (
+                                            <div className="error-message">{errors.youPass}</div>
+                                        )}
+                                    </div>
+                                    {/* input */}
+                                    <div className="mb-3 col">
+                                        <label className="form-label">New Password</label>
+                                        <Field
+                                            type="password"
+                                            className="form-control"
+                                            placeholder="**********"
+                                            name='newPass'
+
+                                        />
+                                        {errors.newPass && touched.newPass && (
+                                            <div className="error-message">{errors.newPass}</div>
+                                        )}
+                                    </div>
+                                    {/* input */}
+                                    <div className="mb-3 col">
+                                        <label className="form-label">Re-type New Password</label>
+                                        <Field
+                                            type="password"
+                                            className="form-control"
+                                            placeholder="**********"
+                                            name='currentPass'
+
+                                        />
+                                        {errors.currentPass && touched.currentPass && (
+                                            <div className="error-message">{errors.currentPass}</div>
+                                        )}
+                                    </div>
+                                    {/* input */}
+                                    <div className="col-12">
+                                     <br/>
+                                        <a href="#" className="btn btn-primary">
+                                            Save Password
+                                        </a>
+                                    </div>
+
+
+                                </Form>
+                            )}
+                        </Formik>
+                        </div>
                     </div>
                     <hr className="my-10"/>
                     <div>
