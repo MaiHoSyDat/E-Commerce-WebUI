@@ -1,5 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react';
 import axios from "axios";
+import {Field, Form, Formik} from "formik";
+import * as Yup from "yup";
+import {getAllProductsByShop} from "../../service/productService";
 // import {handleStatus} from "./dashboardCustomer";
 
 
@@ -7,10 +10,7 @@ const DashboardEmployee = () => {
     const [employee, setEmployee] = useState([]);
     const [searchType, setSearchType] = useState(1); // Lựa chọn tìm kiếm theo tên hoặc email
     const [searchText, setSearchText] = useState('');
-    const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [showModal, setShowModal] = useState(false);
+
     const [status, setStatus] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -39,19 +39,6 @@ const DashboardEmployee = () => {
         }
         fetchData()
     },[searchText,searchType])
-    // const handleSearch = () => {
-    //     axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
-    //         .then((response) => {
-    //             setEmployee(response.data.content);
-    //             console.log(response.data)
-    //             setTotalPages(response.data.totalPages)
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    // };
-
-
     const fetchData = () => {
         axios
             .get('http://localhost:8080/admin/getAccountByRole', {
@@ -63,32 +50,6 @@ const DashboardEmployee = () => {
             .then((response) => {
                 setEmployee(response.data.content);
                 setTotalPages(response.data.totalPages);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        axios
-            .post('http://localhost:8080/admin', {
-                name,
-                username,
-                email,
-            },)
-            .then((response) => {
-                console.log(response.data);
-                setName('');
-                setUsername('');
-                setEmail('');
-                setShowModal(false);
-                setTotalPages(Math.ceil((employee.length + 1) / 10));
-                setCurrentPage(Math.ceil((employee.length + 1) / 10));
-                setEmployee([...employee, response.data]);
-
             })
             .catch((err) => {
                 console.log(err);
@@ -164,19 +125,143 @@ const DashboardEmployee = () => {
                                 </nav>
                             </div>
                             <div>
-                                {/*<a href="#!"  className="btn btn-primary">*/}
                                 <button
                                     type="button"
-                                    button onClick={() => setShowModal(true)}
-                                    className="btn btn-primary"
                                     data-bs-toggle="modal"
                                     data-bs-target="#addCustomerModal"
+                                    className="btn btn-success"
                                 >
-                                    Add Employee
+                                    Create New Employee
                                 </button>
-                                {/*</a>*/}
                             </div>
                         </div>
+                    </div>
+                    <div
+                        className="modal fade"
+                        id="addCustomerModal"
+                        tabIndex={-1}
+                        aria-labelledby="userModalLabel"
+                        aria-hidden="true"
+                    >
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content p-4">
+                                <div className="modal-header border-0">
+                                    <h5 className="modal-title fs-3 fw-bold" id="userModalLabel">
+                                        Add new Employee
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    />
+                                </div>
+                                <div className="modal-body">
+                                    <Formik
+                                        initialValues={{
+                                            name1: 'xdcfvgbhnj',
+                                            username1: '',
+                                            email1: ''
+                                        }}
+                                        validationSchema={Yup.object().shape({
+                                            name1: Yup.string().required('Name is required'),
+                                            username1: Yup.string().required('Username is required'),
+                                            email1: Yup.string().required('Email is required'),
+
+                                        })}
+                                        onSubmit={(values, {setSubmitting, resetForm}) => {
+                                            // Handle form submission
+                                            let name = values.name1;
+                                            let username = values.username1;
+                                            let email = values.email1;
+                                            console.log(name)
+
+                                            axios
+                                                .post('http://localhost:8080/admin/',{
+                                                    name,
+                                                    username,
+                                                    email,
+                                                },
+
+                                                    {
+                                                        headers: {
+                                                            'Authorization': localStorage.getItem('token')
+                                                        },
+                                                    })
+
+                                                .then(response => {
+                                                    console.log(response.data);
+
+                                                    // setShowModal(false);
+                                                    setTotalPages(Math.ceil((employee.length + 1) / 10));
+                                                    setCurrentPage(Math.ceil((employee.length + 1) / 10));
+                                                    setEmployee([...employee, response.data]);
+
+
+                                                })
+                                                .catch(error => {
+                                                    // Handle error
+                                                    alert("Please review the information")
+
+                                                    console.error(error);
+                                                })
+                                                .finally(() => {
+                                                    setSubmitting(false);
+                                                });
+                                        }}
+                                    >
+                                        {({errors, touched, isSubmitting}) => (
+                                            <Form>
+                                                <div className="row g-3">
+                                                    <div className="col-12">
+                                                        <Field
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder="Name"
+                                                            name="name"
+                                                        />
+                                                        {errors.name && touched.name && (
+                                                            <div className="error-message">{errors.name}</div>
+                                                        )}
+                                                    </div>
+                                                    <div className="col-5">
+                                                        <Field
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder="username"
+                                                            name="username1"
+                                                            />
+                                                        {errors.username1 && touched.username1 && (
+                                                            <div className="error-message">{errors.username1}</div>
+                                                        )}
+                                                    </div>
+                                                    <div className="col-5">
+                                                        <Field
+                                                            type="email"
+                                                            className="form-control"
+                                                            placeholder="email"
+                                                            name="email1"
+                                                        />
+                                                        {errors.email1 && touched.email1 && (
+                                                            <div className="error-message">{errors.email1}</div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <div className="mt-3">
+                                                    <button
+                                                        type="submit"
+                                                        className="btn btn-primary"
+                                                        disabled={isSubmitting}
+                                                    >
+                                                        {isSubmitting ? 'Submitting...' : 'Submit'}
+                                                    </button>
+                                                </div>
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                </div>
+
+                            </div>
                     </div>
                 </div>
                 <div className="row ">
@@ -200,7 +285,11 @@ const DashboardEmployee = () => {
                                         </form>
                                     </div>
                                     <div className="col-md-4 col-12">
-                                        <select value={searchType} onChange={handleSearchTypeChange}>
+                                        <select
+                                            style={{ backgroundColor: 'lightgray', color: 'black', fontSize: '16px' }}
+                                            value={searchType}
+                                            onChange={handleSearchTypeChange}
+                                        >
                                             <option value={1}>Full Name</option>
                                             <option value={2}>Email</option>
                                         </select>
@@ -283,62 +372,7 @@ const DashboardEmployee = () => {
                                                             </td>
                                                         </tr>
                                                         <div>
-                                                            {/* Modal add*/}
-                                                            <div className={`modal fade ${showModal ? 'show' : ''}`}
-                                                                 id="addCustomerModal" tabIndex="-1"
-                                                                 aria-labelledby="addCustomerModalLabel"
-                                                                 aria-hidden={!showModal}>
-                                                                <div className="modal-dialog">
-                                                                    <div className="modal-content">
-                                                                        <div className="modal-header">
-                                                                            <h5 className="modal-title"
-                                                                                id="addCustomerModalLabel">Add New
-                                                                                Customer</h5>
-                                                                            <button type="button" className="btn-close"
-                                                                                    data-bs-dismiss="modal"
-                                                                                    aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div className="modal-body">
-                                                                            <form onSubmit={handleSubmit}>
-                                                                                <div className="mb-3">
-                                                                                    <label htmlFor="name"
-                                                                                           className="form-label">Name</label>
-                                                                                    <input type="text"
-                                                                                           className="form-control"
-                                                                                           id="name" value={name}
-                                                                                           onChange={(e) => setName(e.target.value)}
-                                                                                           required/>
-                                                                                </div>
-                                                                                <div className="mb-3">
-                                                                                    <label htmlFor="username"
-                                                                                           className="form-label">Username</label>
-                                                                                    <input type="text"
-                                                                                           className="form-control"
-                                                                                           id="username"
-                                                                                           value={username}
-                                                                                           onChange={(e) => setUsername(e.target.value)}
-                                                                                           required/>
-                                                                                </div>
-                                                                                <div className="mb-3">
-                                                                                    <label htmlFor="email"
-                                                                                           className="form-label">Email</label>
-                                                                                    <input type="email"
-                                                                                           className="form-control"
-                                                                                           id="email" value={email}
-                                                                                           onChange={(e) => setEmail(e.target.value)}
-                                                                                           required/>
-                                                                                </div>
-                                                                                <button type="submit"
-                                                                                        data-bs-dismiss="modal"
-                                                                                        className="btn btn-primary">Submit
-                                                                                </button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
-
                                                     </>
                                                 )
                                             })
@@ -391,7 +425,7 @@ const DashboardEmployee = () => {
                     </div>
                 </div>
             </div>
-
+            </div>
         </>
     );
 };
