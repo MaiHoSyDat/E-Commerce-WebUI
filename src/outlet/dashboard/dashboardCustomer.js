@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import axios from "axios";
 import {Field} from "formik";
-
+import Switch from 'react-switch';
+import Swal from "sweetalert2";
 
 const DashboardCustomer = () => {
     const [status, setStatus] = useState([]);
@@ -11,6 +12,9 @@ const DashboardCustomer = () => {
     const [searchText, setSearchText] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [totalElements, setTotalElements] = useState(0);
+
+
 
 
     useEffect(() => {
@@ -45,7 +49,7 @@ const DashboardCustomer = () => {
     // };
     useEffect(()=>{
         const fetchData = async () => {
-            await axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
+            await axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}&roleId=2`)
                 .then((response) => {
                     setAccount(response.data.content);
                     setTotalPages(response.data.totalPages)
@@ -69,37 +73,66 @@ const DashboardCustomer = () => {
                 const {content, totalPages} = response.data;
                 setAccount(content);
                 setTotalPages(totalPages);
+                setTotalElements(response.data.totalElements);
+
             })
             .catch((error) => {
                 console.log(error);
             });
     };
-
     const handleStatus = (idAccount, event) => {
-        const idStatus = event.target.value;
-        axios
-            .post(
-                "http://localhost:8080/admin/blockOrActive?accountId=" +
-                idAccount +
-                "&statusId=" +
-                idStatus
-            )
-            .then((response) => {
-                // Cập nhật lại trạng thái của tài khoản sau khi cập nhật thành công
-                const updatedAccount = account.map((a) => {
-                    if (a.id === idAccount) {
-                        return {...a, status: {id: idStatus}};
-                    }
-                    return a;
-                });
-                setAccount(updatedAccount);
+        const idStatus = event;
 
-                console.log(response);
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Changed!',
+                    'The status has been changed.',
+                    'success'
+                )
+                axios
+                    .post(
+                        "http://localhost:8080/admin/blockOrActive?accountId=" +
+                        idAccount +
+                        "&statusId=" +
+                        idStatus
+                    )
+                    .then((response) => {
+                         const updatedAccount = account.map((a) => {
+                        if (a.id === idAccount) {
+                            return {...a, status: {id: idStatus}};
+                        }
+                        return a;
+                    });
+                    setAccount(updatedAccount);
+
+                    console.log(response);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+            }
+        })
+
     };
+
     const handlePreviousPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -155,9 +188,10 @@ const DashboardCustomer = () => {
                                             />
                                         </form>
                                     </div>
-                                    <div className="col-md-4 col-12">
+                                    <div className="col-lg-2 col-md-4 col-12">
+
                                         <select
-                                            style={{ backgroundColor: 'lightgray', color: 'black', fontSize: '16px' }}
+                                            className="form-select "
                                             value={searchType}
                                             onChange={handleSearchTypeChange}
                                         >
@@ -168,26 +202,29 @@ const DashboardCustomer = () => {
                                 </div>
                             </div>
                             <div className="card-body p-0 ">
-                                <div className="table-responsive">
+                                <div className="table table-striped">
                                     <table
                                         className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
                                         <thead className="bg-light">
                                         <tr>
-                                            <th>Username</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>Spent</th>
-                                            <th>Status</th>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">Status</th>
 
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {
-                                            account.map((a) => {
+                                            account.map((a, index) => {
                                                 return (
                                                     <>
                                                         <tr>
+                                                            <th scope="row">
+                                                                {(currentPage - 1)* 10 + index + 1}
+                                                            </th>
                                                             <td>
                                                                 <div className="d-flex align-items-center">
 
@@ -203,20 +240,19 @@ const DashboardCustomer = () => {
                                                             <td>
                                                                 {a.role.name}
                                                             </td>
-                                                            <td>$49.00</td>
-                                                            <td><select
-                                                                key={a.id}
-                                                                name="status"
-                                                                id="status"
-                                                                onChange={(event) => handleStatus(a.id, event)}
-                                                                value={a.status.id}
-                                                            >
-                                                                {status.map((s) => (
-                                                                    <option key={s.id} value={s.id}>
-                                                                        {s.name}
-                                                                    </option>
-                                                                ))}
-                                                            </select></td>
+                                                            <td>
+                                                                <Switch
+                                                                    checked={a.status.id === 1}
+                                                                    onChange={() => {
+                                                                        const newStatusId = a.status.id === 1 ? 2 : 1;
+                                                                        handleStatus(a.id, newStatusId);
+                                                                    }}
+                                                                    activeBoxShadow="0px 0px 1px 2px #2693e6"
+                                                                    height={24}
+                                                                    width={48}
+                                                                    handleDiameter={20}
+                                                                />
+                                                            </td>
 
                                                         </tr>
                                                     </>
@@ -229,7 +265,7 @@ const DashboardCustomer = () => {
                                 {/*phân trang*/}
                                 <div className="border-top d-md-flex justify-content-between align-items-center p-6">
         <span>
-                    Showing {account.length} to {account.length} of {totalPages * 10} entries
+                    Showing {account.length} to {account.length} of {totalElements } entries
 
         </span>
                                     <nav className="mt-2 mt-md-0">
