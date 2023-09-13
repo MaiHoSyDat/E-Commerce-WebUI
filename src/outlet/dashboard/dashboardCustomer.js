@@ -34,15 +34,28 @@ const DashboardCustomer = () => {
     const handleSearchTextChange = (event) => {
         setSearchText(event.target.value);
     };
-    const handleSearch = () => {
-        axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
-            .then((response) => {
-                setAccount(response.data.content);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
+    // const handleSearch = () => {
+    //     axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
+    //         .then((response) => {
+    //             setAccount(response.data.content);
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // };
+    useEffect(()=>{
+        const fetchData = async () => {
+            await axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
+                .then((response) => {
+                    setAccount(response.data.content);
+                    setTotalPages(response.data.totalPages)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+        fetchData()
+    },[searchText,searchType])
 
     const fetchData = () => {
         axios
@@ -140,13 +153,14 @@ const DashboardCustomer = () => {
                                                 value={searchText}
                                                 onChange={handleSearchTextChange}
                                             />
-                                            <button type="button" className="btn btn-primary" onClick={handleSearch}>
-                                                Search
-                                            </button>
                                         </form>
                                     </div>
                                     <div className="col-md-4 col-12">
-                                        <select value={searchType} onChange={handleSearchTypeChange}>
+                                        <select
+                                            style={{ backgroundColor: 'lightgray', color: 'black', fontSize: '16px' }}
+                                            value={searchType}
+                                            onChange={handleSearchTypeChange}
+                                        >
                                             <option value={1}>Full Name</option>
                                             <option value={2}>Email</option>
                                         </select>

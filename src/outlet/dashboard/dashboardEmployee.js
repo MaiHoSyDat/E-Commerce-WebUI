@@ -2,9 +2,6 @@ import React, {useEffect, useState, useRef} from 'react';
 import axios from "axios";
 import {Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-import {getAllProductsByShop} from "../../service/productService";
-// import {handleStatus} from "./dashboardCustomer";
-
 
 const DashboardEmployee = () => {
     const [employee, setEmployee] = useState([]);
@@ -279,9 +276,6 @@ const DashboardEmployee = () => {
                                                 value={searchText}
                                                 onChange={handleSearchTextChange}
                                             />
-                                            {/*<button type="button" className="btn btn-primary" onClick={handleSearch}>*/}
-                                            {/*    Search*/}
-                                            {/*</button>*/}
                                         </form>
                                     </div>
                                     <div className="col-md-4 col-12">
