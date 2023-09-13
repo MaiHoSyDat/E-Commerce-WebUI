@@ -45,6 +45,8 @@ import ShopNotification from "./outlet/shop/shopNotification";
 import ShopManager from "./pages/shopManager";
 import CustomerOrderDetail from "./outlet/customer/customerOrderDetail";
 import ShopOrderDetail from "./outlet/shop/shopOrderDetail";
+import ShopDiscountCode from "./outlet/shop/shopDiscountCode";
+import ShopRevenue from "./outlet/shop/shopRevenue";
 
 function App() {
     // xoá account khi tắt trang
@@ -106,6 +108,8 @@ function App() {
             <Route path="shop-manager" element={<ShopManager/>}>
                 <Route path="order" element={<ShopOrder/>}/>
                 <Route path="order-detail/:idOrder" element={<ShopOrderDetail/>}/>
+                <Route path="discount-code" element={<ShopDiscountCode/>}/>
+                <Route path="revenue" element={<ShopRevenue/>}/>
                 <Route path="address" element={<ShopAddress/>}/>
                 <Route path="notification" element={<ShopNotification/>}/>
             </Route>

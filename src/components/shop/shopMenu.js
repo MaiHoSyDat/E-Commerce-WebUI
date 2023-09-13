@@ -19,6 +19,26 @@ const ShopMenu = () => {
                             </Link>
 
                         </li>
+                        <li className="nav-item">
+                            {/* nav link */}
+                            <Link to={"/shop-manager/discount-code"}>
+                                <a className="nav-link " aria-current="page" href="">
+                                    <i className="feather-icon icon-zap me-2" />
+                                    Discount Code
+                                </a>
+                            </Link>
+
+                        </li>
+                        <li className="nav-item">
+                            {/* nav link */}
+                            <Link to={"/shop-manager/revenue"}>
+                                <a className="nav-link " aria-current="page" href="">
+                                    <i className="feather-icon icon-bar-chart-2 me-2" />
+                                    Revenue
+                                </a>
+                            </Link>
+
+                        </li>
                         {/* nav item */}
                         <li className="nav-item">
                             <Link to={"/shop/setting"}>

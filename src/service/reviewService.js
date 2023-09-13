@@ -8,3 +8,10 @@ export const getAllReviewsByProduct = createAsyncThunk(
         return res.data;
     }
 )
+export const addReview = createAsyncThunk(
+    "review/addReview",
+    async (review) => {
+        const res = await axios.post("http://localhost:8080/review", review);
+        return res.data;
+    }
+)

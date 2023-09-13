@@ -20,7 +20,7 @@ const ShopSingleDetail = () => {
                     {/* img */}
                     {/* img */}
                     <img
-                        src={"/" + shopDTO.shop.logo}
+                        src={shopDTO.shop.logo}
                         alt=""
                         className="rounded-circle icon-shape icon-xxl"
                     />
