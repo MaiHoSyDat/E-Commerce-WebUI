@@ -1,28 +1,26 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getShopByAccountLogin, getShopDTO} from "../../service/shopService";
+import {getShopByAccountLogin} from "../../service/shopService";
 import {setFilterNameProduct} from "../../service/inputService";
-import {useParams} from "react-router-dom";
 
-const ShopSingleSearch = () => {
+const ShopSingleSearchLogin = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
-    const {idShop} = useParams();
-    const shopDTO = useSelector(state => {
-        console.log(state)
-        return state.shop.shopDTO;
+    const shopLogin = useSelector(state => {
+        return state.shop.shopLogin;
     })
     useEffect(() => {
-        dispatch(getShopDTO(idShop));
-    }, []);
+        dispatch(getShopByAccountLogin(account.id))
+    },[]);
+
     const handleInputChangeNameProduct = (e) => {
         dispatch(setFilterNameProduct(e.target.value));
     };
-
     return (
         <>
-            {shopDTO !== undefined && <div className="align-self-center p-8">
+            <div className="align-self-center p-8">
                 <div className="mb-3">
-                    <h5 className="mb-0 fw-bold">{shopDTO.shop.name}</h5>
+                    <h5 className="mb-0 fw-bold">{shopLogin.name}</h5>
                     <p className="mb-0 text-muted">
                         Whatever the occasion, we've got you covered.
                     </p>
@@ -32,7 +30,7 @@ const ShopSingleSearch = () => {
                         type="text"
                         className="form-control"
                         id="exampleFormControlInput1"
-                        placeholder= {"Search " + shopDTO.shop.name}
+                        placeholder= {"Search " + shopLogin.name}
                         onChange={handleInputChangeNameProduct}
                     />
                     <span className="position-absolute end-0 top-0 mt-2 me-3">
@@ -53,10 +51,10 @@ const ShopSingleSearch = () => {
       </svg>
     </span>
                 </div>
-            </div>}
+            </div>
 
         </>
     );
 };
 
-export default ShopSingleSearch;
+export default ShopSingleSearchLogin;

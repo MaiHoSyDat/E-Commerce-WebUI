@@ -1,53 +1,54 @@
-import { useSelector, useDispatch } from "react-redux";
-import {useEffect} from "react";
-import { getProductPage} from "../../service/productPageAction";
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {getAllProductsByShop, getFilterProducts} from "../../service/productService";
 import {Link} from "react-router-dom";
+import {setFilterShopSingle} from "../../service/inputService";
 
 const ProductFilterShow = () => {
+    const numbers = [1, 2, 3, 4, 5]
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products.products);
-    const currentPage = useSelector((state) => state.products.currentPage);
-    const totalPages = useSelector((state) => state.products.totalPages);
-
+    const filterProducts = useSelector(state => {
+        console.log(state.product.filterProducts)
+        return state.product.filterProducts;
+    })
+    const filterParam = useSelector(state => {
+        console.log(state.inputFilter.filterParam)
+        return state.inputFilter.filterParam;
+    })
 
     useEffect(() => {
-        dispatch(getProductPage(currentPage));
-    }, [dispatch, currentPage]);
-
-    const handlePageChange = (newPage) => {
-        dispatch(getProductPage(newPage));
-    };
-
+        // const fetchData = async () => {
+        //     await dispatch(getAllProductsByShop(shopLogin.id));
+        //     await dispatch(setFilterShopSingle(shopLogin.id));
+        // };
+        // fetchData();
+        dispatch(getFilterProducts(filterParam))
+    },[filterParam]);
     return (
         <>
-
             <div className="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
-                {/* col */}
-                {products && products.length > 0 && products.map( (product) =>
-                    <div key={product.id} className="col">
+                {filterProducts && filterProducts.map(dto => (
+                    <div className="col">
                         {/* card */}
                         <div className="card card-product">
                             <div className="card-body">
                                 {/* badge */}
                                 <div className="text-center position-relative ">
                                     <div className=" position-absolute top-0 start-0">
-                                        <span className="badge bg-danger">Sale</span>
+                                        {dto.product.status && <span className="badge bg-danger">{dto.product.status.name}</span>}
                                     </div>
-                                    <Link to={`/product/detail/${product.id}`}>
-                                        {/* img */}
+                                    <Link to={"/product/detail/" + dto.product.id}>
                                         <img
-                                            src={product.thumbnail}
+                                            src={dto.product.thumbnail}
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
                                     </Link>
                                     {/* action btn */}
                                     <div className="card-product-action">
-                                        <a
-                                            href="#!"
+                                        <Link
+                                            to={"/product/detail/" + dto.product.id}
                                             className="btn-action"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#quickViewModal"
                                         >
                                             <i
                                                 className="bi bi-eye"
@@ -55,7 +56,7 @@ const ProductFilterShow = () => {
                                                 data-bs-html="true"
                                                 title="Quick View"
                                             />
-                                        </a>
+                                        </Link>
                                         <a
                                             href="shop-wishlist.html"
                                             className="btn-action"
@@ -63,7 +64,7 @@ const ProductFilterShow = () => {
                                             data-bs-html="true"
                                             title="Wishlist"
                                         >
-                                            <i className="bi bi-heart"/>
+                                            <i className="bi bi-heart" />
                                         </a>
                                         <a
                                             href="#!"
@@ -72,14 +73,14 @@ const ProductFilterShow = () => {
                                             data-bs-html="true"
                                             title="Compare"
                                         >
-                                            <i className="bi bi-arrow-left-right"/>
+                                            <i className="bi bi-arrow-left-right" />
                                         </a>
                                     </div>
                                 </div>
                                 {/* heading */}
                                 <div className="text-small mb-1">
                                     <a href="#!" className="text-decoration-none text-muted">
-                                        <small>{product.category.name}</small>
+                                        <small>{dto.product.category.name}</small>
                                     </a>
                                 </div>
                                 <h2 className="fs-6">
@@ -87,28 +88,23 @@ const ProductFilterShow = () => {
                                         href="shop-single.html"
                                         className="text-inherit text-decoration-none"
                                     >
-                                        {product.name}
+                                        {dto.product.name}
                                     </a>
                                 </h2>
                                 <div>
-                                    {/* rating */}
+                                    {" "}
                                     <small className="text-warning">
-                                        {" "}
-                                        <i className="bi bi-star-fill"/>
-                                        <i className="bi bi-star-fill"/>
-                                        <i className="bi bi-star-fill"/>
-                                        <i className="bi bi-star-fill"/>
-                                        <i className="bi bi-star-half"/>
-                                    </small>{" "}
-                                    <span className="text-muted small">4.5(149)</span>
+                                        {numbers.map((i) => (
+                                            i <= Math.floor(dto.average_rating) ? (<i className="bi bi-star-fill"/>) : (<i className="bi bi-star"/>)
+                                        ))}
+                                    </small>
+                                    {" "}
+                                    <span className="text-muted small">{dto.average_rating}({dto.total_reviews} reviews)</span>
                                 </div>
                                 {/* price */}
                                 <div className="d-flex justify-content-between align-items-center mt-3">
                                     <div>
-                                        <span className="text-dark">${product.price}</span>{" "}
-              {/*                          <span className="text-decoration-line-through text-muted">*/}
-              {/*  $24*/}
-              {/*</span>*/}
+                                        <span className="text-dark">${dto.product.price}</span>{" "}
                                     </div>
                                     {/* btn */}
                                     <div>
@@ -125,8 +121,8 @@ const ProductFilterShow = () => {
                                                 strokeLinejoin="round"
                                                 className="feather feather-plus"
                                             >
-                                                <line x1={12} y1={5} x2={12} y2={19}/>
-                                                <line x1={5} y1={12} x2={19} y2={12}/>
+                                                <line x1={12} y1={5} x2={12} y2={19} />
+                                                <line x1={5} y1={12} x2={19} y2={12} />
                                             </svg>
                                             Add
                                         </a>
@@ -135,58 +131,40 @@ const ProductFilterShow = () => {
                             </div>
                         </div>
                     </div>
-
-                )}
+                ))}
             </div>
-
             <div className="row mt-8">
                 <div className="col">
                     {/* nav */}
                     <nav>
                         <ul className="pagination">
-                            <li
-                                className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
-                            >
-                                <a
-                                    className={`page-link mx-1 ${
-                                        currentPage === currentPage ? "current-page" : ""
-                                    }`}
-                                    href="#"
-                                    onClick={() => handlePageChange(currentPage - 1)}
-                                    aria-label="Previous"
-                                >
+                            <li className="page-item disabled">
+                                <a className="page-link  mx-1 " href="#" aria-label="Previous">
                                     <i className="feather-icon icon-chevron-left" />
                                 </a>
                             </li>
-
-                            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-                                (page) => (
-                                    <li
-                                        key={page}
-                                        className={`page-item ${page === currentPage ? "active" : ""}`}
-                                    >
-                                        <a
-                                            className="page-link"
-                                            href="#"
-                                            onClick={() => handlePageChange(page)}
-                                        >
-                                            {page}
-                                        </a>
-                                    </li>
-                                )
-                            )}
-
-                            <li
-                                className={`page-item ${
-                                    currentPage === totalPages ? "disabled" : ""
-                                }`}
-                            >
-                                <a
-                                    className="page-link mx-1"
-                                    href="#"
-                                    onClick={() => handlePageChange(currentPage + 1)}
-                                    aria-label="Next"
-                                >
+                            <li className="page-item ">
+                                <a className="page-link  mx-1 active" href="#">
+                                    1
+                                </a>
+                            </li>
+                            <li className="page-item">
+                                <a className="page-link mx-1 text-body" href="#">
+                                    2
+                                </a>
+                            </li>
+                            <li className="page-item">
+                                <a className="page-link mx-1 text-body" href="#">
+                                    ...
+                                </a>
+                            </li>
+                            <li className="page-item">
+                                <a className="page-link mx-1 text-body" href="#">
+                                    12
+                                </a>
+                            </li>
+                            <li className="page-item">
+                                <a className="page-link mx-1 text-body" href="#" aria-label="Next">
                                     <i className="feather-icon icon-chevron-right" />
                                 </a>
                             </li>
@@ -195,6 +173,7 @@ const ProductFilterShow = () => {
                 </div>
             </div>
         </>
+
     );
 };
 

@@ -1,7 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setFilterNameProduct} from "../service/inputService";
 
 const NavbarCustomer = () => {
+    const dispatch = useDispatch();
+    const handleInputChangeNameProduct = (e) => {
+        dispatch(setFilterNameProduct(e.target.value));
+    };
+
     return (
         <>
             <div className="border-bottom ">
@@ -112,6 +119,7 @@ const NavbarCustomer = () => {
                                             className="form-control rounded"
                                             type="search"
                                             placeholder="Search for products"
+                                            onChange={handleInputChangeNameProduct}
                                         />
                                         <span className="input-group-append">
                   <button
@@ -492,253 +500,6 @@ const NavbarCustomer = () => {
                                                 </a>
                                             </Link>
                                         </li>
-                                        <li className="nav-item dropdown w-100 w-lg-auto dropdown-fullwidth">
-                                            <a
-                                                className="nav-link dropdown-toggle"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Mega menu
-                                            </a>
-                                            <div className=" dropdown-menu pb-0">
-                                                <div className="row p-2 p-lg-4">
-                                                    <div className="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                        <h6 className="text-primary ps-3">
-                                                            Dairy, Bread &amp; Eggs
-                                                        </h6>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Butter
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Milk Drinks
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Curd &amp; Yogurt
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Eggs
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Buns &amp; Bakery
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Cheese
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Condensed Milk
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Dairy Products
-                                                        </a>
-                                                        </Link>
-                                                    </div>
-                                                    <div className="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                        <h6 className="text-primary ps-3">
-                                                            Breakfast &amp; Instant Food
-                                                        </h6>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Breakfast Cereal
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            {" "}
-                                                            Noodles, Pasta &amp; Soup
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Frozen Veg Snacks
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            {" "}
-                                                            Frozen Non-Veg Snacks
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            {" "}
-                                                            Vermicelli
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            {" "}
-                                                            Instant Mixes
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            {" "}
-                                                            Batter
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            {" "}
-                                                            Fruit and Juices
-                                                        </a>
-                                                        </Link>
-                                                    </div>
-                                                    <div className="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                        <h6 className="text-primary ps-3">
-                                                            Cold Drinks &amp; Juices
-                                                        </h6>
-
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Soft Drinks
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Fruit Juices
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Coldpress
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Water &amp; Ice Cubes
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Soda &amp; Mixers
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Health Drinks
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Herbal Drinks
-                                                        </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                        <a
-                                                            className="dropdown-item"
-                                                            href=""
-                                                        >
-                                                            Milk Drinks
-                                                        </a>
-                                                        </Link>
-                                                    </div>
-                                                    <div className="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                        <div className="card border-0">
-                                                            <img
-                                                                src="../assets/images/banner/menu-banner.jpg"
-                                                                alt="eCommerce HTML Template"
-                                                                className="img-fluid"
-                                                            />
-                                                            <div className="position-absolute ps-6 mt-8">
-                                                                <h5 className=" mb-0 ">
-                                                                    Dont miss this <br />
-                                                                    offer today.
-                                                                </h5>
-                                                                <a href="#" className="btn btn-primary btn-sm mt-3">
-                                                                    Shop Now
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
                                         <li className="nav-item w-100 w-lg-auto">
                                             <Link to={"/about"}>
                                                 <a className="nav-link" href="">
@@ -842,7 +603,7 @@ const NavbarCustomer = () => {
                     </div>
                 </div>
             </div>
-            {/* ShopSingle Cart */}
+            {/* ShopSingleLogin Cart */}
             <div
                 className="offcanvas offcanvas-end"
                 tabIndex={-1}
