@@ -203,3 +203,15 @@ const DashboardShopPending = () => {
 };
 
 export default DashboardShopPending;
+//chuyển trang shop
+//search shop
+//xóa checkbox
+//xóa nút edit/delete
+//xóa checkbox
+//thêm username
+//tắt modal bị lỗi
+//bỏ spent và toàn  role
+//xóa review
+//phân trang product
+//status sản phẩm chỉ block hoặc active
+//add lần 2 bị lỗi

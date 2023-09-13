@@ -5,6 +5,8 @@ import axios from "axios";
 
 const DashboardEmployee = () => {
     const [employee, setEmployee] = useState([]);
+    const [searchType, setSearchType] = useState(1); // Lựa chọn tìm kiếm theo tên hoặc email
+    const [searchText, setSearchText] = useState('');
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -17,6 +19,24 @@ const DashboardEmployee = () => {
     useEffect(() => {
         fetchData();
     }, [currentPage]);
+    const handleSearchTypeChange = (event) => {
+        setSearchType(event.target.value);
+    };
+
+    const handleSearchTextChange = (event) => {
+        setSearchText(event.target.value);
+    };
+    const handleSearch = () => {
+        axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
+            .then((response) => {
+                setEmployee(response.data.content);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+
 
     const fetchData = () => {
         axios
@@ -158,8 +178,19 @@ const DashboardEmployee = () => {
                                                 type="search"
                                                 placeholder="Search Customers"
                                                 aria-label="Search"
+                                                value={searchText}
+                                                onChange={handleSearchTextChange}
                                             />
+                                            <button type="button" className="btn btn-primary" onClick={handleSearch}>
+                                                Search
+                                            </button>
                                         </form>
+                                    </div>
+                                    <div className="col-md-4 col-12">
+                                        <select value={searchType} onChange={handleSearchTypeChange}>
+                                            <option value={1}>Full Name</option>
+                                            <option value={2}>Email</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
