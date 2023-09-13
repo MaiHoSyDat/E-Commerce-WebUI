@@ -13,6 +13,8 @@ import {storage} from "../firebase";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {v4} from "uuid";
 import * as Yup from "yup";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 
 
@@ -32,9 +34,9 @@ const Home = () => {
         if (account && account.status.id === 3 && account.role.name === "ROLE_SHOP") {
             window.$("#shopInformationModal").modal("show");
         }
-        // if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
-        //     hiển thị thông báo bạn đang đợi Admin duyệt
-        // }
+        if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
+            Swal.fire('Any fool can use a computer')
+        }
         // if (account && account.status.id === 3 && account.role.name === "ROLE_EMPLOYEE") {
         //     window.$("#").modal("show");
         //     làm giống shop cập nhật thông tin
