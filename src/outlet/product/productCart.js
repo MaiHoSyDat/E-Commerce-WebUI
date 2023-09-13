@@ -4,7 +4,7 @@ import 'sweetalert2/dist/sweetalert2.css';
 import {useDispatch, useSelector} from "react-redux";
 import {
     deleteProductFromCartByAccount,
-    getProductByAccount, updateCartByStore,
+    getCartByAccount, updateCartByStore,
     updateProductFromCartByAccount
 } from "../../service/cartService";
 import axios from "axios";
@@ -26,7 +26,7 @@ const ProductCart = () => {
     const [payOfBill, setPayOfBill] = useState({});
     const [discountCode, setDiscountCode] = useState([]);
     useEffect(() => {
-        dispatch(getProductByAccount())
+        dispatch(getCartByAccount())
     }, [])
 
     useEffect(() => {
