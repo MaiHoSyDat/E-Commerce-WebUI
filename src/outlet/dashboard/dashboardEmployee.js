@@ -26,16 +26,30 @@ const DashboardEmployee = () => {
     const handleSearchTextChange = (event) => {
         setSearchText(event.target.value);
     };
-    const handleSearch = () => {
-        axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
-            .then((response) => {
-                setEmployee(response.data.content);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
-
+    useEffect(()=>{
+        const fetchData = async () => {
+            await axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
+                .then((response) => {
+                    setEmployee(response.data.content);
+                    setTotalPages(response.data.totalPages)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+        fetchData()
+    },[searchText,searchType])
+    // const handleSearch = () => {
+    //     axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
+    //         .then((response) => {
+    //             setEmployee(response.data.content);
+    //             console.log(response.data)
+    //             setTotalPages(response.data.totalPages)
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // };
 
 
     const fetchData = () => {
@@ -47,9 +61,8 @@ const DashboardEmployee = () => {
                 }
             })
             .then((response) => {
-                const {content, totalPages} = response.data;
-                setEmployee(content);
-                setTotalPages(totalPages);
+                setEmployee(response.data.content);
+                setTotalPages(response.data.totalPages);
             })
             .catch((err) => {
                 console.log(err);
@@ -181,9 +194,9 @@ const DashboardEmployee = () => {
                                                 value={searchText}
                                                 onChange={handleSearchTextChange}
                                             />
-                                            <button type="button" className="btn btn-primary" onClick={handleSearch}>
-                                                Search
-                                            </button>
+                                            {/*<button type="button" className="btn btn-primary" onClick={handleSearch}>*/}
+                                            {/*    Search*/}
+                                            {/*</button>*/}
                                         </form>
                                     </div>
                                     <div className="col-md-4 col-12">
@@ -200,6 +213,7 @@ const DashboardEmployee = () => {
                                         className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
                                         <thead className="bg-light">
                                         <tr>
+                                            <td>#</td>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Role</th>
@@ -209,10 +223,13 @@ const DashboardEmployee = () => {
                                         </thead>
                                         <tbody>
                                         {
-                                            employee.map((e) => {
+                                            employee.map((e,index) => {
                                                 return (
                                                     <>
                                                         <tr>
+                                                            <td>
+                                                                {(currentPage - 1)* 10 + index + 1}
+                                                            </td>
                                                             <td>
                                                                 <div className="d-flex align-items-center">
                                                                     <div className="ms-2">
