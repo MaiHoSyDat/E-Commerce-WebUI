@@ -16,14 +16,14 @@ const NavbarCustomer = () => {
                     <div className="container">
                         <div className="row w-100 align-items-center gx-lg-2 gx-0">
                             <div className="col-xxl-2 col-lg-3">
-                                <Link to={"/index"}>
-                                <a className="navbar-brand d-none d-lg-block" href="">
-                                    <img
-                                        src="../assets/images/logo/freshcart-logo.svg"
-                                        alt="eCommerce HTML Template"
-                                    />
-                                </a>
-                                </Link>
+                                {/*<Link to={"/index"}>*/}
+                                {/*<a className="navbar-brand d-none d-lg-block" href="">*/}
+                                {/*    <img*/}
+                                {/*        src="../assets/images/logo/freshcart-logo.svg"*/}
+                                {/*        alt="eCommerce HTML Template"*/}
+                                {/*    />*/}
+                                {/*</a>*/}
+                                {/*</Link>*/}
                                 <div className="d-flex justify-content-between w-100 d-lg-none">
                                     <a className="navbar-brand" href="index.html">
                                         <img
@@ -58,11 +58,9 @@ const NavbarCustomer = () => {
                                                 </a>
                                             </div>
                                             <div className="list-inline-item">
-                                                <a
+                                                <Link to={"/cart"}
                                                     className="text-muted position-relative "
-                                                    data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasRight"
-                                                    href="#offcanvasExample"
+
                                                     role="button"
                                                     aria-controls="offcanvasRight"
                                                 >
@@ -82,11 +80,11 @@ const NavbarCustomer = () => {
                                                         <line x1={3} y1={6} x2={21} y2={6} />
                                                         <path d="M16 10a4 4 0 0 1-8 0" />
                                                     </svg>
-                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                        1
-                        <span className="visually-hidden">unread messages</span>
-                      </span>
-                                                </a>
+                      {/*                              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">*/}
+                      {/*  1*/}
+                      {/*  <span className="visually-hidden">unread messages</span>*/}
+                      {/*</span>*/}
+                                                </Link>
                                             </div>
                                         </div>
                                         {/* Button */}
@@ -201,10 +199,8 @@ const NavbarCustomer = () => {
                                         </Link>
                                     </div>
                                     <div className="list-inline-item">
-                                        <a
+                                        <Link to={"/cart"}
                                             className="text-muted position-relative "
-                                            data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasRight"
                                             href="#offcanvasExample"
                                             role="button"
                                             aria-controls="offcanvasRight"
@@ -225,10 +221,10 @@ const NavbarCustomer = () => {
                                                 <line x1={3} y1={6} x2={21} y2={6} />
                                                 <path d="M16 10a4 4 0 0 1-8 0" />
                                             </svg>
-                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                    1<span className="visually-hidden">unread messages</span>
-                  </span>
-                                        </a>
+                    {/*                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">*/}
+                    {/*1<span className="visually-hidden">unread messages</span>*/}
+                  {/*</span>*/}
+                                        </Link>
                                     </div>
 
                                 </div>

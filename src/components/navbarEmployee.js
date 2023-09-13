@@ -52,17 +52,15 @@ const NavbarEmployee = () => {
                                                         strokeLinejoin="round"
                                                         className="feather feather-user"
                                                     >
-                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                        <circle cx={12} cy={7} r={4} />
+                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                                        <circle cx={12} cy={7} r={4}/>
                                                     </svg>
                                                 </a>
                                             </div>
                                             <div className="list-inline-item">
-                                                <a
+                                                <Link
                                                     className="text-muted position-relative "
-                                                    data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasRight"
-                                                    href="#offcanvasExample"
+                                                    to={"/cart"}
                                                     role="button"
                                                     aria-controls="offcanvasRight"
                                                 >
@@ -78,15 +76,16 @@ const NavbarEmployee = () => {
                                                         strokeLinejoin="round"
                                                         className="feather feather-shopping-bag"
                                                     >
-                                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                                                        <line x1={3} y1={6} x2={21} y2={6} />
-                                                        <path d="M16 10a4 4 0 0 1-8 0" />
+                                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                        <line x1={3} y1={6} x2={21} y2={6}/>
+                                                        <path d="M16 10a4 4 0 0 1-8 0"/>
                                                     </svg>
-                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                        1
-                        <span className="visually-hidden">unread messages</span>
-                      </span>
-                                                </a>
+                      {/*                              <span*/}
+                      {/*                                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">*/}
+                      {/*  1*/}
+                      {/*  <span className="visually-hidden">unread messages</span>*/}
+                      {/*</span>*/}
+                                                </Link>
                                             </div>
                                         </div>
                                         {/* Button */}
@@ -106,7 +105,8 @@ const NavbarEmployee = () => {
                                                 className="bi bi-text-indent-left text-primary"
                                                 viewBox="0 0 16 16"
                                             >
-                                                <path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708zM7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                                <path
+                                                    d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708zM7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
                                             </svg>
                                         </button>
                                     </div>
@@ -138,8 +138,8 @@ const NavbarEmployee = () => {
                         strokeLinejoin="round"
                         className="feather feather-search"
                     >
-                      <circle cx={11} cy={11} r={8} />
-                      <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                      <circle cx={11} cy={11} r={8}/>
+                      <line x1={21} y1={21} x2="16.65" y2="16.65"/>
                     </svg>
                   </button>
                 </span>
@@ -167,9 +167,11 @@ const NavbarEmployee = () => {
                                                     strokeLinejoin="round"
                                                     className="feather feather-heart"
                                                 >
-                                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                                    <path
+                                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                                 </svg>
-                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                                                <span
+                                                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
                     5<span className="visually-hidden">unread messages</span>
                   </span>
                                             </a>
@@ -194,18 +196,16 @@ const NavbarEmployee = () => {
                                                     strokeLinejoin="round"
                                                     className="feather feather-user"
                                                 >
-                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                    <circle cx={12} cy={7} r={4} />
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                                    <circle cx={12} cy={7} r={4}/>
                                                 </svg>
                                             </a>
                                         </Link>
                                     </div>
                                     <div className="list-inline-item">
-                                        <a
+                                        <Link
                                             className="text-muted position-relative "
-                                            data-bs-toggle="offcanvas"
-                                            data-bs-target="#offcanvasRight"
-                                            href="#offcanvasExample"
+                                            to={"/cart"}
                                             role="button"
                                             aria-controls="offcanvasRight"
                                         >
@@ -221,14 +221,15 @@ const NavbarEmployee = () => {
                                                 strokeLinejoin="round"
                                                 className="feather feather-shopping-bag"
                                             >
-                                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                                                <line x1={3} y1={6} x2={21} y2={6} />
-                                                <path d="M16 10a4 4 0 0 1-8 0" />
+                                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                <line x1={3} y1={6} x2={21} y2={6}/>
+                                                <path d="M16 10a4 4 0 0 1-8 0"/>
                                             </svg>
-                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                    1<span className="visually-hidden">unread messages</span>
-                  </span>
-                                        </a>
+                  {/*                          <span*/}
+                  {/*                              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">*/}
+                  {/*  1<span className="visually-hidden">unread messages</span>*/}
+                  {/*</span>*/}
+                                        </Link>
                                     </div>
 
                                 </div>
@@ -287,8 +288,8 @@ const NavbarEmployee = () => {
                           strokeLinejoin="round"
                           className="feather feather-search"
                       >
-                        <circle cx={11} cy={11} r={8} />
-                        <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                        <circle cx={11} cy={11} r={8}/>
+                        <line x1={21} y1={21} x2="16.65" y2="16.65"/>
                       </svg>
                     </button>
                   </span>
@@ -301,7 +302,7 @@ const NavbarEmployee = () => {
                                             data-bs-toggle="modal"
                                             data-bs-target="#locationModal"
                                         >
-                                            <i className="feather-icon icon-map-pin me-2" />
+                                            <i className="feather-icon icon-map-pin me-2"/>
                                             Pick Location
                                         </button>
                                     </div>
@@ -328,10 +329,10 @@ const NavbarEmployee = () => {
                       strokeLinejoin="round"
                       className="feather feather-grid"
                   >
-                    <rect x={3} y={3} width={7} height={7} />
-                    <rect x={14} y={3} width={7} height={7} />
-                    <rect x={14} y={14} width={7} height={7} />
-                    <rect x={3} y={14} width={7} height={7} />
+                    <rect x={3} y={3} width={7} height={7}/>
+                    <rect x={14} y={3} width={7} height={7}/>
+                    <rect x={14} y={14} width={7} height={7}/>
+                    <rect x={3} y={14} width={7} height={7}/>
                   </svg>
                 </span>{" "}
                                         All Categories
@@ -414,10 +415,10 @@ const NavbarEmployee = () => {
                       strokeLinejoin="round"
                       className="feather feather-grid"
                   >
-                    <rect x={3} y={3} width={7} height={7} />
-                    <rect x={14} y={3} width={7} height={7} />
-                    <rect x={14} y={14} width={7} height={7} />
-                    <rect x={3} y={14} width={7} height={7} />
+                    <rect x={3} y={3} width={7} height={7}/>
+                    <rect x={14} y={3} width={7} height={7}/>
+                    <rect x={14} y={14} width={7} height={7}/>
+                    <rect x={3} y={14} width={7} height={7}/>
                   </svg>
                 </span>{" "}
                                         All Categories
@@ -680,10 +681,11 @@ const NavbarEmployee = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -763,10 +765,11 @@ const NavbarEmployee = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -850,10 +853,11 @@ const NavbarEmployee = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -938,10 +942,11 @@ const NavbarEmployee = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -1025,10 +1030,11 @@ const NavbarEmployee = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
