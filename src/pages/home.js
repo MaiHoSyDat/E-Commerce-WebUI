@@ -29,9 +29,16 @@ const Home = () => {
         if (account && account.status.id === 3 && account.role.name === "ROLE_CUSTOMER") {
             window.$("#statusModal").modal("show");
         }
-        if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
+        if (account && account.status.id === 3 && account.role.name === "ROLE_SHOP") {
             window.$("#shopInformationModal").modal("show");
         }
+        // if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
+        //     hiển thị thông báo bạn đang đợi Admin duyệt
+        // }
+        // if (account && account.status.id === 3 && account.role.name === "ROLE_EMPLOYEE") {
+        //     window.$("#").modal("show");
+        //     làm giống shop cập nhật thông tin
+        // }
     }, [])
 
     const remoteImg = (index) => {
