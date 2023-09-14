@@ -106,10 +106,6 @@ const DashboardMenu = () => {
                                         <li className="nav-item ">
                                             <a className="nav-link " href="/dashboard/shop">
                                                 <div className="d-flex align-items-center">
-                <span className="nav-link-icon">
-                  {" "}
-                    <i className="bi bi-shop" />
-                </span>
                                                     <span className="nav-link-text">Sellers / Vendors</span>
                                                 </div>
                                             </a>
