@@ -58,11 +58,9 @@ const NavbarShop = () => {
                                                 </a>
                                             </div>
                                             <div className="list-inline-item">
-                                                <a
+                                                <Link
                                                     className="text-muted position-relative "
-                                                    data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasRight"
-                                                    href="#offcanvasExample"
+                                                    to={"/cart"}
                                                     role="button"
                                                     aria-controls="offcanvasRight"
                                                 >
@@ -82,11 +80,11 @@ const NavbarShop = () => {
                                                         <line x1={3} y1={6} x2={21} y2={6} />
                                                         <path d="M16 10a4 4 0 0 1-8 0" />
                                                     </svg>
-                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                        1
-                        <span className="visually-hidden">unread messages</span>
-                      </span>
-                                                </a>
+                      {/*                              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">*/}
+                      {/*  1*/}
+                      {/*  <span className="visually-hidden">unread messages</span>*/}
+                      {/*</span>*/}
+                                                </Link>
                                             </div>
                                         </div>
                                         {/* Button */}

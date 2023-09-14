@@ -45,7 +45,7 @@ export const deleteProductFromCartByAccount = createAsyncThunk(
         return res.data;
     }
 )
-export const getProductByAccount = createAsyncThunk(
+export const getCartByAccount = createAsyncThunk(
     "cart",
     async () => {
         const res = await axios.get('http://localhost:8080/cart',  {
