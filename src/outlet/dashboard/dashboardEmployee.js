@@ -197,7 +197,7 @@ const DashboardEmployee = () => {
                                         validationSchema={Yup.object().shape({
                                             name: Yup.string().required('Name is required'),
                                             username: Yup.string().required('Username is required'),
-                                            email: Yup.string().required('Email is required'),
+                                            email: Yup.string().email('Invalid email').required('Email is required'),
 
                                         })}
                                         onSubmit={(values, {setSubmitting, resetForm}) => {
@@ -222,21 +222,30 @@ const DashboardEmployee = () => {
 
                                                 .then(response => {
                                                     console.log(response.data);
-                                                    resetForm();
                                                     setTotalPages(Math.ceil((employee.length + 1) / 10));
                                                     setCurrentPage(Math.ceil((employee.length + 1) / 10));
                                                     setEmployee([...employee, response.data]);
+                                                    Swal.fire(
+                                                        'Add complete!',
+                                                        'Good job!',
+                                                        'success'
+                                                    )
 
 
                                                 })
                                                 .catch(error => {
                                                     // Handle error
-                                                    alert("Please review the information")
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Can not submit  ',
+                                                    })
 
                                                     console.error(error);
                                                 })
                                                 .finally(() => {
                                                     setSubmitting(false);
+                                                    resetForm();
                                                 });
                                         }}
                                     >
@@ -319,7 +328,7 @@ const DashboardEmployee = () => {
                                                 value={searchType}
                                                 onChange={handleSearchTypeChange}
                                             >
-                                                <option value={1}>Full Name</option>
+                                                <option value={1}>Name</option>
                                                 <option value={2}>Email</option>
                                             </select>
                                         </div>

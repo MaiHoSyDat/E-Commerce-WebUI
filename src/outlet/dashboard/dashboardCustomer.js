@@ -195,7 +195,7 @@ const DashboardCustomer = () => {
                                             value={searchType}
                                             onChange={handleSearchTypeChange}
                                         >
-                                            <option value={1}>Full Name</option>
+                                            <option value={1}> Name</option>
                                             <option value={2}>Email</option>
                                         </select>
                                     </div>

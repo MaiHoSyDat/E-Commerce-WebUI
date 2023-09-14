@@ -91,7 +91,7 @@ const SignIn = () => {
                                                 onChange={handleInputChange}
                                                 className="form-control"
                                                 id="inputEmail4"
-                                                placeholder="name"
+                                                placeholder="Enter username"
                                                 required=""
                                             />
                                         </div>
