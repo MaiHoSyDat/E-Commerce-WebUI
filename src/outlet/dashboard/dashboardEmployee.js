@@ -190,21 +190,21 @@ const DashboardEmployee = () => {
                                 <div className="modal-body">
                                     <Formik
                                         initialValues={{
-                                            name1: 'xdcfvgbhnj',
-                                            username1: '',
-                                            email1: ''
+                                            name: '',
+                                            username: '',
+                                            email: ''
                                         }}
                                         validationSchema={Yup.object().shape({
-                                            name1: Yup.string().required('Name is required'),
-                                            username1: Yup.string().required('Username is required'),
-                                            email1: Yup.string().required('Email is required'),
+                                            name: Yup.string().required('Name is required'),
+                                            username: Yup.string().required('Username is required'),
+                                            email: Yup.string().required('Email is required'),
 
                                         })}
                                         onSubmit={(values, {setSubmitting, resetForm}) => {
                                             // Handle form submission
-                                            let name = values.name1;
-                                            let username = values.username1;
-                                            let email = values.email1;
+                                            let name = values.name;
+                                            let username = values.username;
+                                            let email = values.email;
                                             console.log(name)
 
                                             axios
@@ -222,7 +222,7 @@ const DashboardEmployee = () => {
 
                                                 .then(response => {
                                                     console.log(response.data);
-
+                                                    resetForm();
                                                     // setShowModal(false);
                                                     setTotalPages(Math.ceil((employee.length + 1) / 10));
                                                     setCurrentPage(Math.ceil((employee.length + 1) / 10));
@@ -260,10 +260,10 @@ const DashboardEmployee = () => {
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="username"
-                                                            name="username1"
+                                                            name="username"
                                                         />
-                                                        {errors.username1 && touched.username1 && (
-                                                            <div className="error-message">{errors.username1}</div>
+                                                        {errors.username && touched.username && (
+                                                            <div className="error-message">{errors.username}</div>
                                                         )}
                                                     </div>
                                                     <div className="col-5">
@@ -271,10 +271,10 @@ const DashboardEmployee = () => {
                                                             type="email"
                                                             className="form-control"
                                                             placeholder="email"
-                                                            name="email1"
+                                                            name="email"
                                                         />
-                                                        {errors.email1 && touched.email1 && (
-                                                            <div className="error-message">{errors.email1}</div>
+                                                        {errors.email && touched.email && (
+                                                            <div className="error-message">{errors.email}</div>
                                                         )}
                                                     </div>
                                                 </div>
@@ -283,6 +283,7 @@ const DashboardEmployee = () => {
                                                         type="submit"
                                                         className="btn btn-primary"
                                                         disabled={isSubmitting}
+
                                                     >
                                                         {isSubmitting ? 'Submitting...' : 'Submit'}
                                                     </button>
