@@ -144,6 +144,7 @@ const CustomerSetting = () => {
 
                                             <div className="row g-3">
                                                     <div className="col-12">
+                                                        <p>Address</p>
                                                         <Field
                                                             type="text"
                                                             className="form-control"
@@ -151,11 +152,11 @@ const CustomerSetting = () => {
                                                             name="address"
                                                         />
                                                         {errors.address && touched.address && (
-                                                            <div className="error-message">{errors.address}</div>
+                                                            <div className="error-message" style={{color:"red"}}>{errors.address}</div>
                                                         )}
                                                     </div>
-
                                                     <div className="col-12">
+                                                        <p>Phone Number</p>
                                                         <Field
                                                             type="text"
                                                             className="form-control"
@@ -163,7 +164,7 @@ const CustomerSetting = () => {
                                                             name="phone"
                                                         />
                                                         {errors.phone && touched.phone && (
-                                                            <div className="error-message">{errors.phone}</div>
+                                                            <div className="error-message" style={{color:"red"}}>{errors.phone}</div>
                                                         )}
                                                     </div>
                                                     <div className="col-12">
@@ -175,7 +176,7 @@ const CustomerSetting = () => {
                                                             name="birthday"
                                                         />
                                                         {errors.birthday && touched.birthday && (
-                                                            <div className="error-message">{errors.birthday}</div>
+                                                            <div className="error-message" style={{color:"red"}}>{errors.birthday}</div>
                                                         )}
                                                     </div>
 
@@ -206,9 +207,11 @@ const CustomerSetting = () => {
                                                             type="file"
                                                             id="avatar"
                                                             onChange={handleFileChange}
+                                                            hidden={true}
                                                         />
+                                                        <label className={"btn btn-outline-danger"} htmlFor={"avatar"}>Choose File</label>
                                                         {errors.thumbnail && touched.thumbnail && (
-                                                            <div className="error-message">{errors.thumbnail}</div>
+                                                            <div className="error-message" style={{color:"red"}}>{errors.thumbnail}</div>
                                                         )}
                                                     </div>
 
@@ -328,7 +331,7 @@ const CustomerSetting = () => {
                                             name='youPass'
                                         />
                                         {errors.youPass && touched.youPass && (
-                                            <div className="error-message">{errors.youPass}</div>
+                                            <div className="error-message" style={{color:"red"}}>{errors.youPass}</div>
                                         )}
                                     </div>
                                     {/* input */}
@@ -342,7 +345,7 @@ const CustomerSetting = () => {
 
                                         />
                                         {errors.newPass && touched.newPass && (
-                                            <div className="error-message">{errors.newPass}</div>
+                                            <div className="error-message" style={{color:"red"}}>{errors.newPass}</div>
                                         )}
                                     </div>
                                     {/* input */}
@@ -356,7 +359,7 @@ const CustomerSetting = () => {
 
                                         />
                                         {errors.retypePass && touched.retypePass && (
-                                            <div className="error-message">{errors.retypePass}</div>
+                                            <div className="error-message" style={{color:"red"}}>{errors.retypePass}</div>
                                         )}
                                     </div>
                                     {/* input */}
