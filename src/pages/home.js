@@ -10,6 +10,9 @@ import { Field, Form, Formik} from "formik";
 import axios from "axios";
 import { isAfter, isBefore, parse } from 'date-fns';
 import Index from "../outlet/index";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
+
 
 
 const Home = () => {
@@ -19,7 +22,7 @@ const Home = () => {
 
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem('account'))
-        if (account && account.status.id === 3) {
+        if (account && account.status.id === 3 && account.role.id===2) {
             window.$("#statusModal").modal("show");
         }
     }, []);
@@ -43,7 +46,7 @@ const Home = () => {
                     </div>
                     <div className="modal-body">
                         <Formik
-                            initialValues={{birthday:'', avatar: '', address: '', phone: '',gender: '1'  }}
+                            initialValues={{birthday:'', avatar: 'https://i.pinimg.com/originals/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg', address: '', phone: '',gender: '1'  }}
                             validate={values => {
                                 const errors = {};
                                 // Kiểm tra các trường dữ liệu
@@ -88,11 +91,20 @@ const Home = () => {
                                 }).
                                 then((rep)=>{
                                     window.$("#statusModal").modal("hide");
-                                    alert("Update successful")
+                                    Swal.fire(
+                                        '',
+                                        'Update successful',
+                                        'success'
+                                    )
                                     account.status.id =1;
                                     localStorage.setItem("account" , JSON.stringify(account))
                                 }).catch((err)=>{
-                                    alert("Update failed")
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: ' Update failed ',
+                                    })
+
                                     window.$("#statusModal").modal("show");
                                     console.log(err)
                                 })
