@@ -47,13 +47,15 @@ const SignIn = () => {
             <div className="border-bottom shadow-sm">
                 <nav className="navbar navbar-light py-2">
                     <div className="container justify-content-center justify-content-lg-between">
-                        <a className="navbar-brand" href="../index.html">
+                        <Link to={"/index"}>
+                        <a className="navbar-brand" href="">
                             <img
-                                src="../assets/images/logo/freshcart-logo.svg"
+                                src="/assets/images/logo/freshcart-logo.svg"
                                 alt=""
                                 className="d-inline-block align-text-top"
                             />
                         </a>
+                        </Link>
                         <span className="navbar-text">
           Already have an account? <a href="signin.html">Sign in</a>
         </span>
@@ -69,7 +71,7 @@ const SignIn = () => {
                             <div className="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
                                 {/* img */}
                                 <img
-                                    src="../assets/images/svg-graphics/signin-g.svg"
+                                    src="/assets/images/svg-graphics/signin-g.svg"
                                     alt=""
                                     className="img-fluid"
                                 />

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getShopByAccountLogin} from "../../service/shopService";
-import {getAllProductsByShop} from "../../service/productService";
+import {getAllProductsByShop, getFilterProducts} from "../../service/productService";
 import {Field, Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -13,6 +13,7 @@ import {
 } from "firebase/storage";
 import {v4} from "uuid";
 import {storage} from "../../firebase";
+import {setFilterCategory, setFilterQuantityShow, setFilterSortShow} from "../../service/inputService";
 
 const ShopSingleFilterLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -23,10 +24,19 @@ const ShopSingleFilterLogin = () => {
     const shopProducts = useSelector(state => {
         return state.product.shopProducts;
     })
+    const filterProducts = useSelector(state => {
+        console.log(state.product.filterProducts)
+        return state.product.filterProducts;
+    })
+    const filterParam = useSelector(state => {
+        console.log(state.inputFilter.filterParam)
+        return state.inputFilter.filterParam;
+    })
     useEffect(() => {
-        dispatch(getShopByAccountLogin(account.id))
-        dispatch(getAllProductsByShop(shopLogin.id))
-    }, []);
+        // dispatch(getShopByAccountLogin(account.id))
+        // dispatch(getAllProductsByShop(shopLogin.id))
+        dispatch(getFilterProducts(filterParam));
+    }, [filterParam]);
 
     const [imageUpload, setImageUpload] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
@@ -60,7 +70,6 @@ const ShopSingleFilterLogin = () => {
         updatedImages.splice(index, 1);
         setImageUpload(updatedImages);
     };
-    console.log("imageUrls top :>>" + imageUrls)
     useEffect(() => {
 
         if (imageUpload !== null) {
@@ -76,30 +85,38 @@ const ShopSingleFilterLogin = () => {
             setImageUrls(newImageUrls)
         }
     },[imageUpload])
+    const handleInputChangeQuantityShow = () => {
+        let num = document.getElementById("quantity").value;
+        dispatch((setFilterQuantityShow(num)))
+    }
+    const handleInputChangeSortShow = () => {
+        let sort = document.getElementById("sort").value;
+        dispatch((setFilterSortShow(sort)))
+    }
 
 
     return (
         <>
             <div className="d-md-flex justify-content-between mb-3 align-items-center">
                 <div>
-                    <p className="mb-3 mb-md-0">{shopProducts.length} Products found</p>
+                    <p className="mb-3 mb-md-0">{filterProducts.length} Products found</p>
                 </div>
                 <div className="d-flex justify-content-md-between align-items-center">
                     <div className="me-2">
-                        <select className="form-select">
-                            <option selected="">Show: 50</option>
-                            <option value={10}>10</option>
-                            <option value={20}>20</option>
-                            <option value={30}>30</option>
+                        <select className="form-select" id="quantity" onClick={handleInputChangeQuantityShow}>
+                            <option  value={10000000} selected="" >Show: All</option>
+                            <option value={10} >10</option>
+                            <option value={20} >20</option>
+                            <option value={30} >30</option>
                         </select>
                     </div>
                     <div>
-                        <select className="form-select">
-                            <option selected="">Sort by: Featured</option>
-                            <option value="Low to High">Price: Low to High</option>
-                            <option value="High to Low">Price: High to Low</option>
-                            <option value="Release Date">Release Date</option>
-                            <option value="Avg. Rating">Avg. Rating</option>
+                        <select className="form-select" id="sort" onClick={handleInputChangeSortShow}>
+                            <option selected=""  value="">Sort by: Normal</option>
+                            <option value="Low to High" >Price: Low to High</option>
+                            <option value="High to Low" > Price: High to Low</option>
+                            <option value="Release Date" > Release Date</option>
+                            <option value="Avg. Rating" > Avg. Rating</option>
                         </select>
                     </div>
                     &ensp;
@@ -191,6 +208,7 @@ const ShopSingleFilterLogin = () => {
                                             setImageUpload([])
                                             document.getElementById("image").value = null
                                             dispatch(getAllProductsByShop(shopLogin.id));
+                                            dispatch(setFilterCategory("All Categories"));
                                             resetForm();
                                             alert("Create successful products")
                                             console.log("imageUrls :>>>>" + imageUrls)

@@ -16,7 +16,7 @@ import DashboardEmployee from "./outlet/dashboard/dashboardEmployee";
 import DashboardCustomer from "./outlet/dashboard/dashboardCustomer";
 import DashboardReview from "./outlet/dashboard/dashboardReview";
 import ShopList from "./outlet/shop/shopList";
-import ShopSingle from "./outlet/shop/shopSingle";
+import ShopSingleLogin from "./outlet/shop/shopSingleLogin";
 import Shop from "./pages/shop";
 import Product from "./pages/product";
 import ProductFilter from "./outlet/product/productFilter";
@@ -26,7 +26,6 @@ import ProductCart from "./outlet/product/productCart";
 import Cart from "./pages/cart";
 import Checkout from "./pages/checkout";
 import ProductCheckout from "./outlet/product/productCheckout";
-import ShopInfomation from "./outlet/shop/shopInfomation";
 import About from "./pages/about";
 import Error404 from "./pages/error404";
 import Signup from "./pages/signup";
@@ -38,6 +37,16 @@ import CustomerAddress from "./outlet/customer/customerAddress";
 import CustomerPayment from "./outlet/customer/customerPayment";
 import CustomerNotification from "./outlet/customer/customerNotification";
 import Signin from "./pages/signin";
+import ShopSingle from "./outlet/shop/shopSingle";
+import ShopSetting from "./outlet/shop/shopSetting";
+import ShopOrder from "./outlet/shop/shopOrder";
+import ShopAddress from "./outlet/shop/shopAddress";
+import ShopNotification from "./outlet/shop/shopNotification";
+import ShopManager from "./pages/shopManager";
+import CustomerOrderDetail from "./outlet/customer/customerOrderDetail";
+import ShopOrderDetail from "./outlet/shop/shopOrderDetail";
+import ShopDiscountCode from "./outlet/shop/shopDiscountCode";
+import ShopRevenue from "./outlet/shop/shopRevenue";
 import DashboardShopPending from "./outlet/dashboard/dashboardShopPending";
 
 function App() {
@@ -65,8 +74,9 @@ function App() {
             <Route path="shop" element={<Shop/>}>
                 <Route path="list" element={<ShopList/>}/>
                 <Route path="" element={<ShopList/>}/>
-                <Route path="single" element={<ShopSingle/>}/>
-                <Route path="setting" element={<ShopInfomation/>}/>
+                <Route path="single" element={<ShopSingleLogin/>}/>
+                <Route path="single/:idShop" element={<ShopSingle/>}/>
+                <Route path="setting" element={<ShopSetting/>}/>
             </Route>
             <Route path="product" element={<Product/>}>
                 <Route path="filter" element={<ProductFilter/>}/>
@@ -88,12 +98,21 @@ function App() {
             <Route path="signin" element={<Signin/>}></Route>
             <Route path="signup" element={<Signup/>}></Route>
             <Route path="forgot-password" element={<ForgotPassword/>}></Route>
-            <Route path="account" element={<Customer/>}>
+            <Route path="customer" element={<Customer/>}>
                 <Route path="order" element={<CustomerOrder/>}/>
+                <Route path="order-detail/:idOrder" element={<CustomerOrderDetail/>}/>
                 <Route path="setting" element={<CustomerSetting/>}/>
                 <Route path="address" element={<CustomerAddress/>}/>
                 <Route path="payment" element={<CustomerPayment/>}/>
                 <Route path="notification" element={<CustomerNotification/>}/>
+            </Route>
+            <Route path="shop-manager" element={<ShopManager/>}>
+                <Route path="order" element={<ShopOrder/>}/>
+                <Route path="order-detail/:idOrder" element={<ShopOrderDetail/>}/>
+                <Route path="discount-code" element={<ShopDiscountCode/>}/>
+                <Route path="revenue" element={<ShopRevenue/>}/>
+                <Route path="address" element={<ShopAddress/>}/>
+                <Route path="notification" element={<ShopNotification/>}/>
             </Route>
         </Routes>
     </>
