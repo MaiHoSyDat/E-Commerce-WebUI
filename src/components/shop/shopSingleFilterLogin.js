@@ -14,6 +14,7 @@ import {
 import {v4} from "uuid";
 import {storage} from "../../firebase";
 import {setFilterCategory, setFilterQuantityShow, setFilterSortShow} from "../../service/inputService";
+import Swal from "sweetalert2";
 
 const ShopSingleFilterLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -195,7 +196,6 @@ const ShopSingleFilterLogin = () => {
                                         },
                                         images: imageUrls
                                     }
-                                    console.log(product)
                                     axios
                                         .post('http://localhost:8080/shops/' + account.id + '/products/create', product,
                                             {
@@ -210,15 +210,20 @@ const ShopSingleFilterLogin = () => {
                                             dispatch(getAllProductsByShop(shopLogin.id));
                                             dispatch(setFilterCategory("All Categories"));
                                             resetForm();
-                                            alert("Create successful products")
-                                            console.log("imageUrls :>>>>" + imageUrls)
-
+                                            Swal.fire(
+                                                'Success!',
+                                                'Create successful products!',
+                                                'success'
+                                            )
 
                                         })
                                         .catch(error => {
                                             // Handle error
-                                            alert("Please review the information")
-
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Please review the information!',
+                                            })
                                             console.error(error);
                                         })
                                         .finally(() => {

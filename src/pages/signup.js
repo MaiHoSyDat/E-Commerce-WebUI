@@ -164,7 +164,10 @@ const Signup = () => {
                                                 <ErrorMessage name="password" component="div"
                                                               className="error-message"/>
                                             </div>
-                                            <Field name="role" as="select">
+                                            <Field name="role"
+                                                   as="select"
+                                                   className="form-control"
+                                                  >
                                                 <option value="" disabled></option>
                                                 <option value="2">
                                                     Customer

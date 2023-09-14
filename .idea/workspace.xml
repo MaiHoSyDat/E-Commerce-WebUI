@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c9b0c00a-c74f-497e-aef5-7ddb98f0c3ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterLogin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopDiscountCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopDiscountCode.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signup.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +74,7 @@
       <workItem from="1694049537604" duration="8540000" />
       <workItem from="1694567958263" duration="1463000" />
       <workItem from="1694586950141" duration="9782000" />
-      <workItem from="1694678620032" duration="2208000" />
+      <workItem from="1694678620032" duration="12426000" />
     </task>
     <servers />
   </component>
