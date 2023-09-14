@@ -223,7 +223,6 @@ const DashboardEmployee = () => {
                                                 .then(response => {
                                                     console.log(response.data);
                                                     resetForm();
-                                                    // setShowModal(false);
                                                     setTotalPages(Math.ceil((employee.length + 1) / 10));
                                                     setCurrentPage(Math.ceil((employee.length + 1) / 10));
                                                     setEmployee([...employee, response.data]);
@@ -283,7 +282,7 @@ const DashboardEmployee = () => {
                                                         type="submit"
                                                         className="btn btn-primary"
                                                         disabled={isSubmitting}
-
+                                                        data-bs-dismiss="modal"
                                                     >
                                                         {isSubmitting ? 'Submitting...' : 'Submit'}
                                                     </button>
@@ -372,33 +371,6 @@ const DashboardEmployee = () => {
                                                                         width={48}
                                                                         handleDiameter={20}
                                                                     />
-                                                                </td>
-                                                                <td>
-                                                                    <div className="dropdown">
-                                                                        <a
-                                                                            href="#"
-                                                                            className="text-reset"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false"
-                                                                        >
-                                                                            <i className="feather-icon icon-more-vertical fs-5"/>
-                                                                        </a>
-                                                                        <ul className="dropdown-menu">
-                                                                            <li>
-                                                                                <a className="dropdown-item" href="#">
-                                                                                    <i className="bi bi-trash me-3"/>
-                                                                                    Delete
-                                                                                </a>
-                                                                            </li>
-                                                                            <li>
-                                                                                <a className="dropdown-item" href="#">
-                                                                                    <i className="bi bi-pencil-square me-3 "/>
-                                                                                    Edit
-                                                                                </a>
-
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                             <div>
