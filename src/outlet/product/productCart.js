@@ -179,23 +179,32 @@ const ProductCart = () => {
         })
     }
     const handleUpdateCart = (num) => {
-        if (num == 1) {
-            dispatch(updateProductFromCartByAccount(carts)).then(res => {
-                Swal.fire(
-                    'Success!',
-                    'You have successfully updated your shopping cart!',
-                    'success'
-                )
-            }).catch(err => {
-                console.log(err)
-            })
-        } else if (num == 2) {
-            dispatch(updateProductFromCartByAccount(carts)).then(res => {
+        if (carts.length !== 0 ){
+            if (num == 1) {
+                dispatch(updateProductFromCartByAccount(carts)).then(res => {
+                    Swal.fire(
+                        'Success!',
+                        'You have successfully updated your shopping cart!',
+                        'success'
+                    )
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else if (num == 2) {
+                dispatch(updateProductFromCartByAccount(carts)).then(res => {
 
-            }).catch(err => {
-                console.log(err)
-            })
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
+        }else {
+            Swal.fire(
+                'Cart is Empty?',
+                'You have not purchased any products yet!',
+                'question'
+            )
         }
+
 
     }
     return (
