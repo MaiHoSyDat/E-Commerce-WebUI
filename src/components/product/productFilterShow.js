@@ -29,7 +29,7 @@ const ProductFilterShow = () => {
         return state.inputFilter.filterParam;
     })
     useEffect(() => {
-        dispatch(getCustomerByAccountLogin(account.id));
+        if (account != null) dispatch(getCustomerByAccountLogin(account.id));
     },[]);
 
     useEffect(() => {

@@ -169,9 +169,6 @@ const NavbarEmployee = () => {
                                                 >
                                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                                 </svg>
-                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                    5<span className="visually-hidden">unread messages</span>
-                  </span>
                                             </a>
                                         </Link>
                                     </div>
@@ -225,9 +222,21 @@ const NavbarEmployee = () => {
                                                 <line x1={3} y1={6} x2={21} y2={6} />
                                                 <path d="M16 10a4 4 0 0 1-8 0" />
                                             </svg>
-                                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                    1<span className="visually-hidden">unread messages</span>
-                  </span>
+                                        </a>
+                                    </div>
+                                    &nbsp;&nbsp;
+                                    <div className="list-inline-item">
+                                        <a
+                                            className="text-muted position-relative"
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#offcanvasRight"
+                                            href="#offcanvasExample"
+                                            role="button"
+                                            aria-controls="offcanvasRight"
+                                        >
+                                            <svg fill="#777777" width="20px" height="20px" viewBox="0 0 16 16" id="bell-16px" xmlns="http://www.w3.org/2000/svg">
+                                                <path id="Path_164" data-name="Path 164" d="M42.2,10.7l-1.53-1.02A1.5,1.5,0,0,1,40,8.43V6a5,5,0,0,0-3.109-4.623,1.987,1.987,0,0,0-3.782,0A5,5,0,0,0,30,6V8.43a1.5,1.5,0,0,1-.668,1.248L27.8,10.7a1.8,1.8,0,0,0,1,3.3H33a2,2,0,0,0,4,0h4.2a1.8,1.8,0,0,0,1-3.3Zm-1,2.3H28.8a.8.8,0,0,1-.444-1.47l1.531-1.02A2.5,2.5,0,0,0,31,8.43V6a4,4,0,0,1,8,0V8.43a2.5,2.5,0,0,0,1.113,2.08l1.532,1.021A.8.8,0,0,1,41.2,13ZM35,15a1,1,0,0,1-1-1h2A1,1,0,0,1,35,15Zm.5-11.5A.5.5,0,0,1,35,4a2,2,0,0,0-2,2,.5.5,0,0,1-1,0,3,3,0,0,1,3-3A.5.5,0,0,1,35.5,3.5Z" transform="translate(-27)"/>
+                                            </svg>
                                         </a>
                                     </div>
 

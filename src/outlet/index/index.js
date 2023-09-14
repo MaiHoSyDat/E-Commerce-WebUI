@@ -26,7 +26,9 @@ const Index = () => {
         return state.product.indexProductsMaxRating;
     })
     useEffect(() => {
-        dispatch(getCustomerByAccountLogin(account.id));
+        if (account != null) {
+            dispatch(getCustomerByAccountLogin(account.id));
+        }
     },[]);
     useEffect(() => {
         dispatch(getWishlistByCustomerId(customerLogin.id));

@@ -13,6 +13,7 @@ import orderDetailReducer from "./reducer/orderDetailSlice";
 import statusReducer from "./reducer/statusSlice";
 import codeReducer from "./reducer/codeSlice";
 import feedbackReducer from "./reducer/feedbackSlice";
+import reviewReducer from "./reducer/reviewSlice";
 
 export const store = configureStore({
     reducer: {
@@ -29,6 +30,7 @@ export const store = configureStore({
         orderDetail: orderDetailReducer,
         status: statusReducer,
         code: codeReducer,
-        feedback: feedbackReducer
+        feedback: feedbackReducer,
+        review: reviewReducer
     }
 })

@@ -7,7 +7,7 @@ import StarRating from "./starRating";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllProductsByCustomerBuy, getAllProductsByShop, getProduct} from "../../service/productService";
 import {getCustomerByAccountLogin} from "../../service/customerService";
-import {addReview} from "../../service/reviewService";
+import {addReview, getAllReviewsByProductAndCustomer} from "../../service/reviewService";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import {addFeedback, getAllFeedbackByProductId} from "../../service/feedbackService";
@@ -59,6 +59,10 @@ const ProductDetailInformation = ({product}) => {
         console.log(state)
         return state.product.productsByCustomerBuy;
     })
+    const reviewsByProductAndCustomer = useSelector(state => {
+        console.log(state)
+        return state.review.reviewsByProductAndCustomer;
+    })
     useEffect(() => {
         dispatch(getAllFeedbackByProductId(productDetail.id));
     },[productDetail])
@@ -92,6 +96,9 @@ const ProductDetailInformation = ({product}) => {
                 console.log(err)
             })
     }, [])
+    useEffect(() => {
+        dispatch(getAllReviewsByProductAndCustomer([productDetail.id, customerLogin.id]));
+    },[customerLogin,productDetail])
     const totalStart = (data) => {
         console.log(data[1].rating)
         let arr = []
@@ -543,43 +550,51 @@ const ProductDetailInformation = ({product}) => {
                                                     }
                                                 }
                                                 if (checkProductBuy) {
-                                                    let headline = document.getElementById("headline").value;
-                                                    let context = document.getElementById("context").value;
-                                                    const radioButtons = document.getElementsByName('rating');
-                                                    let rating = 0;
-                                                    for (let i = 0; i < radioButtons.length; i++) {
-                                                        if (radioButtons[i].checked) {
-                                                            rating = radioButtons[i].value;
-                                                            break;
-                                                        }
-                                                    }
-                                                    let user = {...customerLogin};
-                                                    let product = {...productDetail};
-                                                    let date = "";
-                                                    let review = {headline: headline, context: context,
-                                                        user: user, product: product, date: date, rating: rating}
-                                                    const fetchData = async () => {
-                                                        await dispatch(addReview(review));;
-                                                        await axios.get('http://localhost:8080/products/review/' + productId,
-                                                            {
-                                                                headers: {
-                                                                    'Authorization': localStorage.getItem('token'),
-                                                                },
-                                                            })
-                                                            .then((resp) => {
-                                                                setReviews(resp.data)
-                                                                totalStart(resp.data)
-
-                                                            })
-                                                            .catch((err) => {
-                                                                console.log(err)
-                                                            });
+                                                    if (reviewsByProductAndCustomer.length) {
+                                                        Swal.fire('You have already reviewed this product !')
                                                         document.getElementById('headline').value = '';
                                                         document.getElementById('context').value = '';
+                                                    } else {
+                                                        let headline = document.getElementById("headline").value;
+                                                        let context = document.getElementById("context").value;
+                                                        const radioButtons = document.getElementsByName('rating');
+                                                        let rating = 0;
+                                                        for (let i = 0; i < radioButtons.length; i++) {
+                                                            if (radioButtons[i].checked) {
+                                                                rating = radioButtons[i].value;
+                                                                break;
+                                                            }
+                                                        }
+                                                        let user = {...customerLogin};
+                                                        let product = {...productDetail};
+                                                        let date = "";
+                                                        let review = {headline: headline, context: context,
+                                                            user: user, product: product, date: date, rating: rating}
+                                                        const fetchData = async () => {
+                                                            await dispatch(addReview(review));;
+                                                            await axios.get('http://localhost:8080/products/review/' + productId,
+                                                                {
+                                                                    headers: {
+                                                                        'Authorization': localStorage.getItem('token'),
+                                                                    },
+                                                                })
+                                                                .then((resp) => {
+                                                                    setReviews(resp.data)
+                                                                    totalStart(resp.data)
+
+                                                                })
+                                                                .catch((err) => {
+                                                                    console.log(err)
+                                                                });
+                                                            document.getElementById('headline').value = '';
+                                                            document.getElementById('context').value = '';
+                                                        }
+                                                        fetchData()
                                                     }
-                                                    fetchData()
                                                 } else {
                                                     Swal.fire('You have not purchased this product yet !')
+                                                    document.getElementById('headline').value = '';
+                                                    document.getElementById('context').value = '';
                                                 }
                                             }}>
                                                 Submit Review
