@@ -5,8 +5,8 @@ import axios from "axios";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "../../firebase";
 import {v4} from "uuid";
-import {getCustomer} from "../../service/customerService";
-import {useDispatch} from "react-redux";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 const CustomerSetting = () => {
     let account = JSON.parse(localStorage.getItem('account'));
@@ -33,7 +33,6 @@ const CustomerSetting = () => {
         })
 
     },[])
-    console.log(image1)
 
     useEffect(() => {
         if (imageUpload !== null) {
@@ -116,12 +115,22 @@ const CustomerSetting = () => {
                                         console.log(newCustomer)
                                         console.log(newCustomer.avatar)
 
-                                        axios.post("http://localhost:8080/customer/edit", newCustomer).then((rep) => {
-                                            window.$("#statusModal").modal("hide");
-                                            alert("Update successful")
+                                        axios.post("http://localhost:8080/customer/edit", newCustomer,{
+                                            headers: {
+                                                'Authorization': localStorage.getItem('token')
+                                            },
+                                        }).then(() => {
+                                            Swal.fire(
+                                                '',
+                                                'Update successful',
+                                                'success'
+                                            )
                                         }).catch((err) => {
-                                            alert("Update failed")
-                                            window.$("#statusModal").modal("show");
+                                            Swal.fire(
+                                                'Update failed ?',
+                                                'Incorrect password ?',
+                                                'question'
+                                            )
                                             console.log(err)
                                         })
 
@@ -250,7 +259,7 @@ const CustomerSetting = () => {
                             initialValues={{
                                 youPass: '',
                                 newPass: '',
-                                currentPass: '',
+                                retypePass: '',
 
                             }}
                             validate={values => {
@@ -267,18 +276,40 @@ const CustomerSetting = () => {
                                     errors.newPass = 'New password must be at least 6 characters long';
                                 }
 
-                                if (!values.currentPass) {
-                                    errors.currentPass = 'Current password is required';
+                                if (!values.retypePass) {
+                                    errors.retypePass = 'Current password is required';
                                 }
-                                if (values.newPass !== values.currentPass) {
-                                    errors.currentPass = 'Re-type new password does not match new password';
+                                if (values.newPass !== values.retypePass) {
+                                    errors.retypePass = 'Re-type new password does not match new password';
                                 }
 
                                 return errors;
                             }}
-                            onSubmit={(values, {setSubmitting}) => {
-
-
+                            onSubmit={(values, {setSubmitting,resetForm} ) => {
+                                let setPass = {
+                                    accountId: account.id,
+                                    pass:values.youPass,
+                                    newPass:values.newPass,
+                                    retypePass:values.retypePass
+                                };
+                                axios.post("http://localhost:8080/account/editPass", setPass,{
+                                    headers: {
+                                        'Authorization': localStorage.getItem('token')
+                                    },
+                                }).then(() => {
+                                    Swal.fire(
+                                        '',
+                                        'Update successful',
+                                        'success'
+                                    )
+                                }).catch(() => {
+                                    Swal.fire(
+                                        'Update failed ?',
+                                        'Incorrect password ?',
+                                        'question'
+                                    )
+                                })
+                                resetForm();
                                 setSubmitting(false);
                             }}
                             enableReinitialize={true}
@@ -321,19 +352,24 @@ const CustomerSetting = () => {
                                             type="password"
                                             className="form-control"
                                             placeholder="**********"
-                                            name='currentPass'
+                                            name='retypePass'
 
                                         />
-                                        {errors.currentPass && touched.currentPass && (
-                                            <div className="error-message">{errors.currentPass}</div>
+                                        {errors.retypePass && touched.retypePass && (
+                                            <div className="error-message">{errors.retypePass}</div>
                                         )}
                                     </div>
                                     {/* input */}
                                     <div className="col-12">
                                      <br/>
-                                        <a href="#" className="btn btn-primary">
-                                            Save Password
-                                        </a>
+                                        <button
+                                            type="submit"
+                                            className="btn btn-primary"
+                                            disabled={isSubmitting}
+                                        >
+                                            Update
+                                        </button>
+
                                     </div>
 
 

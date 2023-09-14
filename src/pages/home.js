@@ -81,7 +81,11 @@ const Home = () => {
                                     }
                                 }
 
-                                axios.post("http://localhost:8080/customer/save",customer).
+                                axios.post("http://localhost:8080/customer/save",customer,{
+                                    headers: {
+                                        'Authorization': localStorage.getItem('token')
+                                    },
+                                }).
                                 then((rep)=>{
                                     window.$("#statusModal").modal("hide");
                                     alert("Update successful")
