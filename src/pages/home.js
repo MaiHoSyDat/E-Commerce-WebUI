@@ -17,7 +17,6 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 
 
-
 const Home = () => {
     let account = JSON.parse(localStorage.getItem('account'));
 
@@ -35,17 +34,16 @@ const Home = () => {
             window.$("#shopInformationModal").modal("show");
         }
         if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
-            Swal.fire('')
+            Swal.fire('Need confirm from Admin. Please Waiting...')
         }
         if (account && account.status.id === 3 && account.role.name === "ROLE_EMPLOYEE") {
             window.$("#employeeModal").modal("show");
         }
     }, [])
 
-    const remoteImg = (index) => {
-        const updateImage = [...imageUpload];
-        updateImage.splice(index, 1);
-        setImageUpload(updateImage);
+    const handleFileChange = (event) => {
+        const files = Array.from(event.target.files);
+        setImageUpload(files);
     };
 
     useEffect(() => {
@@ -64,19 +62,16 @@ const Home = () => {
         }
     },[imageUpload])
 
-    const handleFileChange = (event) => {
-        const files = Array.from(event.target.files);
-        setImageUpload(files);
-    };
-
-    const validation=Yup.object().shape({
+    // validate shop
+    const validation = Yup.object().shape({
         logo: Yup.array()
             .min(1, 'Please select at least one image')
             .nullable(),
         address: Yup.string().required('Address is required'),
         phone: Yup.string().required('Phone is required'),
-        name: Yup.string().required('Name is required'),
     })
+
+    console.log(imageUpload)
 
     return (
         <>
@@ -102,7 +97,8 @@ const Home = () => {
                                     avatar: '',
                                     address: '',
                                     phone: '',
-                                    gender: '1'}}
+                                    gender: '1'
+                                }}
                                 validate={values => {
                                     const errors = {};
                                     // Kiểm tra các trường dữ liệu
@@ -183,19 +179,6 @@ const Home = () => {
                                                                         alt={`Selected Image ${index}`}
                                                                         style={{width: '100px', height: 'auto'}}
                                                                     />
-                                                                    <button
-                                                                        onClick={() => remoteImg(index)}
-                                                                        style={{
-                                                                            position: 'absolute',
-                                                                            right: '0px',
-                                                                            background: 'black',
-                                                                            border: '1px',
-                                                                            cursor: 'pointer',
-                                                                        }}
-                                                                    >
-                                                                        <i className="fa fa-camera"
-                                                                           style={{color: "red"}}></i>
-                                                                    </button>
                                                                 </div>
                                                             ))}
                                                         </div>
@@ -303,8 +286,7 @@ const Home = () => {
                                 initialValues={{
                                     logo: '',
                                     address: '',
-                                    phone: '',
-                                    name: ''
+                                    phone: ''
                                 }}
                                 validationSchema={validation}
                                 onSubmit={(values, {setSubmitting}) => {
@@ -316,8 +298,8 @@ const Home = () => {
                                     let shop = {
                                         logo: imageUrls[0],
                                         address: values.address,
+                                        name: account.name,
                                         phone: values.phone,
-                                        name: values.name,
                                         status: {
                                             id: 1
                                         },
@@ -347,63 +329,6 @@ const Home = () => {
 
                                             <div className="col-12">
                                                 <Field
-                                                    name="logo"
-                                                    type="file"
-                                                    id="image"
-                                                    multiple
-                                                    onChange={handleFileChange}
-                                                />
-                                                {errors.logo && touched.logo && (
-                                                    <div className="error-message">{errors.logo}</div>
-                                                )}
-                                                {imageUpload.length > 0 && (
-                                                    <div>
-                                                        <h5>Shop Logo:</h5>
-                                                        <div style={{display: 'flex'}}>
-                                                            {imageUpload.map((file, index) => (
-                                                                <div key={index} style={{
-                                                                    marginRight: '10px',
-                                                                    position: 'relative'
-                                                                }}>
-                                                                    <img
-                                                                        src={URL.createObjectURL(file)}
-                                                                        alt={`Selected Image ${index}`}
-                                                                        style={{width: '100px', height: 'auto'}}
-                                                                    />
-                                                                    <button
-                                                                        onClick={() => remoteImg(index)}
-                                                                        style={{
-                                                                            position: 'absolute',
-                                                                            right: '0px',
-                                                                            background: 'black',
-                                                                            border: '1px',
-                                                                            cursor: 'pointer',
-                                                                        }}
-                                                                    >
-                                                                        <i class="fa fa-camera"
-                                                                           style={{color: "red"}}></i>
-                                                                    </button>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
-
-                                            <div className="col-12">
-                                                <Field
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Shop Name"
-                                                    name="name"
-                                                />
-                                                {errors.name && touched.name && (
-                                                    <div className="error-message">{errors.name}</div>
-                                                )}
-                                            </div>
-
-                                            <div className="col-12">
-                                                <Field
                                                     type="text"
                                                     className="form-control"
                                                     placeholder="Your Address"
@@ -423,6 +348,39 @@ const Home = () => {
                                                 />
                                                 {errors.phone && touched.phone && (
                                                     <div className="error-message">{errors.phone}</div>
+                                                )}
+                                            </div>
+
+                                            <div className="col-12">
+                                                <Field
+                                                    name="logo"
+                                                    type="file"
+                                                    id="image"
+                                                    onChange={handleFileChange}
+                                                    hidden={true}
+                                                />
+                                                <label className={"btn btn-outline-danger"} htmlFor={"image"}>Choose File</label>
+                                                {errors.logo && touched.logo && (
+                                                    <div className="error-message">{errors.logo}</div>
+                                                )}
+                                                {imageUpload.length > 0 && (
+                                                    <div>
+                                                        <h5>Shop Logo:</h5>
+                                                        <div style={{display: 'flex'}}>
+                                                            {imageUpload.map((file, index) => (
+                                                                <div key={index} style={{
+                                                                    marginRight: '10px',
+                                                                    position: 'relative'
+                                                                }}>
+                                                                    <img
+                                                                        src={URL.createObjectURL(file)}
+                                                                        alt={`Selected Image ${index}`}
+                                                                        style={{width: '100px', height: 'auto'}}
+                                                                    />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
                                                 )}
                                             </div>
 
@@ -468,14 +426,13 @@ const Home = () => {
                         <div className="modal-body-employee">
                             <Formik
                                 initialValues={{
-                                    avatar: '',
                                     full_name: '',
                                     birthday: '',
                                     address: '',
                                     phone: '',
                                     salary: '',
                                     gender: '1'
-                            }}
+                                }}
                                 validate={values => {
                                     const errors = {};
                                     // Kiểm tra các trường dữ liệu
@@ -510,7 +467,6 @@ const Home = () => {
                                 }}
                                 onSubmit={(values, {setSubmitting}) => {
                                     let employee = {
-                                        avtar: imageUrls[0],
                                         full_name: values.full_name,
                                         birthday: values.birthday,
                                         address: values.address,
@@ -543,39 +499,8 @@ const Home = () => {
                             >
                                 {({errors, touched, isSubmitting}) => (
                                     <Form>
-                                        {/*avatar*/}
                                         <div className="row g-3">
 
-                                            <div className="col-12">
-                                                <Field
-                                                    name="avatar"
-                                                    type="file"
-                                                    id="avatar"
-                                                    onChange={handleFileChange}
-                                                />
-                                                {errors.avatar && touched.avatar && (
-                                                    <div className="error-message">{errors.avatar}</div>
-                                                )}
-                                                {imageUpload.length > 0 && (
-                                                    <div>
-                                                        <h5>Shop Logo:</h5>
-                                                        <div style={{display: 'flex'}}>
-                                                            {imageUpload.map((file, index) => (
-                                                                <div key={index} style={{
-                                                                    marginRight: '10px',
-                                                                    position: 'relative'
-                                                                }}>
-                                                                    <img
-                                                                        src={URL.createObjectURL(file)}
-                                                                        alt={`Selected Image ${index}`}
-                                                                        style={{width: '100px', height: 'auto'}}
-                                                                    />
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
                                             {/*full_name*/}
                                             <div className="col-12">
                                                 <Field

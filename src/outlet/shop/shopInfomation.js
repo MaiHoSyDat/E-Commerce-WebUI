@@ -15,41 +15,50 @@ const ShopInfomation = () => {
 
     const [logoUpload, setLogoUpload] = useState([]);
     const [logoUrls, setLogoUrls] = useState([]);
-    const imagesListRef = ref(storage, "shop/");
+    const [shopInformation, setShopInfor] = useState({});
+    const [logoShop, setLogoShop] = useState('');
 
     const shop = useSelector((state) => {
         return state.shop.shopLogin
     })
 
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setLogoShop(URL.createObjectURL(file))
+        setLogoUpload(file);
+    };
+
     useEffect(() => {
         dispatch(getShopByAccountLogin(account.id))
     }, []);
 
-    const handleFileChange = (event) => {
-        const files = Array.from(event.target.files);
-        setLogoUpload(files);
-    };
+    useEffect(() => {
+        axios
+            .get("http://localhost:8080/shops/login/" + account.id, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            },
+        }).then((resp) => {
+            setShopInfor(resp.data)
+            setLogoShop(resp.data.logo)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [])
 
-    const remoteLogo = (index) => {
-        const updateLogo = [...logoUpload];
-        updateLogo.splice(index, 1);
-        setLogoUpload(updateLogo);
-    };
+
     useEffect(() => {
         if (logoUpload !== null) {
-            const newLogoUrls = [];
-            for (let i = 0; i < logoUpload.length; i++) {
-                const imageRef = ref(storage, `shop/${logoUpload[i].name + v4()}`);
-                uploadBytes(imageRef, logoUpload[i]).then((snapshot) => {
-                    getDownloadURL(snapshot.ref).then((url) => {
-                        newLogoUrls.push(url);
-                    });
+            const logoRef = ref(storage, `shop/${logoUpload.name + v4()}`);
+            uploadBytes(logoRef, logoUpload).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    setLogoUrls(url);
                 });
-            }
-            setLogoUrls(newLogoUrls)
+            });
         }
     }, [logoUpload])
 
+    // validation
     const validation = Yup.object().shape({
         name: Yup.string().required('Name is required'),
         address: Yup.string().required('Address is required'),
@@ -59,6 +68,8 @@ const ShopInfomation = () => {
             .min(1, 'Please select at least one image')
             .nullable(),
     })
+
+
 
     return (
         <div className="col-lg-9 col-md-8 col-12">
@@ -84,10 +95,10 @@ const ShopInfomation = () => {
                             {/* form */}
                             <Formik
                                 initialValues={{
-                                    logo: shop.logo,
-                                    name: shop.name,
-                                    address: shop.address,
-                                    phone: shop.phone
+                                    logo: shopInformation.logo,
+                                    name: shopInformation.name,
+                                    address: shopInformation.address,
+                                    phone: shopInformation.phone
                                 }}
                                 validation={validation}
                                 onSubmit={(values, {setSubmitting}) => {
@@ -112,7 +123,6 @@ const ShopInfomation = () => {
                                     const shopUrl = "http://localhost:8080/shops/save/shop/" + shop.id;
                                     axios.post(shopUrl, shopInformation)
                                         .then((rep) => {
-
                                             alert("Update successful")
                                             account.status.id = 1;
                                             localStorage.setItem("account", JSON.stringify(account))
@@ -127,128 +137,100 @@ const ShopInfomation = () => {
                                 {({errors, touched, isSubmitting}) => (
                                     <Form>
 
-                                        <div className="col-md-6 mb-3">
-                                            <div className="row align-items-center mb-4">
-                                                <div className="col-6">
-                                                    <Field style={{border: '1px solid #ccc', padding: '5px'}}
-                                                           hidden={true}
-                                                           name="file"
-                                                           type="file"
-                                                           id="logo"
-                                                           onChange={handleFileChange}
-                                                    />
-                                                    {logoUpload.map((file, index) => (
-                                                        <div key={index} style={{
-                                                            marginLeft: '450px',
-                                                            marginRight: '10px',
-                                                            position: 'relative',
-                                                            textAlign: "center"
-                                                        }}>
-                                                            <div className='col-4' style={{display: 'flex'}}>
-                                                                <img
-                                                                    src={URL.createObjectURL(file)}
-                                                                    alt={`Selected Image ${index}`}
-                                                                    style={{width: '350px', height: '350'}}
-                                                                />
-                                                                <div
-                                                                    style={{
-                                                                        marginRight: '10px',
-                                                                        position: 'relative'
-                                                                    }}
-                                                                >
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <label className="btn btn-outline-dark-info" htmlFor="logo">Choose</label>
-                                            {errors.logo && touched.logo && (
-                                                <div className="error-message">{errors.logo}</div>
-                                            )}
-                                        </div>
+                                        <div className="row g-3">
 
-                                        <div className="col-md-6 mb-3">
-                                            <div className="d-flex justify-content-between">
-                                                <label className="form-label" htmlFor="status">
-                                                    <p>Status:</p>
+                                            <div className="col-12">
+                                                <label className="form-label" htmlFor="title">
+                                                    Name
                                                 </label>
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="name"
+                                                    placeholder="Enter Your Shop name"
+                                                />
+                                                {errors.name && touched.name && (
+                                                    <div className="error-message">{errors.name}</div>
+                                                )}
                                             </div>
 
-                                            <div className="d-flex justify-content-between">
-                                                <label className="form-label" htmlFor="dataCreate">
-                                                    <p>Date Create: {shop.dateCreate}</p>
+                                            <div className="col-12">
+                                                <label className="form-label" htmlFor="title">
+                                                    Address
                                                 </label>
+                                                <Field
+                                                    type="text"
+                                                    name="address"
+                                                    className="form-control"
+                                                    placeholder="Enter Your Address"
+                                                />
+                                                {errors.address && touched.address && (
+                                                    <div className="error-message">{errors.address}</div>
+                                                )}
                                             </div>
 
-                                            <div className="d-flex justify-content-between">
-                                                <label className="form-label" htmlFor="rating">
-                                                    <p>Rating:</p>
+                                            <div className="col-12">
+                                                <label className="form-label" htmlFor="phone">
+                                                    Phone
                                                 </label>
+                                                <Field
+                                                    type="text"
+                                                    id="phone"
+                                                    name="phone"
+                                                    className="form-control"
+                                                    placeholder="Your Phone Number"
+                                                />
+                                                {errors.phone && touched.phone && (
+                                                    <div className="error-message">{errors.phone}</div>
+                                                )}
+                                            </div>
+
+                                            <div className="col-12">
+                                                <Field
+                                                    name="file"
+                                                    type="file"
+                                                    id="logo"
+                                                    onChange={handleFileChange}
+                                                    hidden={true}
+                                                />
+                                                <label className={"btn btn-outline-danger"} htmlFor={"logo"}>Choose File</label>
+                                                {errors.logo && touched.logo && (
+                                                    <div className="error-message">{errors.logo}</div>
+                                                )}
+                                            </div>
+
+                                            <div className="col-12 d-grid">
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-primary"
+                                                    disabled={isSubmitting}
+                                                >
+                                                    Update
+                                                </button>
                                             </div>
                                         </div>
 
-                                        <div className="col-md-6 mb-3">
-                                            <label className="form-label" htmlFor="shopName">
-                                                Shop Name<span className="text-danger">*</span>
-                                            </label>
-                                            <Field
-                                                type="text"
-                                                className="form-control"
-                                                name="name"
-                                                placeholder="Enter Your Shop name"
-                                            />
-                                            {errors.name && touched.name && (
-                                                <div className="error-message">{errors.name}</div>
-                                            )}
-                                        </div>
-
-                                        <div className="col-md-6     mb-3">
-                                            <label className="form-label" htmlFor="title">
-                                                Address
-                                            </label>
-                                            <Field
-                                                type="text"
-                                                name="address"
-                                                className="form-control"
-                                                placeholder="Enter Your Address"
-                                            />
-                                            {errors.address && touched.address && (
-                                                <div className="error-message">{errors.address}</div>
-                                            )}
-                                        </div>
-
-                                        <div className="col-md-6 mb-3">
-                                            <label className="form-label" htmlFor="phone">
-                                                Phone
-                                            </label>
-                                            <Field
-                                                type="text"
-                                                id="phone"
-                                                name="phone"
-                                                className="form-control"
-                                                placeholder="Your Phone Number"
-                                            />
-                                            {errors.phone && touched.phone && (
-                                                <div className="error-message">{errors.phone}</div>
-                                            )}
-                                        </div>
-
-                                        <div className="col-md-12">
-                                            <button
-                                                type="submit"
-                                                className="btn btn-primary"
-                                                disabled={isSubmitting}
-                                            >
-                                                Update
-                                            </button>
-                                        </div>
                                     </Form>
                                 )}
                             </Formik>
                         </div>
+                        <div className='col-2'></div>
+                        <div className='col-4' style={{textAlign: "center"}}>
+                            <br/>
+                            <div style={{display: 'flex'}}>
+                                <div style={{
+                                    marginRight: '10px',
+                                    position: 'relative'
+                                }}>
+                                    <img
+                                        src={logoShop}
+                                        alt={`Selected Image `}
+                                        style={{width: '200px', height: 'auto'}}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
                 <hr className="my-10"/>
                 <div className="pe-lg-14">
