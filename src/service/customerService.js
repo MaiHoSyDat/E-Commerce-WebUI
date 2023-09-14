@@ -8,10 +8,10 @@ export const getAllCustomers = createAsyncThunk(
         return res.data;
     }
 )
-export const getCustomer = createAsyncThunk(
-    "customer/getCustomer",
-    async (id) => {
-        const res = await axios.get("http://localhost:8080/customer/customerDetail/"+id);
+export const getCustomerByAccountLogin = createAsyncThunk(
+    "customer/getCustomerByAccountLogin",
+    async (idAccount) => {
+        const res = await axios.get("http://localhost:8080/customer/" + idAccount);
         return res.data;
     }
 )

@@ -1,11 +1,23 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getTenProductsToIndex, getThreeProductsMaxRating} from "../../service/productService";
-import Star from "../../components/star";
+import {getFilterProducts, getTenProductsToIndex, getThreeProductsMaxRating} from "../../service/productService";
+import {getCustomerByAccountLogin} from "../../service/customerService";
+import {getWishlistByCustomerId, updateWishlist} from "../../service/wishlistService";
+import Swal from "sweetalert2";
 
 const Index = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const customerLogin = useSelector(state => {
+        console.log(state.customer.customerLogin)
+        return state.customer.customerLogin;
+    })
+    const wishlistByCustomer = useSelector(state => {
+        console.log(state)
+        return state.wishlist.wishlistByCustomer;
+    })
+
     const numbers = [1, 2, 3, 4, 5]
     const indexProducts = useSelector(state => {
         return state.product.indexProducts;
@@ -14,9 +26,56 @@ const Index = () => {
         return state.product.indexProductsMaxRating;
     })
     useEffect(() => {
-        dispatch(getTenProductsToIndex())
-        dispatch(getThreeProductsMaxRating())
+        if (account != null) {
+            dispatch(getCustomerByAccountLogin(account.id));
+        }
     },[]);
+    useEffect(() => {
+        dispatch(getWishlistByCustomerId(customerLogin.id));
+        dispatch(getTenProductsToIndex());
+        dispatch(getThreeProductsMaxRating());
+    },[customerLogin]);
+    const handleAddProductToWishlist = (idProduct) => {
+        let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
+        // let checkId = () => {
+        //     if (wishlistByCustomer.length) return wishlistByCustomer.products.some(product => product.id == idProduct);
+        //     else return false;
+        // }
+        let newProducts = [...wishlistByCustomer.products]
+        if (!checkId) {
+            newProducts.push({id:idProduct});
+            let newWishlist = {
+                id: wishlistByCustomer.id,
+                products: newProducts,
+                account: {id: customerLogin.id}
+            }
+            const fetchData = async () => {
+                await dispatch(updateWishlist(newWishlist));
+                await dispatch(getWishlistByCustomerId(customerLogin.id))
+                    .then(res => {
+                        Swal.fire(
+                            'Success!',
+                            'Add to Wishlist successfully!',
+                            'success'
+                        )
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            }
+            fetchData();
+
+        } else {
+            dispatch(getWishlistByCustomerId(customerLogin.id))
+                .then(res => {
+                    Swal.fire('The product already exists in the wishlist!')
+                })
+                .catch(err => {
+                    console.log(err)})
+
+        }
+
+    }
     return (
         <main>
             <section className="mt-8">
@@ -247,7 +306,7 @@ const Index = () => {
                                                 <div className=" position-absolute top-0 start-0">
                                                     {dto.product.status && <span className="badge bg-danger">{dto.product.status.name}</span>}
                                                 </div>
-                                                <a href="#!">
+                                                <a href="#">
                                                     {" "}
                                                     <img
                                                         src={dto.product.thumbnail}
@@ -256,37 +315,30 @@ const Index = () => {
                                                     />
                                                 </a>
                                                 <div className="card-product-action">
+                                                    <Link to={"/product/detail/" + dto.product.id}>
                                                     <a
-                                                        href="#!"
+                                                        href=""
                                                         className="btn-action"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#quickViewModal"
+                                                        data-bs-toggle=""
+                                                        data-bs-target=""
                                                     >
                                                         <i
                                                             className="bi bi-eye"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-html="true"
+                                                            data-bs-toggle=""
+                                                            data-bs-html=""
                                                             title="Quick View"
                                                         />
                                                     </a>
-                                                    <a
-                                                        href="#!"
+                                                    </Link>
+                                                    <button style={{ border: "none" }}
                                                         className="btn-action"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-html="true"
+                                                        data-bs-toggle=""
+                                                        data-bs-html=""
                                                         title="Wishlist"
+                                                            onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
                                                     >
                                                         <i className="bi bi-heart" />
-                                                    </a>
-                                                    <a
-                                                        href="#!"
-                                                        className="btn-action"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-html="true"
-                                                        title="Compare"
-                                                    >
-                                                        <i className="bi bi-arrow-left-right" />
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div className="text-small mb-1">
@@ -295,12 +347,14 @@ const Index = () => {
                                                 </a>
                                             </div>
                                             <h2 className="fs-6">
+                                                <Link to={"/product/detail/" + dto.product.id}>
                                                 <a
-                                                    href="pages/shop-single.html"
+                                                    href=""
                                                     className="text-inherit text-decoration-none"
                                                 >
                                                     {dto.product.name}
                                                 </a>
+                                                </Link>
                                             </h2>
                                             <div>
                                                 {" "}
@@ -394,37 +448,31 @@ const Index = () => {
                                                     />
                                                 </a>
                                                 <div className="card-product-action">
+                                                    <Link to={"/product/detail/" + dto.product.id}>
                                                     <a
-                                                        href="#!"
+                                                        href="#"
                                                         className="btn-action"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#quickViewModal"
+                                                        data-bs-toggle=""
+                                                        data-bs-target=""
                                                     >
                                                         <i
                                                             className="bi bi-eye"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-html="true"
+                                                            data-bs-toggle=""
+                                                            data-bs-html=""
                                                             title="Quick View"
                                                         />
                                                     </a>
-                                                    <a
-                                                        href="#!"
+                                                    </Link>
+                                                    <button style={{ border: "none" }}
+                                                        onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
                                                         className="btn-action"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-html="true"
+                                                        data-bs-toggle=""
+                                                        data-bs-html=""
                                                         title="Wishlist"
+
                                                     >
                                                         <i className="bi bi-heart" />
-                                                    </a>
-                                                    <a
-                                                        href="#!"
-                                                        className="btn-action"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-html="true"
-                                                        title="Compare"
-                                                    >
-                                                        <i className="bi bi-arrow-left-right" />
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div className="text-small mb-1">
@@ -433,19 +481,18 @@ const Index = () => {
                                                 </a>
                                             </div>
                                             <h2 className="fs-6">
+                                                <Link to={"/product/detail/" + dto.product.id}>
                                                 <a
-                                                    href="pages/shop-single.html"
+                                                    href=""
                                                     className="text-inherit text-decoration-none"
                                                 >
                                                     {dto.product.name}
                                                 </a>
+                                                </Link>
                                             </h2>
                                             <div className="d-flex justify-content-between align-items-center mt-3">
                                                 <div>
                                                     <span className="text-dark">${dto.product.price}</span>{" "}
-                                                    <span className="text-decoration-line-through text-muted">
-                      $18
-                    </span>
                                                 </div>
                                                 <div>
                                                     {" "}

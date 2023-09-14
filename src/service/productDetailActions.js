@@ -17,3 +17,17 @@ export const fetchProductDetail = (productId) => async (dispatch) => {
             dispatch(fetchProductDetailFailure(error.message));
         }
 };
+
+export const productDetail = (productId) => async (dispatch) => {
+        try {
+            dispatch(fetchProductDetailRequest());
+            const response = await fetch(`http://localhost:8080/products/productDetail/${productId}`);
+            if (!response.ok) {
+                throw new Error("Request failed");
+            }
+            const product = await response.json();
+            dispatch(productDetail(product));
+        } catch (error) {
+            dispatch(fetchProductDetailFailure(error.message));
+        }
+};

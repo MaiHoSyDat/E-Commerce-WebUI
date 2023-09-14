@@ -25,7 +25,7 @@ const ProductDetailRelatedItems = () => {
                                     <a href="#!">
                                         {/* img */}
                                         <img
-                                            src="../assets/images/products/product-img-1.jpg"
+                                            src="/assets/images/products/product-img-1.jpg"
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
@@ -129,7 +129,7 @@ const ProductDetailRelatedItems = () => {
                                 <div className="text-center position-relative">
                                     <a href="#!">
                                         <img
-                                            src="../assets/images/products/product-img-2.jpg"
+                                            src="/assets/images/products/product-img-2.jpg"
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
@@ -229,7 +229,7 @@ const ProductDetailRelatedItems = () => {
                                 <div className="text-center position-relative">
                                     <a href="#!">
                                         <img
-                                            src="../assets/images/products/product-img-3.jpg"
+                                            src="/assets/images/products/product-img-3.jpg"
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
@@ -332,7 +332,7 @@ const ProductDetailRelatedItems = () => {
                                 <div className="text-center position-relative">
                                     <a href="#!">
                                         <img
-                                            src="../assets/images/products/product-img-4.jpg"
+                                            src="/assets/images/products/product-img-4.jpg"
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
@@ -435,7 +435,7 @@ const ProductDetailRelatedItems = () => {
                                 <div className="text-center position-relative">
                                     <a href="#!">
                                         <img
-                                            src="../assets/images/products/product-img-9.jpg"
+                                            src="/assets/images/products/product-img-9.jpg"
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
