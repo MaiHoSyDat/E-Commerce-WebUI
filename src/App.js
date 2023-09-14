@@ -47,6 +47,7 @@ import CustomerOrderDetail from "./outlet/customer/customerOrderDetail";
 import ShopOrderDetail from "./outlet/shop/shopOrderDetail";
 import ShopDiscountCode from "./outlet/shop/shopDiscountCode";
 import ShopRevenue from "./outlet/shop/shopRevenue";
+import DashboardShopPending from "./outlet/dashboard/dashboardShopPending";
 
 function App() {
     // xoá account khi tắt trang
@@ -62,7 +63,7 @@ function App() {
                 <Route path="index" element={<DashboardIndex/>}/>
                 <Route path="products" element={<DashboardProduct/>}/>
                 <Route path="category" element={<DashboardCategory/>}/>
-                <Route path="categoryDetail" element={<DashboardCategoryDetail/>}/>
+                <Route path="shopPending" element={<DashboardShopPending/>}/>
                 <Route path="order" element={<DashboardOrder/>}/>
                 <Route path="orderDetail" element={<DashboardOrderDetail/>}/>
                 <Route path="shop" element={<DashboardShop/>}/>

@@ -5,6 +5,7 @@ import {deleteOrder, getAllOrdersByCustomer} from "../../service/orderService";
 import {Link} from "react-router-dom";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
+import {addNotification} from "../../service/notificationService";
 
 const CustomerOrder = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -82,7 +83,14 @@ const CustomerOrder = () => {
                                             data-bs-title="Delete"
                                                 onClick={() => {
                                                     if (order.status.name == "Pending") {
+                                                        let name = "Order";
+                                                        let context = "" + customerLogin.account.name + " have deleted a order with ID: " + order.id;
+                                                        let sender = customerLogin.account;
+                                                        let receiver = order.shop.account;
+                                                        let notification = {name: name, context: context,
+                                                            sender: sender, receiver: receiver};
                                                         const fetchData = async () => {
+                                                            await dispatch(addNotification(notification));
                                                             await dispatch(deleteOrder(order.id));
                                                             await dispatch(getAllOrdersByCustomer(customerLogin.id));
                                                         };

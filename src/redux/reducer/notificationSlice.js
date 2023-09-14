@@ -1,8 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-import {getAllNotificationsByReceiverCustomer} from "../../service/notificationService";
+import {
+    getAllNotificationsByReceiverCustomer,
+    getAllNotificationsByReceiverShop
+} from "../../service/notificationService";
 const initialState = {
     notificationByCustomer: [],
+    notificationByShop: []
 }
 const notificationSlice = createSlice({
     name: "notification",
@@ -11,6 +15,9 @@ const notificationSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(getAllNotificationsByReceiverCustomer.fulfilled,(state,action) => {
             state.notificationByCustomer = action.payload;
+        })
+        builder.addCase(getAllNotificationsByReceiverShop.fulfilled,(state,action) => {
+            state.notificationByShop = action.payload;
         })
     }
 })
