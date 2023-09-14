@@ -6,7 +6,7 @@ import ShopSingleFilterLogin from "../../components/shop/shopSingleFilterLogin";
 import ShopSingleSearchLogin from "../../components/shop/shopSingleSearchLogin";
 import ShopSingleViewLogin from "../../components/shop/shopSingleViewLogin";
 import {getShopByAccountLogin, getShopDTOByAccountLogin} from "../../service/shopService";
-import {setFilterShopSingle} from "../../service/inputService";
+import {setFilterIdStatus, setFilterShopSingle} from "../../service/inputService";
 import {useDispatch, useSelector} from "react-redux";
 
 const ShopSingleLogin = () => {
@@ -22,6 +22,7 @@ const ShopSingleLogin = () => {
         const fetchData = async () => {
             await dispatch(getShopByAccountLogin(account.id));
             await dispatch(setFilterShopSingle(shopLogin.id));
+            await dispatch(setFilterIdStatus(0));
         };
         fetchData();
         // dispatch(setFilterShopSingle(shopLogin.id));

@@ -5,6 +5,9 @@ import {getAllProductsByShop, getFilterProducts} from "../../service/productServ
 
 import {setFilterShopSingle} from "../../service/inputService";
 import {Link} from "react-router-dom";
+import {getCustomerByAccountLogin} from "../../service/customerService";
+import {getWishlistByCustomerId, updateWishlist} from "../../service/wishlistService";
+import Swal from "sweetalert2";
 
 const ShopSingleFilterViewLogin = () => {
     const numbers = [1, 2, 3, 4, 5]
@@ -12,6 +15,14 @@ const ShopSingleFilterViewLogin = () => {
     const dispatch = useDispatch();
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
+    })
+    const customerLogin = useSelector(state => {
+        console.log(state.customer.customerLogin)
+        return state.customer.customerLogin;
+    })
+    const wishlistByCustomer = useSelector(state => {
+        console.log(state)
+        return state.wishlist.wishlistByCustomer;
     })
     const filterProducts = useSelector(state => {
         console.log(state.product.filterProducts)
@@ -22,8 +33,49 @@ const ShopSingleFilterViewLogin = () => {
         return state.inputFilter.filterParam;
     })
     useEffect(() => {
+        dispatch(getCustomerByAccountLogin(account.id));
+    },[]);
+    useEffect(() => {
+        dispatch(getWishlistByCustomerId(customerLogin.id));
         dispatch(getFilterProducts(filterParam));
-    },[filterParam])
+    },[filterParam,customerLogin])
+    const handleAddProductToWishlist = (idProduct) => {
+        let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
+        let newProducts = [...wishlistByCustomer.products]
+        if (!checkId) {
+            newProducts.push({id:idProduct});
+            let newWishlist = {
+                id: wishlistByCustomer.id,
+                products: newProducts,
+                account: {id: customerLogin.id}
+            }
+            const fetchData = async () => {
+                await dispatch(updateWishlist(newWishlist));
+                await dispatch(getWishlistByCustomerId(customerLogin.id))
+                    .then(res => {
+                        Swal.fire(
+                            'Success!',
+                            'Add to Wishlist successfully!',
+                            'success'
+                        )
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            }
+            fetchData();
+
+        } else {
+            dispatch(getWishlistByCustomerId(customerLogin.id))
+                .then(res => {
+                    Swal.fire('The product already exists in the wishlist!')
+                })
+                .catch(err => {
+                    console.log(err)})
+
+        }
+
+    }
 
 
     return (
@@ -54,29 +106,20 @@ const ShopSingleFilterViewLogin = () => {
                                         >
                                             <i
                                                 className="bi bi-eye"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-html="true"
+                                                data-bs-toggle=""
+                                                data-bs-html=""
                                                 title="Quick View"
                                             />
                                         </Link>
-                                        <a
-                                            href="shop-wishlist.html"
-                                            className="btn-action"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-html="true"
-                                            title="Wishlist"
+                                        <button style={{ border: "none" }}
+                                                className="btn-action"
+                                                data-bs-toggle=""
+                                                data-bs-html=""
+                                                title="Wishlist"
+                                                onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
                                         >
                                             <i className="bi bi-heart" />
-                                        </a>
-                                        <a
-                                            href="#!"
-                                            className="btn-action"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-html="true"
-                                            title="Compare"
-                                        >
-                                            <i className="bi bi-arrow-left-right" />
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                                 {/* heading */}
@@ -86,12 +129,14 @@ const ShopSingleFilterViewLogin = () => {
                                     </a>
                                 </div>
                                 <h2 className="fs-6">
+                                    <Link to={"/product/detail/" + dto.product.id}>
                                     <a
-                                        href="shop-single.html"
+                                        href=""
                                         className="text-inherit text-decoration-none"
                                     >
                                         {dto.product.name}
                                     </a>
+                                    </Link>
                                 </h2>
                                 <div>
                                     {" "}

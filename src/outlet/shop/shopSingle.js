@@ -9,7 +9,7 @@ import ShopSingleDetail from "../../components/shop/shopSingleDetail";
 import {useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {getShopDTO} from "../../service/shopService";
-import {setFilterShopSingle} from "../../service/inputService";
+import {setFilterIdStatus, setFilterShopSingle} from "../../service/inputService";
 
 const ShopSingle = () => {
     const {idShop} = useParams();
@@ -18,6 +18,7 @@ const ShopSingle = () => {
         const fetchData = async () => {
             await dispatch(getShopDTO(idShop));
             await dispatch(setFilterShopSingle(idShop));
+            await dispatch(setFilterIdStatus(2));
         };
         fetchData();
         // dispatch(setFilterShopSingle(shopLogin.id));

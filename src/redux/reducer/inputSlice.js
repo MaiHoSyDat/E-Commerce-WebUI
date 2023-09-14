@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {
     setFilterCategory,
     setFilterCheckedRating,
-    setFilterCheckedShops,
+    setFilterCheckedShops, setFilterIdStatus,
     setFilterNameProduct, setFilterParam,
     setFilterPrice,
     setFilterQuantityShow,
@@ -20,7 +20,8 @@ const initialState = {
         maxPrice: "",
         ratings: [],
         sort: "",
-        quantity: ""
+        quantity: "",
+        idStatus: null
     }
 }
 const inputSlice = createSlice({
@@ -70,6 +71,10 @@ const inputSlice = createSlice({
             state.filterParam.idShops = [];
             state.filterParam.idShops.push(Number(action.payload));
         })
+        builder.addCase(setFilterIdStatus.fulfilled,(state,action) => {
+            if (action.payload == 0) state.filterParam.idStatus = null
+            else state.filterParam.idStatus = Number(action.payload);
+        })
         builder.addCase(setFilterParam.fulfilled,(state,action) => {
             state.filterParam.nameProduct = "";
             state.filterParam.category = "All Products";
@@ -79,6 +84,7 @@ const inputSlice = createSlice({
             state.filterParam.ratings = [];
             state.filterParam.sort = "";
             state.filterParam.quantity = "";
+            state.filterParam.idStatus = 2;
         })
 
     }

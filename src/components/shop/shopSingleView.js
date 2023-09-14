@@ -19,7 +19,7 @@ const ShopSingleView = () => {
             {shopDTO !== undefined && <div className="py-4">
                 {/* img */}
                 <img
-                    src={"/" + shopDTO.shop.logo}
+                    src={shopDTO.shop.logo}
                     alt=""
                     className="img-fluid"
                 />

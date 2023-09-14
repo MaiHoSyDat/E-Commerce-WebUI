@@ -24,7 +24,7 @@ const Navbar = () => {
                                 <Link to={"/index"}>
                                     <a className="navbar-brand d-none d-lg-block" href="">
                                         <img
-                                            src="../../assets/images/logo/freshcart-logo.svg"
+                                            src="/assets/images/logo/freshcart-logo.svg"
                                             alt="eCommerce HTML Template"
                                         />
                                     </a>
@@ -32,7 +32,7 @@ const Navbar = () => {
                                 <div className="d-flex justify-content-between w-100 d-lg-none">
                                     <a className="navbar-brand" href="index.html">
                                         <img
-                                            src="../assets/images/logo/freshcart-logo.svg"
+                                            src="/assets/images/logo/freshcart-logo.svg"
                                             alt="eCommerce HTML Template"
                                         />
                                     </a>
