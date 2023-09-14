@@ -70,7 +70,6 @@ const ShopSingleFilterLogin = () => {
         updatedImages.splice(index, 1);
         setImageUpload(updatedImages);
     };
-    console.log("imageUrls top :>>" + imageUrls)
     useEffect(() => {
 
         if (imageUpload !== null) {
