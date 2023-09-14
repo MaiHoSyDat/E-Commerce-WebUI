@@ -4,6 +4,7 @@ import DashboardHeader from "../components/dashboard/dashboardHeader";
 import {Outlet} from "react-router-dom";
 
 const Dashboard = () => {
+    let account = JSON.parse(localStorage.getItem('account'));
     return (
         <div>
             <DashboardHeader></DashboardHeader>

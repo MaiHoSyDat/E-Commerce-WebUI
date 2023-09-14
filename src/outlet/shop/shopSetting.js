@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ShopInfomation = () => {
+const ShopSetting = () => {
     return (
         <main>
             {/* section */}
@@ -135,8 +135,7 @@ const ShopInfomation = () => {
                 </div>
             </section>
         </main>
-
     );
 };
 
-export default ShopInfomation;
+export default ShopSetting;

@@ -9,11 +9,18 @@ export const getAllProducts = createAsyncThunk(
         return res.data;
     }
 )
+export const getAllProductsByCustomerBuy = createAsyncThunk(
+    "product/getAllProductsByCustomerBuy",
+    async (idCustomer) => {
+        const res = await axios.get("http://localhost:8080/customer/productBuy/" +idCustomer);
+        return res.data;
+    }
+)
 // lấy ra 1 sp chi tiết
 export const getProduct = createAsyncThunk(
     "product/getProduct",
     async (idProduct) => {
-        const res = await axios.get("" + idProduct);
+        const res = await axios.get("http://localhost:8080/products/detail/" + idProduct);
         return res.data;
     }
 )

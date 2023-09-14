@@ -60,6 +60,12 @@ export const setFilterShopSingle = createAsyncThunk(
         return input;
     }
 )
+export const setFilterIdStatus = createAsyncThunk(
+    "input/inputFilterIdStatus",
+    async (input) => {
+        return input;
+    }
+)
 export const setFilterParam = createAsyncThunk(
     "input/setFilterParam",
     async () => {

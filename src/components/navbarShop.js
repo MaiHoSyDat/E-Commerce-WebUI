@@ -19,7 +19,7 @@ const NavbarShop = () => {
                                 <Link to={"/index"}>
                                     <a className="navbar-brand d-none d-lg-block" href="">
                                         <img
-                                            src="../assets/images/logo/freshcart-logo.svg"
+                                            src="/assets/images/logo/freshcart-logo.svg"
                                             alt="eCommerce HTML Template"
                                         />
                                     </a>
@@ -27,7 +27,7 @@ const NavbarShop = () => {
                                 <div className="d-flex justify-content-between w-100 d-lg-none">
                                     <a className="navbar-brand" href="index.html">
                                         <img
-                                            src="../assets/images/logo/freshcart-logo.svg"
+                                            src="/assets/images/logo/freshcart-logo.svg"
                                             alt="eCommerce HTML Template"
                                         />
                                     </a>
@@ -172,6 +172,21 @@ const NavbarShop = () => {
                                                 </svg>
                                             </a>
                                         </Link>
+                                    </div>
+                                    &nbsp;
+                                    <div className="list-inline-item">
+                                        <a
+                                            className="text-muted position-relative"
+                                            data-bs-toggle="offcanvas"
+                                            data-bs-target="#offcanvasRight"
+                                            href="#offcanvasExample"
+                                            role="button"
+                                            aria-controls="offcanvasRight"
+                                        >
+                                            <svg fill="#777777" width="20px" height="20px" viewBox="0 0 16 16" id="bell-16px" xmlns="http://www.w3.org/2000/svg">
+                                                <path id="Path_164" data-name="Path 164" d="M42.2,10.7l-1.53-1.02A1.5,1.5,0,0,1,40,8.43V6a5,5,0,0,0-3.109-4.623,1.987,1.987,0,0,0-3.782,0A5,5,0,0,0,30,6V8.43a1.5,1.5,0,0,1-.668,1.248L27.8,10.7a1.8,1.8,0,0,0,1,3.3H33a2,2,0,0,0,4,0h4.2a1.8,1.8,0,0,0,1-3.3Zm-1,2.3H28.8a.8.8,0,0,1-.444-1.47l1.531-1.02A2.5,2.5,0,0,0,31,8.43V6a4,4,0,0,1,8,0V8.43a2.5,2.5,0,0,0,1.113,2.08l1.532,1.021A.8.8,0,0,1,41.2,13ZM35,15a1,1,0,0,1-1-1h2A1,1,0,0,1,35,15Zm.5-11.5A.5.5,0,0,1,35,4a2,2,0,0,0-2,2,.5.5,0,0,1-1,0,3,3,0,0,1,3-3A.5.5,0,0,1,35.5,3.5Z" transform="translate(-27)"/>
+                                            </svg>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -457,9 +472,9 @@ const NavbarShop = () => {
                                             </Link>
                                         </li>
                                         <li className="nav-item w-100 w-lg-auto">
-                                            <Link to={"/setting"}>
+                                            <Link to={"/shop-manager"}>
                                                 <a className="nav-link" href="">
-                                                    Setting
+                                                    Manager
                                                 </a>
                                             </Link>
                                         </li>

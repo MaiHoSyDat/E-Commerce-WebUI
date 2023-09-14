@@ -13,7 +13,7 @@ import {
 } from "firebase/storage";
 import {v4} from "uuid";
 import {storage} from "../../firebase";
-import {setFilterQuantityShow, setFilterSortShow} from "../../service/inputService";
+import {setFilterCategory, setFilterQuantityShow, setFilterSortShow} from "../../service/inputService";
 
 const ShopSingleFilterLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -209,6 +209,7 @@ const ShopSingleFilterLogin = () => {
                                             setImageUpload([])
                                             document.getElementById("image").value = null
                                             dispatch(getAllProductsByShop(shopLogin.id));
+                                            dispatch(setFilterCategory("All Categories"));
                                             resetForm();
                                             alert("Create successful products")
                                             console.log("imageUrls :>>>>" + imageUrls)
