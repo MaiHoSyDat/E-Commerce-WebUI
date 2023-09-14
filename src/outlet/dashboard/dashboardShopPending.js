@@ -2,57 +2,74 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const DashboardShopPending = () => {
+    const [shop, setShop] = useState([]);
+    const [searchType, setSearchType] = useState(1); // Lựa chọn tìm kiếm theo tên hoặc email
+    const [searchText, setSearchText] = useState('');
+    const [update, setUpdate] = useState('');
+    const [totalElements, setTotalElements] = useState(0);
     const [status, setStatus] = useState([]);
-    const [account, setAccount] = useState([]);
+    const [oneStatus, setOneStatus] = useState('')
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+
     useEffect(() => {
         fetchData();
-        fetchStatus();
-    }, [currentPage,account]);
-//lấy ra tất cả các status
-    const fetchStatus = () => {
+    }, [currentPage]);
+    // const handleSearchTypeChange = (event) => {
+    //     setSearchType(event.target.value);
+    // };
+    //
+    // const handleSearchTextChange = (event) => {
+    //     setSearchText(event.target.value);
+    // };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         await axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}&roleId=3`)
+    //             .then((response) => {
+    //                 setShop(response.data.content);
+    //                 setTotalPages(response.data.totalPages)
+    //                 setTotalElements(response.data.totalElements)
+    //                 console.log(response.data)
+    //             })
+    //             .catch((error) => {
+    //                 console.error(error);
+    //             });
+    //     }
+    //     fetchData()
+    // }, [searchText, searchType])
+    const fetchData = () => {
         axios
-            .get('http://localhost:8080/admin/roles')
+            .get('http://localhost:8080/admin/getAllShopPending?idStatus=4&idRole=3')
+            .then((response) => {
+                setShop(response.data.content);
+                setTotalPages(response.data.totalPages);
+                setTotalElements(response.data.totalElements)
+                console.log(shop)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/admin/shopStatus')
             .then((response) => {
                 setStatus(response.data);
             })
             .catch((error) => {
                 console.log(error);
             });
-    };
-//lấy ra tất cả account có role shop
-    const fetchData = () => {
-        axios
-            .get('http://localhost:8080/admin/getAccountByRole', {
-                params: {
-                    page: currentPage - 1,
-                    id: 3,
-                },
-            })
-            .then((response) => {
-                const { content, totalPages } = response.data;
-                setAccount(content);
-                setTotalPages(totalPages);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
+    }, [oneStatus]);
 
     const handleStatusChange = (idAccount, event) => {
         const idStatus = event.target.value;
+        setOneStatus(idStatus)
         axios
             .post(`http://localhost:8080/admin/shop/blockOrActive?accountId=${idAccount}&statusId=${idStatus}`)
-            .then((response) => {
-                const updatedAccountShop = account.map((s) => {
-                    if (s.id === idAccount) {
-                        return { ...s, status: { id: parseInt(idStatus) } };
-                    }
-                    return s;
-                });
-                setAccount(updatedAccountShop);
+            .then(() => {
+                fetchData()
+
             })
             .catch((error) => {
                 console.log(error);
@@ -120,13 +137,13 @@ const DashboardShopPending = () => {
                                         <th>Username</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Role</th>
+                                        {/*<th>Role</th>*/}
                                         <th>Spent</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {account.map((a) => (
+                                    {shop.map((a) => (
                                         <tr key={a.id}>
                                             <td>
                                                 <div className="d-flex align-items-center">
@@ -139,7 +156,7 @@ const DashboardShopPending = () => {
                                             </td>
                                             <td>{a.name}</td>
                                             <td>{a.email}</td>
-                                            <td>{a.role.name}</td>
+                                            {/*<td>{a.role.name}</td>*/}
                                             <td>$49.00</td>
                                             <td>
                                                 {status.map((st) => {
@@ -147,7 +164,13 @@ const DashboardShopPending = () => {
                                                         if (st.id === 4) {
                                                             return (
                                                                 <>
-
+                                                                    {/*<button type="button" className="btn btn-outline-success btn-floating" data-mdb-ripple-color="dark"*/}
+                                                                    {/*        onClick={() => handleStatusChange(a.id, {target: {value: 3}})}>*/}
+                                                                    {/*    <i className="fas fa-star"></i>*/}
+                                                                    {/*</button>*/}
+                                                                    {/*<button type="button" className="btn btn-danger btn-floating" onClick={() => handleStatusChange(a.id, {target: {value: 2}})}>*/}
+                                                                    {/*    <i className="fas fa-magic"></i>*/}
+                                                                    {/*</button>*/}
                                                                     <button
                                                                         className="btn btn-success me-2"
                                                                         onClick={() => handleStatusChange(a.id, {target: {value: 3}})}
@@ -165,7 +188,6 @@ const DashboardShopPending = () => {
                                                         } else {
                                                             return (
                                                                 <>
-                                                                    {a.status.name}
                                                                 </>
                                                             );
                                                         }
