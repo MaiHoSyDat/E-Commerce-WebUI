@@ -62,7 +62,7 @@ const ShopOrderDetail = () => {
                                 {order.code && <td className="align-middle border-top-0">{order.code.name}</td>}
                             </tr>
                             <tr>
-                                <th>Total Amount : </th>
+                                <th>Payment Amount : </th>
                                 {!order.code && <td className="align-middle border-top-0">${order.totalAmount}</td>}
                                 {order.code && <td className="align-middle border-top-0">${order.totalAmount * (1 - order.code.percent)}</td>}
                             </tr>
