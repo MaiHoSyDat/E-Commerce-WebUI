@@ -109,7 +109,7 @@ const ShopInfomation = () => {
                                             id: account.id
                                         }
                                     }
-                                    const shopUrl = "http://localhost:8080/shops/save?id=" + shop.id;
+                                    const shopUrl = "http://localhost:8080/shops/save/shop/" + shop.id;
                                     axios.post(shopUrl, shopInformation)
                                         .then((rep) => {
 

@@ -21,8 +21,8 @@ import 'sweetalert2/dist/sweetalert2.css';
 const Home = () => {
     let account = JSON.parse(localStorage.getItem('account'));
 
-    const [logoUpload, setLogoUpload] = useState([]);
-    const [logoUrls, setLogoUrls] = useState([]);
+    const [imageUpload, setImageUpload] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
     const imagesListRef = ref(storage, "shop/");
 
     useEffect(() => {
@@ -35,40 +35,38 @@ const Home = () => {
             window.$("#shopInformationModal").modal("show");
         }
         if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
-            Swal.fire('Any fool can use a computer')
+            Swal.fire('')
         }
-        // if (account && account.status.id === 3 && account.role.name === "ROLE_EMPLOYEE") {
-        //     window.$("#").modal("show");
-        //     làm giống shop cập nhật thông tin
-        // }
+        if (account && account.status.id === 3 && account.role.name === "ROLE_EMPLOYEE") {
+            window.$("#employeeModal").modal("show");
+        }
     }, [])
 
     const remoteImg = (index) => {
-        const updateLogo = [...logoUpload];
-        updateLogo.splice(index, 1);
-        setLogoUpload(updateLogo);
+        const updateImage = [...imageUpload];
+        updateImage.splice(index, 1);
+        setImageUpload(updateImage);
     };
-    console.log("imageUrls top :>>" + logoUrls)
 
     useEffect(() => {
 
-        if (logoUpload !== null) {
-            const newLogoUrls = [];
-            for (let i = 0; i < logoUpload.length; i++) {
-                const imageRef = ref(storage, `shop/${logoUpload[i].name + v4()}`);
-                uploadBytes(imageRef, logoUpload[i]).then((snapshot) => {
+        if (imageUpload !== null) {
+            const newImageUrls = [];
+            for (let i = 0; i < imageUpload.length; i++) {
+                const imageRef = ref(storage, `shop/${imageUpload[i].name + v4()}`);
+                uploadBytes(imageRef, imageUpload[i]).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then((url) => {
-                        newLogoUrls.push(url);
+                        newImageUrls.push(url);
                     });
                 });
             }
-            setLogoUrls(newLogoUrls)
+            setImageUrls(newImageUrls)
         }
-    },[logoUpload])
+    },[imageUpload])
 
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
-        setLogoUpload(files);
+        setImageUpload(files);
     };
 
     const validation=Yup.object().shape({
@@ -82,7 +80,7 @@ const Home = () => {
 
     return (
         <>
-            {/* Modal setting account*/}
+            {/* Modal update information account*/}
             <div
                 className="modal fade"
                 id="statusModal"
@@ -99,7 +97,12 @@ const Home = () => {
                         </div>
                         <div className="modal-body">
                             <Formik
-                                initialValues={{birthday: '', avatar: '', address: '', phone: '', gender: '1'}}
+                                initialValues={{
+                                    birthday: '',
+                                    avatar: '',
+                                    address: '',
+                                    phone: '',
+                                    gender: '1'}}
                                 validate={values => {
                                     const errors = {};
                                     // Kiểm tra các trường dữ liệu
@@ -166,11 +169,11 @@ const Home = () => {
                                                 {errors.avatar && touched.avatar && (
                                                     <div className="error-message">{errors.avatar}</div>
                                                 )}
-                                                {logoUpload.length > 0 && (
+                                                {imageUpload.length > 0 && (
                                                     <div>
                                                         <h5>Shop Logo:</h5>
                                                         <div style={{display: 'flex'}}>
-                                                            {logoUpload.map((file, index) => (
+                                                            {imageUpload.map((file, index) => (
                                                                 <div key={index} style={{
                                                                     marginRight: '10px',
                                                                     position: 'relative'
@@ -280,6 +283,7 @@ const Home = () => {
                 </div>
             </div>
 
+            {/*modal update information employee*/}
             <div
                 className="modal fade"
                 id="shopInformationModal"
@@ -304,13 +308,13 @@ const Home = () => {
                                 }}
                                 validationSchema={validation}
                                 onSubmit={(values, {setSubmitting}) => {
-                                    if (!logoUrls[0]) {
+                                    if (!imageUrls[0]) {
                                         alert("Please select an image for the logo");
                                         setSubmitting(false);
                                         return;
                                     }
                                     let shop = {
-                                        logo: logoUrls[0],
+                                        logo: imageUrls[0],
                                         address: values.address,
                                         phone: values.phone,
                                         name: values.name,
@@ -321,7 +325,7 @@ const Home = () => {
                                             id: account.id
                                         }
                                     }
-                                    axios.post("http://localhost:8080/shops/save?id=" + account.id, shop)
+                                    axios.post("http://localhost:8080/shops/save/account/" + account.id, shop)
                                         .then((rep) => {
                                             window.$("#shopInformationModal").modal("hide");
                                             alert("Update successful")
@@ -352,11 +356,11 @@ const Home = () => {
                                                 {errors.logo && touched.logo && (
                                                     <div className="error-message">{errors.logo}</div>
                                                 )}
-                                                {logoUpload.length > 0 && (
+                                                {imageUpload.length > 0 && (
                                                     <div>
                                                         <h5>Shop Logo:</h5>
                                                         <div style={{display: 'flex'}}>
-                                                            {logoUpload.map((file, index) => (
+                                                            {imageUpload.map((file, index) => (
                                                                 <div key={index} style={{
                                                                     marginRight: '10px',
                                                                     position: 'relative'
@@ -434,6 +438,239 @@ const Home = () => {
 
 
                                         </div>
+                                    </Form>
+                                )}
+                            </Formik>
+
+                        </div>
+                        <div className="modal-footer border-0 justify-content-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/*modal update information employee*/}
+            <div
+                className="modal fade"
+                id="employeeModal"
+                tabIndex={-1}
+                aria-labelledby="userEmployeeModal"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content p-4">
+                        <div className="modal-header border-0">
+                            <h5 className="modal-title fs-3 fw-bold" id="userEmployeeModal">
+                                Employee Information
+                            </h5>
+                        </div>
+                        <div className="modal-body-employee">
+                            <Formik
+                                initialValues={{
+                                    avatar: '',
+                                    full_name: '',
+                                    birthday: '',
+                                    address: '',
+                                    phone: '',
+                                    salary: '',
+                                    gender: '1'
+                            }}
+                                validate={values => {
+                                    const errors = {};
+                                    // Kiểm tra các trường dữ liệu
+                                    if (!values.birthday) {
+                                        errors.birthday = 'Please enter date of birth';
+                                    } else {
+                                        const parsedDate = parse(values.birthday, 'dd/MM/yyyy', new Date());
+                                        const minDate = parse('01/01/1930', 'dd/MM/yyyy', new Date());
+                                        const maxDate = parse('31/12/2018', 'dd/MM/yyyy', new Date());
+
+                                        if (isBefore(parsedDate, minDate) || isAfter(parsedDate, maxDate)) {
+                                            errors.birthday = 'Birthday must be between 1930 and 2018';
+                                        }
+                                    }
+                                    if (!values.full_name) {
+                                        errors.full_name = 'Please enter your Full Name';
+                                    }
+
+                                    if (!values.address) {
+                                        errors.address = 'Please enter your address';
+                                    }
+
+                                    if (!values.phone) {
+                                        errors.phone = 'Please enter your phone number';
+                                    }
+
+                                    if (!values.salary) {
+                                        errors.salary = 'Please enter your salary';
+                                    }
+
+                                    return errors;
+                                }}
+                                onSubmit={(values, {setSubmitting}) => {
+                                    let employee = {
+                                        avtar: imageUrls[0],
+                                        full_name: values.full_name,
+                                        birthday: values.birthday,
+                                        address: values.address,
+                                        phone: values.phone,
+                                        salary: values.salary,
+                                        gender: values.gender,
+                                        status: {
+                                            id: 1
+                                        },
+                                        account: {
+                                            id: account.id
+                                        }
+                                    }
+
+                                    axios
+                                        .post("http://localhost:8080/employee/save/" + account.id, employee).then((rep) => {
+                                        window.$("#employeeModal").modal("hide");
+                                        alert("Update successful")
+                                        account.status.id = 1;
+                                        localStorage.setItem("account", JSON.stringify(account))
+                                    }).catch((err) => {
+                                        alert("Update failed")
+                                        window.$("#employeeModal").modal("show");
+                                        console.log(err)
+                                    })
+
+
+                                    setSubmitting(false);
+                                }}
+                            >
+                                {({errors, touched, isSubmitting}) => (
+                                    <Form>
+                                        {/*avatar*/}
+                                        <div className="row g-3">
+
+                                            <div className="col-12">
+                                                <Field
+                                                    name="avatar"
+                                                    type="file"
+                                                    id="avatar"
+                                                    onChange={handleFileChange}
+                                                />
+                                                {errors.avatar && touched.avatar && (
+                                                    <div className="error-message">{errors.avatar}</div>
+                                                )}
+                                                {imageUpload.length > 0 && (
+                                                    <div>
+                                                        <h5>Shop Logo:</h5>
+                                                        <div style={{display: 'flex'}}>
+                                                            {imageUpload.map((file, index) => (
+                                                                <div key={index} style={{
+                                                                    marginRight: '10px',
+                                                                    position: 'relative'
+                                                                }}>
+                                                                    <img
+                                                                        src={URL.createObjectURL(file)}
+                                                                        alt={`Selected Image ${index}`}
+                                                                        style={{width: '100px', height: 'auto'}}
+                                                                    />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            {/*full_name*/}
+                                            <div className="col-12">
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="Full Name"
+                                                    name="full_name"
+                                                />
+                                                {errors.full_name && touched.full_name && (
+                                                    <div className="error-message">{errors.full_name}</div>
+                                                )}
+                                            </div>
+                                            {/*date of birth*/}
+                                            <div className="col-12">
+                                                <p>Date of Birth</p>
+                                                <Field
+                                                    type="date"
+                                                    className="form-control"
+                                                    placeholder="Date of Birth"
+                                                    name="birthday"
+                                                />
+                                                {errors.birthday && touched.birthday && (
+                                                    <div className="error-message">{errors.birthday}</div>
+                                                )}
+                                            </div>
+                                            {/*Address*/}
+                                            <div className="col-12">
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="Address"
+                                                    name="address"
+                                                />
+                                                {errors.address && touched.address && (
+                                                    <div className="error-message">{errors.address}</div>
+                                                )}
+                                            </div>
+                                            {/*Phone*/}
+                                            <div className="col-12">
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="Phone Number"
+                                                    name="phone"
+                                                />
+                                                {errors.phone && touched.phone && (
+                                                    <div className="error-message">{errors.phone}</div>
+                                                )}
+                                            </div>
+                                            {/*Salary*/}
+                                            <div className="col-12">
+                                                <Field
+                                                    type="text"
+                                                    className="form-control"
+                                                    placeholder="Salary"
+                                                    name="salary"
+                                                />
+                                                {errors.salary && touched.salary && (
+                                                    <div className="error-message">{errors.salary}</div>
+                                                )}
+                                            </div>
+                                            {/*Gender*/}
+                                            <div className="col-12">
+                                                <div className="form-check form-check-inline">
+                                                    <Field
+                                                        type="radio"
+                                                        className="form-check-input"
+                                                        name="gender"
+                                                        value="1"
+                                                    />
+                                                    <label className="form-check-label">Male</label>
+                                                </div>
+                                                <div className="form-check form-check-inline">
+                                                    <Field
+                                                        type="radio"
+                                                        className="form-check-input"
+                                                        name="gender"
+                                                        value="2"
+                                                    />
+                                                    <label className="form-check-label">Female</label>
+                                                </div>
+                                            </div>
+
+
+                                            <div className="col-12 d-grid">
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-primary"
+                                                    disabled={isSubmitting}
+                                                >
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div>
+
                                     </Form>
                                 )}
                             </Formik>
