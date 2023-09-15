@@ -71,8 +71,10 @@ const ProductDetailInformation = ({product}) => {
         dispatch(getAllProductsByShop(shopLogin.id));
     },[shopLogin])
     useEffect(() => {
-        dispatch(getCustomerByAccountLogin(account.id));
-        dispatch(getShopByAccountLogin(account.id));
+        if (account != null) {
+            dispatch(getCustomerByAccountLogin(account.id));
+            dispatch(getShopByAccountLogin(account.id));
+        }
     },[])
     useEffect(() => {
         dispatch(getAllProductsByCustomerBuy(customerLogin.id));

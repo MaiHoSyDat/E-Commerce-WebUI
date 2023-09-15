@@ -46,9 +46,15 @@ const DashboardMenu = () => {
                             </li>
                             <li className="nav-item">
                                 <Link to={"/dashboard/category"}>
-                                <a className="nav-link " href="/dashboard/category">
-                                    Category
-                                </a>
+                                    <a className="nav-link " href="/dashboard/category">
+                                        <div className="d-flex align-items-center">
+                <span className="nav-link-icon">
+                  {" "}
+                    <i className="bi bi-heart"/>
+                </span>
+                                            <span className="nav-link-text">Category</span>
+                                        </div>
+                                    </a>
                                 </Link>
                             </li>
                             <li className="nav-item">
@@ -133,7 +139,13 @@ const DashboardMenu = () => {
                                         <li className="nav-item ">
                                             <Link to={"/dashboard/shopPending"}>
                                             <a className="nav-link " href="/dashboard/shopPending">
-                                                Shop Pending
+                                                <div className="d-flex align-items-center">
+                <span className="nav-link-icon">
+                  {" "}
+                    <i className="bi-exclamation-triangle"/>
+                </span>
+                                                    <span className="nav-link-text">Sellers / Vendors</span>
+                                                </div>
                                             </a>
                                             </Link>
                                         </li>
