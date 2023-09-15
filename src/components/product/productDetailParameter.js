@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.css';
-import {createProductsToCartByAccount} from "../../service/cartService";
+import {createProductsToCartByAccount, getCartByAccount, updateCartByStore} from "../../service/cartService";
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProductDetail} from "../../service/productDetailActions";
@@ -10,34 +10,78 @@ import axios from "axios";
 
 const ProductDetailParameter = () => {
     const {productId} = useParams();
-
+    const dispatch = useDispatch();
     const product = useSelector(state => state.productDetail.product);
     const loading = useSelector(state => state.productDetail.loading);
     const error = useSelector(state => state.productDetail.error);
+    useEffect(() => {
+        dispatch(getCartByAccount())
+    }, [])
 
-    const dispatch = useDispatch();
+    const carts = useSelector(state => {
+        return state.cart.allProductsFromCart
+    })
+
     const [quantity, setQuantity] = useState(1);
+    const [quantityByCart, setQuantityByCart] = useState(0);
+
+    useEffect(() => {
+        if (product) {
+            let totalQuantity = 0;
+            for (let i = 0; i < carts.length; i++) {
+                if (carts[i].product.id === product.id) {
+                    totalQuantity += carts[i].quantity;
+                }
+            }
+            setQuantityByCart(totalQuantity);
+        }
+    }, [carts]);
+
 
     const handleChangeQuantity = (num) => {
-        if (num === 1) {
+        if (num === 1 && quantity > 1) {
             setQuantity(quantity - 1)
-        } else if (num === 2)
-            setQuantity(quantity + 1)
+        } else if (num === 2) {
+            let number = quantity;
+            for (let i = 0; i < carts.length; i++) {
+                if (carts[i].product.id == product.id) {
+                    number += carts[i].quantity;
+                }
+            }
+            if (number < product.quantity) {
+                setQuantity(quantity + 1)
+            } else {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Oops...',
+                    text: 'Quantity is not enough!',
+                })
+            }
+        }
     }
-
-    const handleAddToCart = (productId) => {
-        let product = [productId, quantity]
-        dispatch(createProductsToCartByAccount(product))
-            .then(res => {
+    const handleAddToCart = async (productId) => {
+        if (quantityByCart + quantity <= product.quantity) {
+            let product = [productId, quantity];
+            try {
+                await dispatch(createProductsToCartByAccount(product));
                 Swal.fire(
                     'Success!',
                     'Add to cart successfully!',
                     'success'
-                )
-            }).catch(err => {
-            console.log(err)
-        })
-    }
+                );
+                await setQuantityByCart(quantityByCart + quantity);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: 'Quantity is not enough!',
+            })
+        }
+
+    };
 
     useEffect(() => {
         dispatch(fetchProductDetail(productId));
@@ -57,6 +101,7 @@ const ProductDetailParameter = () => {
 
     return (
         <>
+            {console.log(1)}
             <div className="col-md-6">
                 <div className="ps-lg-10 mt-6 mt-md-0">
                     {/* content */}

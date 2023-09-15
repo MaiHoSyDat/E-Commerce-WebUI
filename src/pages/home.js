@@ -75,7 +75,7 @@ const Home = () => {
 
     return (
         <>
-            {/* Modal update information account*/}
+            {/* Modal update information customer*/}
             <div
                 className="modal fade"
                 id="statusModal"
@@ -136,16 +136,30 @@ const Home = () => {
                                         }
                                     }
 
-                                    axios.post("http://localhost:8080/customer/save", customer).then((rep) => {
-                                        window.$("#statusModal").modal("hide");
-                                        alert("Update successful")
-                                        account.status.id = 1;
-                                        localStorage.setItem("account", JSON.stringify(account))
-                                    }).catch((err) => {
-                                        alert("Update failed")
-                                        window.$("#statusModal").modal("show");
-                                        console.log(err)
+                                axios.post("http://localhost:8080/customer/save",customer,{
+                                    headers: {
+                                        'Authorization': localStorage.getItem('token')
+                                    },
+                                }).
+                                then((rep)=>{
+                                    window.$("#statusModal").modal("hide");
+                                    Swal.fire(
+                                        '',
+                                        'Update successful',
+                                        'success'
+                                    )
+                                    account.status.id =1;
+                                    localStorage.setItem("account" , JSON.stringify(account))
+                                }).catch((err)=>{
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: ' Update failed ',
                                     })
+
+                                    window.$("#statusModal").modal("show");
+                                    console.log(err)
+                                })
 
 
                                     setSubmitting(false);
@@ -154,37 +168,6 @@ const Home = () => {
                                 {({errors, touched, isSubmitting}) => (
                                     <Form>
                                         <div className="row g-3">
-
-                                            <div className="col-12">
-                                                <Field
-                                                    name="avatar"
-                                                    type="file"
-                                                    id="image"
-                                                    onChange={handleFileChange}
-                                                />
-                                                {errors.avatar && touched.avatar && (
-                                                    <div className="error-message">{errors.avatar}</div>
-                                                )}
-                                                {imageUpload.length > 0 && (
-                                                    <div>
-                                                        <h5>Shop Logo:</h5>
-                                                        <div style={{display: 'flex'}}>
-                                                            {imageUpload.map((file, index) => (
-                                                                <div key={index} style={{
-                                                                    marginRight: '10px',
-                                                                    position: 'relative'
-                                                                }}>
-                                                                    <img
-                                                                        src={URL.createObjectURL(file)}
-                                                                        alt={`Selected Image ${index}`}
-                                                                        style={{width: '100px', height: 'auto'}}
-                                                                    />
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
 
                                             <div className="col-12">
                                                 <Field

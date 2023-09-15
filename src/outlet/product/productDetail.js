@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useLayoutEffect} from 'react';
 import ProductDetailImage from "../../components/product/productDetailImage";
 import ProductDetailParameter from "../../components/product/productDetailParameter";
 import ProductDetailInformation from "../../components/product/productDetailInformation";
@@ -19,6 +19,9 @@ const ProductDetail = () => {
     useEffect(() => {
         dispatch(fetchProductDetail(productId));
     }, [dispatch, productId]);
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0)
+    });
 
     if (!product) {
         return <p>Product not found.</p>;

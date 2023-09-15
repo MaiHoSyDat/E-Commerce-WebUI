@@ -9,7 +9,7 @@ import axios from "axios";
 import * as Yup from 'yup';
 
 
-const ShopInfomation = () => {
+const ShopSetting = () => {
     let account = JSON.parse(localStorage.getItem('account'));
     const dispatch = useDispatch();
 
@@ -96,7 +96,7 @@ const ShopInfomation = () => {
                             <Formik
                                 initialValues={{
                                     logo: shopInformation.logo,
-                                    name: shopInformation.name,
+                                    name: account.name,
                                     address: shopInformation.address,
                                     phone: shopInformation.phone
                                 }}
@@ -110,7 +110,7 @@ const ShopInfomation = () => {
                                     let shopInformation = {
                                         id: shop.id,
                                         logo: logoUrls[0],
-                                        name: values.name,
+                                        name: account.name,
                                         address: values.address,
                                         phone: values.phone,
                                         status: {
@@ -138,21 +138,6 @@ const ShopInfomation = () => {
                                     <Form>
 
                                         <div className="row g-3">
-
-                                            <div className="col-12">
-                                                <label className="form-label" htmlFor="title">
-                                                    Name
-                                                </label>
-                                                <Field
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="name"
-                                                    placeholder="Enter Your Shop name"
-                                                />
-                                                {errors.name && touched.name && (
-                                                    <div className="error-message">{errors.name}</div>
-                                                )}
-                                            </div>
 
                                             <div className="col-12">
                                                 <label className="form-label" htmlFor="title">
@@ -287,4 +272,4 @@ const ShopInfomation = () => {
     );
 };
 
-export default ShopInfomation;
+export default ShopSetting;

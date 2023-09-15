@@ -38,41 +38,9 @@ const DashboardMenu = () => {
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a
-                                    className="nav-link   collapsed "
-                                    href="#"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navCategoriesCategories"
-                                    aria-expanded="false"
-                                    aria-controls="navCategoriesCategories"
-                                >
-                                    <div className="d-flex align-items-center">
-                <span className="nav-link-icon">
-                  {" "}
-                    <i className="bi bi-list-task" />
-                </span>
-                                        <span className="nav-link-text">Categories</span>
-                                    </div>
+                                <a className="nav-link " href="/dashboard/category">
+                                    Category
                                 </a>
-                                <div
-                                    id="navCategoriesCategories"
-                                    className="collapse "
-                                    data-bs-parent="#sideNavbar"
-                                >
-                                    <ul className="nav flex-column">
-                                        <li className="nav-item ">
-                                            <a className="nav-link " href="/dashboard/category">
-                                                Category
-                                            </a>
-                                        </li>
-                                        {/* Nav item */}
-                                        <li className="nav-item ">
-                                            <a className="nav-link " href="/dashboard/categoryDetail">
-                                                CategoryDetail
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                             <li className="nav-item">
                                 <a
@@ -111,16 +79,45 @@ const DashboardMenu = () => {
                                     </ul>
                                 </div>
                             </li>
-                            <li className="nav-item ">
-                                <a className="nav-link " href="/dashboard/shop">
+
+                            <li className="nav-item">
+                                <a
+                                    className="nav-link   collapsed "
+                                    href="#"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navCategoriesCategories"
+                                    aria-expanded="false"
+                                    aria-controls="navCategoriesCategories"
+                                >
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-shop" />
+                    <i className="bi bi-list-task" />
                 </span>
-                                        <span className="nav-link-text">Sellers / Vendors</span>
+                                        <span className="nav-link-text">Shop</span>
                                     </div>
                                 </a>
+                                <div
+                                    id="navCategoriesCategories"
+                                    className="collapse "
+                                    data-bs-parent="#sideNavbar"
+                                >
+                                    <ul className="nav flex-column">
+                                        <li className="nav-item ">
+                                            <a className="nav-link " href="/dashboard/shop">
+                                                <div className="d-flex align-items-center">
+                                                    <span className="nav-link-text">Sellers / Vendors</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        {/* Nav item */}
+                                        <li className="nav-item ">
+                                            <a className="nav-link " href="/dashboard/shopPending">
+                                                Shop Pending
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li className="nav-item ">
                                 <a className="nav-link " href="/dashboard/employee">
