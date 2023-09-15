@@ -46,6 +46,8 @@ const CustomerSetting = () => {
 
     }, [imageUpload])
 
+
+
     return (
         <>
             <div className="col-lg-9 col-md-8 col-12">
@@ -110,10 +112,7 @@ const CustomerSetting = () => {
                                             address: values.address,
                                             phone: values.phone,
                                             gender: values.gender,
-
                                         }
-                                        console.log(newCustomer)
-                                        console.log(newCustomer.avatar)
 
                                         axios.post("http://localhost:8080/customer/edit", newCustomer,{
                                             headers: {

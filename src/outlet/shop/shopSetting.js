@@ -7,6 +7,8 @@ import {v4} from "uuid";
 import {Field, Form, Formik} from "formik";
 import axios from "axios";
 import * as Yup from 'yup';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 
 const ShopSetting = () => {
@@ -46,7 +48,7 @@ const ShopSetting = () => {
         })
     }, [])
 
-
+    console.log(shopInformation.id)
     useEffect(() => {
         if (logoUpload !== null) {
             const logoRef = ref(storage, `shop/${logoUpload.name + v4()}`);
@@ -58,6 +60,8 @@ const ShopSetting = () => {
         }
     }, [logoUpload])
 
+    console.log(shopInformation)
+
     // validation
     const validation = Yup.object().shape({
         name: Yup.string().required('Name is required'),
@@ -68,8 +72,6 @@ const ShopSetting = () => {
             .min(1, 'Please select at least one image')
             .nullable(),
     })
-
-
 
     return (
         <div className="col-lg-9 col-md-8 col-12">
@@ -95,10 +97,10 @@ const ShopSetting = () => {
                             {/* form */}
                             <Formik
                                 initialValues={{
-                                    logo: shopInformation.logo,
+                                    logo: shop.logo,
                                     name: account.name,
-                                    address: shopInformation.address,
-                                    phone: shopInformation.phone
+                                    address: shop.address,
+                                    phone: shop.phone
                                 }}
                                 validation={validation}
                                 onSubmit={(values, {setSubmitting}) => {
@@ -109,7 +111,7 @@ const ShopSetting = () => {
                                     }
                                     let shopInformation = {
                                         id: shop.id,
-                                        logo: logoUrls[0],
+                                        logo: logoUrls,
                                         name: account.name,
                                         address: values.address,
                                         phone: values.phone,
@@ -123,11 +125,19 @@ const ShopSetting = () => {
                                     const shopUrl = "http://localhost:8080/shops/save/shop/" + shop.id;
                                     axios.post(shopUrl, shopInformation)
                                         .then((rep) => {
-                                            alert("Update successful")
+                                            Swal.fire(
+                                                '',
+                                                'Update successful',
+                                                'success'
+                                            )
                                             account.status.id = 1;
                                             localStorage.setItem("account", JSON.stringify(account))
                                         }).catch((err) => {
-                                        alert("Update failed")
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: ' Update failed ',
+                                        })
                                         console.log(err)
                                     })
                                     setSubmitting(false);
@@ -217,58 +227,8 @@ const ShopSetting = () => {
                         </div>
                     </div>
                 </div>
-                <hr className="my-10"/>
-                <div className="pe-lg-14">
-                    {/* heading */}
-                    <h5 className="mb-4">Password</h5>
-                    <form className=" row row-cols-1 row-cols-lg-2">
-                        {/* input */}
-                        <div className="mb-3 col">
-                            <label className="form-label">New Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="**********"
-                            />
-                        </div>
-                        {/* input */}
-                        <div className="mb-3 col">
-                            <label className="form-label">Current Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                placeholder="**********"
-                            />
-                        </div>
-                        {/* input */}
-                        <div className="col-12">
-                            <p className="mb-4">
-                                Can’t remember your current password?
-                                <a href="#"> Reset your password.</a>
-                            </p>
-                            <a href="#" className="btn btn-primary">
-                                Save Password
-                            </a>
-                        </div>
-                    </form>
-                </div>
-                <hr className="my-10"/>
-                <div>
-                    {/* heading */}
-                    <h5 className="mb-4">Delete Account</h5>
-                    <p className="mb-2">Would you like to delete your account?</p>
-                    <p className="mb-5">
-                        This account contain 12 orders, Deleting your account will remove all
-                        the order details associated with it.
-                    </p>
-                    {/* btn */}
-                    <a href="#" className="btn btn-outline-danger">
-                        I want to delete my account
-                    </a>
-                </div>
             </div>
         </div>
-
     );
 };
 

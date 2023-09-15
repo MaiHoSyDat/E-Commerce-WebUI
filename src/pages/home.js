@@ -156,7 +156,6 @@ const Home = () => {
                                         title: 'Oops...',
                                         text: ' Update failed ',
                                     })
-
                                     window.$("#statusModal").modal("show");
                                     console.log(err)
                                 })
@@ -249,7 +248,7 @@ const Home = () => {
                 </div>
             </div>
 
-            {/*modal update information employee*/}
+            {/*modal update information shop*/}
             <div
                 className="modal fade"
                 id="shopInformationModal"
@@ -293,11 +292,19 @@ const Home = () => {
                                     axios.post("http://localhost:8080/shops/save/account/" + account.id, shop)
                                         .then((rep) => {
                                             window.$("#shopInformationModal").modal("hide");
-                                            alert("Update successful")
+                                            Swal.fire(
+                                                '',
+                                                'Update successful',
+                                                'success'
+                                            )
                                             account.status.id = 1;
                                             localStorage.setItem("account", JSON.stringify(account))
                                         }).catch((err) => {
-                                        alert("Update failed")
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: ' Update failed ',
+                                        })
                                         window.$("#shopInformationModal").modal("show");
                                         console.log(err)
                                     })
@@ -467,11 +474,19 @@ const Home = () => {
                                     axios
                                         .post("http://localhost:8080/employee/save/" + account.id, employee).then((rep) => {
                                         window.$("#employeeModal").modal("hide");
-                                        alert("Update successful")
+                                        Swal.fire(
+                                            '',
+                                            'Update successful',
+                                            'success'
+                                        )
                                         account.status.id = 1;
                                         localStorage.setItem("account", JSON.stringify(account))
                                     }).catch((err) => {
-                                        alert("Update failed")
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: ' Update failed ',
+                                        })
                                         window.$("#employeeModal").modal("show");
                                         console.log(err)
                                     })
