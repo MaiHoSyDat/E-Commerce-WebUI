@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import {addFeedback, getAllFeedbackByProductId} from "../../service/feedbackService";
 import {getShopByAccountLogin} from "../../service/shopService";
+import {addNotification} from "../../service/notificationService";
 
 const ProductDetailInformation = ({product}) => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -570,7 +571,15 @@ const ProductDetailInformation = ({product}) => {
                                                         let date = "";
                                                         let review = {headline: headline, context: context,
                                                             user: user, product: product, date: date, rating: rating}
+                                                        //notification
+                                                        let name = "Review";
+                                                        let content = "" + customerLogin.account.name + " have reviewed  your product with name: " + '"' + productDetail.name + '"';
+                                                        let sender = customerLogin.account;
+                                                        let receiver = productDetail.shop.account;
+                                                        let notification = {name: name, context: content,
+                                                            sender: sender, receiver: receiver};
                                                         const fetchData = async () => {
+                                                            await dispatch(addNotification(notification));
                                                             await dispatch(addReview(review));;
                                                             await axios.get('http://localhost:8080/products/review/' + productId,
                                                                 {

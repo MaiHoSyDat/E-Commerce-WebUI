@@ -10,6 +10,8 @@ import shop from "../../pages/shop";
 import {Field, Form, Formik} from "formik";
 import {isAfter, isBefore, parse} from "date-fns";
 import axios from "axios";
+import {getAllCustomerBuyProductFromShop} from "../../service/customerService";
+import {addNotification} from "../../service/notificationService";
 
 const ShopDiscountCode = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -22,13 +24,17 @@ const ShopDiscountCode = () => {
         console.log(state)
         return state.code.codeByShop;
     })
+    const customersBuyProductOfShop = useSelector(state => {
+        console.log(state)
+        return state.customer.customersBuyProductOfShop;
+    })
     useEffect(() => {
         dispatch(getShopByAccountLogin(account.id));
     }, [])
     useEffect(() => {
         dispatch(getAllCodeByShop(shopLogin.id));
+        dispatch(getAllCustomerBuyProductFromShop(shopLogin.id));
     }, [shopLogin])
-    console.log(shopLogin)
     return (
         <>
             <div className="col-lg-9 col-md-8 col-12">
@@ -201,6 +207,7 @@ const ShopDiscountCode = () => {
                                                     className="form-control"
                                                     placeholder="Name Code"
                                                     name="name"
+                                                    id = "nameCode"
                                                 />
                                                 {errors.name && touched.name && (
                                                     <div className="error-message">{errors.name}</div>
@@ -239,8 +246,21 @@ const ShopDiscountCode = () => {
                                                     type="submit"
                                                     className="btn btn-primary"
                                                     disabled={isSubmitting}
+                                                    onClick={() => {
+                                                        for (let i = 0; i < customersBuyProductOfShop.length; i++) {
+                                                            let nameCode = document.getElementById("nameCode").value;
+                                                            console.log(nameCode)
+                                                            let name = "Discount Code";
+                                                            let context = "" + shopLogin.account.name + " just got a new discount code " + '"' + nameCode + '"';
+                                                            let sender = shopLogin.account;
+                                                            let receiver = customersBuyProductOfShop[i].account;
+                                                            let notification = {name: name, context: context,
+                                                                sender: sender, receiver: receiver};
+                                                            dispatch(addNotification(notification));
+                                                        }
+                                                    }}
                                                 >
-                                                    Update
+                                                    Create
                                                 </button>
                                             </div>
                                         </div>
