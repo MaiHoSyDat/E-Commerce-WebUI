@@ -17,8 +17,9 @@ const ShopSingleViewLogin = () => {
                 {/* img */}
                 <img
                     src={shopLogin.logo}
-                    alt=""
-                    className="img-fluid"
+                    className="rounded-circle" 
+                    width="150" height="150"
+
                 />
             </div>
 

@@ -1,8 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {getAllCategories, getTenCategoriesPage} from "../../service/categoryService";
-import {getCustomerByAccountLogin} from "../../service/customerService";
+import {getAllCustomerBuyProductFromShop, getCustomerByAccountLogin} from "../../service/customerService";
 const initialState = {
-    customerLogin: {}
+    customerLogin: {},
+    customersBuyProductOfShop: []
 }
 const customerSlice = createSlice({
     name: "customer",
@@ -11,6 +12,9 @@ const customerSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(getCustomerByAccountLogin.fulfilled,(state,action) => {
             state.customerLogin = action.payload;
+        })
+        builder.addCase(getAllCustomerBuyProductFromShop.fulfilled,(state,action) => {
+            state.customersBuyProductOfShop = action.payload;
         })
     }
 })

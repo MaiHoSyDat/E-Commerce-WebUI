@@ -14,27 +14,33 @@ import {
 import {v4} from "uuid";
 import {storage} from "../../firebase";
 import {setFilterCategory, setFilterQuantityShow, setFilterSortShow} from "../../service/inputService";
+import Swal from "sweetalert2";
 
 const ShopSingleFilterLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
     })
+
     const shopProducts = useSelector(state => {
         return state.product.shopProducts;
     })
+
     const filterProducts = useSelector(state => {
         console.log(state.product.filterProducts)
         return state.product.filterProducts;
     })
+
     const filterParam = useSelector(state => {
         console.log(state.inputFilter.filterParam)
         return state.inputFilter.filterParam;
     })
+
     useEffect(() => {
-        // dispatch(getShopByAccountLogin(account.id))
-        // dispatch(getAllProductsByShop(shopLogin.id))
+        dispatch(getShopByAccountLogin(account.id))
+        dispatch(getAllProductsByShop(shopLogin.id))
         dispatch(getFilterProducts(filterParam));
     }, [filterParam]);
 
@@ -60,6 +66,7 @@ const ShopSingleFilterLogin = () => {
 
             })
     }, []);
+
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
         setImageUpload(files);
@@ -85,6 +92,7 @@ const ShopSingleFilterLogin = () => {
             setImageUrls(newImageUrls)
         }
     },[imageUpload])
+
     const handleInputChangeQuantityShow = () => {
         let num = document.getElementById("quantity").value;
         dispatch((setFilterQuantityShow(num)))
@@ -93,7 +101,6 @@ const ShopSingleFilterLogin = () => {
         let sort = document.getElementById("sort").value;
         dispatch((setFilterSortShow(sort)))
     }
-
 
     return (
         <>
@@ -195,7 +202,6 @@ const ShopSingleFilterLogin = () => {
                                         },
                                         images: imageUrls
                                     }
-                                    console.log(product)
                                     axios
                                         .post('http://localhost:8080/shops/' + account.id + '/products/create', product,
                                             {
@@ -210,15 +216,20 @@ const ShopSingleFilterLogin = () => {
                                             dispatch(getAllProductsByShop(shopLogin.id));
                                             dispatch(setFilterCategory("All Categories"));
                                             resetForm();
-                                            alert("Create successful products")
-                                            console.log("imageUrls :>>>>" + imageUrls)
-
+                                            Swal.fire(
+                                                'Success!',
+                                                'Create successful products!',
+                                                'success'
+                                            )
 
                                         })
                                         .catch(error => {
                                             // Handle error
-                                            alert("Please review the information")
-
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Please review the information!',
+                                            })
                                             console.error(error);
                                         })
                                         .finally(() => {
@@ -306,7 +317,9 @@ const ShopSingleFilterLogin = () => {
                                                 </Field>
                                                 {errors.category && touched.category && (
                                                     <div className="error-message">{errors.category}</div>
-                                                )}                                            </div>
+                                                )}
+                                            </div>
+
                                             <div className="col-12">
                                                 <Field
                                                     name="files"
@@ -352,6 +365,7 @@ const ShopSingleFilterLogin = () => {
                                                 )}
                                             </div>
                                         </div>
+
                                         <div className="mt-3">
                                             <button
                                                 type="submit"

@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {
     createProductsToCartByAccount,
     deleteProductFromCartByAccount,
-    getProductByAccount, updateCartByStore,
+    getCartByAccount, updateCartByStore,
     updateProductFromCartByAccount
 } from "../../service/cartService";
 import {getProductPage} from "../../service/productPageAction";

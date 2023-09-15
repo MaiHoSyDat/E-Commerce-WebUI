@@ -48,6 +48,9 @@ import ShopOrderDetail from "./outlet/shop/shopOrderDetail";
 import ShopDiscountCode from "./outlet/shop/shopDiscountCode";
 import ShopRevenue from "./outlet/shop/shopRevenue";
 import DashboardShopPending from "./outlet/dashboard/dashboardShopPending";
+import Employee from "./pages/employee";
+import EmployeeSetting from "./outlet/employee/employeeSetting";
+import DashboardSalary from "./outlet/dashboard/dashboardSalary";
 
 function App() {
     // xoá account khi tắt trang
@@ -70,6 +73,7 @@ function App() {
                 <Route path="employee" element={<DashboardEmployee/>}/>
                 <Route path="customer" element={<DashboardCustomer/>}/>
                 <Route path="review" element={<DashboardReview/>}/>
+                <Route path="salary" element={<DashboardSalary/>}/>
             </Route>
             <Route path="shop" element={<Shop/>}>
                 <Route path="list" element={<ShopList/>}/>
@@ -113,6 +117,9 @@ function App() {
                 <Route path="revenue" element={<ShopRevenue/>}/>
                 <Route path="address" element={<ShopAddress/>}/>
                 <Route path="notification" element={<ShopNotification/>}/>
+            </Route>
+            <Route path="employee" element={<Employee/>}>
+                <Route path="setting" element={<EmployeeSetting/>}/>
             </Route>
         </Routes>
     </>
