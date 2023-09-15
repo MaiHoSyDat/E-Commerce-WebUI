@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import ShopSingleDetailLogin from "../../components/shop/shopSingleDetailLogin";
 import ShopSingleMenu from "../../components/shop/shopSingleMenu";
 import ShopSingleFilterViewLogin from "../../components/shop/shopSingleFilterViewLogin";
@@ -6,12 +6,13 @@ import ShopSingleFilterLogin from "../../components/shop/shopSingleFilterLogin";
 import ShopSingleSearchLogin from "../../components/shop/shopSingleSearchLogin";
 import ShopSingleViewLogin from "../../components/shop/shopSingleViewLogin";
 import {getShopByAccountLogin, getShopDTOByAccountLogin} from "../../service/shopService";
-import {setFilterIdStatus, setFilterShopSingle} from "../../service/inputService";
+import {setFilterShopSingle} from "../../service/inputService";
 import {useDispatch, useSelector} from "react-redux";
 
 const ShopSingleLogin = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const [product , setProduct] = useState({})
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
     })
@@ -22,14 +23,17 @@ const ShopSingleLogin = () => {
         const fetchData = async () => {
             await dispatch(getShopByAccountLogin(account.id));
             await dispatch(setFilterShopSingle(shopLogin.id));
-            await dispatch(setFilterIdStatus(0));
         };
         fetchData();
         // dispatch(setFilterShopSingle(shopLogin.id));
     },[shopLogin.id]);
+    const handleEditProduct = (product) => {
+        setProduct(product)
+    };
+    console.log(shopLogin)
     return (
         <>
-            <section className="mb-lg-14 mb-8 mt-8">
+            {shopLogin && <section className="mb-lg-14 mb-8 mt-8">
                 <div className="container">
                     <div className="row">
                         <div className="col-12 col-lg-3 col-md-4 mb-4 mb-md-0">
@@ -41,13 +45,13 @@ const ShopSingleLogin = () => {
                                 <ShopSingleSearchLogin></ShopSingleSearchLogin>
                                 <ShopSingleViewLogin></ShopSingleViewLogin>
                             </div>
-                            <ShopSingleFilterLogin></ShopSingleFilterLogin>
-                            <ShopSingleFilterViewLogin></ShopSingleFilterViewLogin>
+                            <ShopSingleFilterLogin product={product} />
+                            <ShopSingleFilterViewLogin onEditProduct={handleEditProduct} />
                         </div>
 
                     </div>
                 </div>
-            </section>
+            </section>}
         </>
     );
 };
