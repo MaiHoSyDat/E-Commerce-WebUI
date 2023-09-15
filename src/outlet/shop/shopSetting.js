@@ -18,7 +18,7 @@ const ShopSetting = () => {
     const [logoUpload, setLogoUpload] = useState([]);
     const [logoUrls, setLogoUrls] = useState([]);
     const [logoShop, setLogoShop] = useState('');
-    const [shopInfor, setShopInfor] = useState({});
+    const [shopInformation, setShopInformation] = useState({});
 
 
     const shop = useSelector((state) => {
@@ -42,7 +42,7 @@ const ShopSetting = () => {
                 'Authorization': localStorage.getItem('token')
             },
         }).then((resp) => {
-            setShopInfor(resp.data)
+            setShopInformation(resp.data)
             setLogoShop(resp.data.logo)
         }).catch((err) => {
             console.log(err)
@@ -71,6 +71,8 @@ const ShopSetting = () => {
             .nullable(),
     })
 
+    console.log(shopInformation)
+
     return (
         <div className="col-lg-9 col-md-8 col-12">
             <div className="py-6 p-md-6 p-lg-10">
@@ -95,10 +97,10 @@ const ShopSetting = () => {
                             {/* form */}
                             <Formik
                                 initialValues={{
-                                    logo: shopInfor.logo,
+                                    logo: shopInformation.logo,
                                     name: account.name,
-                                    address: shopInfor.address,
-                                    phone: shopInfor.phone
+                                    address: shopInformation.address,
+                                    phone: shopInformation.phone
                                 }}
                                 validation={validation}
                                 onSubmit={(values, {setSubmitting}) => {
@@ -107,8 +109,8 @@ const ShopSetting = () => {
                                         setSubmitting(false);
                                         return;
                                     }
-                                    let shopInformation = {
-                                        id: shopInfor.id,
+                                    let informationShop = {
+                                        id: shopInformation.id,
                                         logo: logoUrls,
                                         name: account.name,
                                         address: values.address,
@@ -120,8 +122,8 @@ const ShopSetting = () => {
                                             id: account.id
                                         }
                                     }
-                                    const shopUrl = "http://localhost:8080/shops/save/shop/" + shopInfor.id;
-                                    axios.post(shopUrl, shopInformation)
+                                    const shopUrl = "http://localhost:8080/shops/save/shop/" + shopInformation.id;
+                                    axios.post(shopUrl, informationShop)
                                         .then((rep) => {
                                             Swal.fire(
                                                 '',
