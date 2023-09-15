@@ -147,6 +147,7 @@ const DashboardShopPending = () => {
                                                         if (st.id === 4) {
                                                             return (
                                                                 <>
+
                                                                     <button
                                                                         className="btn btn-success me-2"
                                                                         onClick={() => handleStatusChange(a.id, {target: {value: 3}})}
@@ -203,3 +204,15 @@ const DashboardShopPending = () => {
 };
 
 export default DashboardShopPending;
+//chuyển trang shop
+//search shop
+//xóa checkbox
+//xóa nút edit/delete
+//xóa checkbox
+//thêm username
+//tắt modal bị lỗi
+//bỏ spent và toàn  role
+//xóa review
+//phân trang product
+//status sản phẩm chỉ block hoặc active
+//add lần 2 bị lỗi

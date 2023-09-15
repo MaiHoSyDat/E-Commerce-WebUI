@@ -4,6 +4,8 @@ import {Formik, Form, Field, ErrorMessage} from 'formik';
 import Footer from "../components/footer";
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -92,11 +94,21 @@ const Signup = () => {
                                                 id: status
                                             }
                                         }
-                                        axios.post("http://localhost:8080/register", account).then((rep) => {
+                                        axios.post("http://localhost:8080/register", account).
+                                        then((rep) => {
+                                            Swal.fire(
+                                                '',
+                                                'Account successfully created',
+                                                'success'
+                                            )
                                             navigate("/signin")
                                         }).catch((err) => {
                                             console.log(err)
-                                            alert("Account already exists")
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Account creation failed!',
+                                            })
                                         })
 
 
@@ -154,7 +166,10 @@ const Signup = () => {
                                                 <ErrorMessage name="password" component="div"
                                                               className="error-message"/>
                                             </div>
-                                            <Field name="role" as="select">
+                                            <Field name="role"
+                                                   as="select"
+                                                   className="form-control"
+                                                  >
                                                 <option value="" disabled></option>
                                                 <option value="2">
                                                     Customer

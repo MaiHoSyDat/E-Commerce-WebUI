@@ -523,15 +523,18 @@ const ProductCart = () => {
                                                         headers: {
                                                             'Authorization': localStorage.getItem('token'),
                                                         }
-                                                    }).then();
+                                                    }).then((res)=>{
+                                                        Swal.fire(
+                                                            'Payment success!',
+                                                            'You have successfully completed your shopping cart!',
+                                                            'success'
+                                                        )
+                                                        navigate("/customer/order")
+                                                    }).catch(()=>{
+                                                        alert("Thất bại")
+                                                    });
                                                 }
                                                 fetchData()
-                                                Swal.fire(
-                                                    'Payment success!',
-                                                    'You have successfully completed your shopping cart!',
-                                                    'success'
-                                                )
-                                                navigate("/customer/order")
                                             }
                                         }}
                                     >
