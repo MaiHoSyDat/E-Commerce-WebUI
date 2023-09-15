@@ -71,7 +71,6 @@ const Home = () => {
         phone: Yup.string().required('Phone is required'),
     })
 
-    console.log(imageUpload)
 
     return (
         <>

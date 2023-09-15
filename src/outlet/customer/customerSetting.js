@@ -21,7 +21,7 @@ const CustomerSetting = () => {
         setImageUpload(file)
     };
     useEffect(()=>{
-        axios .get("http://localhost:8080/customer/customerDetail/"+account.id,  {
+        axios .get("http://localhost:8080/customer/customerDetail/" + account.id,  {
             headers: {
                 'Authorization': localStorage.getItem('token')
             },

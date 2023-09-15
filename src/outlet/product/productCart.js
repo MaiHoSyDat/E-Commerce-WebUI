@@ -11,9 +11,20 @@ import axios from "axios";
 import {Field, Form, Formik} from "formik";
 import {isAfter, isBefore, parse} from "date-fns";
 import {Link, useNavigate} from "react-router-dom";
+import {getCustomerByAccountLogin} from "../../service/customerService";
+import {getShopByAccountLogin} from "../../service/shopService";
+import {addNotification} from "../../service/notificationService";
 
 const ProductCart = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const customerLogin = useSelector(state => {
+        console.log(state.customer.customerLogin)
+        return state.customer.customerLogin;
+    })
+    useEffect(() => {
+        dispatch(getCustomerByAccountLogin(account.id));
+    },[])
     const navigate = useNavigate();
     const carts = useSelector(state => {
         return state.cart.allProductsFromCart
@@ -493,6 +504,15 @@ const ProductCart = () => {
                                                     'question'
                                                 )
                                             } else {
+                                                for (let i = 0; i < shopCodes.length; i++) {
+                                                    let name = "Order";
+                                                    let context = "" + customerLogin.account.name + " has just created a new order";
+                                                    let sender = customerLogin.account;
+                                                    let receiver = {id: shopCodes[i].idAccount};
+                                                    let notification = {name: name, context: context,
+                                                        sender: sender, receiver: receiver};
+                                                    dispatch(addNotification(notification));
+                                                }
                                                 const fetchData = async () => {
                                                     handleUpdateCart(2);
                                                     let codeDTOs = [];
