@@ -87,31 +87,47 @@ const ShopSingleFilterLogin = ({product}) => {
         dispatch((setFilterSortShow(sort)))
     }
     const [productDetail, setProductDetail] = useState({})
-    const [category , setCategory] = useState('')
+    const [category, setCategory] = useState('')
+    const [images, setImages] = useState([])
 
     const productState = useSelector(state => state.productDetail.product);
 
     useEffect(() => {
         dispatch(fetchProductDetail(product.id));
+        axios
+            .get('http://localhost:8080/shops/image/' + product.id,
+                {
+                    headers: {
+                        'Authorization': localStorage.getItem('token')
+                    },
+                })
+            .then((resp) => {
+                console.log(resp.data)
+            })
+            .catch((err) => {
+                console.log("err :" + err)
+            })
+
+
     }, [product]);
 
-    useEffect(()=>{
-        if (productState){
+    useEffect(() => {
+        if (productState) {
             setProductDetail(productState)
         }
-    },[productState])
+    }, [productState])
 
     const handleCreateProduct = () => {
-       setProductDetail({
-           id: 0,
-           name: '',
-           price:0,
-           quantity:0,
-           description:'',
-           unit:'kg',
-           category:"1",
-           shop: account.id,
-       }) ;
+        setProductDetail({
+            id: 0,
+            name: '',
+            price: 0,
+            quantity: 0,
+            description: '',
+            unit: 'kg',
+            category: "1",
+            shop: account.id,
+        });
     };
     return (
         <>
@@ -172,16 +188,16 @@ const ShopSingleFilterLogin = ({product}) => {
                                 aria-label="Close"
                             />
                         </div>
-                         <div className="modal-body">
+                        <div className="modal-body">
                             {productDetail && <Formik
                                 initialValues={{
-                                    id: productDetail.id||0,
-                                    name: productDetail.name||'',
-                                    price: productDetail.price||0,
-                                    quantity: productDetail.quantity||0,
-                                    description: productDetail.description||'',
-                                    unit: productDetail.unit||'kg',
-                                    category: category||"1",
+                                    id: productDetail.id || 0,
+                                    name: productDetail.name || '',
+                                    price: productDetail.price || 0,
+                                    quantity: productDetail.quantity || 0,
+                                    description: productDetail.description || '',
+                                    unit: productDetail.unit || 'kg',
+                                    category: category || "1",
                                     shop: '',
                                 }}
                                 validationSchema={Yup.object().shape({
@@ -243,7 +259,7 @@ const ShopSingleFilterLogin = ({product}) => {
                                 }}
                                 enableReinitialize={true}
                             >
-                                {({ errors, touched, isSubmitting}) => (
+                                {({errors, touched, isSubmitting}) => (
                                     <Form>
                                         <div className="row g-3">
                                             <div className="col-12">

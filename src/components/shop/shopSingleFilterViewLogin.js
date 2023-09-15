@@ -139,13 +139,20 @@ const ShopSingleFilterViewLogin = ( { onEditProduct }) => {
                                                                 headers: {
                                                                     'Authorization': localStorage.getItem('token'),
                                                                 },
-                                                            }).then(
+                                                            }).then(()=>{
                                                                 Swal.fire(
                                                                     'Deleted!',
                                                                     'Your file has been deleted.',
                                                                     'success'
                                                                 )
-                                                            )
+                                                            }).catch((err)=>{
+                                                                Swal.fire({
+                                                                    icon: 'error',
+                                                                    title: 'Oops...',
+                                                                    text: 'Something went wrong!',
+                                                                })
+
+                                                            })
 
                                                         })}
 

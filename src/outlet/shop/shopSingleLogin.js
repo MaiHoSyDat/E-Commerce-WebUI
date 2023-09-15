@@ -30,9 +30,10 @@ const ShopSingleLogin = () => {
     const handleEditProduct = (product) => {
         setProduct(product)
     };
+    console.log(shopLogin)
     return (
         <>
-            <section className="mb-lg-14 mb-8 mt-8">
+            {shopLogin && <section className="mb-lg-14 mb-8 mt-8">
                 <div className="container">
                     <div className="row">
                         <div className="col-12 col-lg-3 col-md-4 mb-4 mb-md-0">
@@ -50,7 +51,7 @@ const ShopSingleLogin = () => {
 
                     </div>
                 </div>
-            </section>
+            </section>}
         </>
     );
 };
