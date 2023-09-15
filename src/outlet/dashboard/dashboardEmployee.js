@@ -114,7 +114,7 @@ const DashboardEmployee = () => {
             ) {
                 Swal.fire(
                     'Cancelled',
-                    'Your imaginary file is safe :)',
+                    'You block this user :)',
                     'error'
                 )
             }

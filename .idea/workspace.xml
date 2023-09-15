@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardEmployee.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShopPending.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShopPending.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +96,8 @@
       <workItem from="1694660405580" duration="4919000" />
       <workItem from="1694676142256" duration="622000" />
       <workItem from="1694677593279" duration="306000" />
-      <workItem from="1694678680949" duration="7178000" />
+      <workItem from="1694678680949" duration="7715000" />
+      <workItem from="1694741368980" duration="4550000" />
     </task>
     <servers />
   </component>

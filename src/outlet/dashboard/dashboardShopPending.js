@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from "sweetalert2";
+import { MDBBtn } from 'mdb-react-ui-kit';
 
 const DashboardShopPending = () => {
     const [shop, setShop] = useState([]);
@@ -65,13 +67,60 @@ const DashboardShopPending = () => {
     const handleStatusChange = (idAccount, event) => {
         const idStatus = event.target.value;
         setOneStatus(idStatus)
-        axios
-            .post(`http://localhost:8080/admin/shop/blockOrActive?accountId=${idAccount}&statusId=${idStatus}`)
-            .then(() => {
-                fetchData()
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Changed!',
+                    'The status has been changed.',
+                    'success'
+                )
+                axios
+                    .post(`http://localhost:8080/admin/shop/blockOrActive?accountId=${idAccount}&statusId=${idStatus}`)
+                    .then(() => {
+                        fetchData()
+                    })
+                    .then((response) => {
+                        // Cập nhật lại trạng thái của tài khoản sau khi cập nhật thành công
+                        const updatedEmployee = shop.map((a) => {
+                            if (a.id === idAccount) {
+                                return {...a, status: {id: idStatus}};
+                            }
+                            return a;
+                        });
+                        setShop(updatedEmployee);
 
-            })
+                        console.log(response);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire(
+                    'Cancelled',
+                    'Task has been cancel :)',
+                    'error'
+                )
+            }
+        })
+
             .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
                 console.log(error);
             });
     };
@@ -171,6 +220,7 @@ const DashboardShopPending = () => {
                                                                     {/*<button type="button" className="btn btn-danger btn-floating" onClick={() => handleStatusChange(a.id, {target: {value: 2}})}>*/}
                                                                     {/*    <i className="fas fa-magic"></i>*/}
                                                                     {/*</button>*/}
+
                                                                     <button
                                                                         className="btn btn-success me-2"
                                                                         onClick={() => handleStatusChange(a.id, {target: {value: 3}})}
