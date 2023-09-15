@@ -21,7 +21,6 @@ import 'sweetalert2/dist/sweetalert2.css';
 const ShopSingleFilterLogin = ({product}) => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
-
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
     })
@@ -36,8 +35,8 @@ const ShopSingleFilterLogin = ({product}) => {
     })
     const [images, setImages] = useState([]);
     useEffect(() => {
-        // dispatch(getShopByAccountLogin(account.id))
-        // dispatch(getAllProductsByShop(shopLogin.id))
+        dispatch(getShopByAccountLogin(account.id))
+        dispatch(getAllProductsByShop(shopLogin.id))
         dispatch(getFilterProducts(filterParam));
     }, [filterParam]);
 
@@ -88,7 +87,8 @@ const ShopSingleFilterLogin = ({product}) => {
             }
             setImageUrls(newImageUrls)
         }
-    }, [imageUpload])
+    },[imageUpload])
+
     const handleInputChangeQuantityShow = () => {
         let num = document.getElementById("quantity").value;
         dispatch((setFilterQuantityShow(num)))
@@ -225,7 +225,6 @@ const ShopSingleFilterLogin = ({product}) => {
                                         },
                                         images: imageUrls
                                     }
-                                    console.log(product)
                                     axios
                                         .post('http://localhost:8080/shops/' + account.id + '/products/create', productNew,
                                             {
@@ -254,8 +253,11 @@ const ShopSingleFilterLogin = ({product}) => {
                                         })
                                         .catch(error => {
                                             // Handle error
-                                            alert("Please review the information")
-
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Please review the information!',
+                                            })
                                             console.error(error);
                                         })
                                         .finally(() => {
@@ -346,8 +348,7 @@ const ShopSingleFilterLogin = ({product}) => {
                                                         <option key={category.id} value={category.id}>
                                                             {category.name}
                                                         </option>
-                                                    ))
-                                                    }
+                                                    ))}
                                                 </Field>
                                                 {errors.category && touched.category && (
                                                     <div className="error-message">{errors.category}</div>

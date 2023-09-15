@@ -14,13 +14,15 @@ const Signup = () => {
             <div className="border-bottom shadow-sm">
                 <nav className="navbar navbar-light py-2">
                     <div className="container justify-content-center justify-content-lg-between">
-                        <a className="navbar-brand" href="../index.html">
+                        <Link to={"/index"}>
+                        <a className="navbar-brand" href="">
                             <img
-                                src="../assets/images/logo/freshcart-logo.svg"
+                                src="/assets/images/logo/freshcart-logo.svg"
                                 alt=""
                                 className="d-inline-block align-text-top"
                             />
                         </a>
+                        </Link>
                         <span className="navbar-text">
           Already have an account? <Link to={"/signin"}>Sign in</Link>
         </span>
@@ -164,7 +166,10 @@ const Signup = () => {
                                                 <ErrorMessage name="password" component="div"
                                                               className="error-message"/>
                                             </div>
-                                            <Field name="role" as="select">
+                                            <Field name="role"
+                                                   as="select"
+                                                   className="form-control"
+                                                  >
                                                 <option value="" disabled></option>
                                                 <option value="2">
                                                     Customer
