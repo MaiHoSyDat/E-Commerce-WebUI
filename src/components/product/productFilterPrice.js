@@ -114,6 +114,24 @@ const ProductFilterPrice = () => {
                         400 - 500 ($)
                     </label>
                 </div>
+                <div className="form-check mb-2">
+                    {/* input */}
+                    <input
+                        className="form-check-input"
+                        type="radio"
+                        value="500,10000000000000000000000000000000000000000000000000000000"
+                        id="max"
+                        name="radioPrice"
+                        onClick={() => {
+                            let price = document.getElementById("max").value;
+                            dispatch(setFilterPrice(price))
+                        }}
+                    />
+                    <label className="form-check-label" htmlFor="Blinkit">
+                        >= 500 ($)
+                    </label>
+                </div>
+
             </div>
 
         </>

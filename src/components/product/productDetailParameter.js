@@ -1,41 +1,87 @@
 import React, {useState} from 'react';
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.css';
-import {createProductsToCartByAccount} from "../../service/cartService";
-import  {useEffect} from 'react';
+import {createProductsToCartByAccount, getCartByAccount, updateCartByStore} from "../../service/cartService";
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProductDetail} from "../../service/productDetailActions";
 import {useParams} from "react-router-dom";
+import axios from "axios";
 
 const ProductDetailParameter = () => {
-    const { productId } = useParams();
-
+    const {productId} = useParams();
+    const dispatch = useDispatch();
     const product = useSelector(state => state.productDetail.product);
     const loading = useSelector(state => state.productDetail.loading);
     const error = useSelector(state => state.productDetail.error);
+    useEffect(() => {
+        dispatch(getCartByAccount())
+    }, [])
 
-    const dispatch = useDispatch();
-    const [quantity,setQuantity] = useState(1);
-    const handleChangeQuantity = (num) =>{
-        if (num ===1) {
+    const carts = useSelector(state => {
+        return state.cart.allProductsFromCart
+    })
+
+    const [quantity, setQuantity] = useState(1);
+    const [quantityByCart, setQuantityByCart] = useState(0);
+
+    useEffect(() => {
+        if (product) {
+            let totalQuantity = 0;
+            for (let i = 0; i < carts.length; i++) {
+                if (carts[i].product.id === product.id) {
+                    totalQuantity += carts[i].quantity;
+                }
+            }
+            setQuantityByCart(totalQuantity);
+        }
+    }, [carts]);
+
+
+    const handleChangeQuantity = (num) => {
+        if (num === 1 && quantity > 1) {
             setQuantity(quantity - 1)
-        }else if (num === 2)
-            setQuantity(quantity + 1)
+        } else if (num === 2) {
+            let number = quantity;
+            for (let i = 0; i < carts.length; i++) {
+                if (carts[i].product.id == product.id) {
+                    number += carts[i].quantity;
+                }
+            }
+            if (number < product.quantity) {
+                setQuantity(quantity + 1)
+            } else {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Oops...',
+                    text: 'Quantity is not enough!',
+                })
+            }
+        }
     }
+    const handleAddToCart = async (productId) => {
+        if (quantityByCart + quantity <= product.quantity) {
+            let product = [productId, quantity];
+            try {
+                await dispatch(createProductsToCartByAccount(product));
+                Swal.fire(
+                    'Success!',
+                    'Add to cart successfully!',
+                    'success'
+                );
+                await setQuantityByCart(quantityByCart + quantity);
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: 'Quantity is not enough!',
+            })
+        }
 
-    const handleAddToCart = (productId) => {
-        let product = [productId,quantity]
-        dispatch(createProductsToCartByAccount(product))
-            .then(res=>{
-            Swal.fire(
-                'Success!',
-                'Add to cart successfully!',
-                'success'
-            )
-        }).catch(err =>{
-            console.log(err)
-        })
-    }
+    };
 
     useEffect(() => {
         dispatch(fetchProductDetail(productId));
@@ -55,6 +101,7 @@ const ProductDetailParameter = () => {
 
     return (
         <>
+            {console.log(1)}
             <div className="col-md-6">
                 <div className="ps-lg-10 mt-6 mt-md-0">
                     {/* content */}
@@ -68,11 +115,11 @@ const ProductDetailParameter = () => {
                         {/* rating */}{" "}
                         <small className="text-warning">
                             {" "}
-                            <i className="bi bi-star-fill" />
-                            <i className="bi bi-star-fill" />
-                            <i className="bi bi-star-fill" />
-                            <i className="bi bi-star-fill" />
-                            <i className="bi bi-star-half" />
+                            <i className="bi bi-star-fill"/>
+                            <i className="bi bi-star-fill"/>
+                            <i className="bi bi-star-fill"/>
+                            <i className="bi bi-star-fill"/>
+                            <i className="bi bi-star-half"/>
                         </small>
                         <a href="#" className="ms-2">
                             (30 reviews)
@@ -87,7 +134,7 @@ const ProductDetailParameter = () => {
       </span>
                     </div>
                     {/* hr */}
-                    <hr className="my-6" />
+                    <hr className="my-6"/>
                     <div className="mb-5">
                         {/*<button type="button" className="btn btn-outline-secondary">*/}
                         {/*    250g*/}
@@ -98,7 +145,7 @@ const ProductDetailParameter = () => {
                         {/*</button>*/}
                         {/*/!* btn *!/*/}
                         <button type="button" className="btn btn-outline-secondary">
-                            {product.unit} Kg
+                            {product.unit}
                         </button>
                     </div>
                     <div>
@@ -109,7 +156,7 @@ const ProductDetailParameter = () => {
                                 defaultValue="-"
                                 className="button-minus  btn  btn-sm "
                                 data-field="quantity"
-                                onClick={()=>handleChangeQuantity(1)}
+                                onClick={() => handleChangeQuantity(1)}
                             />
                             <input
                                 type="number"
@@ -124,7 +171,7 @@ const ProductDetailParameter = () => {
                                 defaultValue="+"
                                 className="button-plus btn btn-sm "
                                 data-field="quantity"
-                                onClick={()=>handleChangeQuantity(2)}
+                                onClick={() => handleChangeQuantity(2)}
                             />
                         </div>
                     </div>
@@ -133,9 +180,9 @@ const ProductDetailParameter = () => {
                             {/* button */}
                             {/* btn */}
                             <button type="button" className="btn btn-primary"
-                                    onClick={()=>handleAddToCart(productId)}
+                                    onClick={() => handleAddToCart(productId)}
                             >
-                                <i className="feather-icon icon-shopping-bag me-2" />
+                                <i className="feather-icon icon-shopping-bag me-2"/>
                                 Add to cart
                             </button>
                         </div>
@@ -148,7 +195,7 @@ const ProductDetailParameter = () => {
                                 data-bs-html="true"
                                 aria-label="Compare"
                             >
-                                <i className="bi bi-arrow-left-right" />
+                                <i className="bi bi-arrow-left-right"/>
                             </a>
                             <a
                                 className="btn btn-light "
@@ -157,19 +204,19 @@ const ProductDetailParameter = () => {
                                 data-bs-html="true"
                                 aria-label="Wishlist"
                             >
-                                <i className="feather-icon icon-heart" />
+                                <i className="feather-icon icon-heart"/>
                             </a>
                         </div>
                     </div>
                     {/* hr */}
-                    <hr className="my-6" />
+                    <hr className="my-6"/>
                     <div>
                         {/* table */}
                         <table className="table table-borderless mb-0">
                             <tbody>
                             <tr>
                                 <td>Product Code:</td>
-                                <td>FBB00255</td>
+                                <td>{product.id}</td>
                             </tr>
                             <tr>
                                 <td>
@@ -181,15 +228,7 @@ const ProductDetailParameter = () => {
                                 <td>Category:</td>
                                 <td>{product.category.name}</td>
                             </tr>
-                            <tr>
-                                <td>Shipping:</td>
-                                <td>
-                                    <small>
-                                        01 day shipping.
-                                        <span className="text-muted">( Free pickup today)</span>
-                                    </small>
-                                </td>
-                            </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -208,19 +247,19 @@ const ProductDetailParameter = () => {
                             <ul className="dropdown-menu">
                                 <li>
                                     <a className="dropdown-item" href="#">
-                                        <i className="bi bi-facebook me-2" />
+                                        <i className="bi bi-facebook me-2"/>
                                         Facebook
                                     </a>
                                 </li>
                                 <li>
                                     <a className="dropdown-item" href="#">
-                                        <i className="bi bi-twitter me-2" />
+                                        <i className="bi bi-twitter me-2"/>
                                         Twitter
                                     </a>
                                 </li>
                                 <li>
                                     <a className="dropdown-item" href="#">
-                                        <i className="bi bi-instagram me-2" />
+                                        <i className="bi bi-instagram me-2"/>
                                         Instagram
                                     </a>
                                 </li>

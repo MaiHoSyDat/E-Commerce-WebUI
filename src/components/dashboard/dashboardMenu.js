@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const DashboardMenu = () => {
     return (
@@ -6,73 +7,49 @@ const DashboardMenu = () => {
             <nav className="navbar-vertical-nav d-none d-xl-block ">
                 <div className="navbar-vertical">
                     <div className="px-4 py-5">
+                        <Link to={"/index"}>
                         <a href="/index" className="navbar-brand">
-                            <img src="../assets/images/logo/freshcart-logo.svg" alt="" />
+                            <img src="../assets/images/logo/freshcart-logo.svg" alt=""/>
                         </a>
+                        </Link>
                     </div>
                     <div className="navbar-vertical-content flex-grow-1" data-simplebar="">
                         <ul className="navbar-nav flex-column" id="sideNavbar">
                             <li className="nav-item ">
+                                <Link to={"/dashboard/index"}>
                                 <a className="nav-link  active " href="/dashboard/index">
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-house" />
+                    <i className="bi bi-house"/>
                 </span>
                                         <span className="nav-link-text">Dashboard</span>
                                     </div>
                                 </a>
+                                </Link>
                             </li>
                             <li className="nav-item mt-6 mb-3">
                                 <span className="nav-label">Store Managements</span>
                             </li>
                             <li className="nav-item ">
+                                <Link to={"/dashboard/products"}>
                                 <a className="nav-link " href="/dashboard/products">
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-cart" />
+                    <i className="bi bi-cart"/>
                 </span>
                                         <span className="nav-link-text">Products</span>
                                     </div>
                                 </a>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a
-                                    className="nav-link   collapsed "
-                                    href="#"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navCategoriesCategories"
-                                    aria-expanded="false"
-                                    aria-controls="navCategoriesCategories"
-                                >
-                                    <div className="d-flex align-items-center">
-                <span className="nav-link-icon">
-                  {" "}
-                    <i className="bi bi-list-task" />
-                </span>
-                                        <span className="nav-link-text">Categories</span>
-                                    </div>
+                                <Link to={"/dashboard/category"}>
+                                <a className="nav-link " href="/dashboard/category">
+                                    Category
                                 </a>
-                                <div
-                                    id="navCategoriesCategories"
-                                    className="collapse "
-                                    data-bs-parent="#sideNavbar"
-                                >
-                                    <ul className="nav flex-column">
-                                        <li className="nav-item ">
-                                            <a className="nav-link " href="/dashboard/category">
-                                                Category
-                                            </a>
-                                        </li>
-                                        {/* Nav item */}
-                                        <li className="nav-item ">
-                                            <a className="nav-link " href="/dashboard/categoryDetail">
-                                                CategoryDetail
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                </Link>
                             </li>
                             <li className="nav-item">
                                 <a
@@ -86,7 +63,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-bag" />
+                    <i className="bi bi-bag"/>
                 </span>
                                         <span className="nav-link-text">Orders</span>
                                     </div>
@@ -98,63 +75,124 @@ const DashboardMenu = () => {
                                 >
                                     <ul className="nav flex-column">
                                         <li className="nav-item ">
+                                            <Link to={"/dashboard/order"}>
                                             <a className="nav-link " href="/dashboard/order">
                                                 List
                                             </a>
+                                            </Link>
                                         </li>
                                         {/* Nav item */}
                                         <li className="nav-item ">
+                                            <Link to={"/dashboard/orderDetail"}>
                                             <a className="nav-link " href="/dashboard/orderDetail">
                                                 Single
                                             </a>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li className="nav-item">
+                                <a
+                                    className="nav-link   collapsed "
+                                    href="#"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#navCategoriesCategories"
+                                    aria-expanded="false"
+                                    aria-controls="navCategoriesCategories"
+                                >
+                                    <div className="d-flex align-items-center">
+                <span className="nav-link-icon">
+                  {" "}
+                    <i className="bi bi-list-task"/>
+                </span>
+                                        <span className="nav-link-text">Shop</span>
+                                    </div>
+                                </a>
+                                <div
+                                    id="navCategoriesCategories"
+                                    className="collapse "
+                                    data-bs-parent="#sideNavbar"
+                                >
+                                    <ul className="nav flex-column">
+                                        <li className="nav-item ">
+                                            <Link to={"/dashboard/shop"}>
+                                            <a className="nav-link " href="/dashboard/shop">
+                                                <div className="d-flex align-items-center">
+                <span className="nav-link-icon">
+                  {" "}
+                    <i className="bi bi-shop"/>
+                </span>
+                                                    <span className="nav-link-text">Sellers / Vendors</span>
+                                                </div>
+                                            </a>
+                                                </Link>
+                                        </li>
+                                        {/* Nav item */}
+                                        <li className="nav-item ">
+                                            <Link to={"/dashboard/shopPending"}>
+                                            <a className="nav-link " href="/dashboard/shopPending">
+                                                Shop Pending
+                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                             <li className="nav-item ">
-                                <a className="nav-link " href="/dashboard/shop">
-                                    <div className="d-flex align-items-center">
-                <span className="nav-link-icon">
-                  {" "}
-                    <i className="bi bi-shop" />
-                </span>
-                                        <span className="nav-link-text">Sellers / Vendors</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li className="nav-item ">
+                                <Link to={"/dashboard/employee"}>
                                 <a className="nav-link " href="/dashboard/employee">
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-people" />
+                    <i className="bi bi-people"/>
                 </span>
                                         <span className="nav-link-text">Employees</span>
                                     </div>
                                 </a>
+                                </Link>
                             </li>
                             <li className="nav-item ">
+                                <Link to={"/dashboard/customer"}>
                                 <a className="nav-link " href="/dashboard/customer">
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-people" />
+                    <i className="bi bi-people"/>
                 </span>
                                         <span className="nav-link-text">Customers</span>
                                     </div>
                                 </a>
+                                </Link>
                             </li>
                             <li className="nav-item ">
+                                <Link to={"/dashboard/review"}>
                                 <a className="nav-link " href="/dashboard/review">
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-star" />
+                    <i className="bi bi-star"/>
                 </span>
                                         <span className="nav-link-text">Reviews</span>
                                     </div>
                                 </a>
+                                </Link>
                             </li>
+                            <li className="nav-item ">
+                                <Link to={"/dashboard/salary"}>
+                                    <a className="nav-link " href="/dashboard/salary">
+                                        <div className="d-flex align-items-center">
+                <span className="nav-link-icon">
+                  {" "}
+                    <i className="bi bi-wallet"/>
+                </span>
+                                            <span className="nav-link-text">Salary</span>
+                                        </div>
+                                    </a>
+                                </Link>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -167,7 +205,7 @@ const DashboardMenu = () => {
                 <div className="navbar-vertical">
                     <div className="px-4 py-5 d-flex justify-content-between align-items-center">
                         <a href="../index.html" className="navbar-brand">
-                            <img src="../assets/images/logo/freshcart-logo.svg" alt="" />
+                            <img src="../assets/images/logo/freshcart-logo.svg" alt=""/>
                         </a>
                         <button
                             type="button"
@@ -183,7 +221,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-house" />
+                    <i className="bi bi-house"/>
                 </span>
                                         <span>Dashboard</span>
                                     </div>
@@ -197,7 +235,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-cart" />
+                    <i className="bi bi-cart"/>
                 </span>
                                         <span className="nav-link-text">Products</span>
                                     </div>
@@ -208,7 +246,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-list-task" />
+                    <i className="bi bi-list-task"/>
                 </span>
                                         <span className="nav-link-text">Categories</span>
                                     </div>
@@ -226,7 +264,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-bag" />
+                    <i className="bi bi-bag"/>
                 </span>
                                         <span className="nav-link-text">Orders</span>
                                     </div>
@@ -256,7 +294,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-shop" />
+                    <i className="bi bi-shop"/>
                 </span>
                                         <span className="nav-link-text">Sellers / Vendors</span>
                                     </div>
@@ -267,7 +305,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-people" />
+                    <i className="bi bi-people"/>
                 </span>
                                         <span className="nav-link-text">Customers</span>
                                     </div>
@@ -278,7 +316,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-star" />
+                    <i className="bi bi-star"/>
                 </span>
                                         <span className="nav-link-text">Reviews</span>
                                     </div>
@@ -295,7 +333,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-newspaper" />
+                    <i className="bi bi-newspaper"/>
                 </span>
                                         <span className="nav-link-text">Blog</span>
                                     </div>
@@ -306,7 +344,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-images" />
+                    <i className="bi bi-images"/>
                 </span>
                                         <span className="nav-link-text">Media</span>
                                     </div>
@@ -317,7 +355,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-gear" />
+                    <i className="bi bi-gear"/>
                 </span>
                                         <span className="nav-link-text">Store Settings</span>
                                     </div>
@@ -334,7 +372,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-headphones" />
+                    <i className="bi bi-headphones"/>
                 </span>
                                         <span className="nav-link-text">Support Ticket</span>
                                     </div>
@@ -345,7 +383,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-question-circle" />
+                    <i className="bi bi-question-circle"/>
                 </span>
                                         <span className="nav-link-text">Help Center</span>
                                     </div>
@@ -356,7 +394,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-infinity" />
+                    <i className="bi bi-infinity"/>
                 </span>
                                         <span className="nav-link-text">How FreshCart Works</span>
                                     </div>
@@ -370,7 +408,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-apple" />
+                    <i className="bi bi-apple"/>
                 </span>
                                         <span className="nav-link-text">Apple Store</span>
                                     </div>
@@ -381,7 +419,7 @@ const DashboardMenu = () => {
                                     <div className="d-flex align-items-center">
                 <span className="nav-link-icon">
                   {" "}
-                    <i className="bi bi-google-play" />
+                    <i className="bi bi-google-play"/>
                 </span>
                                         <span className="nav-link-text">Google Play Store</span>
                                     </div>

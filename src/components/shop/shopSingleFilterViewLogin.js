@@ -1,53 +1,58 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getShopByAccountLogin} from "../../service/shopService";
-import {getAllProductsByShop} from "../../service/productService";
-import axios from "axios";
-import async from "async";
+import {getAllProductsByShop, getFilterProducts} from "../../service/productService";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
-const ShopSingleFilterViewLogin = () => {
+
+import {Link} from "react-router-dom";
+import axios from "axios";
+
+const ShopSingleFilterViewLogin = ( { onEditProduct }) => {
+    const numbers = [1, 2, 3, 4, 5]
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
     })
-    const shopProducts = useSelector(state => {
-        return state.product.shopProducts;
+    const filterProducts = useSelector(state => {
+        return state.product.filterProducts;
+    })
+    const filterParam = useSelector(state => {
+        return state.inputFilter.filterParam;
     })
     useEffect(() => {
-        dispatch(getShopByAccountLogin(account.id));
-    },[]);
-    useEffect(() => {
-        dispatch(getAllProductsByShop(shopLogin.id));
-    },[shopLogin])
-
-
+        dispatch(getFilterProducts(filterParam));
+    },[filterParam])
+    const handleEditProduct = (product) => {
+        onEditProduct(product); // Gọi callback function và truyền đối tượng product
+    };
     return (
         <>
             <div className="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
-                {
-                    shopProducts && shopProducts.map(product => (
-                        <div className="col">
+                {filterProducts && filterProducts.map(dto => (
+                    <>
+                        {dto.product.status.id != 2 && <div className="col">
                             {/* card */}
                             <div className="card card-product">
                                 <div className="card-body">
-                                    <div className="text-center position-relative">
-                                        {/* badge */}
-                                        <a href="#!">
-                                            {/* img */}
+                                    {/* badge */}
+                                    <div className="text-center position-relative ">
+                                        <div className=" position-absolute top-0 start-0">
+                                            {dto.product.status && <span className="badge bg-danger">{dto.product.status.name}</span>}
+                                        </div>
+                                        <Link to={"/product/detail/" + dto.product.id}>
                                             <img
-                                                src={product.thumbnail}
+                                                src={dto.product.thumbnail}
                                                 alt="Grocery Ecommerce Template"
                                                 className="mb-3 img-fluid"
                                             />
-                                        </a>
-                                        {/* btn action */}
+                                        </Link>
+                                        {/* action btn */}
                                         <div className="card-product-action">
-                                            <a
-                                                href="#!"
+                                            <Link
+                                                to={"/product/detail/" + dto.product.id}
                                                 className="btn-action"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#quickViewModal"
                                             >
                                                 <i
                                                     className="bi bi-eye"
@@ -55,9 +60,9 @@ const ShopSingleFilterViewLogin = () => {
                                                     data-bs-html="true"
                                                     title="Quick View"
                                                 />
-                                            </a>
+                                            </Link>
                                             <a
-                                                href="#!"
+                                                href="shop-wishlist.html"
                                                 className="btn-action"
                                                 data-bs-toggle="tooltip"
                                                 data-bs-html="true"
@@ -76,146 +81,107 @@ const ShopSingleFilterViewLogin = () => {
                                             </a>
                                         </div>
                                     </div>
+                                    {/* heading */}
                                     <div className="text-small mb-1">
                                         <a href="#!" className="text-decoration-none text-muted">
-                                            <small>{product.category.name}</small>
+                                            <small>{dto.product.category.name}</small>
                                         </a>
                                     </div>
                                     <h2 className="fs-6">
-                                        <a href="#!" className="text-inherit text-decoration-none">
-                                            {product.name} - {product.unit}g
+                                        <a
+                                            href="shop-single.html"
+                                            className="text-inherit text-decoration-none"
+                                        >
+                                            {dto.product.name}
                                         </a>
                                     </h2>
-                                    <div className="text-warning">
-                                        <small>
-                                            <i className="bi bi-star-fill" />
-                                            <i className="bi bi-star-fill" />
-                                            <i className="bi bi-star-fill" />
-                                            <i className="bi bi-star-half" />
-                                            <i className="bi bi-star" />
+                                    <div>
+                                        {" "}
+                                        <small className="text-warning">
+                                            {numbers.map((i) => (
+                                                i <= Math.floor(dto.average_rating) ? (<i className="bi bi-star-fill"/>) : (<i className="bi bi-star"/>)
+                                            ))}
                                         </small>
-                                        {/* text */}
-                                        <span className="text-muted small">3.5 (89)</span>
+                                        {" "}
+                                        <span className="text-muted small">{dto.average_rating}({dto.total_reviews} reviews)</span>
                                     </div>
-                                    <div className="d-flex justify-content-between mt-4">
+                                    {/* price */}
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
                                         <div>
-                                            <span className="text-dark">${product.price}</span>
+                                            <span className="text-dark">${dto.product.price}</span>{" "}
                                         </div>
+                                        {/* btn */}
                                         <div>
-                                            <button className="btn" data-toggle="modal" data-target="#myModal"><i className="fa fa-pencil" style={{color:"blue"}}></i></button>
-                                            <button className="btn" data-toggle="modal" data-target="#myModal"><i className="fa fa-trash" style={{color:"red"}}></i></button>
+                                            <div>
+                                                <button
+                                                    type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#sproductModal"
+                                                    className="btn btn-light"
+                                                    onClick={() => handleEditProduct(dto.product)}
+
+                                                >
+                                                    <i className="fa fa-pencil" style={{color: "blue"}}></i>
+                                                </button>
+                                                <button className="btn btn-light"
+                                                        data-toggle="modal"
+                                                        data-target="#myModal"
+                                                        onClick={() => Swal.fire({
+                                                            title: 'Are you sure?',
+                                                            text: "You won't be able to revert this!",
+                                                            icon: 'warning',
+                                                            showCancelButton: true,
+                                                            confirmButtonColor: '#3085d6',
+                                                            cancelButtonColor: '#d33',
+                                                            confirmButtonText: 'Yes, delete it!'
+                                                        }).then((result) => {
+                                                            axios.post('http://localhost:8080/shops/editStatus',dto.product , {
+                                                                headers: {
+                                                                    'Authorization': localStorage.getItem('token'),
+                                                                },
+                                                            }).then(()=>{
+                                                                Swal.fire(
+                                                                    'Deleted!',
+                                                                    'Your file has been deleted.',
+                                                                    'success'
+                                                                )
+                                                            }).catch((err)=>{
+                                                                Swal.fire({
+                                                                    icon: 'error',
+                                                                    title: 'Oops...',
+                                                                    text: 'Something went wrong!',
+                                                                })
+
+                                                            })
+
+                                                        })}
+
+                                                >
+                                                    <i
+                                                        className="fa fa-trash" style={{color: "red"}}></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
-                }
-                <div className="col">
-                    {/* card */}
-                    <div className="card card-product">
-                        <div className="card-body">
-                            <div className="text-center position-relative">
-                                {/* badge */}
-                                <a href="#!">
-                                    {/* img */}
-                                    <img
-                                        src="../assets/images/products/product-img-10.jpg"
-                                        alt="Grocery Ecommerce Template"
-                                        className="mb-3 img-fluid"
-                                    />
-                                </a>
-                                {/* btn action */}
-                                <div className="card-product-action">
-                                    <a
-                                        href="#!"
-                                        className="btn-action"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#quickViewModal"
-                                    >
-                                        <i
-                                            className="bi bi-eye"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-html="true"
-                                            title="Quick View"
-                                        />
-                                    </a>
-                                    <a
-                                        href="#!"
-                                        className="btn-action"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-html="true"
-                                        title="Wishlist"
-                                    >
-                                        <i className="bi bi-heart" />
-                                    </a>
-                                    <a
-                                        href="#!"
-                                        className="btn-action"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-html="true"
-                                        title="Compare"
-                                    >
-                                        <i className="bi bi-arrow-left-right" />
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="text-small mb-1">
-                                <a href="#!" className="text-decoration-none text-muted">
-                                    <small>Dairy, Bread &amp; Eggs</small>
-                                </a>
-                            </div>
-                            <h2 className="fs-6">
-                                <a href="#!" className="text-inherit text-decoration-none">
-                                    Amul Butter - 500 g
-                                </a>
-                            </h2>
-                            <div className="text-warning">
-                                <small>
-                                    <i className="bi bi-star-fill" />
-                                    <i className="bi bi-star-fill" />
-                                    <i className="bi bi-star-fill" />
-                                    <i className="bi bi-star-half" />
-                                    <i className="bi bi-star" />
-                                </small>
-                                {/* text */}
-                                <span className="text-muted small">3.5 (89)</span>
-                            </div>
-                            <div className="d-flex justify-content-between mt-4">
-                                <div>
-                                    <span className="text-dark">$13</span>
+                        </div>}
+                    </>
 
-                                </div>
-                                <div>
-
-                                    <button
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#sproductModal"
-                                        className="btn"
-                                    >
-                                        <i className="fa fa-pencil" style={{color:"blue"}}></i>
-                                    </button>
-                                    <button className="btn" data-toggle="modal" data-target="#myModal"><i className="fa fa-trash" style={{color:"red"}}></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                ))}
             </div>
-            {/* row */}
             <div className="row mt-8">
                 <div className="col">
                     {/* nav */}
                     <nav>
                         <ul className="pagination">
                             <li className="page-item disabled">
-                                <a className="page-link mx-1 " href="#" aria-label="Previous">
+                                <a className="page-link  mx-1 " href="#" aria-label="Previous">
                                     <i className="feather-icon icon-chevron-left" />
                                 </a>
                             </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 active" href="#">
+                            <li className="page-item ">
+                                <a className="page-link  mx-1 active" href="#">
                                     1
                                 </a>
                             </li>
@@ -243,7 +209,6 @@ const ShopSingleFilterViewLogin = () => {
                     </nav>
                 </div>
             </div>
-
 
 
         </>

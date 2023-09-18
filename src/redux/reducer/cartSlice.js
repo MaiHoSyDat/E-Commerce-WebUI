@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {
     createProductsToCartByAccount,
     deleteProductFromCartByAccount,
-    getProductByAccount, updateCartByStore,
+    getCartByAccount, updateCartByStore,
     updateProductFromCartByAccount
 } from "../../service/cartService";
 const initialState = {
@@ -14,7 +14,7 @@ const cartSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getProductByAccount.fulfilled, (state, action) => {
+        builder.addCase(getCartByAccount.fulfilled, (state, action) => {
             state.allProductsFromCart = action.payload;
         });
         builder.addCase(deleteProductFromCartByAccount.fulfilled, (state, action) => {

@@ -1,6 +1,151 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useParams} from "react-router-dom";
+import axios from "axios";
+import {Field} from "formik";
+import Switch from 'react-switch';
+import Swal from "sweetalert2";
 
 const DashboardCustomer = () => {
+    const [status, setStatus] = useState([]);
+    const [account, setAccount] = useState([]);
+    const [searchType, setSearchType] = useState(1); // Lựa chọn tìm kiếm theo tên hoặc email
+    const [searchText, setSearchText] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalElements, setTotalElements] = useState(0);
+
+
+
+
+    useEffect(() => {
+        fetchData();
+    }, [currentPage]);
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/admin/customerRoles')
+            .then((response) => {
+                setStatus(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+    const handleSearchTypeChange = (event) => {
+        setSearchType(event.target.value);
+    };
+
+    const handleSearchTextChange = (event) => {
+        setSearchText(event.target.value);
+    };
+    // const handleSearch = () => {
+    //     axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}`)
+    //         .then((response) => {
+    //             setAccount(response.data.content);
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // };
+    useEffect(()=>{
+        const fetchData = async () => {
+            await axios.get(`http://localhost:8080/admin/getByLike?page=0&num=${searchType}&context=${searchText}&roleId=2`)
+                .then((response) => {
+                    setAccount(response.data.content);
+                    setTotalPages(response.data.totalPages)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+        fetchData()
+    },[searchText,searchType])
+
+    const fetchData = () => {
+        axios
+            .get('http://localhost:8080/admin/getAccountByRole', {
+                params: {
+                    page: currentPage - 1,
+                    id: 2
+                },
+            })
+            .then((response) => {
+                const {content, totalPages} = response.data;
+                setAccount(content);
+                setTotalPages(totalPages);
+                setTotalElements(response.data.totalElements);
+
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+    const handleStatus = (idAccount, event) => {
+        const idStatus = event;
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Changed!',
+                    'The status has been changed.',
+                    'success'
+                )
+                axios
+                    .post(
+                        "http://localhost:8080/admin/blockOrActive?accountId=" +
+                        idAccount +
+                        "&statusId=" +
+                        idStatus
+                    )
+                    .then((response) => {
+                         const updatedAccount = account.map((a) => {
+                        if (a.id === idAccount) {
+                            return {...a, status: {id: idStatus}};
+                        }
+                        return a;
+                    });
+                    setAccount(updatedAccount);
+
+                    console.log(response);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+            }
+        })
+
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+
     return (
         <>
             <div className="container">
@@ -23,11 +168,6 @@ const DashboardCustomer = () => {
                                     </ol>
                                 </nav>
                             </div>
-                            <div>
-                                <a href="#!" className="btn btn-primary">
-                                    Add New Customer
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,728 +183,118 @@ const DashboardCustomer = () => {
                                                 type="search"
                                                 placeholder="Search Customers"
                                                 aria-label="Search"
+                                                value={searchText}
+                                                onChange={handleSearchTextChange}
                                             />
                                         </form>
+                                    </div>
+                                    <div className="col-lg-2 col-md-4 col-12">
+
+                                        <select
+                                            className="form-select "
+                                            value={searchType}
+                                            onChange={handleSearchTypeChange}
+                                        >
+                                            <option value={1}> Name</option>
+                                            <option value={2}>Email</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div className="card-body p-0 ">
-                                <div className="table-responsive">
-                                    <table className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
+                                <div className="table table-striped">
+                                    <table
+                                        className="table table-centered table-hover table-borderless mb-0 table-with-checkbox text-nowrap">
                                         <thead className="bg-light">
                                         <tr>
-                                            <th>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="checkAll"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="checkAll"
-                                                    ></label>
-                                                </div>
-                                            </th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Purchase Date</th>
-                                            <th>Phone</th>
-                                            <th>Spent</th>
-                                            <th />
+                                            <th scope="col">#</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">Status</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerOne"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerOne"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-1.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Bonnie Howe
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>bonniehowe@gmail.com</td>
-                                            <td>17 May, 2023 at 3:18pm</td>
-                                            <td>-</td>
-                                            <td>$49.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerTwo"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerTwo"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-2.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Judy Nelson
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>judynelson@gmail.com</td>
-                                            <td>27 April, 2023 at 2:47pm</td>
-                                            <td>435-239-6436</td>
-                                            <td>$490.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerThree"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerThree"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-3.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            John Mattox
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>johnmattox@gmail.com</td>
-                                            <td>27 April, 2023 at 2:47pm</td>
-                                            <td>347-424-9526</td>
-                                            <td>$29.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerFour"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerFour"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-4.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Wayne Rossman
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>waynerossman@gmail.com</td>
-                                            <td>27 April, 2023 at 2:47pm</td>
-                                            <td>-</td>
-                                            <td>$39.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerFive"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerFive"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-5.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Rhonda Pinson
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>rhondapinson@gmail.com</td>
-                                            <td>18 March, 2023 at 2:47pm</td>
-                                            <td>304-471-8451</td>
-                                            <td>$213.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerSix"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerSix"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-6.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            John Mattox
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>johnmattox@gmail.com</td>
-                                            <td>18 March, 2023 at 2:47pm</td>
-                                            <td>410-636-2682</td>
-                                            <td>$490.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerSeven"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerSeven"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-7.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Wayne Rossman
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>waynerossman@gmail.com</td>
-                                            <td>18 March, 2023 at 2:47pm</td>
-                                            <td>845-294-6681</td>
-                                            <td>$39.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerEight"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerEight"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-8.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Richard Shelton
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>richarddhelton@jourrapide.com</td>
-                                            <td>12 March, 2023 at 9:47am</td>
-                                            <td>313-887-8495</td>
-                                            <td>$19.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerNine"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerNine"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-9.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Stephanie Morales
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>stephaniemorales@gmail.com</td>
-                                            <td>22 Feb, 2023 at 9:47pm</td>
-                                            <td>812-682-1588</td>
-                                            <td>$250.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerTen"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerTen"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-10.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Stephanie Morales
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>stephaniemorales@gmail.com</td>
-                                            <td>22 Feb, 2023 at 9:47pm</td>
-                                            <td>812-682-1588</td>
-                                            <td>$250.00</td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td className="pe-0">
-                                                <div className="form-check">
-                                                    <input
-                                                        className="form-check-input"
-                                                        type="checkbox"
-                                                        defaultValue=""
-                                                        id="customerEleven"
-                                                    />
-                                                    <label
-                                                        className="form-check-label"
-                                                        htmlFor="customerEleven"
-                                                    ></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <img
-                                                        src="../assets/images/avatar/avatar-11.jpg"
-                                                        alt=""
-                                                        className="avatar avatar-xs rounded-circle"
-                                                    />
-                                                    <div className="ms-2">
-                                                        <a href="#" className="text-inherit">
-                                                            Pasquale Kidd
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>pasqualekidd@rhyta.com</td>
-                                            <td>22 Feb, 2023 at 9:47pm</td>
-                                            <td>336-396-0658</td>
-                                            <td>$159.00</td>
-                                            <td>
-                                                <div className="dropdown ">
-                                                    <a
-                                                        href="#"
-                                                        className="text-reset"
-                                                        data-bs-toggle="dropdown"
-                                                        aria-expanded="false"
-                                                    >
-                                                        <i className="feather-icon icon-more-vertical fs-5" />
-                                                    </a>
-                                                    <ul className="dropdown-menu">
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-trash me-3" />
-                                                                Delete
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a className="dropdown-item" href="#">
-                                                                <i className="bi bi-pencil-square me-3 " />
-                                                                Edit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {
+                                            account.map((a, index) => {
+                                                return (
+                                                    <>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                {(currentPage - 1)* 10 + index + 1}
+                                                            </th>
+                                                            <td>
+                                                                <div className="d-flex align-items-center">
+
+                                                                    <div className="ms-2">
+                                                                        <a href="#" className="text-inherit">
+                                                                            {a.username}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>{a.name}</td>
+                                                            <td>{a.email}</td>
+                                                            <td>
+                                                                {a.role.name}
+                                                            </td>
+                                                            <td>
+                                                                <Switch
+                                                                    checked={a.status.id === 1}
+                                                                    onChange={() => {
+                                                                        const newStatusId = a.status.id === 1 ? 2 : 1;
+                                                                        handleStatus(a.id, newStatusId);
+                                                                    }}
+                                                                    activeBoxShadow="0px 0px 1px 2px #2693e6"
+                                                                    height={24}
+                                                                    width={48}
+                                                                    handleDiameter={20}
+                                                                />
+                                                            </td>
+
+                                                        </tr>
+                                                    </>
+                                                )
+                                            })
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
+                                {/*phân trang*/}
                                 <div className="border-top d-md-flex justify-content-between align-items-center p-6">
-                                    <span>Showing 1 to 8 of 12 entries</span>
+        <span>
+                    Showing {account.length} to {account.length} of {totalElements } entries
+
+        </span>
                                     <nav className="mt-2 mt-md-0">
                                         <ul className="pagination mb-0 ">
-                                            <li className="page-item disabled">
-                                                <a className="page-link " href="#!">
+                                            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                                <a className="page-link" href="#!" onClick={handlePreviousPage}>
                                                     Previous
                                                 </a>
                                             </li>
-                                            <li className="page-item">
-                                                <a className="page-link active" href="#!">
-                                                    1
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
-                                                    3
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#!">
+                                            {Array.from({length: totalPages}, (_, i) => (
+                                                <li
+                                                    key={i + 1}
+                                                    className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
+                                                >
+                                                    <a
+                                                        className="page-link"
+                                                        href="#!"
+                                                        onClick={() => setCurrentPage(i + 1)}
+                                                    >
+                                                        {i + 1}
+                                                    </a>
+                                                </li>
+                                            ))}
+                                            <li
+                                                className={`page-item ${
+                                                    currentPage === totalPages ? 'disabled' : ''
+                                                }`}
+                                            >
+                                                <a className="page-link" href="#!" onClick={handleNextPage}>
                                                     Next
                                                 </a>
                                             </li>
@@ -782,3 +312,4 @@ const DashboardCustomer = () => {
 };
 
 export default DashboardCustomer;
+// export {handleStatus}

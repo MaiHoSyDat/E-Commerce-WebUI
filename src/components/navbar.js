@@ -1,4 +1,3 @@
-
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
@@ -10,7 +9,6 @@ const Navbar = () => {
     const handleInputChangeNameProduct = (e) => {
         dispatch(setFilterNameProduct(e.target.value));
     };
-
 
 
     const signin = () => {
@@ -26,7 +24,7 @@ const Navbar = () => {
                                 <Link to={"/index"}>
                                     <a className="navbar-brand d-none d-lg-block" href="">
                                         <img
-                                            src="../assets/images/logo/freshcart-logo.svg"
+                                            src="/assets/images/logo/freshcart-logo.svg"
                                             alt="eCommerce HTML Template"
                                         />
                                     </a>
@@ -34,7 +32,7 @@ const Navbar = () => {
                                 <div className="d-flex justify-content-between w-100 d-lg-none">
                                     <a className="navbar-brand" href="index.html">
                                         <img
-                                            src="../assets/images/logo/freshcart-logo.svg"
+                                            src="/assets/images/logo/freshcart-logo.svg"
                                             alt="eCommerce HTML Template"
                                         />
                                     </a>
@@ -59,17 +57,17 @@ const Navbar = () => {
                                                         strokeLinejoin="round"
                                                         className="feather feather-user"
                                                     >
-                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                        <circle cx={12} cy={7} r={4} />
+                                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                                        <circle cx={12} cy={7} r={4}/>
                                                     </svg>
                                                 </a>
                                             </div>
                                             <div className="list-inline-item">
-                                                <a
+                                                <Link
                                                     className="text-muted position-relative "
-                                                    data-bs-toggle="offcanvas"
-                                                    data-bs-target="#offcanvasRight"
-                                                    href="#offcanvasExample"
+                                                    // data-bs-toggle="offcanvas"
+                                                    // data-bs-target="#offcanvasRight"
+                                                    to={"/cart"}
                                                     role="button"
                                                     aria-controls="offcanvasRight"
                                                 >
@@ -85,15 +83,15 @@ const Navbar = () => {
                                                         strokeLinejoin="round"
                                                         className="feather feather-shopping-bag"
                                                     >
-                                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                                                        <line x1={3} y1={6} x2={21} y2={6} />
-                                                        <path d="M16 10a4 4 0 0 1-8 0" />
+                                                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                                        <line x1={3} y1={6} x2={21} y2={6}/>
+                                                        <path d="M16 10a4 4 0 0 1-8 0"/>
                                                     </svg>
-                                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                        1
-                        <span className="visually-hidden">unread messages</span>
-                      </span>
-                                                </a>
+                                                    {/*                              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">*/}
+                                                    {/*  1*/}
+                                                    {/*  <span className="visually-hidden">unread messages</span>*/}
+                                                    {/*</span>*/}
+                                                </Link>
                                             </div>
                                         </div>
                                         {/* Button */}
@@ -113,7 +111,8 @@ const Navbar = () => {
                                                 className="bi bi-text-indent-left text-primary"
                                                 viewBox="0 0 16 16"
                                             >
-                                                <path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708zM7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                                <path
+                                                    d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708zM7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
                                             </svg>
                                         </button>
                                     </div>
@@ -145,8 +144,8 @@ const Navbar = () => {
                         strokeLinejoin="round"
                         className="feather feather-search"
                     >
-                      <circle cx={11} cy={11} r={8} />
-                      <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                      <circle cx={11} cy={11} r={8}/>
+                      <line x1={21} y1={21} x2="16.65" y2="16.65"/>
                     </svg>
                   </button>
                 </span>
@@ -175,8 +174,8 @@ const Navbar = () => {
                                                 strokeLinejoin="round"
                                                 className="feather feather-user"
                                             >
-                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                                <circle cx={12} cy={7} r={4} />
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                                <circle cx={12} cy={7} r={4}/>
                                             </svg>
                                         </a>
                                     </div>
@@ -236,8 +235,8 @@ const Navbar = () => {
                           strokeLinejoin="round"
                           className="feather feather-search"
                       >
-                        <circle cx={11} cy={11} r={8} />
-                        <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                        <circle cx={11} cy={11} r={8}/>
+                        <line x1={21} y1={21} x2="16.65" y2="16.65"/>
                       </svg>
                     </button>
                   </span>
@@ -250,7 +249,7 @@ const Navbar = () => {
                                             data-bs-toggle="modal"
                                             data-bs-target="#locationModal"
                                         >
-                                            <i className="feather-icon icon-map-pin me-2" />
+                                            <i className="feather-icon icon-map-pin me-2"/>
                                             Pick Location
                                         </button>
                                     </div>
@@ -277,10 +276,10 @@ const Navbar = () => {
                       strokeLinejoin="round"
                       className="feather feather-grid"
                   >
-                    <rect x={3} y={3} width={7} height={7} />
-                    <rect x={14} y={3} width={7} height={7} />
-                    <rect x={14} y={14} width={7} height={7} />
-                    <rect x={3} y={14} width={7} height={7} />
+                    <rect x={3} y={3} width={7} height={7}/>
+                    <rect x={14} y={3} width={7} height={7}/>
+                    <rect x={14} y={14} width={7} height={7}/>
+                    <rect x={3} y={14} width={7} height={7}/>
                   </svg>
                 </span>{" "}
                                         All Categories
@@ -363,10 +362,10 @@ const Navbar = () => {
                       strokeLinejoin="round"
                       className="feather feather-grid"
                   >
-                    <rect x={3} y={3} width={7} height={7} />
-                    <rect x={14} y={3} width={7} height={7} />
-                    <rect x={14} y={14} width={7} height={7} />
-                    <rect x={3} y={14} width={7} height={7} />
+                    <rect x={3} y={3} width={7} height={7}/>
+                    <rect x={14} y={3} width={7} height={7}/>
+                    <rect x={14} y={14} width={7} height={7}/>
+                    <rect x={3} y={14} width={7} height={7}/>
                   </svg>
                 </span>{" "}
                                         All Categories
@@ -448,253 +447,6 @@ const Navbar = () => {
                                                     Product
                                                 </a>
                                             </Link>
-                                        </li>
-                                        <li className="nav-item dropdown w-100 w-lg-auto dropdown-fullwidth">
-                                            <a
-                                                className="nav-link dropdown-toggle"
-                                                href="#"
-                                                role="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                Mega menu
-                                            </a>
-                                            <div className=" dropdown-menu pb-0">
-                                                <div className="row p-2 p-lg-4">
-                                                    <div className="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                        <h6 className="text-primary ps-3">
-                                                            Dairy, Bread &amp; Eggs
-                                                        </h6>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Butter
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Milk Drinks
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Curd &amp; Yogurt
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Eggs
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Buns &amp; Bakery
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Cheese
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Condensed Milk
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Dairy Products
-                                                            </a>
-                                                        </Link>
-                                                    </div>
-                                                    <div className="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                        <h6 className="text-primary ps-3">
-                                                            Breakfast &amp; Instant Food
-                                                        </h6>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Breakfast Cereal
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                {" "}
-                                                                Noodles, Pasta &amp; Soup
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Frozen Veg Snacks
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                {" "}
-                                                                Frozen Non-Veg Snacks
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                {" "}
-                                                                Vermicelli
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                {" "}
-                                                                Instant Mixes
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                {" "}
-                                                                Batter
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                {" "}
-                                                                Fruit and Juices
-                                                            </a>
-                                                        </Link>
-                                                    </div>
-                                                    <div className="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                        <h6 className="text-primary ps-3">
-                                                            Cold Drinks &amp; Juices
-                                                        </h6>
-
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Soft Drinks
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Fruit Juices
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Coldpress
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Water &amp; Ice Cubes
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Soda &amp; Mixers
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Health Drinks
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Herbal Drinks
-                                                            </a>
-                                                        </Link>
-                                                        <Link to={"/product/filter"}>
-                                                            <a
-                                                                className="dropdown-item"
-                                                                href=""
-                                                            >
-                                                                Milk Drinks
-                                                            </a>
-                                                        </Link>
-                                                    </div>
-                                                    <div className="col-lg-3 col-12 mb-4 mb-lg-0">
-                                                        <div className="card border-0">
-                                                            <img
-                                                                src="../assets/images/banner/menu-banner.jpg"
-                                                                alt="eCommerce HTML Template"
-                                                                className="img-fluid"
-                                                            />
-                                                            <div className="position-absolute ps-6 mt-8">
-                                                                <h5 className=" mb-0 ">
-                                                                    Dont miss this <br />
-                                                                    offer today.
-                                                                </h5>
-                                                                <a href="#" className="btn btn-primary btn-sm mt-3">
-                                                                    Shop Now
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </li>
                                         <li className="nav-item w-100 w-lg-auto">
                                             <Link to={"/about"}>
@@ -780,16 +532,16 @@ const Navbar = () => {
                         </div>
                         <div className="modal-footer border-0 justify-content-center">
 
-                                <button onClick={signin} data-bs-dismiss="modal"  className="btn btn-link">
-                                    Already have an account? Sign in
+                            <button onClick={signin} data-bs-dismiss="modal" className="btn btn-link">
+                                Already have an account? Sign in
 
-                                </button>
+                            </button>
 
                         </div>
                     </div>
                 </div>
             </div>
-            {/* ShopSingle Cart */}
+            {/* ShopSingleLogin Cart */}
             <div
                 className="offcanvas offcanvas-end"
                 tabIndex={-1}
@@ -859,10 +611,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -942,10 +695,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -1029,10 +783,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -1117,10 +872,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>
@@ -1204,10 +960,11 @@ const Navbar = () => {
                               strokeLinejoin="round"
                               className="feather feather-trash-2 text-success"
                           >
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                            <line x1={10} y1={11} x2={10} y2={17} />
-                            <line x1={14} y1={11} x2={14} y2={17} />
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path
+                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1={10} y1={11} x2={10} y2={17}/>
+                            <line x1={14} y1={11} x2={14} y2={17}/>
                           </svg>
                         </span>
                                                         <span className="text-muted">Remove</span>

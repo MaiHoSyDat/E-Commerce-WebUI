@@ -4,12 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92932c45-7d35-4b0c-9bb6-94e2fe1c4e42" name="Changes" comment="">
+    <list default="true" id="de10e350-573d-483c-87f8-9e62b24ebe7e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterViewLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterViewLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopSingle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopSingle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/libs/jquery/dist/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/libs/jquery/dist/jquery.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/libs/quill/dist/quill.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/libs/quill/dist/quill.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dashboard/dashboardMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/dashboardMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardCustomer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardEmployee.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShopPending.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShopPending.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signup.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +34,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/pages/signup.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -35,25 +46,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/E-Commerce-WebUI",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/E-Commerce-WebService&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="92932c45-7d35-4b0c-9bb6-94e2fe1c4e42" name="Changes" comment="" />
+      <changelist id="c9b0c00a-c74f-497e-aef5-7ddb98f0c3ca" name="Changes" comment="" />
       <created>1693455634091</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -70,6 +81,9 @@
       <workItem from="1693925648875" duration="435000" />
       <workItem from="1693962808734" duration="347000" />
       <workItem from="1694049537604" duration="8540000" />
+      <workItem from="1694567958263" duration="1463000" />
+      <workItem from="1694586950141" duration="9782000" />
+      <workItem from="1694678620032" duration="2208000" />
     </task>
     <servers />
   </component>
@@ -86,5 +100,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/outlet/product/productCart.js</url>
+          <line>418</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
