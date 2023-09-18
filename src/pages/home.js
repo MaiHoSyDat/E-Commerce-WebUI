@@ -27,14 +27,21 @@ const Home = () => {
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem('account'))
 
-        if (account && account.status.id === 3 && account.role.name === "ROLE_CUSTOMER") {
+        if (account && account.status.id === 3 && account.role.id == 2) {
             window.$("#statusModal").modal("show");
         }
-        if (account && account.status.id === 3 && account.role.name === "ROLE_SHOP") {
+        if (account && account.status.id === 3 && account.role.id == 3) {
             window.$("#shopInformationModal").modal("show");
         }
-        if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
-            Swal.fire('Need confirm from Admin. Please Waiting...')
+        if (account && account.status.id === 4 && account.role.id == 3) {
+            localStorage.removeItem('account');
+            localStorage.removeItem('token');
+            Swal.fire({
+                text: 'Login successful, You need to waiting response from admin. Thank you',
+                didClose: () => {
+                    window.location.href = "http://localhost:3000/signin";
+                }
+            });
         }
         if (account && account.status.id === 3 && account.role.name === "ROLE_EMPLOYEE") {
             window.$("#employeeModal").modal("show");
@@ -70,8 +77,6 @@ const Home = () => {
         address: Yup.string().required('Address is required'),
         phone: Yup.string().required('Phone is required'),
     })
-
-    console.log(imageUpload)
 
     return (
         <>

@@ -51,15 +51,15 @@ import DashboardShopPending from "./outlet/dashboard/dashboardShopPending";
 import Employee from "./pages/employee";
 import EmployeeSetting from "./outlet/employee/employeeSetting";
 import DashboardSalary from "./outlet/dashboard/dashboardSalary";
-
+import {useEffect} from "react";
+import jwt from "jwt-decode";
 function App() {
-    // xoá account khi tắt trang
-    // window.addEventListener('beforeunload', () => {
-    //     localStorage.setItem('account', null);
-    //     localStorage.setItem('token', null);
-    // });
+
+
+
   return (
     <>
+
         <Routes>
             <Route path="dashboard" element={<Dashboard/>}>
                 <Route path="" element={<DashboardIndex/>}/>

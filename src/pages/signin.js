@@ -5,7 +5,26 @@ import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
+import jwt from "jwt-decode";
+import {Field, Form, Formik} from "formik";
+import {isAfter, isBefore, parse} from "date-fns";
+
 const SignIn = () => {
+    let userObj ={}
+
+
+    useEffect(() => {
+
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "1019879807561-qdd2356b4o39mo4r9174hv2dpp9097n7.apps.googleusercontent.com",
+            callback: handelCallbackResp
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("login"),
+            {theme: "outline", size: "large"}
+        )
+    }, [])
     const navigate = useNavigate();
     const [account, setAccount] = useState({
         username: '',
@@ -13,8 +32,8 @@ const SignIn = () => {
     });
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setAccount({ ...account, [name]: value });
+        const {name, value} = event.target;
+        setAccount({...account, [name]: value});
     };
     const handleError = () => {
 
@@ -42,25 +61,164 @@ const SignIn = () => {
         }
     }, []);
 
+    function handelCallbackResp(resp) {
+        userObj = jwt(resp.credential);
+        console.log(userObj)
+        let account = {
+            username: userObj.email,
+            name: userObj.name,
+            email: userObj.email,
+        }
+        console.log(account)
+
+        axios
+            .post('http://localhost:8080/login/email', account)
+            .then((response) => {
+                console.log(response)
+                if (response.data === "new account") {
+                    window.$("#abc").modal("show");
+                } else {
+                    localStorage.setItem('token', 'Bearer ' + response.data.token);
+                    localStorage.setItem('account', JSON.stringify(response.data));
+                    navigate("/index")
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+
+            });
+    }
+
     return (
         <>
+            <div
+                className="modal fade"
+                id="abc"
+                tabIndex={-1}
+                aria-labelledby="userCustomerModal"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content p-4">
+                        <div className="modal-header border-0">
+                            <h5 className="modal-title fs-3 fw-bold" id="userCustomerModal">
+                                Role
+                            </h5>
+                        </div>
+                        <div className="modal-body">
+                            <Formik
+                                initialValues={{
+                                    role: '2'
+                                }}
+                                validate={values => {
+                                    const errors = {};
+                                    // Kiểm tra các trường dữ liệu
+
+                                    return errors;
+                                }}
+                                onSubmit={(values, {setSubmitting}) => {
+                                    const ACTIVE = "1";
+                                    const SHOP_PENDING = "4";
+                                    let status = ACTIVE;
+                                    if (values.role != "2") {
+                                        status = SHOP_PENDING;
+                                    }
+                                    let account = {
+                                        username: userObj.email,
+                                        name: userObj.name,
+                                        email: userObj.email,
+                                        role: {
+                                            id: values.role
+                                        },
+                                        status: {
+                                            id: status
+                                        }
+                                    }
+                                    axios
+                                        .post('http://localhost:8080/login/email', account)
+                                        .then((response) => {
+                                            localStorage.setItem('token', 'Bearer ' + response.data.token);
+                                            localStorage.setItem('account', JSON.stringify(response.data));
+                                            console.log(JSON.stringify(response.data))
+                                                navigate("/index")
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Something went wrong!',
+                                            })
+
+                                        });
+
+                                    setSubmitting(false);
+                                }}
+                            >
+                                {({isSubmitting}) => (
+                                    <Form>
+                                        <div className="row g-3">
+
+                                            <div className="col-12">
+                                                <Field name="role"
+                                                       as="select"
+                                                       className="form-control"
+                                                >
+                                                    <option value="2">
+                                                        Customer
+                                                    </option>
+                                                    <option value="3">
+                                                        Shop
+                                                    </option>
+                                                    ))
+                                                </Field>
+                                            </div>
+                                            <div className="col-12 d-grid">
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-primary"
+                                                    disabled={isSubmitting}
+                                                    data-bs-dismiss="modal"
+                                                >
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </Form>
+                                )}
+                            </Formik>
+
+                        </div>
+                        <div className="modal-footer border-0 justify-content-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className="border-bottom shadow-sm">
                 <nav className="navbar navbar-light py-2">
                     <div className="container justify-content-center justify-content-lg-between">
                         <Link to={"/index"}>
-                        <a className="navbar-brand" href="">
-                            <img
-                                src="/assets/images/logo/freshcart-logo.svg"
-                                alt=""
-                                className="d-inline-block align-text-top"
-                            />
-                        </a>
+                            <a className="navbar-brand" href="">
+                                <img
+                                    src="/assets/images/logo/freshcart-logo.svg"
+                                    alt=""
+                                    className="d-inline-block align-text-top"
+                                />
+                            </a>
                         </Link>
                         <span className="navbar-text">
           Already have an account? <a href="signin.html">Sign in</a>
         </span>
                     </div>
                 </nav>
+
             </div>
             <main>
                 {/* section */}
@@ -83,76 +241,79 @@ const SignIn = () => {
                                     <p>Welcome back to FreshCart! Enter your email to get started.</p>
                                 </div>
 
-                                    <div className="row g-3">
-                                        {/* row */}
-                                        <div className="col-12">
-                                            {/* input */}
+                                <div className="row g-3">
+                                    {/* row */}
+                                    <div className="col-12">
+                                        {/* input */}
+                                        <input
+                                            type="text"
+                                            name="username"
+                                            onChange={handleInputChange}
+                                            className="form-control"
+                                            id="inputEmail4"
+                                            placeholder="Enter username"
+                                            required=""
+                                        />
+                                    </div>
+                                    <div className="col-12">
+                                        {/* input */}
+                                        <div className="password-field position-relative">
                                             <input
-                                                type="text"
-                                                name= "username"
+                                                type="password"
+                                                name="password"
                                                 onChange={handleInputChange}
+                                                id="fakePassword"
+                                                placeholder="Enter Password"
                                                 className="form-control"
-                                                id="inputEmail4"
-                                                placeholder="Enter username"
                                                 required=""
                                             />
-                                        </div>
-                                        <div className="col-12">
-                                            {/* input */}
-                                            <div className="password-field position-relative">
-                                                <input
-                                                    type="password"
-                                                    name= "password"
-                                                    onChange={handleInputChange}
-                                                    id="fakePassword"
-                                                    placeholder="Enter Password"
-                                                    className="form-control"
-                                                    required=""
-                                                />
-                                                <span>
-                      <i id="passwordToggler" className="bi bi-eye-slash" />
+                                            <span>
+                      <i id="passwordToggler" className="bi bi-eye-slash"/>
                     </span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex justify-content-between">
-                                            {/* form check */}
-                                            <div className="form-check">
-                                                <input
-                                                    className="form-check-input"
-                                                    type="checkbox"
-                                                    defaultValue=""
-                                                    id="flexCheckDefault"
-                                                />
-                                                {/* label */}{" "}
-                                                <label
-                                                    className="form-check-label"
-                                                    htmlFor="flexCheckDefault"
-                                                >
-                                                    Remember me
-                                                </label>
-                                            </div>
-                                            <div>
-                                                {" "}
-                                                Forgot password? <a href="forgot-password.html">Reset It</a>
-                                            </div>
-                                        </div>
-                                        {/* btn */}
-                                        <div className="col-12 d-grid">
-                                            <button type="submit" className="btn btn-primary" onClick={handleLogin}>
-                                                Sign In
-                                            </button>
-                                        </div>
-                                        {/* link */}
-                                        <div>
-                                            Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
                                         </div>
                                     </div>
+                                    <div className="d-flex justify-content-between">
+                                        {/* form check */}
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                defaultValue=""
+                                                id="flexCheckDefault"
+                                            />
+                                            {/* label */}{" "}
+                                            <label
+                                                className="form-check-label"
+                                                htmlFor="flexCheckDefault"
+                                            >
+                                                Remember me
+                                            </label>
+                                        </div>
+                                        <div>
+                                            {" "}
+                                            Forgot password? <a href="forgot-password.html">Reset It</a>
+                                        </div>
+                                    </div>
+                                    {/* btn */}
+                                    <div className="col-12 d-grid">
+                                        <button type="submit" className="btn btn-primary" onClick={handleLogin}>
+                                            Sign In
+                                        </button>
+                                    </div>
+                                    {/* link */}
+                                    <div>
+                                        Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
+                                    </div>
+                                    <div id="login"></div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
             </main>
             <Footer></Footer>
+
         </>
 
     );
