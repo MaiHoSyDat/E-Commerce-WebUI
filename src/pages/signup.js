@@ -76,9 +76,9 @@ const Signup = () => {
                                         return errors;
                                     }}
                                     onSubmit={(values, {setSubmitting}) => {
-                                        const PENDING = "3";
+                                        const ACTIVE = "1";
                                         const SHOP_PENDING ="4";
-                                        let status = PENDING;
+                                        let status = ACTIVE;
                                         if (values.role != "2") {
                                             status = SHOP_PENDING;
                                         }
