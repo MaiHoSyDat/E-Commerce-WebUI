@@ -10,11 +10,9 @@ const Index = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const customerLogin = useSelector(state => {
-        console.log(state.customer.customerLogin)
         return state.customer.customerLogin;
     })
     const wishlistByCustomer = useSelector(state => {
-        console.log(state)
         return state.wishlist.wishlistByCustomer;
     })
 

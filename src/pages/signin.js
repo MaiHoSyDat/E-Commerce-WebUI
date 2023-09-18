@@ -7,24 +7,54 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import jwt from "jwt-decode";
 import {Field, Form, Formik} from "formik";
-import {isAfter, isBefore, parse} from "date-fns";
+import FacebookLogin from "react-facebook-login";
 
 const SignIn = () => {
-    let userObj ={}
+    let userObj = {}
+    const responseFacebook = (response) => {
+        userObj = response
+        callApi(response)
+    };
 
-
+    // useEffect(() => {
+    //     /* global google */
+    //     google.accounts.id.initialize({
+    //         client_id: "1019879807561-qdd2356b4o39mo4r9174hv2dpp9097n7.apps.googleusercontent.com",
+    //         callback: handelCallbackResp
+    //     });
+    //     google.accounts.id.renderButton(
+    //         document.getElementById("login"),
+    //         {theme: "outline", size: "large", buttonType: "logo_only"}
+    //     )
+    // }, [])
     useEffect(() => {
+        const script = document.createElement("script");
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.onload = () => {
+            /* global google */
+            google.accounts.id.initialize({
+                client_id: "1019879807561-qdd2356b4o39mo4r9174hv2dpp9097n7.apps.googleusercontent.com",
+                callback: handelCallbackResp
+            });
 
-        /* global google */
-        google.accounts.id.initialize({
-            client_id: "1019879807561-qdd2356b4o39mo4r9174hv2dpp9097n7.apps.googleusercontent.com",
-            callback: handelCallbackResp
-        });
-        google.accounts.id.renderButton(
-            document.getElementById("login"),
-            {theme: "outline", size: "large"}
-        )
-    }, [])
+            google.accounts.id.renderButton(
+                document.getElementById("login"),
+                {
+                    theme: "outline",
+                    size: "large",
+                    buttonType: "logo_only"
+                }
+            );
+        };
+
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
     const navigate = useNavigate();
     const [account, setAccount] = useState({
         username: '',
@@ -63,18 +93,19 @@ const SignIn = () => {
 
     function handelCallbackResp(resp) {
         userObj = jwt(resp.credential);
-        console.log(userObj)
-        let account = {
-            username: userObj.email,
-            name: userObj.name,
-            email: userObj.email,
-        }
-        console.log(account)
+        callApi(userObj)
+    }
 
+    const callApi = ((resp) => {
+
+        let account = {
+            username: resp.email,
+            name: resp.name,
+            email: resp.email,
+        }
         axios
             .post('http://localhost:8080/login/email', account)
             .then((response) => {
-                console.log(response)
                 if (response.data === "new account") {
                     window.$("#abc").modal("show");
                 } else {
@@ -92,7 +123,8 @@ const SignIn = () => {
                 })
 
             });
-    }
+
+    })
 
     return (
         <>
@@ -144,8 +176,7 @@ const SignIn = () => {
                                         .then((response) => {
                                             localStorage.setItem('token', 'Bearer ' + response.data.token);
                                             localStorage.setItem('account', JSON.stringify(response.data));
-                                            console.log(JSON.stringify(response.data))
-                                                navigate("/index")
+                                            navigate("/index")
                                         })
                                         .catch((error) => {
                                             console.log(error);
@@ -304,7 +335,18 @@ const SignIn = () => {
                                     <div>
                                         Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
                                     </div>
-                                    <div id="login"></div>
+                                    <div  id="login"></div>
+                                    <div >
+                                        <FacebookLogin
+
+                                            appId="987657502490133"
+                                            autoLoad={false}
+                                            fields="name,email,picture"
+                                            icon="fa-facebook"
+                                            textButton="Login with Facebook"
+                                            callback={responseFacebook}
+                                        />
+                                    </div>
 
                                 </div>
                             </div>
