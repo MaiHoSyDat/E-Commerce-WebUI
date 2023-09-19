@@ -12,10 +12,10 @@ const About = () => {
     return (
         <>
             {account === null && <Navbar></Navbar>}
-            {account && account.role.name === "ROLE_CUSTOMER" && <NavbarCustomer></NavbarCustomer>}
-            {account && account.role.name === "ROLE_ADMIN" && <NavbarAdmin></NavbarAdmin>}
-            {account && account.role.name === "ROLE_SHOP" && <NavbarShop></NavbarShop>}
-            {account && account.role.name === "ROLE_EMPLOYEE" && <NavbarEmployee></NavbarEmployee>}
+            {account && account.role.id == 2 && <NavbarCustomer></NavbarCustomer>}
+            {account && account.role.id == 1 && <NavbarAdmin></NavbarAdmin>}
+            {account && account.role.id == 3 && <NavbarShop></NavbarShop>}
+            {account && account.role.id == 4 && <NavbarEmployee></NavbarEmployee>}
             <main>
                 {/* section */}
                 <section className="mt-lg-14 mt-8">

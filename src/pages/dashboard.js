@@ -11,8 +11,8 @@ const Dashboard = () => {
         <div>
             <DashboardHeader></DashboardHeader>
             <div className="main-wrapper">
-                {account && account.role.name === "ROLE_ADMIN" && <DashboardMenu></DashboardMenu>}
-                {account && account.role.name === "ROLE_EMPLOYEE" && <DashboardMenuEmployee></DashboardMenuEmployee>}
+                {account && account.role.id == 1 && <DashboardMenu></DashboardMenu>}
+                {account && account.role.id == 4 && <DashboardMenuEmployee></DashboardMenuEmployee>}
                 <main className="main-content-wrapper">
                     <Outlet></Outlet>
                 </main>
