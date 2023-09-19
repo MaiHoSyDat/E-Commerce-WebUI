@@ -68,7 +68,7 @@ const ForgotPassword = () => {
                                             let sendEmail = {
                                                 email: value.email
                                             }
-                                            const url = "http://localhost:8080/account/reset-password";
+                                            const url = "http://localhost:8080/reset-password";
                                             axios
                                                 .post(url, sendEmail)
                                                 .then(() => {
