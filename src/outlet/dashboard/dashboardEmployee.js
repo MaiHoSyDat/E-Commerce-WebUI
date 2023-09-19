@@ -253,33 +253,36 @@ const DashboardEmployee = () => {
                                             <Form>
                                                 <div className="row g-3">
                                                     <div className="col-12">
+                                                        <h6>Name:</h6>
                                                         <Field
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="Name"
-                                                            name="name"
+                                                            name="Name"
                                                         />
                                                         {errors.name && touched.name && (
                                                             <div className="error-message">{errors.name}</div>
                                                         )}
                                                     </div>
                                                     <div className="col-5">
+                                                        <h6>Username:</h6>
                                                         <Field
                                                             type="text"
                                                             className="form-control"
                                                             placeholder="username"
-                                                            name="username"
+                                                            name="Username"
                                                         />
                                                         {errors.username && touched.username && (
                                                             <div className="error-message">{errors.username}</div>
                                                         )}
                                                     </div>
                                                     <div className="col-5">
+                                                        <h6>Email:</h6>
                                                         <Field
                                                             type="email"
                                                             className="form-control"
                                                             placeholder="email"
-                                                            name="email"
+                                                            name="Email"
                                                         />
                                                         {errors.email && touched.email && (
                                                             <div className="error-message">{errors.email}</div>

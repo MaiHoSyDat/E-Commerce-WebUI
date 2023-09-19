@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import Switch from "react-switch";
+import Swal from "sweetalert2";
 
 const DashboardShop = () => {
     const [status, setStatus] = useState([]);
@@ -27,27 +29,56 @@ const DashboardShop = () => {
             });
     }, []);
     //thay đổi trạng thái của shop
-    const handleStatus = (idShop, event) => {
-        const idStatus = event.target.value;
-        axios
-            .post(
-                "http://localhost:8080/admin/shop/blockOrActiveShop?shopId=" + idShop  +"&statusId=" + idStatus
-            )
-            .then((response) => {
-                // Cập nhật lại trạng thái của shop sau khi cập nhật thành công
-                const updatedEmployee = shop.map((a) => {
-                    if (a.id === idShop) {
-                        return {...a, status: {id: idStatus}};
-                    }
-                    return a;
-                });
-                setShop(updatedEmployee);
 
-                console.log(response);
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
+    const handleStatus = (idShop, event) => {
+        const idStatus = event;
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Changed!',
+                    'The status has been changed.',
+                    'success'
+                )
+                axios
+                    .post(
+                        "http://localhost:8080/admin/shop/blockOrActiveShop?shopId=" + idShop  +"&statusId=" + idStatus
+                    )
+                    .then((response) => {
+                        // Cập nhật lại trạng thái của tài khoản sau khi cập nhật thành công
+                        const updatedShop = shop.map((a) => {
+                            if (a.id === idShop) {
+                                return {...a, status: {id: idStatus}};
+                            }
+                            return a;
+                        });
+                        setShop(updatedShop);
+
+                        console.log(response);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+            }
+        })
+
     };
     return (
         <>
@@ -164,19 +195,17 @@ const DashboardShop = () => {
                                                         </td>
                                                         <td>{s.name}</td>
                                                         <td>
-                                                                            <select
-                                                                                key={s.id}
-                                                                                name="status"
-                                                                                id="status"
-                                                                                onChange={(event) => handleStatus(s.id, event)}
-                                                                                value={s.status.id}
-                                                                            >
-                                                                                {status.map((s) => (
-                                                                                    <option key={s.id} value={s.id}>
-                                                                                        {s.name}
-                                                                                    </option>
-                                                                                ))}
-                                                                            </select>
+                                                            <Switch
+                                                                checked={s.status.id === 1}
+                                                                onChange={() => {
+                                                                    const newStatusId = s.status.id === 1 ? 2 : 1;
+                                                                    handleStatus(s.id, newStatusId);
+                                                                }}
+                                                                activeBoxShadow="0px 0px 1px 2px #2693e6"
+                                                                height={24}
+                                                                width={48}
+                                                                handleDiameter={20}
+                                                            />
                                                         </td>
                                                         <td>{s.dateCreate}</td>
                                                         <td>
