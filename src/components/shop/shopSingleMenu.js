@@ -2,8 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getAllCategories, getTenCategoriesPage} from "../../service/categoryService";
 import {setFilterCategory} from "../../service/inputService";
+import {Link, useParams} from "react-router-dom";
+import * as navLinks from "react-bootstrap/ElementChildren";
 
 const ShopSingleMenu = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const allCategories = useSelector(state => {
         return state.category.allCategories;
@@ -11,6 +14,11 @@ const ShopSingleMenu = () => {
     const tenCategoriesPage = useSelector(state => {
         return state.category.tenCategoriesPage;
     })
+    const idShopView = useSelector(state => {
+        console.log(state.shop.idShop)
+        return state.shop.idShop;
+    })
+    const {idShop} = useParams();
     let [count, setCount] = useState(0);
     useEffect(() => {
         const fetchData = async () => {
@@ -36,53 +44,40 @@ const ShopSingleMenu = () => {
             <ul className="nav flex-column nav-pills nav-pills-dark">
                 {/* nav item */}
                 <li className="nav-item">
+                    <Link to={"/shop/single/" + idShop} >
                     <a className="nav-link active" aria-current="page" href="#">
                         <i className="feather-icon icon-shopping-bag me-2" />
                         Shop
                     </a>
+                    </Link>
                 </li>
-                {/* nav item */}
                 <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="feather-icon icon-gift me-2" />
-                        Deals
-                    </a>
-                </li>
-                {/* nav item */}
-                <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="feather-icon icon-map-pin me-2" />
-                        Buy It Again
-                    </a>
-                </li>
-                {/* nav item */}
-                <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="feather-icon icon-star me-2" />
-                        Reviews
-                    </a>
-                </li>
-                {/* nav item */}
-                <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link to={"/shop/single/" + idShop + "/detail"} >
+                    <a className="nav-link" href="#" >
                         <i className="feather-icon icon-book me-2" />
-                        Recipes
+                        Details
                     </a>
+                    </Link>
                 </li>
                 {/* nav item */}
-                <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="feather-icon icon-phone-call me-2" />
-                        Contact
+                {account == null && <li className="nav-item">
+                    <Link to={"/signin"} >
+                        <a className="nav-link" >
+                            <i className="feather-icon icon-message-circle me-2" />
+                            Message
+                        </a>
+                    </Link>
+                    {/* message content */}
+                </li>}
+                {account != null && <li className="nav-item">
+                    <Link to={"/shop/single/" + idShop + "/chat"} >
+                    <a className="nav-link" >
+                        <i className="feather-icon icon-message-circle me-2" />
+                        Message
                     </a>
-                </li>
-                {/* nav item */}
-                <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="feather-icon icon-clipboard me-2" />
-                        Policy
-                    </a>
-                </li>
+                    </Link>
+                    {/* message content */}
+                </li>}
             </ul>
             <hr />
             <div>

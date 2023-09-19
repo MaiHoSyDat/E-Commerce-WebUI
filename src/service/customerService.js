@@ -22,3 +22,22 @@ export const getAllCustomerBuyProductFromShop = createAsyncThunk(
         return res.data;
     }
 )
+export const getAllCustomerMapMessage = createAsyncThunk(
+    "customer/getAllCustomerMapMessage",
+    async (idShop) => {
+        const res = await axios.get("http://localhost:8080/customer/messages/" + idShop);
+        return res.data;
+    }
+)
+export const setCustomerMessageDTO = createAsyncThunk(
+    "customer/setCustomerMessageDTO",
+    async (customerMessageDTO) => {
+        return customerMessageDTO;
+    }
+)
+export const loadCustomerMessageDTO = createAsyncThunk(
+    "customer/loadCustomerMessageDTO",
+    async () => {
+        return 1;
+    }
+)

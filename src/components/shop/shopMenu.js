@@ -59,6 +59,15 @@ const ShopMenu = () => {
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
+                            <Link to={"/shop-manager/message"}>
+                                <a className="nav-link" href="">
+                                    <i className="feather-icon icon-message-circle me-2" />
+                                    Message
+                                </a>
+                            </Link>
+                        </li>
+                        {/* nav item */}
+                        <li className="nav-item">
                             <Link to={"/shop-manager/notification"}>
                                 <a className="nav-link" href="">
                                     <i className="feather-icon icon-bell me-2" />

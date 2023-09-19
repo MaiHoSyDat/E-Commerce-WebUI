@@ -46,3 +46,10 @@ export const getShopDTOByAccountLogin = createAsyncThunk(
         return res.data;
     }
 )
+export const saveIdShop = createAsyncThunk(
+    "shop/idShop",
+    async (idShop) => {
+        const res = await axios.get("http://localhost:8080/account/shop/"+ idShop);
+        return res.data;
+    }
+)
