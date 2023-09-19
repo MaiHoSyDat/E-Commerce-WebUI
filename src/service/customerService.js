@@ -11,21 +11,33 @@ export const getAllCustomers = createAsyncThunk(
 export const getCustomerByAccountLogin = createAsyncThunk(
     "customer/getCustomerByAccountLogin",
     async (idAccount) => {
-        const res = await axios.get("http://localhost:8080/customer/" + idAccount);
+        const res = await axios.get("http://localhost:8080/customer/" + idAccount, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const getAllCustomerBuyProductFromShop = createAsyncThunk(
     "customer/getAllCustomerBuyProductFromShop",
     async (idShop) => {
-        const res = await axios.get("http://localhost:8080/customer/buyProductOfShop/" + idShop);
+        const res = await axios.get("http://localhost:8080/customer/buyProductOfShop/" + idShop, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const getAllCustomerMapMessage = createAsyncThunk(
     "customer/getAllCustomerMapMessage",
     async (idShop) => {
-        const res = await axios.get("http://localhost:8080/customer/messages/" + idShop);
+        const res = await axios.get("http://localhost:8080/customer/messages/" + idShop, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )

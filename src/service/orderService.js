@@ -11,35 +11,55 @@ export const getAllOrders = createAsyncThunk(
 export const getAllOrdersByCustomer = createAsyncThunk(
     "order/getAllOrdersByCustomer",
     async (idCustomer) => {
-        const res = await axios.get("http://localhost:8080/customer/" + idCustomer + "/orders");
+        const res = await axios.get("http://localhost:8080/customer/" + idCustomer + "/orders", {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const getAllOrdersByShop = createAsyncThunk(
     "order/getAllOrdersByShop",
     async (idShop) => {
-        const res = await axios.get("http://localhost:8080/shop/" + idShop + "/orders");
+        const res = await axios.get("http://localhost:8080/shop/" + idShop + "/orders", {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const getOrderById = createAsyncThunk(
     "order/getOrderById",
     async (idOrder) => {
-        const res = await axios.get("http://localhost:8080/order/" + idOrder);
+        const res = await axios.get("http://localhost:8080/order/" + idOrder, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const updateOrder = createAsyncThunk(
     "order/updateOrder",
     async ([idOrder, updateOrder]) => {
-        const res = await axios.post("http://localhost:8080/order/" + idOrder, updateOrder);
+        const res = await axios.post("http://localhost:8080/order/" + idOrder, updateOrder, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const deleteOrder = createAsyncThunk(
     "order/deleteOrder",
     async (idOrder) => {
-        const res = await axios.get("http://localhost:8080/order/delete/" + idOrder);
+        const res = await axios.get("http://localhost:8080/order/delete/" + idOrder, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )

@@ -12,7 +12,11 @@ export const getAllProducts = createAsyncThunk(
 export const getAllProductsByCustomerBuy = createAsyncThunk(
     "product/getAllProductsByCustomerBuy",
     async (idCustomer) => {
-        const res = await axios.get("http://localhost:8080/customer/productBuy/" +idCustomer);
+        const res = await axios.get("http://localhost:8080/customer/productBuy/" +idCustomer, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
@@ -20,7 +24,11 @@ export const getAllProductsByCustomerBuy = createAsyncThunk(
 export const getProduct = createAsyncThunk(
     "product/getProduct",
     async (idProduct) => {
-        const res = await axios.get("http://localhost:8080/products/detail/" + idProduct);
+        const res = await axios.get("http://localhost:8080/products/detail/" + idProduct, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
@@ -28,7 +36,11 @@ export const getProduct = createAsyncThunk(
 export const getFilterProducts = createAsyncThunk(
     "product/getFilterProducts",
     async (filterParam) => {
-        const res = await axios.post("http://localhost:8080/products/filter" , filterParam);
+        const res = await axios.post("http://localhost:8080/products/filter" , filterParam, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
@@ -36,7 +48,11 @@ export const getFilterProducts = createAsyncThunk(
 export const getAllProductsByShop = createAsyncThunk(
     "product/getAllProductsByShop",
     async (idShop) => {
-        const res = await axios.get("http://localhost:8080/shops/" + idShop + "/products" );
+        const res = await axios.get("http://localhost:8080/shops/" + idShop + "/products" , {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
@@ -44,7 +60,11 @@ export const getAllProductsByShop = createAsyncThunk(
 export const getTenProductsToIndex = createAsyncThunk(
     "product/getTenProductsToIndex",
     async (idShop) => {
-        const res = await axios.get("http://localhost:8080/index/tenNewProducts" );
+        const res = await axios.get("http://localhost:8080/index/tenNewProducts", {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        } );
         return res.data;
     }
 )
@@ -52,7 +72,11 @@ export const getTenProductsToIndex = createAsyncThunk(
 export const getThreeProductsMaxRating = createAsyncThunk(
     "product/getThreeProductsMaxRating",
     async (idShop) => {
-        const res = await axios.get("http://localhost:8080/index/threeProductsMaxRating" );
+        const res = await axios.get("http://localhost:8080/index/threeProductsMaxRating", {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        } );
         return res.data;
     }
 )
@@ -80,7 +104,11 @@ export const deleteProduct = createAsyncThunk(
 export const getFiveMostPurchasedProducts = createAsyncThunk(
     "product/getFiveMostPurchasedProducts",
     async () => {
-        const res = await axios.get("http://localhost:8080/products/fiveMostPurchased");
+        const res = await axios.get("http://localhost:8080/products/fiveMostPurchased", {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )

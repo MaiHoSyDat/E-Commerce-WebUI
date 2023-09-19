@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import {addNotification} from "../../service/notificationService";
+import {getAllStatusOrder} from "../../service/statusService";
 
 const CustomerOrder = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -18,22 +19,37 @@ const CustomerOrder = () => {
         console.log(state)
         return state.order.ordersByCustomer;
     })
+    const statusOrder = useSelector(state => {
+        return state.status.statusOrder;
+    })
     useEffect(() => {
+        dispatch(getAllStatusOrder())
         dispatch(getCustomerByAccountLogin(account.id));
     },[])
     useEffect(() => {
         dispatch(getAllOrdersByCustomer(customerLogin.id));
     },[customerLogin])
+    const [filterItems, setFilterItems] = useState([]);
+    useEffect(() =>{
+        setFilterItems([...ordersByCustomer])
+    },[ordersByCustomer])
+    const handleFilterStatus = () =>{
+        let statusName = document.getElementById("filterStatus").value;
+        if (statusName == "All") setFilterItems([...ordersByCustomer]);
+        else {
+            setFilterItems(ordersByCustomer.filter(item => item.status.name == statusName))
+        }
+    }
     //phan trang
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 6;
-    const totalProducts = ordersByCustomer.length;
+    const totalProducts = filterItems.length;
     const totalPages = Math.ceil(totalProducts / productsPerPage);
 
     // Tạo danh sách sản phẩm cho trang hiện tại
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
-    const currentProducts = ordersByCustomer.slice(startIndex, endIndex);
+    const currentProducts = filterItems.slice(startIndex, endIndex);
 
     const handlePageChange = (page) => {
         window.scrollTo(0, 0);
@@ -44,7 +60,18 @@ const CustomerOrder = () => {
             <div className="col-lg-9 col-md-8 col-12">
                 <div className="py-6 p-md-6 p-lg-10">
                     {/* heading */}
-                    <h2 className="mb-6">Orders</h2>
+                    <div className="row">
+                        <div className="col-6"><h2 className="mb-6">Orders </h2></div>
+                        <div className="col-2"><h2 className="mb-6">Status: </h2></div>
+                        <div className="col-4">
+                            <select className="form-select" aria-label="Default select example" style={{width:"200px"}} id={"filterStatus"} onClick={handleFilterStatus}>
+                                <option value="All" >All</option>
+                                {statusOrder && statusOrder.map(status => (
+                                    <option value={status.name} >{status.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
                     <div className="table-responsive-xxl border-0">
                         {/* Table */}
                         <table className="table mb-0 text-nowrap table-centered ">
