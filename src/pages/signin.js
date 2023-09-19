@@ -56,9 +56,6 @@ const SignIn = () => {
                             />
                         </a>
                         </Link>
-                        <span className="navbar-text">
-          Already have an account? <a href="signin.html">Sign in</a>
-        </span>
                     </div>
                 </nav>
             </div>

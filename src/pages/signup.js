@@ -23,9 +23,7 @@ const Signup = () => {
                             />
                         </a>
                         </Link>
-                        <span className="navbar-text">
-          Already have an account? <Link to={"/signin"}>Sign in</Link>
-        </span>
+
                     </div>
                 </nav>
             </div>
@@ -185,13 +183,9 @@ const Signup = () => {
                                                     Register
                                                 </button>
                                             </div>
-                                            <p>
-                                                <small>
-                                                    By continuing, you agree to our <a href="#!"> Terms of
-                                                    Service</a> &amp;{" "}
-                                                    <a href="#!">Privacy Policy</a>
-                                                </small>
-                                            </p>
+                                                <div>
+          Already have an account? <Link to={"/signin"}>Sign In</Link>
+        </div>
                                         </div>
                                         <ErrorMessage name="general" component="div" className="error-message"/>
                                     </Form>
