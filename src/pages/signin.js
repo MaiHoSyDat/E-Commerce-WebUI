@@ -5,6 +5,8 @@ import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
+import {LoginSocialFacebook, LoginSocialGoogle} from "reactjs-social-login";
+
 const SignIn = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useState({
@@ -16,9 +18,6 @@ const SignIn = () => {
         const { name, value } = event.target;
         setAccount({ ...account, [name]: value });
     };
-    const handleError = () => {
-
-    }
     const handleLogin = () => {
         axios
             .post('http://localhost:8080/login', account)
@@ -42,6 +41,50 @@ const SignIn = () => {
         }
     }, []);
 
+
+
+    const handleLoginFailure = () => {
+        // Xử lý khi đăng nhập thất bại
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+        })
+    };
+
+    const handleLoginSuccess = (data) => {
+        callApi(data)
+    };
+
+    const callApi = ((resp) => {
+
+        let account = {
+            username: resp.email,
+            name: resp.name,
+            email: resp.email,
+        }
+        axios
+            .post('http://localhost:8080/login/email', account)
+            .then((response) => {
+                if (response.data === "new account") {
+                    window.$("#abc").modal("show");
+                } else {
+                    localStorage.setItem('token', 'Bearer ' + response.data.token);
+                    localStorage.setItem('account', JSON.stringify(response.data));
+                    navigate("/index")
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+
+            });
+
+    })
     return (
         <>
             <div className="border-bottom shadow-sm">
@@ -147,6 +190,50 @@ const SignIn = () => {
                                             Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
                                         </div>
                                     </div>
+                               <div className="row">
+                                   <div className="col-1"></div>
+                                   <div className="col-5">
+                                       <LoginSocialGoogle
+                                           client_id={"1019879807561-qdd2356b4o39mo4r9174hv2dpp9097n7.apps.googleusercontent.com"}
+                                           onReject={handleLoginFailure}
+                                           onResolve={({provider, data}) => handleLoginSuccess(data)}>
+                                           <a
+                                               className="login100-social-item bg3"
+                                               style={{
+                                                   display: "inline-block",
+                                                   backgroundColor: "#dc4e41",
+                                                   color: "#fff",
+                                                   padding: "10px",
+                                                   borderRadius: "4px",
+                                                   textDecoration: "none"
+                                               }}
+                                           >
+                                               Login with Google
+                                           </a>
+                                       </LoginSocialGoogle>
+                                   </div>
+                                   <div className="col-5">
+                                       <LoginSocialFacebook
+                                           appId={"987657502490133"}
+                                           onReject={handleLoginFailure}
+                                           onResolve={({provider, data}) => handleLoginSuccess(data)}>
+                                           <a
+                                               className="login100-social-item bg1"
+                                               style={{
+                                                   display: "inline-block",
+                                                   backgroundColor: "#3b5998",
+                                                   color: "#fff",
+                                                   padding: "10px",
+                                                   borderRadius: "4px",
+                                                   textDecoration: "none"
+                                               }}
+                                           >
+                                               Login with Facebook
+                                           </a>
+                                       </LoginSocialFacebook>
+                                   </div>
+
+                               </div>
                             </div>
                         </div>
                     </div>
