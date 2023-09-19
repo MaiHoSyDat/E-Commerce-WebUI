@@ -8,14 +8,6 @@ import 'sweetalert2/dist/sweetalert2.css';
 
 const ForgotPassword = () => {
 
-    const [email, setEmail] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [message, setMessage] = useState('');
-
-    const handleResetPassword = () => {
-
-    };
-
     return (
         <>
             <div className="border-bottom shadow-sm">
@@ -68,17 +60,22 @@ const ForgotPassword = () => {
                                             let sendEmail = {
                                                 email: value.email
                                             }
+                                            Swal.fire({
+                                                title: 'Reset password already',
+                                                text: 'Please check your email to get new password',
+                                                icon: 'success',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    window.location.reload();
+                                                }
+                                            });
                                             const url = "http://localhost:8080/reset-password";
                                             axios
                                                 .post(url, sendEmail)
                                                 .then(() => {
-                                                    Swal.fire({
-                                                        icon: 'success',
-                                                        title: 'Send email successfully...',
-                                                        showConfirmButton: false,
-                                                        timer: 1500
-                                                    })
-                                                })
+
+                                            })
                                                 .catch((err) => {
                                                     Swal.fire({
                                                         icon: 'error',
@@ -87,14 +84,6 @@ const ForgotPassword = () => {
                                                     })
                                                     console.log(err)
                                                 })
-                                            // axios
-                                            //     .post('http://localhost:8080/account/reset-password', sendEmail )
-                                            //     .then((response) => {
-                                            //         setMessage(response.data);
-                                            //     })
-                                            //     .catch((error) => {
-                                            //         setMessage('Error: Unable to reset password.');
-                                            //     });
                                             setSubmitting(false);
                                         }}
                                         enableReinitialize={true}
