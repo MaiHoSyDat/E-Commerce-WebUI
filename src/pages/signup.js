@@ -15,17 +15,15 @@ const Signup = () => {
                 <nav className="navbar navbar-light py-2">
                     <div className="container justify-content-center justify-content-lg-between">
                         <Link to={"/index"}>
-                        <a className="navbar-brand" href="">
-                            <img
-                                src="/assets/images/logo/freshcart-logo.svg"
-                                alt=""
-                                className="d-inline-block align-text-top"
-                            />
-                        </a>
+                            <a className="navbar-brand" href="">
+                                <img
+                                    src="/assets/images/logo/freshcart-logo.svg"
+                                    alt=""
+                                    className="d-inline-block align-text-top"
+                                />
+                            </a>
                         </Link>
-                        <span className="navbar-text">
-          Already have an account? <Link to={"/signin"}>Sign in</Link>
-        </span>
+
                     </div>
                 </nav>
             </div>
@@ -76,9 +74,9 @@ const Signup = () => {
                                         return errors;
                                     }}
                                     onSubmit={(values, {setSubmitting}) => {
-                                        const PENDING = "3";
-                                        const SHOP_PENDING ="4";
-                                        let status = PENDING;
+                                        const ACTIVE = "1";
+                                        const SHOP_PENDING = "4";
+                                        let status = ACTIVE;
                                         if (values.role != "2") {
                                             status = SHOP_PENDING;
                                         }
@@ -94,8 +92,7 @@ const Signup = () => {
                                                 id: status
                                             }
                                         }
-                                        axios.post("http://localhost:8080/register", account).
-                                        then((rep) => {
+                                        axios.post("http://localhost:8080/register", account).then((rep) => {
                                             Swal.fire(
                                                 '',
                                                 'Account successfully created',
@@ -118,6 +115,7 @@ const Signup = () => {
                                     <Form>
                                         <div className="row g-3">
                                             <div className="col">
+                                                <h6>Username:</h6>
                                                 <Field
                                                     type="text"
                                                     className="form-control"
@@ -128,6 +126,7 @@ const Signup = () => {
                                                 <ErrorMessage name="name" component="div" className="error-message"/>
                                             </div>
                                             <div className="col">
+                                                <h6>Name:</h6>
                                                 <Field
                                                     type="text"
                                                     className="form-control"
@@ -139,6 +138,7 @@ const Signup = () => {
                                             </div>
 
                                             <div className="col-12">
+                                                <h6>Email:</h6>
                                                 <Field
                                                     type="email"
                                                     className="form-control"
@@ -151,6 +151,7 @@ const Signup = () => {
                                             </div>
                                             <div className="col-12">
                                                 <div className="password-field position-relative">
+                                                    <h6>Password:</h6>
                                                     <Field
                                                         type="password"
                                                         id="fakePassword"
@@ -160,16 +161,16 @@ const Signup = () => {
                                                         name="password"
                                                     />
                                                     <span>
-            <i id="passwordToggler" className="bi bi-eye-slash"/>
           </span>
                                                 </div>
                                                 <ErrorMessage name="password" component="div"
                                                               className="error-message"/>
                                             </div>
+                                            <h6>Role:</h6>
                                             <Field name="role"
                                                    as="select"
                                                    className="form-control"
-                                                  >
+                                            >
                                                 <option value="" disabled></option>
                                                 <option value="2">
                                                     Customer
@@ -185,14 +186,10 @@ const Signup = () => {
                                                     Register
                                                 </button>
                                             </div>
-                                            <p>
-                                                <small>
-                                                    By continuing, you agree to our <a href="#!"> Terms of
-                                                    Service</a> &amp;{" "}
-                                                    <a href="#!">Privacy Policy</a>
-                                                </small>
-                                            </p>
                                         </div>
+                                        <div>
+  Already have an account? <Link to="/signin">Sign In</Link>
+</div>
                                         <ErrorMessage name="general" component="div" className="error-message"/>
                                     </Form>
                                 </Formik>
