@@ -51,6 +51,15 @@ import DashboardShopPending from "./outlet/dashboard/dashboardShopPending";
 import Employee from "./pages/employee";
 import EmployeeSetting from "./outlet/employee/employeeSetting";
 import DashboardSalary from "./outlet/dashboard/dashboardSalary";
+import ShopSingleSearch from "./components/shop/shopSingleSearch";
+import ShopSingleView from "./components/shop/shopSingleView";
+import ShopSingleFilter from "./components/shop/shopSingleFilter";
+import ShopSingleFilterView from "./components/shop/shopSingleFilterView";
+import React from "react";
+import ShopSingleChat from "./components/shop/shopSingleChat";
+import ShopMessage from "./outlet/shop/shopMessage";
+import ShopSingleDetail from "./components/shop/shopSingleDetail";
+import ShopSingleDetailView from "./components/shop/shopSingleDetailView";
 
 function App() {
     // xoá account khi tắt trang
@@ -80,6 +89,8 @@ function App() {
                 <Route path="" element={<ShopList/>}/>
                 <Route path="single" element={<ShopSingleLogin/>}/>
                 <Route path="single/:idShop" element={<ShopSingle/>}/>
+                <Route path="single/:idShop/chat" element={<ShopSingleChat/>}/>
+                <Route path="single/:idShop/detail" element={<ShopSingleDetailView/>}/>
                 <Route path="setting" element={<ShopSetting/>}/>
             </Route>
             <Route path="product" element={<Product/>}>
@@ -117,6 +128,7 @@ function App() {
                 <Route path="revenue" element={<ShopRevenue/>}/>
                 <Route path="address" element={<ShopAddress/>}/>
                 <Route path="notification" element={<ShopNotification/>}/>
+                <Route path="message" element={<ShopMessage/>}/>
             </Route>
             <Route path="employee" element={<Employee/>}>
                 <Route path="setting" element={<EmployeeSetting/>}/>
