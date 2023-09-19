@@ -14,6 +14,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {getCustomerByAccountLogin} from "../../service/customerService";
 import {getShopByAccountLogin} from "../../service/shopService";
 import {addNotification} from "../../service/notificationService";
+import shop from "../../pages/shop";
 
 const ProductCart = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -605,9 +606,25 @@ const ProductCart = () => {
                                                 const fetchData = async () => {
                                                     handleUpdateCart(2);
                                                     let codeDTOs = [];
-                                                    for (const dc of discountCode) {
-                                                        if (checkedStatus[dc.id]){
-                                                            codeDTOs.push({id: dc.codeId, shopId: dc.id})
+                                                    for (const sc of shopCodes) {
+                                                        if (checkedStatus[sc.id]) {
+                                                            let check = false;
+                                                            let index = -1;
+                                                            for (let i = 0; i < discountCode.length; i++) {
+                                                                if (discountCode[i].id == sc.id) {
+                                                                    check = true;
+                                                                    index = i;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if (check) {
+                                                                codeDTOs.push({
+                                                                    id: discountCode[index].codeId,
+                                                                    shopId: sc.id
+                                                                })
+                                                            } else {
+                                                                codeDTOs.push({id: -1, shopId: sc.id})
+                                                            }
                                                         }
                                                     }
                                                     console.log(codeDTOs)
