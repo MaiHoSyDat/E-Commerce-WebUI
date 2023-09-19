@@ -237,6 +237,7 @@ const SignIn = () => {
                                         {/* row */}
                                         <div className="col-12">
                                             {/* input */}
+                                            <h6>Enter username:</h6>
                                             <input
                                                 type="text"
                                                 name= "username"
@@ -250,12 +251,13 @@ const SignIn = () => {
                                         <div className="col-12">
                                             {/* input */}
                                             <div className="password-field position-relative">
+                                                <h6>Enter password:</h6>
                                                 <input
                                                     type="password"
                                                     name= "password"
                                                     onChange={handleInputChange}
                                                     id="fakePassword"
-                                                    placeholder="Enter Password"
+                                                    placeholder="Enter password"
                                                     className="form-control"
                                                     required=""
                                                 />
@@ -289,7 +291,7 @@ const SignIn = () => {
                                         {/* btn */}
                                         <div className="col-12 d-grid">
                                             <button type="submit" className="btn btn-primary" onClick={handleLogin}>
-                                                Sign In
+                                                Log In
                                             </button>
                                         </div>
                                         {/* link */}
