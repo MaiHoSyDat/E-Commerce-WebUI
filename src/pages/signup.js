@@ -74,9 +74,9 @@ const Signup = () => {
                                         return errors;
                                     }}
                                     onSubmit={(values, {setSubmitting}) => {
-                                        const PENDING = "3";
+                                        const ACTIVE = "1";
                                         const SHOP_PENDING ="4";
-                                        let status = PENDING;
+                                        let status = ACTIVE;
                                         if (values.role != "2") {
                                             status = SHOP_PENDING;
                                         }
@@ -126,6 +126,7 @@ const Signup = () => {
                                                 <ErrorMessage name="name" component="div" className="error-message"/>
                                             </div>
                                             <div className="col">
+                                                <h6>Name:</h6>
                                                 <Field
                                                     type="text"
                                                     className="form-control"
@@ -137,6 +138,7 @@ const Signup = () => {
                                             </div>
 
                                             <div className="col-12">
+                                                <h6>Email:</h6>
                                                 <Field
                                                     type="email"
                                                     className="form-control"
@@ -149,6 +151,7 @@ const Signup = () => {
                                             </div>
                                             <div className="col-12">
                                                 <div className="password-field position-relative">
+                                                    <h6>Password:</h6>
                                                     <Field
                                                         type="password"
                                                         id="fakePassword"

@@ -19,23 +19,35 @@ const ProductCart = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const customerLogin = useSelector(state => {
-        console.log(state.customer.customerLogin)
         return state.customer.customerLogin;
     })
-    useEffect(() => {
-        dispatch(getCustomerByAccountLogin(account.id));
-    },[])
     const navigate = useNavigate();
     const carts = useSelector(state => {
         return state.cart.allProductsFromCart
     })
-    const [shopCodes, setShopCode] = useState([]);
+    const [shopCodes, setShopCodes] = useState([]);
     const [totals, setTotals] = useState({});
     const [reducedAmount, setReducedAmount] = useState({});
     const [totalAmount, setTotalAmount] = useState(0);
     const [totalAmountReduced, setTotalAmountReduced] = useState(0);
     const [payOfBill, setPayOfBill] = useState({});
     const [discountCode, setDiscountCode] = useState([]);
+    const [customer, setCustomer] = useState({});
+    const [checkedStatus, setCheckedStatus] = useState({});
+    const [invoiceQuantity, setInvoiceQuantity] = useState(0)
+
+    useEffect(() => {
+        dispatch(getCustomerByAccountLogin(account.id));
+        axios.get("http://localhost:8080/customer/getByAccount", {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            }
+        }).then((res) => {
+            setCustomer(res.data);
+        }).catch(err => {
+            console.log(err)
+        })
+    }, [])
     useEffect(() => {
         dispatch(getCartByAccount())
     }, [])
@@ -46,29 +58,41 @@ const ProductCart = () => {
                 'Authorization': localStorage.getItem('token'),
             }
         }).then((rest) => {
-            setShopCode(rest.data)
+            setShopCodes(rest.data)
         })
-        const calculateTotalAmount = () => {
-            let total = 0;
-            carts.forEach((cart) => {
-                total += cart.product.price * cart.quantity;
-            });
-            setTotalAmount(total);
-        };
-        calculateTotalAmount();
 
     }, [carts])
 
+    // useEffect(() => {
+    //     // Tính tổng số tiền đã giảm
+    //     let totalReduced = 0;
+    //     Object.values(reducedAmount).forEach((amount) => {
+    //         totalReduced += amount;
+    //     });
+    //     setTotalAmountReduced(totalReduced.toFixed(2));
+    // }, [reducedAmount]);
+
     useEffect(() => {
-        // Tính tổng số tiền đã giảm
-        let totalReduced = 0;
-        Object.values(reducedAmount).forEach((amount) => {
-            totalReduced += amount;
-        });
-        setTotalAmountReduced(totalReduced.toFixed(2));
+        const calculateTotals = () => {
+            const newTotals = {};
+            shopCodes.forEach(shopCode => {
+                let total = 0;
+                carts.forEach(cart => {
+                    if (cart.product.shop.id === shopCode.id) {
+                        const {price} = cart.product;
+                        const quantity = cart.quantity;
+                        total += price * quantity;
+                    }
+                });
+                newTotals[shopCode.id] = total;
+            });
+            setTotals(newTotals);
+            setPayOfBill(newTotals)
+        };
 
+        calculateTotals();
+    }, [carts, shopCodes]);
 
-    }, [reducedAmount]);
     const handleAmountIsReduced = (value, id, totalAmount) => {
         let percent = 0;
         for (const item of shopCodes) {
@@ -79,7 +103,6 @@ const ProductCart = () => {
                 }
             }
         }
-
         const shopIndex = discountCode.findIndex(item => item.id === id);
         if (shopIndex !== -1) {
             discountCode[shopIndex].codeId = value;
@@ -101,26 +124,7 @@ const ProductCart = () => {
             [id]: payAmountValue
         }))
     };
-    useEffect(() => {
-        const calculateTotals = () => {
-            const newTotals = {};
-            shopCodes.forEach(shopCode => {
-                let total = 0;
-                carts.forEach(cart => {
-                    if (cart.product.shop.id === shopCode.id) {
-                        const {price} = cart.product;
-                        const quantity = cart.quantity;
-                        total += price * quantity;
-                    }
-                });
-                newTotals[shopCode.id] = total;
-            });
-            setTotals(newTotals);
-            setPayOfBill(newTotals)
-        };
 
-        calculateTotals();
-    }, [carts, shopCodes]);
 
     const handleOnClick = (num, id) => {
         const updatedCart = carts.map(item => {
@@ -168,10 +172,6 @@ const ProductCart = () => {
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                const updateList = carts.filter((item) => (
-                    item.id !== id
-                ))
-                dispatch(updateCartByStore(updateList));
                 swalWithBootstrapButtons.fire(
                     'Deleted!',
                     'Your file has been deleted.',
@@ -190,7 +190,7 @@ const ProductCart = () => {
         })
     }
     const handleUpdateCart = (num) => {
-        if (carts.length !== 0 ){
+        if (carts.length !== 0) {
             if (num == 1) {
                 dispatch(updateProductFromCartByAccount(carts)).then(res => {
                     Swal.fire(
@@ -208,7 +208,7 @@ const ProductCart = () => {
                     console.log(err)
                 })
             }
-        }else {
+        } else {
             Swal.fire(
                 'Cart is Empty?',
                 'You have not purchased any products yet!',
@@ -218,6 +218,77 @@ const ProductCart = () => {
 
 
     }
+    useEffect(() => {
+        const selectedInvoices = Object.values(checkedStatus).filter(Boolean);
+        setInvoiceQuantity(selectedInvoices.length);
+        let totalAmountWhenCheckbox = 0;
+        let totalAmountReducedWhenCheckbox = 0
+        shopCodes.map((s) => {
+            if (checkedStatus[s.id]) {
+                totalAmountWhenCheckbox += totals[s.id];
+                if (reducedAmount[s.id] == null) {
+                    totalAmountReducedWhenCheckbox += 0;
+                } else {
+                    totalAmountReducedWhenCheckbox += reducedAmount[s.id]
+                }
+            }
+
+        })
+        setTotalAmount(totalAmountWhenCheckbox)
+        setTotalAmountReduced(totalAmountReducedWhenCheckbox.toFixed(2))
+    }, [checkedStatus, reducedAmount, totals, carts])
+    const handleCheckboxChange = (shopCode) => {
+        setCheckedStatus((prevCheckedStatus) => ({
+            ...prevCheckedStatus,
+            [shopCode]: !prevCheckedStatus[shopCode]
+        }));
+    };
+    const handleUpdateCustomer = (address, phone) => {
+        if (customer.phone !== phone || customer.address !== address) {
+            swalWithBootstrapButtons.fire({
+                title: 'Update information?',
+                text: "You want to save information for your next purchase?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                let cus = {
+                    ...customer,
+                    phone: phone,
+                    address: address
+                }
+                if (result.isConfirmed) {
+                    axios.post("http://localhost:8080/customer/save", cus, {
+                        headers: {
+                            'Authorization': localStorage.getItem('token'),
+                        }
+                    }).then(res => {
+                        swalWithBootstrapButtons.fire(
+                            'Update success!',
+                            'You have successfully updated your information!',
+                            'success'
+                        )
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                    navigate("/customer/order");
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        '',
+                        'error'
+                    )
+                    navigate("/customer/order");
+                }
+            })
+
+        } else {
+            navigate("/customer/order");
+        }
+    }
+    console.log(discountCode)
     return (
         <main>
             {/* section */}
@@ -245,15 +316,23 @@ const ProductCart = () => {
                                             <li className="list-group-item py-3 py-lg-0 px-0">
                                                 <div className="row align-items-center" style={{marginBottom: "5px"}}>
 
-                                                    <div className="col-8 col-md-3">
+                                                    <div className="col-10 ">
+                                                        <div className='col-11 col-md-4'>
+
+                                                        </div>
                                                         <img
                                                             src={shopCode.logo}
                                                             alt="Ecommerce"
-                                                            style={{maxWidth: "40%"}}
+                                                            style={{maxWidth: "10%"}}
                                                             className="img-thumbnail"
                                                         />
                                                         <strong>{shopCode.shopName}</strong>
                                                     </div>
+                                                    <div className={"col-1 col-md-2"}><input
+                                                        style={{width: "17px", height: "17px"}} type="checkbox"
+                                                        checked={Boolean(checkedStatus[shopCode.id])}
+                                                        onChange={() => handleCheckboxChange(shopCode.id)}
+                                                    /></div>
                                                 </div>
                                                 <div className="row align-items-center" style={{marginBottom: "5px"}}>
 
@@ -418,9 +497,9 @@ const ProductCart = () => {
                                     <Link to={"/index"} className="btn btn-primary">
                                         Continue Shopping
                                     </Link>
-                                    <a href="#" className="btn btn-dark" onClick={() => handleUpdateCart(1)}>
+                                    <Link to="#" className="btn btn-dark" onClick={() => handleUpdateCart(1)}>
                                         Update Cart
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -437,10 +516,10 @@ const ProductCart = () => {
                                             {/* list group item */}
                                             <li className="list-group-item d-flex justify-content-between align-items-start">
                                                 <div className="me-auto">
-                                                    <div>Total Bill :</div>
+                                                    <div>Invoice quantity :</div>
                                                 </div>
                                                 <span>
-                                                    {shopCodes.length}
+                                                    {invoiceQuantity}
                                                 </span>
                                             </li>
 
@@ -475,9 +554,9 @@ const ProductCart = () => {
                                     </div>
                                     <Formik
                                         initialValues={{
-                                            fullName: '',
-                                            phone: '',
-                                            address: ''
+                                            fullName: account.name,
+                                            phone: customer.phone ? customer.phone : '',
+                                            address: customer.address ? customer.address : ''
 
                                         }}
                                         validate={values => {
@@ -496,47 +575,67 @@ const ProductCart = () => {
                                             }
                                             return errors;
                                         }}
-                                        onSubmit={(values) => {
-                                            if (totalAmount == 0) {
-                                                Swal.fire(
-                                                    'Cart is empty?',
-                                                    "You don't have any products in your shopping cart yet!",
-                                                    'question'
-                                                )
+                                        onSubmit={(values, {setSubmitting}) => {
+                                            if (totalAmount === 0) {
+                                                if (carts.length <= 0) {
+                                                    Swal.fire(
+                                                        'Cart is empty?',
+                                                        "You don't have any products in your shopping cart yet!",
+                                                        'question'
+                                                    )
+                                                } else {
+                                                    Swal.fire(
+                                                        'Not selected yet?',
+                                                        "You have not selected a payment invoice!",
+                                                        'question'
+                                                    )
+                                                }
                                             } else {
                                                 for (let i = 0; i < shopCodes.length; i++) {
                                                     let name = "Order";
                                                     let context = "" + customerLogin.account.name + " has just created a new order";
                                                     let sender = customerLogin.account;
                                                     let receiver = {id: shopCodes[i].idAccount};
-                                                    let notification = {name: name, context: context,
-                                                        sender: sender, receiver: receiver};
+                                                    let notification = {
+                                                        name: name, context: context,
+                                                        sender: sender, receiver: receiver
+                                                    };
                                                     dispatch(addNotification(notification));
                                                 }
                                                 const fetchData = async () => {
                                                     handleUpdateCart(2);
                                                     let codeDTOs = [];
                                                     for (const dc of discountCode) {
-                                                        codeDTOs.push({id: dc.codeId, shopId: dc.id})
+                                                        if (checkedStatus[dc.id]){
+                                                            codeDTOs.push({id: dc.codeId, shopId: dc.id})
+                                                        }
                                                     }
+                                                    console.log(codeDTOs)
                                                     await axios.post("http://localhost:8080/cart/payment/" + values.fullName + "/" + values.phone + "/" + values.address, codeDTOs, {
                                                         headers: {
                                                             'Authorization': localStorage.getItem('token'),
                                                         }
-                                                    }).then((res)=>{
+                                                    }).then((res) => {
                                                         Swal.fire(
                                                             'Payment success!',
                                                             'You have successfully completed your shopping cart!',
                                                             'success'
                                                         )
-                                                        navigate("/customer/order")
-                                                    }).catch(()=>{
-                                                        alert("Thất bại")
+                                                        handleUpdateCustomer(values.address, values.phone);
+
+                                                    }).catch((err) => {
+                                                        Swal.fire(
+                                                            'Payment failed!',
+                                                            'Your order payment was not successful!',
+                                                            'info'
+                                                        )
                                                     });
                                                 }
                                                 fetchData()
                                             }
+                                            setSubmitting(false);
                                         }}
+                                        enableReinitialize={true}
                                     >
 
                                         {({errors, touched, isSubmitting}) => (
@@ -545,8 +644,7 @@ const ProductCart = () => {
                                                     <h3><strong>Receiver's information: </strong></h3>
                                                     <div className="mb-2">
                                                         {/* input */}
-
-
+                                                        <strong>Full name: </strong>
                                                         <Field
                                                             type="text"
                                                             className="form-control"
@@ -558,8 +656,9 @@ const ProductCart = () => {
                                                                  style={{color: "red"}}>{errors.address}</div>
                                                         )}
                                                         <br/>
+                                                        <strong>Phone number: </strong>
                                                         <Field
-                                                            type="text"
+                                                            type="number"
                                                             className="form-control"
                                                             name="phone"
                                                             placeholder="Phone Number?"
@@ -570,6 +669,7 @@ const ProductCart = () => {
                                                         )}
 
                                                         <br/>
+                                                        <strong>Address: </strong>
                                                         <Field
                                                             className="form-control"
                                                             name="address"
