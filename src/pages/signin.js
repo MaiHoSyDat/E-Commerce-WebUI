@@ -133,7 +133,7 @@ const SignIn = () => {
                                             </div>
                                             <div>
                                                 {" "}
-                                                Forgot password? <a href="forgot-password.html">Reset It</a>
+                                                Forgot password? <Link to={"/forgot-password"}>Reset It</Link>
                                             </div>
                                         </div>
                                         {/* btn */}

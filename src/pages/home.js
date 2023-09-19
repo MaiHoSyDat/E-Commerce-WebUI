@@ -34,7 +34,14 @@ const Home = () => {
             window.$("#shopInformationModal").modal("show");
         }
         if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
-            Swal.fire('Need confirm from Admin. Please Waiting...')
+            localStorage.removeItem('account');
+            localStorage.removeItem('token');
+            Swal.fire({
+                text: 'Login successful, You need to waiting response from admin. Thank you',
+                didClose: () => {
+                    window.location.href = "http://localhost:3000/signin";
+                }
+                });
         }
         if (account && account.status.id === 3 && account.role.name === "ROLE_EMPLOYEE") {
             window.$("#employeeModal").modal("show");
