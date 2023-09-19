@@ -4,67 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b650e48c-3f3d-48cb-9703-0448b256c62c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/shop/shopSingleChat.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/shop/shopSingleDetailView.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/config/configWebSocket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/shop/shopMessage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/FB.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/GoogleLoginButton.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/messageSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/service/messageService.js" afterDir="false" />
+    <list default="true" id="92932c45-7d35-4b0c-9bb6-94e2fe1c4e42" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/dashboardMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/dashboardMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/productDetailRelatedItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productDetailRelatedItems.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/productFilterShow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productFilterShow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterViewLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterViewLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/customer/customerNotification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/customer/customerNotification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/customer/customerOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/customer/customerOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/index/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/product/productCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/product/productCart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopDiscountCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopDiscountCode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopNotification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopNotification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopSingle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopSingle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/about.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/about.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/checkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/checkout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/customer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/employee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/employee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/product.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/shop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/shopManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/shopManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducer/customerSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/customerSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducer/productSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/productSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducer/shopSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/shopSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/categoryService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/categoryService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/codeService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/codeService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/customerService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/customerService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/feedbackService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/feedbackService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/notificationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/notificationService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/orderDetailService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/orderDetailService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/orderService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/orderService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/productDetailActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/productDetailActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/productPageAction.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/productPageAction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/productService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/productService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/reviewService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/reviewService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/shopService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/shopService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/statusService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/statusService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/wishlistService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/wishlistService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/CommonUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommonUtils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
