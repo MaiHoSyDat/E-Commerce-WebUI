@@ -545,7 +545,7 @@ const ProductCart = () => {
                                                     <h3><strong>Receiver's information: </strong></h3>
                                                     <div className="mb-2">
                                                         {/* input */}
-
+                                                        <h6>Full name:</h6>
 
                                                         <Field
                                                             type="text"
@@ -558,6 +558,7 @@ const ProductCart = () => {
                                                                  style={{color: "red"}}>{errors.address}</div>
                                                         )}
                                                         <br/>
+                                                        <h6>Phone Number:</h6>
                                                         <Field
                                                             type="text"
                                                             className="form-control"
@@ -570,6 +571,7 @@ const ProductCart = () => {
                                                         )}
 
                                                         <br/>
+                                                        <h6>Address:</h6>
                                                         <Field
                                                             className="form-control"
                                                             name="address"

@@ -124,15 +124,6 @@ const DashboardShop = () => {
                                             />
                                         </form>
                                     </div>
-                                    {/* select option */}
-                                    <div className="col-lg-2 col-md-4 col-12">
-                                        <select className="form-select">
-                                            <option selected="">Status</option>
-                                            <option value={1}>Active</option>
-                                            <option value={2}>Deactive</option>
-                                            <option value={3}>Draft</option>
-                                        </select>
-                                    </div>
                                 </div>
                             </div>
                             {/* card body */}
@@ -218,20 +209,6 @@ const DashboardShop = () => {
                                                                 >
                                                                     <i className="feather-icon icon-more-vertical fs-5"/>
                                                                 </a>
-                                                                <ul className="dropdown-menu">
-                                                                    <li>
-                                                                        <a className="dropdown-item" href="#">
-                                                                            <i className="bi bi-trash me-3"/>
-                                                                            Delete
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a className="dropdown-item" href="#">
-                                                                            <i className="bi bi-pencil-square me-3 "/>
-                                                                            Edit
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
                                                             </div>
                                                         </td>
                                                     </tr>
