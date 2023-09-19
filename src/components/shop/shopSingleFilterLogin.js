@@ -14,8 +14,11 @@ import {
 import {v4} from "uuid";
 import {storage} from "../../firebase";
 import {setFilterCategory, setFilterQuantityShow, setFilterSortShow} from "../../service/inputService";
+import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.css';
 
-const ShopSingleFilterLogin = () => {
+
+const ShopSingleFilterLogin = ({product}) => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const shopLogin = useSelector(state => {
@@ -25,21 +28,21 @@ const ShopSingleFilterLogin = () => {
         return state.product.shopProducts;
     })
     const filterProducts = useSelector(state => {
-        console.log(state.product.filterProducts)
         return state.product.filterProducts;
     })
     const filterParam = useSelector(state => {
-        console.log(state.inputFilter.filterParam)
         return state.inputFilter.filterParam;
     })
+    const [images, setImages] = useState([]);
     useEffect(() => {
-        // dispatch(getShopByAccountLogin(account.id))
-        // dispatch(getAllProductsByShop(shopLogin.id))
+        dispatch(getShopByAccountLogin(account.id))
+        dispatch(getAllProductsByShop(shopLogin.id))
         dispatch(getFilterProducts(filterParam));
     }, [filterParam]);
 
     const [imageUpload, setImageUpload] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
+    const [categoryUpdate, setCategoryUpdate] = useState(1);
     const imagesListRef = ref(storage, "product/");
 
 
@@ -85,6 +88,7 @@ const ShopSingleFilterLogin = () => {
             setImageUrls(newImageUrls)
         }
     },[imageUpload])
+
     const handleInputChangeQuantityShow = () => {
         let num = document.getElementById("quantity").value;
         dispatch((setFilterQuantityShow(num)))
@@ -94,6 +98,31 @@ const ShopSingleFilterLogin = () => {
         dispatch((setFilterSortShow(sort)))
     }
 
+    useEffect(() => {
+        axios.get('http://localhost:8080/shops/getImages/' + product.id, {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            },
+        }).then((resp) => {
+            setImages(resp.data)
+            setCategoryUpdate(product.category.id)
+
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [product])
+    const removeImageIsAvailable = (imageId) => {
+        axios.post('http://localhost:8080/products/removeImage/' + imageId, '', {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            },
+        }).then(() => {
+            const list = images.filter((item) => (item.id !== imageId))
+            setImages(list)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     return (
         <>
@@ -104,19 +133,19 @@ const ShopSingleFilterLogin = () => {
                 <div className="d-flex justify-content-md-between align-items-center">
                     <div className="me-2">
                         <select className="form-select" id="quantity" onClick={handleInputChangeQuantityShow}>
-                            <option  value={10000000} selected="" >Show: All</option>
-                            <option value={10} >10</option>
-                            <option value={20} >20</option>
-                            <option value={30} >30</option>
+                            <option value={10000000} selected="">Show: All</option>
+                            <option value={10}>10</option>
+                            <option value={20}>20</option>
+                            <option value={30}>30</option>
                         </select>
                     </div>
                     <div>
                         <select className="form-select" id="sort" onClick={handleInputChangeSortShow}>
-                            <option selected=""  value="">Sort by: Normal</option>
-                            <option value="Low to High" >Price: Low to High</option>
-                            <option value="High to Low" > Price: High to Low</option>
-                            <option value="Release Date" > Release Date</option>
-                            <option value="Avg. Rating" > Avg. Rating</option>
+                            <option selected="" value="">Sort by: Normal</option>
+                            <option value="Low to High">Price: Low to High</option>
+                            <option value="High to Low"> Price: High to Low</option>
+                            <option value="Release Date"> Release Date</option>
+                            <option value="Avg. Rating"> Avg. Rating</option>
                         </select>
                     </div>
                     &ensp;
@@ -126,6 +155,10 @@ const ShopSingleFilterLogin = () => {
                             data-bs-toggle="modal"
                             data-bs-target="#sproductModal"
                             className="btn btn-success"
+                            onClick={() => {
+                                product = {};
+                                setImages([]);
+                            }}
                         >
                             Create New Product
                         </button>
@@ -155,13 +188,12 @@ const ShopSingleFilterLogin = () => {
                         <div className="modal-body">
                             <Formik
                                 initialValues={{
-                                    name: '',
-                                    price: '',
-                                    quantity: '',
-                                    description: '',
-                                    unit: 'kg',
-                                    category: "1",
-                                    shop: '',
+                                    name: product.name ? product.name : '',
+                                    price: product.price ? product.price : '',
+                                    quantity: product.quantity ? product.quantity : '',
+                                    description: product.description ? product.description : '',
+                                    unit: product.unit ? product.unit : 'kg',
+                                    category: categoryUpdate
                                 }}
                                 validationSchema={Yup.object().shape({
                                     name: Yup.string().required('Name is required'),
@@ -180,7 +212,8 @@ const ShopSingleFilterLogin = () => {
                                 })}
                                 onSubmit={(values, {setSubmitting, resetForm}) => {
                                     // Handle form submission
-                                    let product = {
+                                    let productNew = {
+                                        id: product.id ? product.id : -1,
                                         name: values.name,
                                         price: values.price,
                                         quantity: values.quantity,
@@ -190,14 +223,10 @@ const ShopSingleFilterLogin = () => {
                                         category: {
                                             id: values.category
                                         },
-                                        shop: {
-                                            id: account.id
-                                        },
                                         images: imageUrls
                                     }
-                                    console.log(product)
                                     axios
-                                        .post('http://localhost:8080/shops/' + account.id + '/products/create', product,
+                                        .post('http://localhost:8080/shops/' + account.id + '/products/create', productNew,
                                             {
                                                 headers: {
                                                     'Authorization': localStorage.getItem('token')
@@ -206,30 +235,42 @@ const ShopSingleFilterLogin = () => {
 
                                         .then(response => {
                                             setImageUpload([])
+                                            product = {};
+                                            setImages([]);
+
                                             document.getElementById("image").value = null
                                             dispatch(getAllProductsByShop(shopLogin.id));
                                             dispatch(setFilterCategory("All Categories"));
                                             resetForm();
-                                            alert("Create successful products")
+                                            Swal.fire(
+                                                'Good...!',
+                                                'Submit success!',
+                                                'success'
+                                            )
                                             console.log("imageUrls :>>>>" + imageUrls)
 
 
                                         })
                                         .catch(error => {
                                             // Handle error
-                                            alert("Please review the information")
-
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Please review the information!',
+                                            })
                                             console.error(error);
                                         })
                                         .finally(() => {
                                             setSubmitting(false);
                                         });
                                 }}
+                                enableReinitialize={true}
                             >
                                 {({errors, touched, isSubmitting}) => (
                                     <Form>
                                         <div className="row g-3">
                                             <div className="col-12">
+                                                <strong>Product Name: </strong>
                                                 <Field
                                                     type="text"
                                                     className="form-control"
@@ -241,6 +282,7 @@ const ShopSingleFilterLogin = () => {
                                                 )}
                                             </div>
                                             <div className="col-5">
+                                                <strong>Product Price: </strong>
                                                 <Field
                                                     type="text"
                                                     className="form-control"
@@ -252,6 +294,7 @@ const ShopSingleFilterLogin = () => {
                                                 )}
                                             </div>
                                             <div className="col-5">
+                                                <strong>Quantity: </strong>
                                                 <Field
                                                     type="number"
                                                     className="form-control"
@@ -263,6 +306,7 @@ const ShopSingleFilterLogin = () => {
                                                 )}
                                             </div>
                                             <div className="col-2">
+                                                <strong>Unit: </strong>
                                                 <Field
                                                     as="select"
                                                     className="form-control"
@@ -278,6 +322,7 @@ const ShopSingleFilterLogin = () => {
                                                     <div className="error-message">{errors.unit}</div>
                                                 )}                                            </div>
                                             <div className="col-12">
+                                                <strong>Description: </strong>
                                                 <Field
                                                     as="textarea"
                                                     className="form-control"
@@ -291,13 +336,14 @@ const ShopSingleFilterLogin = () => {
 
 
                                             <div className="col-12">
+                                                <strong>Category: </strong>
                                                 <Field
                                                     as="select"
                                                     className="form-control"
                                                     placeholder="Category"
                                                     name="category"
                                                 >
-                                                    <option> Category</option>
+
                                                     {categoryOptions.map((category) => (
                                                         <option key={category.id} value={category.id}>
                                                             {category.name}
@@ -314,7 +360,10 @@ const ShopSingleFilterLogin = () => {
                                                     id="image"
                                                     multiple
                                                     onChange={handleFileChange}
+                                                    hidden={true}
                                                 />
+                                                <label htmlFor={"image"} className={"btn btn-outline-dark-info"}>Choose
+                                                    Image</label>
                                                 {errors.thumbnail && touched.thumbnail && (
                                                     <div className="error-message">{errors.thumbnail}</div>
                                                 )}
@@ -334,6 +383,41 @@ const ShopSingleFilterLogin = () => {
                                                                     />
                                                                     <button
                                                                         onClick={() => removeImage(index)}
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            right: '0px',
+                                                                            background: 'black',
+                                                                            border: '1px',
+                                                                            cursor: 'pointer',
+                                                                        }}
+                                                                    >
+                                                                        <i className="fa fa-trash"
+                                                                           style={{color: "red"}}></i>
+                                                                    </button>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div>
+                                                {images.length > 0 && (
+                                                    <div>
+                                                        <h5>Image is Available:</h5>
+                                                        <div style={{display: 'flex'}}>
+                                                            {images.map((image, index) => (
+                                                                <div key={image.id} style={{
+                                                                    marginRight: '10px',
+                                                                    position: 'relative'
+                                                                }}>
+                                                                    <img
+                                                                        src={image.image}
+                                                                        alt={`Image is Available`}
+                                                                        style={{width: '100px', height: 'auto'}}
+                                                                    />
+                                                                    <button
+                                                                        type={'button'}
+                                                                        onClick={() => removeImageIsAvailable(image.id)}
                                                                         style={{
                                                                             position: 'absolute',
                                                                             right: '0px',

@@ -5,6 +5,7 @@ import {getShopByAccountLogin} from "../../service/shopService";
 import {Link} from "react-router-dom";
 import Swal from "sweetalert2";
 import {getAllStatusOrder} from "../../service/statusService";
+import {addNotification} from "../../service/notificationService";
 
 const ShopOrder = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -59,12 +60,20 @@ const ShopOrder = () => {
                                     </td>
                                     <td className="align-middle border-top-0">{order.date_create}</td>
                                     <td className="align-middle border-top-0">
-                                        <select className="form-select" aria-label="Default select example" id="statusOrder" onClick={() => {
+                                        <select className="form-select" aria-label="Default select example" id={"statusOrder" + order.id} onClick={() => {
                                             //change status
-                                            let idStatus = document.getElementById("statusOrder").value;
-                                            if (idStatus != order.status.id) {
-                                                let newOrder = {...order, status:{id: idStatus}}
+                                            let status = JSON.parse(document.getElementById("statusOrder" + order.id).value);
+                                            if (status.id != order.status.id) {
+                                                let newOrder = {...order, status:{id: status.id}}
+                                                //notification
+                                                let name = "Order";
+                                                let context = "Status change to " + status.name;
+                                                let sender = shopLogin.account;
+                                                let receiver = order.user.account;
+                                                let notification = {name: name, context: context,
+                                                    sender: sender, receiver: receiver};
                                                 const fetchData = async () => {
+                                                    await dispatch(addNotification(notification));
                                                     await dispatch(updateOrder([order.id, newOrder]));
                                                     await dispatch(getAllOrdersByShop(shopLogin.id))
                                                         .then(Swal.fire(
@@ -78,8 +87,8 @@ const ShopOrder = () => {
                                         }}>
                                             {statusOrder && statusOrder.map(status => (
                                                 <>
-                                                    {status.name == order.status.name && <option value={status.id} selected >{status.name}</option>}
-                                                    {status.name != order.status.name && <option value={status.id} >{status.name}</option>}
+                                                    {status.name == order.status.name && <option value={JSON.stringify(status)} selected >{status.name}</option>}
+                                                    {status.name != order.status.name && <option value={JSON.stringify(status)} >{status.name}</option>}
                                                 </>
                                             ))}
 
