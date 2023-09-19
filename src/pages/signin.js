@@ -141,7 +141,7 @@ const SignIn = () => {
                                         {/* btn */}
                                         <div className="col-12 d-grid">
                                             <button type="submit" className="btn btn-primary" onClick={handleLogin}>
-                                                Sign In
+                                                Log In
                                             </button>
                                         </div>
                                         {/* link */}
