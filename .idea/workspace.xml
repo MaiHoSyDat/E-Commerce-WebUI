@@ -5,79 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c9b0c00a-c74f-497e-aef5-7ddb98f0c3ca" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/shop/shopMenu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/customer/customerOrderDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShopPending.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/shop/shopAddress.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/shop/shopDiscountCode.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/shop/shopNotification.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/shop/shopOrder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/shop/shopOrderDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/outlet/shop/shopRevenue.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/shopManager.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/codeSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/customerSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/feedbackSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/orderDetailSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/orderSilce.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/reviewSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/statusSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/reducer/wishlistSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/service/codeService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/service/feedbackService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/service/orderDetailService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/service/statusService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/customer/customerMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/customer/customerMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/dashboardMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/dashboardMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbarAdmin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbarAdmin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbarCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbarCustomer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbarEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbarEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbarShop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbarShop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/productDetailInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productDetailInformation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/productDetailRelatedItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productDetailRelatedItems.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/product/productFilterShow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productFilterShow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleFilterViewLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleFilterViewLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop/shopSingleView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/shopSingleView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/customer/customerOrder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/customer/customerOrder.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/customer/customerSetting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/customer/customerSetting.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardCategory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardCategory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardCustomer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardProduct.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/index/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/product/productDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/product/productDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/product/productWishlist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/product/productWishlist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopInfomation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopSetting.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopSingle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopSingle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopSingleLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopSingleLogin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/about.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/about.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/checkout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/checkout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/customer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/shop.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducer/inputSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/inputSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducer/productSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducer/productSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/customerService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/customerService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/inputService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/inputService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/orderService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/orderService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/productService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/productService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/reviewService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/reviewService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/wishlistService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/wishlistService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signup.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,21 +38,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/E-Commerce-WebUI&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "dev",
+    "last_opened_file_path": "D:/E-Commerce-WebUI",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.1.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -165,7 +98,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/outlet/product/productCart.js</url>
-          <line>418</line>
+          <line>407</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

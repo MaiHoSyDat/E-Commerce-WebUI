@@ -114,6 +114,7 @@ const Signup = () => {
                                                 <ErrorMessage name="name" component="div" className="error-message"/>
                                             </div>
                                             <div className="col">
+                                                <h6>Name:</h6>
                                                 <Field
                                                     type="text"
                                                     className="form-control"
@@ -125,6 +126,7 @@ const Signup = () => {
                                             </div>
 
                                             <div className="col-12">
+                                                <h6>Email:</h6>
                                                 <Field
                                                     type="email"
                                                     className="form-control"
@@ -137,6 +139,7 @@ const Signup = () => {
                                             </div>
                                             <div className="col-12">
                                                 <div className="password-field position-relative">
+                                                    <h6>Password:</h6>
                                                     <Field
                                                         type="password"
                                                         id="fakePassword"
