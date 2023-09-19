@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getAllProductsByShop, getFilterProducts} from "../../service/productService";
 import Swal from 'sweetalert2';
@@ -15,6 +15,12 @@ const ShopSingleFilterViewLogin = ( { onEditProduct }) => {
     const shopLogin = useSelector(state => {
         return state.shop.shopLogin;
     })
+    const customerLogin = useSelector(state => {
+        return state.customer.customerLogin;
+    })
+    const wishlistByCustomer = useSelector(state => {
+        return state.wishlist.wishlistByCustomer;
+    })
     const filterProducts = useSelector(state => {
         return state.product.filterProducts;
     })
@@ -23,14 +29,31 @@ const ShopSingleFilterViewLogin = ( { onEditProduct }) => {
     })
     useEffect(() => {
         dispatch(getFilterProducts(filterParam));
-    },[filterParam])
+    },[filterParam,customerLogin])
+
+    //phan trang
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 12;
+    const totalProducts = filterProducts.length;
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+    // Tạo danh sách sản phẩm cho trang hiện tại
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const currentProducts = filterProducts.slice(startIndex, endIndex);
+
+    const handlePageChange = (page) => {
+        window.scrollTo(0, 0);
+        setCurrentPage(page);
+    };
+
     const handleEditProduct = (product) => {
         onEditProduct(product); // Gọi callback function và truyền đối tượng product
     };
     return (
         <>
             <div className="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
-                {filterProducts && filterProducts.map(dto => (
+                {currentProducts && currentProducts.map(dto => (
                     <>
                         {dto.product.status.id != 2 && <div className="col">
                             {/* card */}
@@ -49,37 +72,6 @@ const ShopSingleFilterViewLogin = ( { onEditProduct }) => {
                                             />
                                         </Link>
                                         {/* action btn */}
-                                        <div className="card-product-action">
-                                            <Link
-                                                to={"/product/detail/" + dto.product.id}
-                                                className="btn-action"
-                                            >
-                                                <i
-                                                    className="bi bi-eye"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-html="true"
-                                                    title="Quick View"
-                                                />
-                                            </Link>
-                                            <a
-                                                href="shop-wishlist.html"
-                                                className="btn-action"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-html="true"
-                                                title="Wishlist"
-                                            >
-                                                <i className="bi bi-heart" />
-                                            </a>
-                                            <a
-                                                href="#!"
-                                                className="btn-action"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-html="true"
-                                                title="Compare"
-                                            >
-                                                <i className="bi bi-arrow-left-right" />
-                                            </a>
-                                        </div>
                                     </div>
                                     {/* heading */}
                                     <div className="text-small mb-1">
@@ -88,12 +80,14 @@ const ShopSingleFilterViewLogin = ( { onEditProduct }) => {
                                         </a>
                                     </div>
                                     <h2 className="fs-6">
+                                        <Link to={"/product/detail/" + dto.product.id}>
                                         <a
-                                            href="shop-single.html"
+                                            href=""
                                             className="text-inherit text-decoration-none"
                                         >
                                             {dto.product.name}
                                         </a>
+                                        </Link>
                                     </h2>
                                     <div>
                                         {" "}
@@ -175,33 +169,20 @@ const ShopSingleFilterViewLogin = ( { onEditProduct }) => {
                     {/* nav */}
                     <nav>
                         <ul className="pagination">
-                            <li className="page-item disabled">
-                                <a className="page-link  mx-1 " href="#" aria-label="Previous">
+                            <li className="page-item">
+                                <a className="page-link  mx-1 " aria-label="Previous" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                                     <i className="feather-icon icon-chevron-left" />
                                 </a>
                             </li>
-                            <li className="page-item ">
-                                <a className="page-link  mx-1 active" href="#">
-                                    1
-                                </a>
-                            </li>
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <li className="page-item">
+                                    <a className="page-link mx-1 text-body" key={index} onClick={() => handlePageChange(index + 1)}>
+                                        {index + 1}
+                                    </a>
+                                </li>
+                            ))}
                             <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    2
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    ...
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    12
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#" aria-label="Next">
+                                <a className="page-link mx-1 text-body" aria-label="Next" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
                                     <i className="feather-icon icon-chevron-right" />
                                 </a>
                             </li>

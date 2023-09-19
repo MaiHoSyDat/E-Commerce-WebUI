@@ -4,7 +4,7 @@ import {
     getShop,
     getShopByAccountLogin,
     getShopDTO,
-    getShopDTOByAccountLogin
+    getShopDTOByAccountLogin, saveIdShop
 } from "../../service/shopService";
 const initialState = {
     allShops: [],
@@ -12,7 +12,8 @@ const initialState = {
     shopLogin: {},
     shopDTO: undefined,
     shopDTOLogin: undefined,
-    shop: {}
+    shop: {},
+    idAccountByShopId: 0
 }
 const shopSlice = createSlice({
     name: "shop",
@@ -36,6 +37,9 @@ const shopSlice = createSlice({
         })
         builder.addCase(getFiveShopsPage.fulfilled,(state,action) => {
             state.fiveShopsPage = action.payload;
+        })
+        builder.addCase(saveIdShop.fulfilled,(state,action) => {
+            state.idAccountByShopId = action.payload.id;
         })
     }
 })

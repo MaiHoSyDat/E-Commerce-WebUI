@@ -4,14 +4,22 @@ import axios from "axios";
 export const getAllShops = createAsyncThunk(
     "shop/getAllShops",
     async () => {
-        const res = await axios.get("http://localhost:8080/shops");
+        const res = await axios.get("http://localhost:8080/shops", {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const getFiveShopsPage = createAsyncThunk(
     "shop/getFiveShopsPage",
     async (offset) => {
-        const res = await axios.get("http://localhost:8080/shops/page/" + offset);
+        const res = await axios.get("http://localhost:8080/shops/page/" + offset, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
@@ -27,7 +35,11 @@ export const getShop = createAsyncThunk(
 export const getShopByAccountLogin = createAsyncThunk(
     "shop/getShopByAccountLogin",
     async (idAccount) => {
-        const res = await axios.get("http://localhost:8080/shops/login/"+ idAccount);
+        const res = await axios.get("http://localhost:8080/shops/login/"+ idAccount, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
@@ -35,14 +47,33 @@ export const getShopByAccountLogin = createAsyncThunk(
 export const getShopDTO = createAsyncThunk(
     "shop/getShopDTO",
     async (idShop) => {
-        const res = await axios.get("http://localhost:8080/shops/dto/"+ idShop);
+        const res = await axios.get("http://localhost:8080/shops/dto/"+ idShop, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )
 export const getShopDTOByAccountLogin = createAsyncThunk(
     "shop/getShopDTOLogin",
     async (idAccount) => {
-        const res = await axios.get("http://localhost:8080/shops/login/dto/"+ idAccount);
+        const res = await axios.get("http://localhost:8080/shops/login/dto/"+ idAccount, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
+        return res.data;
+    }
+)
+export const saveIdShop = createAsyncThunk(
+    "shop/idShop",
+    async (idShop) => {
+        const res = await axios.get("http://localhost:8080/account/shop/"+ idShop, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         return res.data;
     }
 )

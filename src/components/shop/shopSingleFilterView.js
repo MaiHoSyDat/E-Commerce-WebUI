@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getFilterProducts} from "../../service/productService";
 import {Link} from "react-router-dom";
@@ -68,12 +68,26 @@ const ShopSingleFilterView = () => {
                     console.log(err)})
 
         }
-
     }
+    //phan trang
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 12;
+    const totalProducts = filterProducts.length;
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+    // Tạo danh sách sản phẩm cho trang hiện tại
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const currentProducts = filterProducts.slice(startIndex, endIndex);
+
+    const handlePageChange = (page) => {
+        window.scrollTo(0, 0);
+        setCurrentPage(page);
+    };
     return (
         <>
             <div className="row g-4 row-cols-xl-4 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-2">
-                {filterProducts && filterProducts.map(dto => (
+                {currentProducts && currentProducts.map(dto => (
                     <div className="col">
                         {/* card */}
                         <div className="card card-product">
@@ -177,33 +191,40 @@ const ShopSingleFilterView = () => {
                     {/* nav */}
                     <nav>
                         <ul className="pagination">
-                            <li className="page-item disabled">
-                                <a className="page-link  mx-1 " href="#" aria-label="Previous">
+                            <li className="page-item">
+                                <a className="page-link  mx-1 " aria-label="Previous" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                                     <i className="feather-icon icon-chevron-left" />
                                 </a>
                             </li>
-                            <li className="page-item ">
-                                <a className="page-link  mx-1 active" href="#">
-                                    1
-                                </a>
-                            </li>
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <li className="page-item">
+                                    <a className="page-link mx-1 text-body" key={index} onClick={() => handlePageChange(index + 1)}>
+                                        {index + 1}
+                                    </a>
+                                </li>
+                            ))}
+                            {/*<li className="page-item ">*/}
+                            {/*    <a className="page-link  mx-1 active" href="#">*/}
+                            {/*        1*/}
+                            {/*    </a>*/}
+                            {/*</li>*/}
+                            {/*<li className="page-item">*/}
+                            {/*    <a className="page-link mx-1 text-body" href="#">*/}
+                            {/*        2*/}
+                            {/*    </a>*/}
+                            {/*</li>*/}
+                            {/*<li className="page-item">*/}
+                            {/*    <a className="page-link mx-1 text-body" href="#">*/}
+                            {/*        ...*/}
+                            {/*    </a>*/}
+                            {/*</li>*/}
+                            {/*<li className="page-item">*/}
+                            {/*    <a className="page-link mx-1 text-body" href="#">*/}
+                            {/*        12*/}
+                            {/*    </a>*/}
+                            {/*</li>*/}
                             <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    2
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    ...
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#">
-                                    12
-                                </a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link mx-1 text-body" href="#" aria-label="Next">
+                                <a className="page-link mx-1 text-body" aria-label="Next" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
                                     <i className="feather-icon icon-chevron-right" />
                                 </a>
                             </li>

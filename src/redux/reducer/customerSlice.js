@@ -1,9 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getAllCategories, getTenCategoriesPage} from "../../service/categoryService";
-import {getAllCustomerBuyProductFromShop, getCustomerByAccountLogin} from "../../service/customerService";
+import {
+    getAllCustomerBuyProductFromShop,
+    getAllCustomerMapMessage,
+    getCustomerByAccountLogin, loadCustomerMessageDTO, setCustomerMessageDTO
+} from "../../service/customerService";
 const initialState = {
     customerLogin: {},
-    customersBuyProductOfShop: []
+    customersBuyProductOfShop: [],
+    customerMessageDTO: [],
+    customerMessage: {customer:{account:{id:0}}},
+    loadCustomerMessageDTO : 0
 }
 const customerSlice = createSlice({
     name: "customer",
@@ -16,6 +22,17 @@ const customerSlice = createSlice({
         builder.addCase(getAllCustomerBuyProductFromShop.fulfilled,(state,action) => {
             state.customersBuyProductOfShop = action.payload;
         })
+        builder.addCase(getAllCustomerMapMessage.fulfilled,(state,action) => {
+            state.customerMessageDTO = action.payload;
+        })
+        builder.addCase(setCustomerMessageDTO.fulfilled,(state,action) => {
+            state.customerMessage = action.payload;
+        })
+        builder.addCase(loadCustomerMessageDTO.fulfilled,(state,action) => {
+            state.loadCustomerMessageDTO += action.payload;
+
+        })
+
     }
 })
 export default customerSlice.reducer;

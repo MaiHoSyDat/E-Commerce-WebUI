@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {deleteOrder, getAllOrdersByShop, updateOrder} from "../../service/orderService";
 import {getShopByAccountLogin} from "../../service/shopService";
@@ -27,12 +27,50 @@ const ShopOrder = () => {
     useEffect(() => {
         dispatch(getAllOrdersByShop(shopLogin.id));
     },[shopLogin])
+    const [filterItems, setFilterItems] = useState([]);
+    useEffect(() =>{
+        setFilterItems([...ordersByShop])
+    },[ordersByShop])
+    const handleFilterStatus = () =>{
+        let statusName = document.getElementById("filterStatus").value;
+        if (statusName == "All") setFilterItems([...ordersByShop]);
+        else {
+            setFilterItems(ordersByShop.filter(item => item.status.name == statusName))
+        }
+    }
+
+    //phan trang
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 6;
+    const totalProducts = filterItems.length;
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+    // Tạo danh sách sản phẩm cho trang hiện tại
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const currentProducts = filterItems.slice(startIndex, endIndex);
+
+    const handlePageChange = (page) => {
+        window.scrollTo(0, 0);
+        setCurrentPage(page);
+    };
     return (
         <>
             <div className="col-lg-9 col-md-8 col-12">
                 <div className="py-6 p-md-6 p-lg-10">
                     {/* heading */}
-                    <h2 className="mb-6">Orders</h2>
+                    <div className="row">
+                        <div className="col-6"><h2 className="mb-6">Orders </h2></div>
+                        <div className="col-2"><h2 className="mb-6">Status: </h2></div>
+                        <div className="col-4">
+                            <select className="form-select" aria-label="Default select example" style={{width:"200px"}} id={"filterStatus"} onClick={handleFilterStatus}>
+                                <option value="All" >All</option>
+                                {statusOrder && statusOrder.map(status => (
+                                    <option value={status.name} >{status.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
                     <div className="table-responsive-xxl border-0">
                         {/* Table */}
                         <table className="table mb-0 text-nowrap table-centered ">
@@ -48,7 +86,7 @@ const ShopOrder = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {ordersByShop && ordersByShop.map(order => (
+                            {currentProducts && currentProducts.map(order => (
                                 <tr>
                                     <td className="align-middle border-top-0 w-0">
                                         <i className="feather-icon icon-clipboard" style={{ color: "blue" }} />
@@ -114,6 +152,52 @@ const ShopOrder = () => {
 
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div className="py-6 p-md-6 p-lg-10">
+                    <div className="col">
+                        {/* nav */}
+                        <nav>
+                            <ul className="pagination">
+                                <li className="page-item">
+                                    <a className="page-link  mx-1 " aria-label="Previous" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                                        <i className="feather-icon icon-chevron-left" />
+                                    </a>
+                                </li>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <li className="page-item">
+                                        <a className="page-link mx-1 text-body" key={index} onClick={() => handlePageChange(index + 1)}>
+                                            {index + 1}
+                                        </a>
+                                    </li>
+                                ))}
+                                {/*<li className="page-item ">*/}
+                                {/*    <a className="page-link  mx-1 active" href="#">*/}
+                                {/*        1*/}
+                                {/*    </a>*/}
+                                {/*</li>*/}
+                                {/*<li className="page-item">*/}
+                                {/*    <a className="page-link mx-1 text-body" href="#">*/}
+                                {/*        2*/}
+                                {/*    </a>*/}
+                                {/*</li>*/}
+                                {/*<li className="page-item">*/}
+                                {/*    <a className="page-link mx-1 text-body" href="#">*/}
+                                {/*        ...*/}
+                                {/*    </a>*/}
+                                {/*</li>*/}
+                                {/*<li className="page-item">*/}
+                                {/*    <a className="page-link mx-1 text-body" href="#">*/}
+                                {/*        12*/}
+                                {/*    </a>*/}
+                                {/*</li>*/}
+                                <li className="page-item">
+                                    <a className="page-link mx-1 text-body" aria-label="Next" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                                        <i className="feather-icon icon-chevron-right" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
