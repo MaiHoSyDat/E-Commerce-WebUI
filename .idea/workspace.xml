@@ -4,20 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de10e350-573d-483c-87f8-9e62b24ebe7e" name="Changes" comment="">
+    <list default="true" id="b650e48c-3f3d-48cb-9703-0448b256c62c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/libs/jquery/dist/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/libs/jquery/dist/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/libs/quill/dist/quill.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/libs/quill/dist/quill.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dashboard/dashboardMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dashboard/dashboardMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardCustomer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardCustomer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShopPending.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/dashboard/dashboardShopPending.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/change-password.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/forgotPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/forgotPassword.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -51,7 +51,6 @@ import DashboardShopPending from "./outlet/dashboard/dashboardShopPending";
 import Employee from "./pages/employee";
 import EmployeeSetting from "./outlet/employee/employeeSetting";
 import DashboardSalary from "./outlet/dashboard/dashboardSalary";
-import ChangePassword from "./pages/change-password";
 
 function App() {
     // xoá account khi tắt trang
@@ -103,7 +102,6 @@ function App() {
             <Route path="signin" element={<Signin/>}></Route>
             <Route path="signup" element={<Signup/>}></Route>
             <Route path="forgot-password" element={<ForgotPassword/>}></Route>
-            <Route path="change-password" element={<ChangePassword/>}></Route>
             <Route path="customer" element={<Customer/>}>
                 <Route path="order" element={<CustomerOrder/>}/>
                 <Route path="order-detail/:idOrder" element={<CustomerOrderDetail/>}/>

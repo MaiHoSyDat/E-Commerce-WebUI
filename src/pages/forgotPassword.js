@@ -20,9 +20,6 @@ const ForgotPassword = () => {
                                 className="d-inline-block align-text-top"
                             />
                         </a>
-                        <span className="navbar-text">
-          Already have an account? <a href="signin.html">Sign in</a>
-        </span>
                     </div>
                 </nav>
             </div>
