@@ -12,17 +12,19 @@ class CommonUtils {
 
     static exportExcel(data, nameSheet, nameFile) {
         return new Promise((resolve, reject) => {
-            let wb;
-            if (data && data !== '') {
-                wb = XLSX.utils.table_to_book(('#' + data)[0]);
-            } else {
-                let ws = XLSX.utils.json_to_sheet(data);
-                wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, nameSheet)
-            }
-            XLSX.writeFile(wb, `${nameFile}.xlsx`);
+            let wb = XLSX.utils.book_new();
+            let ws = XLSX.utils.json_to_sheet(data);
+            XLSX.utils.book_append_sheet(wb, ws, nameSheet);
+            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+            const blob = new Blob([wbout], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${nameFile}.xlsx`;
+            link.click();
+            URL.revokeObjectURL(url);
             resolve('ok');
-        })
+        });
     }
 }
 
