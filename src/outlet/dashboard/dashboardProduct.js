@@ -37,12 +37,6 @@ const DashboardProduct = () => {
                                     </ol>
                                 </nav>
                             </div>
-                            {/* button */}
-                            <div>
-                                <a href="add-product.html" className="btn btn-primary">
-                                    Add Product
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>

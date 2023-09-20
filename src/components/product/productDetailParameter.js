@@ -122,10 +122,10 @@ const ProductDetailParameter = () => {
     if (!product) {
         return <p>Product not found.</p>;
     }
+    console.log(product)
 
     return (
         <>
-            {console.log(1)}
             <div className="col-md-6">
                 <div className="ps-lg-10 mt-6 mt-md-0">
                     {/* content */}
@@ -135,19 +135,7 @@ const ProductDetailParameter = () => {
                     {/* heading */}
                     <h1 className="mb-1">{product.name} </h1>
                     <div className="mb-4">
-                        {/* rating */}
-                        {/* rating */}{" "}
-                        <small className="text-warning">
-                            {" "}
-                            <i className="bi bi-star-fill"/>
-                            <i className="bi bi-star-fill"/>
-                            <i className="bi bi-star-fill"/>
-                            <i className="bi bi-star-fill"/>
-                            <i className="bi bi-star-half"/>
-                        </small>
-                        <a href="#" className="ms-2">
-                            (30 reviews)
-                        </a>
+                        {product.shop.name}
                     </div>
                     <div className="fs-4">
                         {/* price */}

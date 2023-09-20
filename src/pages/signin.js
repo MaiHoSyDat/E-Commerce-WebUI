@@ -220,9 +220,6 @@ const SignIn = () => {
                             />
                         </a>
                         </Link>
-                        <span className="navbar-text">
-          Already have an account? <a href="signin.html">Sign in</a>
-        </span>
                     </div>
                 </nav>
             </div>
@@ -299,7 +296,7 @@ const SignIn = () => {
                                             </div>
                                             <div>
                                                 {" "}
-                                                Forgot password? <a href="forgot-password.html">Reset It</a>
+                                                Forgot password? <Link to={"/forgot-password"}>Reset It</Link>
                                             </div>
                                         </div>
                                         {/* btn */}

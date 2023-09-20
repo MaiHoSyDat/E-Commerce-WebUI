@@ -106,9 +106,6 @@ function App() {
                     <Route path="single/:idShop/chat" element={<ShopSingleChat/>}/>
                 </>}
                 <Route path="single/:idShop/detail" element={<ShopSingleDetailView/>}/>
-                {account && account.role.id == 3 && <>
-                    <Route path="setting" element={<ShopSetting/>}/>
-                </>}
 
             </Route>
             <Route path="product" element={<Product/>}>
@@ -160,6 +157,8 @@ function App() {
                     <Route path="address" element={<ShopAddress/>}/>
                     <Route path="notification" element={<ShopNotification/>}/>
                     <Route path="message" element={<ShopMessage/>}/>
+                    <Route path="setting" element={<ShopSetting/>}/>
+
                 </Route>
             </>}
 

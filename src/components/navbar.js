@@ -2,6 +2,9 @@ import {Link, Outlet, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {setFilterNameProduct} from "../service/inputService";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -484,58 +487,152 @@ const Navbar = () => {
                             />
                         </div>
                         <div className="modal-body">
-                            <form>
-                                <div className="mb-3">
-                                    <label htmlFor="fullName" className="form-label">
-                                        Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="fullName"
-                                        placeholder="Enter Your Name"
-                                        required=""
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">
-                                        Email address
-                                    </label>
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        id="email"
-                                        placeholder="Enter Email address"
-                                        required=""
-                                    />
-                                </div>
-                                <div className="mb-5">
-                                    <label htmlFor="password" className="form-label">
-                                        Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        id="password"
-                                        placeholder="Enter Password"
-                                        required=""
-                                    />
-                                    <small className="form-text">
-                                        By Signup, you agree to our <a href="#!">Terms of Service</a>{" "}
-                                        &amp; <a href="#!">Privacy Policy</a>
-                                    </small>
-                                </div>
-                                <button type="submit" className="btn btn-primary">
-                                    Sign Up
-                                </button>
-                            </form>
-                        </div>
-                        <div className="modal-footer border-0 justify-content-center">
+                            <Formik
+                                initialValues={{username: '', name: '', email: '', password: '', role: '2'}}
+                                validate={values => {
+                                    const errors = {};
+                                    // Kiểm tra và xử lý lỗi cho các trường
 
-                            <button onClick={signin} data-bs-dismiss="modal" className="btn btn-link">
-                                Already have an account? Sign in
+                                    if (!values.name) {
+                                        errors.name = 'Username is required';
+                                    }
 
-                            </button>
+
+                                    if (!values.email) {
+                                        errors.email = 'Email is required';
+                                    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                                        errors.email = 'Invalid email address';
+                                    }
+
+                                    if (!values.password) {
+                                        errors.password = 'Password is required';
+                                    } else if (values.password.length < 6) {
+                                        errors.password = 'Password must be at least 6 characters long';
+                                    }
+                                    return errors;
+                                }}
+                                onSubmit={(values, {setSubmitting}) => {
+                                    const ACTIVE = "1";
+                                    const SHOP_PENDING = "4";
+                                    let status = ACTIVE;
+                                    if (values.role != "2") {
+                                        status = SHOP_PENDING;
+                                    }
+                                    let account = {
+                                        name: values.name,
+                                        email: values.email,
+                                        password: values.password,
+                                        username: values.username,
+                                        role: {
+                                            id: values.role
+                                        },
+                                        status: {
+                                            id: status
+                                        }
+                                    }
+                                    axios.post("http://localhost:8080/register", account).then((rep) => {
+                                        Swal.fire(
+                                            '',
+                                            'Account successfully created',
+                                            'success'
+                                        )
+                                        navigate("/signin")
+                                    }).catch((err) => {
+                                        console.log(err)
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Account creation failed!',
+                                        })
+                                    })
+
+
+                                    setSubmitting(false);
+                                }}
+                            >
+                                <Form>
+                                    <div className="row g-3">
+                                        <div className="col">
+                                            <h6>Username:</h6>
+                                            <Field
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Username"
+                                                required=""
+                                                name="username"
+                                            />
+                                            <ErrorMessage name="name" component="div" className="error-message"/>
+                                        </div>
+                                        <div className="col">
+                                            <h6>Name:</h6>
+                                            <Field
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Name"
+                                                required=""
+                                                name="name"
+                                            />
+                                            <ErrorMessage name="name" component="div" className="error-message"/>
+                                        </div>
+
+                                        <div className="col-12">
+                                            <h6>Email:</h6>
+                                            <Field
+                                                type="email"
+                                                className="form-control"
+                                                id="inputEmail4"
+                                                placeholder="Email"
+                                                required=""
+                                                name="email"
+                                            />
+                                            <ErrorMessage name="email" component="div" className="error-message"/>
+                                        </div>
+                                        <div className="col-12">
+                                            <div className="password-field position-relative">
+                                                <h6>Password:</h6>
+                                                <Field
+                                                    type="password"
+                                                    id="fakePassword"
+                                                    placeholder="Enter Password"
+                                                    className="form-control"
+                                                    required=""
+                                                    name="password"
+                                                />
+                                                <span>
+          </span>
+                                            </div>
+                                            <ErrorMessage name="password" component="div"
+                                                          className="error-message"/>
+                                        </div>
+                                        <h6>Role:</h6>
+                                        <Field name="role"
+                                               as="select"
+                                               className="form-control"
+                                        >
+                                            <option value="" disabled></option>
+                                            <option value="2">
+                                                Customer
+                                            </option>
+                                            <option value="3">
+                                                Shop
+                                            </option>
+                                            ))
+                                        </Field>
+                                        <ErrorMessage name="status" component="div"/>
+                                        <div className="col-12 d-grid">
+                                            <button type="submit" className="btn btn-primary" data-bs-dismiss="modal"
+                                            >
+                                                Register
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        Already have an account? <a href="/signin">Sign In</a>
+                                    </div>
+                                    <ErrorMessage name="general" component="div" className="error-message"/>
+                                </Form>
+                            </Formik>
 
                         </div>
                     </div>
