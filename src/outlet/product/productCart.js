@@ -175,7 +175,7 @@ const ProductCart = () => {
             if (result.isConfirmed) {
                 swalWithBootstrapButtons.fire(
                     'Deleted!',
-                    'Your file has been deleted.',
+                    'The product has been removed from the cart...',
                     'success'
                 )
                 dispatch(deleteProductFromCartByAccount(id));
@@ -184,7 +184,7 @@ const ProductCart = () => {
             ) {
                 swalWithBootstrapButtons.fire(
                     'Cancelled',
-                    'Your imaginary file is safe :)',
+                    'You have canceled the deletion of the product!)',
                     'error'
                 )
             }
@@ -276,11 +276,7 @@ const ProductCart = () => {
                     })
                     navigate("/customer/order");
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        '',
-                        'error'
-                    )
+
                     navigate("/customer/order");
                 }
             })
