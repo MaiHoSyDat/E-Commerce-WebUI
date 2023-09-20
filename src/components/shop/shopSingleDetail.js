@@ -8,9 +8,11 @@ const ShopSingleDetail = () => {
     const dispatch = useDispatch();
     const {idShop} = useParams();
     const shopDTO = useSelector(state => {
+        console.log(state.shop.shopDTO)
         return state.shop.shopDTO;
     })
     useEffect(() => {
+        console.log(idShop)
         dispatch(getShopDTO(idShop));
     }, []);
     return (

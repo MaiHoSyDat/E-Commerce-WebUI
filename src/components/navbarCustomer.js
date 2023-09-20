@@ -1,10 +1,12 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setFilterNameProduct} from "../service/inputService";
 
 const NavbarCustomer = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleInputChangeNameProduct = (e) => {
         dispatch(setFilterNameProduct(e.target.value));
     };
@@ -172,10 +174,15 @@ const NavbarCustomer = () => {
                                     </div>
 
                                     <div className="list-inline-item me-5">
-                                        <Link to={"/signin"}>
                                         <a
-                                            href="#!"
+                                            href=""
                                             className="text-muted"
+                                            onClick={() => {
+                                                if (account != null) {
+                                                    localStorage.clear();
+                                                    navigate("/signin");
+                                                }
+                                            }}
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +200,6 @@ const NavbarCustomer = () => {
                                                 <circle cx={12} cy={7} r={4} />
                                             </svg>
                                         </a>
-                                        </Link>
                                     </div>
                                     <div className="list-inline-item">
                                         <Link to={"/cart"}

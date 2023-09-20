@@ -1,8 +1,9 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const DashboardHeader = () => {
     let account = JSON.parse(localStorage.getItem('account'));
+    const navigate = useNavigate();
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-glass">
@@ -58,9 +59,10 @@ const DashboardHeader = () => {
                                             <small>{account.email}</small>
                                         </div>
                                         <div className="border-top px-5 py-3">
-                                            <Link to={"/signin"}>
-                                            <a href="#">Log Out</a>
-                                            </Link>
+                                            <a href="#" onClick={() => {
+                                                localStorage.clear();
+                                                navigate("/index")
+                                            }}>Log Out</a>
                                         </div>
                                     </div>
                                 </li>
