@@ -112,6 +112,7 @@ const ProductFilterShow = () => {
                                             src={dto.product.thumbnail}
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
+                                            style={{width:"184px" , height:"184px"}}
                                         />
                                     </Link>
                                     {/* action btn */}

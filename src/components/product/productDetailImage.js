@@ -11,9 +11,9 @@ const ProductDetailImage = ({product}) => {
                 {/* thumbnail */}
                 <div className="product" id="product">
                     <div
-                        className="zoom" style={{backgroundImage: `url(${product.thumbnail})`}}>
+                       style={{backgroundImage: `url(${product.thumbnail})`}}>
 
-                        <img src={product.thumbnail} alt={product.name}/>
+                        <img style={{width:"630px"}} src={product.thumbnail} alt={product.name}/>
                     </div>
                 </div>
                 {/* list img */}

@@ -259,7 +259,6 @@ const SignIn = () => {
                                                     required=""
                                                 />
                                                 <span>
-                      <i id="passwordToggler" className="bi bi-eye-slash" />
                     </span>
                                             </div>
                                         </div>

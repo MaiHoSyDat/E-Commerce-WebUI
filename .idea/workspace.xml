@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d7367f8a-098e-480b-9963-c38df58fb248" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/outlet/shop/shopRevenue.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/outlet/shop/shopRevenue.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/CommonUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/CommonUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/product/productDetailImage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productDetailImage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/product/productFilterShow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/productFilterShow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/signin.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +55,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="35c084e9-5640-4f09-b196-13c8da79c7ea" name="Changes" comment="" />
+      <changelist id="d7367f8a-098e-480b-9963-c38df58fb248" name="Changes" comment="" />
       <created>1693455634091</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -75,6 +76,7 @@
       <workItem from="1694586950141" duration="9782000" />
       <workItem from="1694678620032" duration="2208000" />
       <workItem from="1695171664114" duration="672000" />
+      <workItem from="1695193357471" duration="5386000" />
     </task>
     <servers />
   </component>
