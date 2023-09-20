@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     getFilterProducts,
 } from "../../service/productService";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {getWishlistByCustomerId, updateWishlist} from "../../service/wishlistService";
 import Swal from "sweetalert2";
 import {getCustomerByAccountLogin} from "../../service/customerService";
@@ -12,6 +12,7 @@ const ProductFilterShow = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const numbers = [1, 2, 3, 4, 5]
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const customerLogin = useSelector(state => {
         console.log(state.customer.customerLogin)
         return state.customer.customerLogin;
@@ -42,39 +43,43 @@ const ProductFilterShow = () => {
         dispatch(getFilterProducts(filterParam))
     },[filterParam,customerLogin]);
     const handleAddProductToWishlist = (idProduct) => {
-        let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
-        let newProducts = [...wishlistByCustomer.products]
-        if (!checkId) {
-            newProducts.push({id:idProduct});
-            let newWishlist = {
-                id: wishlistByCustomer.id,
-                products: newProducts,
-                account: {id: customerLogin.id}
-            }
-            const fetchData = async () => {
-                await dispatch(updateWishlist(newWishlist));
-                await dispatch(getWishlistByCustomerId(customerLogin.id))
+        if (account != null) {
+            let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
+            let newProducts = [...wishlistByCustomer.products]
+            if (!checkId) {
+                newProducts.push({id:idProduct});
+                let newWishlist = {
+                    id: wishlistByCustomer.id,
+                    products: newProducts,
+                    account: {id: customerLogin.id}
+                }
+                const fetchData = async () => {
+                    await dispatch(updateWishlist(newWishlist));
+                    await dispatch(getWishlistByCustomerId(customerLogin.id))
+                        .then(res => {
+                            Swal.fire(
+                                'Success!',
+                                'Add to Wishlist successfully!',
+                                'success'
+                            )
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
+                fetchData();
+
+            } else {
+                dispatch(getWishlistByCustomerId(customerLogin.id))
                     .then(res => {
-                        Swal.fire(
-                            'Success!',
-                            'Add to Wishlist successfully!',
-                            'success'
-                        )
+                        Swal.fire('The product already exists in the wishlist!')
                     })
                     .catch(err => {
-                        console.log(err)
-                    })
+                        console.log(err)})
+
             }
-            fetchData();
-
         } else {
-            dispatch(getWishlistByCustomerId(customerLogin.id))
-                .then(res => {
-                    Swal.fire('The product already exists in the wishlist!')
-                })
-                .catch(err => {
-                    console.log(err)})
-
+            navigate("/signin")
         }
 
     }
@@ -128,15 +133,15 @@ const ProductFilterShow = () => {
                                                 title="Quick View"
                                             />
                                         </Link>
-                                        <button style={{ border: "none" }}
-                                                className="btn-action"
-                                                data-bs-toggle=""
-                                                data-bs-html=""
-                                                title="Wishlist"
-                                                onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
+                                        {account != null && account.role.name == "ROLE_CUSTOMER" && <button style={{ border: "none" }}
+                                                                                                            className="btn-action"
+                                                                                                            data-bs-toggle=""
+                                                                                                            data-bs-html=""
+                                                                                                            title="Wishlist"
+                                                                                                            onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
                                         >
                                             <i className="bi bi-heart" />
-                                        </button>
+                                        </button>}
                                     </div>
                                 </div>
                                 {/* heading */}

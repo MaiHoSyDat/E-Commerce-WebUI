@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const Error404 = () => {
     return (
@@ -12,9 +13,9 @@ const Error404 = () => {
                         <div className="offset-lg-1 col-lg-10  py-8 py-xl-0">
                             <div className=" mb-10 mb-xxl-0">
                                 {/* img */}
-                                <a href="../index.html">
+                                <a href="/index.html">
                                     {" "}
-                                    <img src="../assets/images/logo/freshcart-logo.svg" alt="" />
+                                    <img src="/assets/images/logo/freshcart-logo.svg" alt="" />
                                 </a>
                             </div>
                             <div className="row justify-content-center align-items-center">
@@ -32,16 +33,18 @@ const Error404 = () => {
                                             Help Center <i className="feather-icon icon-arrow-right" />
                                         </a>
                                         {/* btn */}
-                                        <a href="../index.html" className="btn btn-primary ms-2">
+                                        <Link to={"/index"}>
+                                        <a href="" className="btn btn-primary ms-2">
                                             Back to home
                                         </a>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div>
                                         {/* img */}
                                         <img
-                                            src="../assets/images/svg-graphics/error.svg"
+                                            src="/assets/images/svg-graphics/error.svg"
                                             alt=""
                                             className="img-fluid"
                                         />

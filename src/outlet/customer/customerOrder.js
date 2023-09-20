@@ -124,32 +124,45 @@ const CustomerOrder = () => {
                                             data-bs-placement="top"
                                             data-bs-title="Delete"
                                                 onClick={() => {
-                                                    if (order.status.name == "Pending") {
-                                                        let name = "Order";
-                                                        let context = "" + customerLogin.account.name + " have deleted a order with ID: " + order.id;
-                                                        let sender = customerLogin.account;
-                                                        let receiver = order.shop.account;
-                                                        let notification = {name: name, context: context,
-                                                            sender: sender, receiver: receiver};
-                                                        const fetchData = async () => {
-                                                            await dispatch(addNotification(notification));
-                                                            await dispatch(deleteOrder(order.id));
-                                                            await dispatch(getAllOrdersByCustomer(customerLogin.id));
-                                                        };
-                                                        fetchData();
-                                                        Swal.fire(
-                                                            'Success!',
-                                                            'Delete Order!',
-                                                            'success'
-                                                        ).then(err => {
-                                                            console.log(err)
-                                                        })
-                                                    } else {
-                                                        Swal.fire('Order have been confirmed and cannot be deleted!')
-                                                            .then(err => {
-                                                                console.log(err)
-                                                            })
-                                                    }
+                                                    Swal.fire({
+                                                        title: 'Are you sure?',
+                                                        text: "You won't be able to revert this!",
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonColor: '#3085d6',
+                                                        cancelButtonColor: '#d33',
+                                                        confirmButtonText: 'Yes, delete it!'
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            if (order.status.name == "Pending") {
+                                                                let name = "Order";
+                                                                let context = "" + customerLogin.account.name + " have deleted a order with ID: " + order.id;
+                                                                let sender = customerLogin.account;
+                                                                let receiver = order.shop.account;
+                                                                let notification = {name: name, context: context,
+                                                                    sender: sender, receiver: receiver};
+                                                                const fetchData = async () => {
+                                                                    await dispatch(addNotification(notification));
+                                                                    await dispatch(deleteOrder(order.id));
+                                                                    await dispatch(getAllOrdersByCustomer(customerLogin.id));
+                                                                };
+                                                                fetchData();
+                                                                Swal.fire(
+                                                                    'Deleted!',
+                                                                    'Your Order has been deleted.',
+                                                                    'success'
+                                                                ).then(err => {
+                                                                    console.log(err)
+                                                                })
+                                                            } else {
+                                                                Swal.fire('Order have been confirmed and cannot be deleted!')
+                                                                    .then(err => {
+                                                                        console.log(err)
+                                                                    })
+                                                            }
+                                                        }
+                                                    })
+
                                                 }}
                                         >
                                             <i className="feather-icon icon-trash-2" style={{ color: "red" }} />

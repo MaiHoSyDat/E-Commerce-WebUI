@@ -2,13 +2,19 @@ import React from 'react';
 import Footer from "../components/footer";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
 import {LoginSocialFacebook, LoginSocialGoogle} from "reactjs-social-login";
 import {Field, Form, Formik} from "formik";
+import {useDispatch} from "react-redux";
+import {saveAccountLogin} from "../service/accountService";
 
 const SignIn = () => {
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const idProduct =location.state?location.state.idProduct:-1;
+    console.log(idProduct)
     const navigate = useNavigate();
     const [account, setAccount] = useState({
         username: '',
@@ -26,7 +32,12 @@ const SignIn = () => {
 
                 localStorage.setItem('token', 'Bearer ' + response.data.token);
                 localStorage.setItem('account', JSON.stringify(response.data));
-                navigate("/index")
+                dispatch(saveAccountLogin(response.data));
+                if (idProduct != -1) {
+                    navigate("/product/detail/" + idProduct)
+                } else {
+                    navigate("/index")
+                }
 
             })
             .catch((error) => {
@@ -79,7 +90,9 @@ const SignIn = () => {
                 } else {
                     localStorage.setItem('token', 'Bearer ' + response.data.token);
                     localStorage.setItem('account', JSON.stringify(response.data));
+                    dispatch(saveAccountLogin(response.data));
                     navigate("/")
+
                 }
             })
             .catch((error) => {
@@ -139,6 +152,7 @@ const SignIn = () => {
                                         .then((response) => {
                                             localStorage.setItem('token', 'Bearer ' + response.data.token);
                                             localStorage.setItem('account', JSON.stringify(response.data));
+                                            dispatch(saveAccountLogin(response.data));
                                             navigate("/index")
                                         })
                                         .catch((error) => {

@@ -1,7 +1,9 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const CustomerMenu = () => {
+    let account = JSON.parse(localStorage.getItem("account"));
+    const navigate = useNavigate();
     return (
         <>
             <div className="col-lg-3 col-md-4 col-12 border-end  d-none d-md-block">
@@ -61,12 +63,15 @@ const CustomerMenu = () => {
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
-                            <Link to={"/index"}>
-                            <a className="nav-link " href="">
+                            <a className="nav-link " href="" onClick={() => {
+                              if (account != null) {
+                                  localStorage.clear();
+                                  navigate("/index");
+                              }
+                            }}>
                                 <i className="feather-icon icon-log-out me-2" />
                                 Log out
                             </a>
-                            </Link>
                         </li>
                     </ul>
                 </div>

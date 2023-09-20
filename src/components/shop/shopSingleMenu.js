@@ -43,33 +43,40 @@ const ShopSingleMenu = () => {
             {/* nav */}
             <ul className="nav flex-column nav-pills nav-pills-dark">
                 {/* nav item */}
-                <li className="nav-item">
+                {idShop && <li className="nav-item">
                     <Link to={"/shop/single/" + idShop} >
-                    <a className="nav-link active" aria-current="page" href="#">
-                        <i className="feather-icon icon-shopping-bag me-2" />
-                        Shop
-                    </a>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to={"/shop/single/" + idShop + "/detail"} >
-                    <a className="nav-link" href="#" >
-                        <i className="feather-icon icon-book me-2" />
-                        Details
-                    </a>
-                    </Link>
-                </li>
-                {/* nav item */}
-                {account == null && <li className="nav-item">
-                    <Link to={"/signin"} >
-                        <a className="nav-link" >
-                            <i className="feather-icon icon-message-circle me-2" />
-                            Message
+                        <a className="nav-link active" aria-current="page" href="#">
+                            <i className="feather-icon icon-shopping-bag me-2" />
+                            Shop
                         </a>
                     </Link>
-                    {/* message content */}
                 </li>}
-                {account != null && <li className="nav-item">
+                {!idShop && <li className="nav-item">
+                    <Link to={"/shop/single"} >
+                        <a className="nav-link active" aria-current="page" href="">
+                            <i className="feather-icon icon-shopping-bag me-2" />
+                            Shop
+                        </a>
+                    </Link>
+                </li>}
+                {idShop && <li className="nav-item">
+                    <Link to={"/shop/single/" + idShop + "/detail"} >
+                        <a className="nav-link" href="#" >
+                            <i className="feather-icon icon-book me-2" />
+                            Details
+                        </a>
+                    </Link>
+                </li>}
+                {!idShop && <li className="nav-item">
+                    <Link to={"/shop/single/detail"} >
+                        <a className="nav-link" href="" >
+                            <i className="feather-icon icon-book me-2" />
+                            Details
+                        </a>
+                    </Link>
+                </li>}
+                {/* nav item */}
+                {account != null && account.role.name == "ROLE_CUSTOMER" && <li className="nav-item">
                     <Link to={"/shop/single/" + idShop + "/chat"} >
                     <a className="nav-link" >
                         <i className="feather-icon icon-message-circle me-2" />

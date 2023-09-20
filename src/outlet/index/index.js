@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getFilterProducts, getTenProductsToIndex, getThreeProductsMaxRating} from "../../service/productService";
 import {getCustomerByAccountLogin} from "../../service/customerService";
@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 const Index = () => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const customerLogin = useSelector(state => {
         return state.customer.customerLogin;
     })
@@ -34,43 +35,49 @@ const Index = () => {
         dispatch(getThreeProductsMaxRating());
     },[customerLogin]);
     const handleAddProductToWishlist = (idProduct) => {
-        let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
-        // let checkId = () => {
-        //     if (wishlistByCustomer.length) return wishlistByCustomer.products.some(product => product.id == idProduct);
-        //     else return false;
-        // }
-        let newProducts = [...wishlistByCustomer.products]
-        if (!checkId) {
-            newProducts.push({id:idProduct});
-            let newWishlist = {
-                id: wishlistByCustomer.id,
-                products: newProducts,
-                account: {id: customerLogin.id}
-            }
-            const fetchData = async () => {
-                await dispatch(updateWishlist(newWishlist));
-                await dispatch(getWishlistByCustomerId(customerLogin.id))
-                    .then(res => {
-                        Swal.fire(
-                            'Success!',
-                            'Add to Wishlist successfully!',
-                            'success'
-                        )
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-            }
-            fetchData();
+        if (account != null) {
+            if (account.role.name == "ROLE_CUSTOMER") {
+                let checkId = wishlistByCustomer.products.some(product => product.id == idProduct);
+                // let checkId = () => {
+                //     if (wishlistByCustomer.length) return wishlistByCustomer.products.some(product => product.id == idProduct);
+                //     else return false;
+                // }
+                let newProducts = [...wishlistByCustomer.products]
+                if (!checkId) {
+                    newProducts.push({id:idProduct});
+                    let newWishlist = {
+                        id: wishlistByCustomer.id,
+                        products: newProducts,
+                        account: {id: customerLogin.id}
+                    }
+                    const fetchData = async () => {
+                        await dispatch(updateWishlist(newWishlist));
+                        await dispatch(getWishlistByCustomerId(customerLogin.id))
+                            .then(res => {
+                                Swal.fire(
+                                    'Success!',
+                                    'Add to Wishlist successfully!',
+                                    'success'
+                                )
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                    }
+                    fetchData();
 
+                } else {
+                    dispatch(getWishlistByCustomerId(customerLogin.id))
+                        .then(res => {
+                            Swal.fire('The product already exists in the wishlist!')
+                        })
+                        .catch(err => {
+                            console.log(err)})
+
+                }
+            }
         } else {
-            dispatch(getWishlistByCustomerId(customerLogin.id))
-                .then(res => {
-                    Swal.fire('The product already exists in the wishlist!')
-                })
-                .catch(err => {
-                    console.log(err)})
-
+            navigate("/signin")
         }
 
     }
@@ -328,15 +335,15 @@ const Index = () => {
                                                         />
                                                     </a>
                                                     </Link>
-                                                    <button style={{ border: "none" }}
-                                                        className="btn-action"
-                                                        data-bs-toggle=""
-                                                        data-bs-html=""
-                                                        title="Wishlist"
-                                                            onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
+                                                    {account != null && account.role.name == "ROLE_CUSTOMER" && <button style={{ border: "none" }}
+                                                                                                     className="btn-action"
+                                                                                                     data-bs-toggle=""
+                                                                                                     data-bs-html=""
+                                                                                                     title="Wishlist"
+                                                                                                     onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
                                                     >
                                                         <i className="bi bi-heart" />
-                                                    </button>
+                                                    </button>}
                                                 </div>
                                             </div>
                                             <div className="text-small mb-1">

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 import RatingProgressBar from "./RatingProgressBar";
 import StarRating from "./starRating";
@@ -17,6 +17,7 @@ import {addNotification} from "../../service/notificationService";
 const ProductDetailInformation = ({product}) => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const customerLogin = useSelector(state => {
         return state.customer.customerLogin;
     })
@@ -63,8 +64,10 @@ const ProductDetailInformation = ({product}) => {
         dispatch(getAllProductsByShop(shopLogin.id));
     },[shopLogin])
     useEffect(() => {
-        dispatch(getCustomerByAccountLogin(account.id));
-        dispatch(getShopByAccountLogin(account.id));
+        if (account != null) {
+            dispatch(getCustomerByAccountLogin(account.id));
+            dispatch(getShopByAccountLogin(account.id));
+        }
     },[])
     useEffect(() => {
         dispatch(getAllProductsByCustomerBuy(customerLogin.id));
@@ -383,26 +386,30 @@ const ProductDetailInformation = ({product}) => {
                                                         <div className="mt-3 mb-3">
                                                             <textarea className="form-control" rows="5" id="feedbackContext" placeholder="Enter your feedback" style={{ height: '50px' , width: '500px'}} />
                                                             <button className="btn btn-sm btn-primary mt-2" onClick={() =>{
-                                                                let checkShopProduct = false;
-                                                                for (let i = 0; i < shopProducts.length; i++) {
-                                                                    if (shopProducts[i].id == productDetail.id) {
-                                                                        checkShopProduct = true;
-                                                                        break;
+                                                                if (account != null) {
+                                                                    let checkShopProduct = false;
+                                                                    for (let i = 0; i < shopProducts.length; i++) {
+                                                                        if (shopProducts[i].id == productDetail.id) {
+                                                                            checkShopProduct = true;
+                                                                            break;
+                                                                        }
                                                                     }
-                                                                }
-                                                                if (checkShopProduct) {
-                                                                    let context = document.getElementById("feedbackContext").value;
-                                                                    let shop = {...shopLogin};
-                                                                    let reviewMap = {...review};
-                                                                    let feedback = {context: context, shop: shop, reviewMap: reviewMap};
-                                                                    const fetchData = async () => {
-                                                                        await dispatch(addFeedback(feedback));
-                                                                        await dispatch(getAllFeedbackByProductId(productDetail.id));
-                                                                        document.getElementById('feedbackContext').value = '';
+                                                                    if (checkShopProduct) {
+                                                                        let context = document.getElementById("feedbackContext").value;
+                                                                        let shop = {...shopLogin};
+                                                                        let reviewMap = {...review};
+                                                                        let feedback = {context: context, shop: shop, reviewMap: reviewMap};
+                                                                        const fetchData = async () => {
+                                                                            await dispatch(addFeedback(feedback));
+                                                                            await dispatch(getAllFeedbackByProductId(productDetail.id));
+                                                                            document.getElementById('feedbackContext').value = '';
+                                                                        }
+                                                                        fetchData()
+                                                                    } else {
+                                                                        Swal.fire('This product does not belong to the shop !')
                                                                     }
-                                                                    fetchData()
                                                                 } else {
-                                                                    Swal.fire('This product does not belong to the shop !')
+                                                                    navigate("/signin")
                                                                 }
 
 
@@ -534,67 +541,71 @@ const ProductDetailInformation = ({product}) => {
                                         {/* button */}
                                         <div className="d-flex justify-content-end">
                                             <button className="btn btn-primary" onClick={() => {
-                                                let checkProductBuy = false;
-                                                for (let i = 0; i < productsByCustomerBuy.length; i++) {
-                                                    if (productsByCustomerBuy[i].id == productDetail.id) {
-                                                        checkProductBuy = true;
-                                                        break;
-                                                    }
-                                                }
-                                                if (checkProductBuy) {
-                                                    if (reviewsByProductAndCustomer.length) {
-                                                        Swal.fire('You have already reviewed this product !')
-                                                        document.getElementById('headline').value = '';
-                                                        document.getElementById('context').value = '';
-                                                    } else {
-                                                        let headline = document.getElementById("headline").value;
-                                                        let context = document.getElementById("context").value;
-                                                        const radioButtons = document.getElementsByName('rating');
-                                                        let rating = 0;
-                                                        for (let i = 0; i < radioButtons.length; i++) {
-                                                            if (radioButtons[i].checked) {
-                                                                rating = radioButtons[i].value;
-                                                                break;
-                                                            }
+                                                if (account != null) {
+                                                    let checkProductBuy = false;
+                                                    for (let i = 0; i < productsByCustomerBuy.length; i++) {
+                                                        if (productsByCustomerBuy[i].id == productDetail.id) {
+                                                            checkProductBuy = true;
+                                                            break;
                                                         }
-                                                        let user = {...customerLogin};
-                                                        let product = {...productDetail};
-                                                        let date = "";
-                                                        let review = {headline: headline, context: context,
-                                                            user: user, product: product, date: date, rating: rating}
-                                                        //notification
-                                                        let name = "Review";
-                                                        let content = "" + customerLogin.account.name + " have reviewed  your product with name: " + '"' + productDetail.name + '"';
-                                                        let sender = customerLogin.account;
-                                                        let receiver = productDetail.shop.account;
-                                                        let notification = {name: name, context: content,
-                                                            sender: sender, receiver: receiver};
-                                                        const fetchData = async () => {
-                                                            await dispatch(addNotification(notification));
-                                                            await dispatch(addReview(review));;
-                                                            await axios.get('http://localhost:8080/products/review/' + productId,
-                                                                {
-                                                                    headers: {
-                                                                        'Authorization': localStorage.getItem('token'),
-                                                                    },
-                                                                })
-                                                                .then((resp) => {
-                                                                    setReviews(resp.data)
-                                                                    totalStart(resp.data)
-
-                                                                })
-                                                                .catch((err) => {
-                                                                    console.log(err)
-                                                                });
+                                                    }
+                                                    if (checkProductBuy) {
+                                                        if (reviewsByProductAndCustomer.length) {
+                                                            Swal.fire('You have already reviewed this product !')
                                                             document.getElementById('headline').value = '';
                                                             document.getElementById('context').value = '';
+                                                        } else {
+                                                            let headline = document.getElementById("headline").value;
+                                                            let context = document.getElementById("context").value;
+                                                            const radioButtons = document.getElementsByName('rating');
+                                                            let rating = 0;
+                                                            for (let i = 0; i < radioButtons.length; i++) {
+                                                                if (radioButtons[i].checked) {
+                                                                    rating = radioButtons[i].value;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            let user = {...customerLogin};
+                                                            let product = {...productDetail};
+                                                            let date = "";
+                                                            let review = {headline: headline, context: context,
+                                                                user: user, product: product, date: date, rating: rating}
+                                                            //notification
+                                                            let name = "Review";
+                                                            let content = "" + customerLogin.account.name + " have reviewed  your product with name: " + '"' + productDetail.name + '"';
+                                                            let sender = customerLogin.account;
+                                                            let receiver = productDetail.shop.account;
+                                                            let notification = {name: name, context: content,
+                                                                sender: sender, receiver: receiver};
+                                                            const fetchData = async () => {
+                                                                await dispatch(addNotification(notification));
+                                                                await dispatch(addReview(review));;
+                                                                await axios.get('http://localhost:8080/products/review/' + productId,
+                                                                    {
+                                                                        headers: {
+                                                                            'Authorization': localStorage.getItem('token'),
+                                                                        },
+                                                                    })
+                                                                    .then((resp) => {
+                                                                        setReviews(resp.data)
+                                                                        totalStart(resp.data)
+
+                                                                    })
+                                                                    .catch((err) => {
+                                                                        console.log(err)
+                                                                    });
+                                                                document.getElementById('headline').value = '';
+                                                                document.getElementById('context').value = '';
+                                                            }
+                                                            fetchData()
                                                         }
-                                                        fetchData()
+                                                    } else {
+                                                        Swal.fire('You have not purchased this product yet !')
+                                                        document.getElementById('headline').value = '';
+                                                        document.getElementById('context').value = '';
                                                     }
                                                 } else {
-                                                    Swal.fire('You have not purchased this product yet !')
-                                                    document.getElementById('headline').value = '';
-                                                    document.getElementById('context').value = '';
+                                                    navigate("/signin")
                                                 }
                                             }}>
                                                 Submit Review

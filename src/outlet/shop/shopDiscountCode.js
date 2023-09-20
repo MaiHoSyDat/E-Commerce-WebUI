@@ -109,18 +109,30 @@ const ShopDiscountCode = () => {
                                             data-bs-placement="top"
                                             data-bs-title="View"
                                             onClick={() => {
-                                                let newCode = {...code, quantity: 0}
-                                                const fetchData = async () => {
-                                                    await dispatch(setQuantity([code.id, newCode]));
-                                                    await dispatch(getAllCodeByShop(shopLogin.id));
-                                                };
-                                                fetchData();
-                                                Swal.fire(
-                                                    'Success!',
-                                                    'Set Quantity!',
-                                                    'success'
-                                                ).then(err => {
-                                                    console.log(err)
+                                                Swal.fire({
+                                                    title: 'Are you sure?',
+                                                    text: "You won't be able to revert this!",
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33',
+                                                    confirmButtonText: 'Yes, lock it!'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        let newCode = {...code, quantity: 0}
+                                                        const fetchData = async () => {
+                                                            await dispatch(setQuantity([code.id, newCode]));
+                                                            await dispatch(getAllCodeByShop(shopLogin.id));
+                                                        };
+                                                        fetchData();
+                                                        Swal.fire(
+                                                            'Lock!',
+                                                            'Your file has been locked.',
+                                                            'success'
+                                                        ).then(err => {
+                                                            console.log(err)
+                                                        })
+                                                    }
                                                 })
                                             }}
                                         >

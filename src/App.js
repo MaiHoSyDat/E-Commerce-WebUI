@@ -1,14 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import Navbar from "./components/navbar";
-import Slider from "./components/slider";
+
 import Home from "./pages/home";
 import Dashboard from "./pages/dashboard";
 import {Route, Routes} from "react-router-dom";
 import DashboardIndex from "./outlet/dashboard/dashboardIndex";
 import DashboardProduct from "./outlet/dashboard/dashboardProduct";
 import DashboardCategory from "./outlet/dashboard/dashboardCategory";
-import DashboardCategoryDetail from "./outlet/dashboard/dashboardCategoryDetail";
 import DashboardOrder from "./outlet/dashboard/dashboardOrder";
 import DashboardOrderDetail from "./outlet/dashboard/dashboardOrderDetail";
 import DashboardShop from "./outlet/dashboard/dashboardShop";
@@ -60,8 +58,13 @@ import ShopSingleChat from "./components/shop/shopSingleChat";
 import ShopMessage from "./outlet/shop/shopMessage";
 import ShopSingleDetail from "./components/shop/shopSingleDetail";
 import ShopSingleDetailView from "./components/shop/shopSingleDetailView";
+import {useSelector} from "react-redux";
 
 function App() {
+    const account = useSelector(state => {
+        return state.account.account;
+    })
+    console.log(account)
     // xoá account khi tắt trang
     // window.addEventListener('beforeunload', () => {
     //     localStorage.setItem('account', null);
@@ -70,42 +73,62 @@ function App() {
   return (
     <>
         <Routes>
-            <Route path="dashboard" element={<Dashboard/>}>
-                <Route path="" element={<DashboardIndex/>}/>
-                <Route path="index" element={<DashboardIndex/>}/>
-                <Route path="products" element={<DashboardProduct/>}/>
-                <Route path="category" element={<DashboardCategory/>}/>
-                <Route path="shopPending" element={<DashboardShopPending/>}/>
-                <Route path="order" element={<DashboardOrder/>}/>
-                <Route path="orderDetail" element={<DashboardOrderDetail/>}/>
-                <Route path="shop" element={<DashboardShop/>}/>
-                <Route path="employee" element={<DashboardEmployee/>}/>
-                <Route path="customer" element={<DashboardCustomer/>}/>
-                <Route path="review" element={<DashboardReview/>}/>
-                <Route path="salary" element={<DashboardSalary/>}/>
-            </Route>
+            {account && account.role.id == 1 &&
+                <>
+                    <Route path="dashboard" element={<Dashboard/>}>
+                        <Route path="" element={<DashboardIndex/>}/>
+                        <Route path="index" element={<DashboardIndex/>}/>
+                        <Route path="products" element={<DashboardProduct/>}/>
+                        <Route path="category" element={<DashboardCategory/>}/>
+                        <Route path="shopPending" element={<DashboardShopPending/>}/>
+                        <Route path="order" element={<DashboardOrder/>}/>
+                        <Route path="orderDetail" element={<DashboardOrderDetail/>}/>
+                        <Route path="shop" element={<DashboardShop/>}/>
+                        <Route path="employee" element={<DashboardEmployee/>}/>
+                        <Route path="customer" element={<DashboardCustomer/>}/>
+                        <Route path="review" element={<DashboardReview/>}/>
+                        <Route path="salary" element={<DashboardSalary/>}/>
+                    </Route>
+                </>
+            }
+
             <Route path="shop" element={<Shop/>}>
                 <Route path="list" element={<ShopList/>}/>
                 <Route path="" element={<ShopList/>}/>
-                <Route path="single" element={<ShopSingleLogin/>}/>
+                {account && account.role.id == 3 && <>
+                    <Route path="single" element={<ShopSingleLogin/>}/>
+                </>}
+                {account && account.role.id == 3 && <>
+                    <Route path="single/detail" element={<ShopSetting/>}/>
+                </>}
                 <Route path="single/:idShop" element={<ShopSingle/>}/>
-                <Route path="single/:idShop/chat" element={<ShopSingleChat/>}/>
+                {account && account.role.id == 2 && <>
+                    <Route path="single/:idShop/chat" element={<ShopSingleChat/>}/>
+                </>}
                 <Route path="single/:idShop/detail" element={<ShopSingleDetailView/>}/>
-                <Route path="setting" element={<ShopSetting/>}/>
+
             </Route>
             <Route path="product" element={<Product/>}>
                 <Route path="filter" element={<ProductFilter/>}/>
                 <Route path="detail/:productId" element={<ProductDetail/>}/>
                 <Route path="" element={<ProductFilter/>}/>
-                <Route path="detail" element={<ProductDetail/>}/>
-                <Route path="wishlist" element={<ProductWishlist/>}/>
+                {account && account.role.id == 2 && <>
+                    <Route path="wishlist" element={<ProductWishlist/>}/>
+                </>}
             </Route>
-            <Route path="cart" element={<Cart/>}>
-                <Route path="" element={<ProductCart/>}/>
-            </Route>
-            <Route path="checkout" element={<Checkout/>}>
-                <Route path="" element={<ProductCheckout/>}/>
-            </Route>
+
+
+            {account && account.role.id == 2 && <>
+                <Route path="cart" element={<Cart/>}>
+                    <Route path="" element={<ProductCart/>}/>
+                </Route>
+            </>}
+            {account && account.role.id == 2 && <>
+                <Route path="checkout" element={<Checkout/>}>
+                    <Route path="" element={<ProductCheckout/>}/>
+                </Route>
+            </>}
+
             <Route path="" element={<Home/>}></Route>
             <Route path="about" element={<About/>}></Route>
             <Route path="index" element={<Home/>}></Route>
@@ -113,29 +136,41 @@ function App() {
             <Route path="signin" element={<Signin/>}></Route>
             <Route path="signup" element={<Signup/>}></Route>
             <Route path="forgot-password" element={<ForgotPassword/>}></Route>
-            <Route path="customer" element={<Customer/>}>
-                <Route path="order" element={<CustomerOrder/>}/>
-                <Route path="order-detail/:idOrder" element={<CustomerOrderDetail/>}/>
-                <Route path="setting" element={<CustomerSetting/>}/>
-                <Route path="address" element={<CustomerAddress/>}/>
-                <Route path="payment" element={<CustomerPayment/>}/>
-                <Route path="notification" element={<CustomerNotification/>}/>
-            </Route>
-            <Route path="shop-manager" element={<ShopManager/>}>
-                <Route path="order" element={<ShopOrder/>}/>
-                <Route path="order-detail/:idOrder" element={<ShopOrderDetail/>}/>
-                <Route path="discount-code" element={<ShopDiscountCode/>}/>
-                <Route path="revenue" element={<ShopRevenue/>}/>
-                <Route path="address" element={<ShopAddress/>}/>
-                <Route path="notification" element={<ShopNotification/>}/>
-                <Route path="message" element={<ShopMessage/>}/>
-                <Route path="setting" element={<ShopSetting/>}/>
 
-            </Route>
-            <Route path="employee" element={<Employee/>}>
-                <Route path="setting" element={<EmployeeSetting/>}/>
-            </Route>
+            {account && account.role.id == 2 && <>
+                <Route path="customer" element={<Customer/>}>
+                    <Route path="order" element={<CustomerOrder/>}/>
+                    <Route path="order-detail/:idOrder" element={<CustomerOrderDetail/>}/>
+                    <Route path="setting" element={<CustomerSetting/>}/>
+                    <Route path="address" element={<CustomerAddress/>}/>
+                    <Route path="payment" element={<CustomerPayment/>}/>
+                    <Route path="notification" element={<CustomerNotification/>}/>
+                </Route>
+            </>}
+
+            {account && account.role.id == 3 && <>
+                <Route path="shop-manager" element={<ShopManager/>}>
+                    <Route path="order" element={<ShopOrder/>}/>
+                    <Route path="order-detail/:idOrder" element={<ShopOrderDetail/>}/>
+                    <Route path="discount-code" element={<ShopDiscountCode/>}/>
+                    <Route path="revenue" element={<ShopRevenue/>}/>
+                    <Route path="address" element={<ShopAddress/>}/>
+                    <Route path="notification" element={<ShopNotification/>}/>
+                    <Route path="message" element={<ShopMessage/>}/>
+                    <Route path="setting" element={<ShopSetting/>}/>
+
+                </Route>
+            </>}
+
+            {account && account.role.id == 4 && <>
+                <Route path="employee" element={<Employee/>}>
+                    <Route path="setting" element={<EmployeeSetting/>}/>
+                </Route>
+            </>}
+
+            <Route path="*" element={<Error404/>}/>
         </Routes>
+
     </>
   );
 }

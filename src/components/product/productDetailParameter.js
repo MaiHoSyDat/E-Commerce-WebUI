@@ -5,12 +5,14 @@ import {createProductsToCartByAccount, getCartByAccount, updateCartByStore} from
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProductDetail} from "../../service/productDetailActions";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 const ProductDetailParameter = () => {
     const {productId} = useParams();
+    let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const product = useSelector(state => state.productDetail.product);
     const loading = useSelector(state => state.productDetail.loading);
     const error = useSelector(state => state.productDetail.error);
@@ -60,25 +62,47 @@ const ProductDetailParameter = () => {
         }
     }
     const handleAddToCart = async (productId) => {
-        if (quantityByCart + quantity <= product.quantity) {
-            let product = [productId, quantity];
-            try {
-                await dispatch(createProductsToCartByAccount(product));
-                Swal.fire(
-                    'Success!',
-                    'Add to cart successfully!',
-                    'success'
-                );
-                await setQuantityByCart(quantityByCart + quantity);
-            } catch (err) {
-                console.log(err);
+        if (account != null) {
+            if (account.role.name == "ROLE_CUSTOMER") {
+                if (quantityByCart + quantity <= product.quantity) {
+                    let product = [productId, quantity];
+                    try {
+                        await dispatch(createProductsToCartByAccount(product));
+                        Swal.fire(
+                            'Success!',
+                            'Add to cart successfully!',
+                            'success'
+                        );
+                        await setQuantityByCart(quantityByCart + quantity);
+                    } catch (err) {
+                        console.log(err);
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Oops...',
+                        text: 'Quantity is not enough!',
+                    })
+                }
+            } else {
+                Swal.fire('You are not a customer!')
             }
+
         } else {
             Swal.fire({
-                icon: 'info',
-                title: 'Oops...',
-                text: 'Quantity is not enough!',
+                title: 'Login',
+                text: "You are not logged in!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Login!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/signin", {state: {idProduct: productId}})
+                }
             })
+
         }
 
     };
