@@ -15,6 +15,7 @@ import codeReducer from "./reducer/codeSlice";
 import feedbackReducer from "./reducer/feedbackSlice";
 import reviewReducer from "./reducer/reviewSlice";
 import notificationReducer from "./reducer/notificationSlice";
+import messageReducer from "./reducer/messageSlice";
 
 export const store = configureStore({
     reducer: {
@@ -33,6 +34,7 @@ export const store = configureStore({
         code: codeReducer,
         feedback: feedbackReducer,
         review: reviewReducer,
-        notification: notificationReducer
+        notification: notificationReducer,
+        message: messageReducer
     }
 })

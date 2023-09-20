@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Footer from "../components/footer";
+import {Link} from "react-router-dom";
+import {Field, Form, Formik} from "formik";
+import axios from "axios";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 const ForgotPassword = () => {
+
     return (
         <>
             <div className="border-bottom shadow-sm">
@@ -14,9 +20,6 @@ const ForgotPassword = () => {
                                 className="d-inline-block align-text-top"
                             />
                         </a>
-                        <span className="navbar-text">
-          Already have an account? <a href="signin.html">Sign in</a>
-        </span>
                     </div>
                 </nav>
             </div>
@@ -35,7 +38,8 @@ const ForgotPassword = () => {
                                     className="img-fluid"
                                 />
                             </div>
-                            <div className="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1 d-flex align-items-center">
+                            <div
+                                className="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1 d-flex align-items-center">
                                 <div>
                                     <div className="mb-lg-9 mb-5">
                                         {/* heading */}
@@ -45,32 +49,80 @@ const ForgotPassword = () => {
                                             and We will email you a link to reset your password.
                                         </p>
                                     </div>
-                                    {/* form */}
-                                    <form>
-                                        {/* row */}
-                                        <div className="row g-3">
-                                            {/* col */}
-                                            <div className="col-12">
-                                                {/* input */}
-                                                <input
-                                                    type="email"
-                                                    className="form-control"
-                                                    id="inputEmail4"
-                                                    placeholder="Email"
-                                                    required=""
-                                                />
-                                            </div>
-                                            {/* btn */}
-                                            <div className="col-12 d-grid gap-2">
-                                                <button type="submit" className="btn btn-primary">
-                                                    Reset Password
-                                                </button>
-                                                <a href="signup.html" className="btn btn-light">
-                                                    Back
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <Formik
+                                        initialValues={{
+                                            email: ''
+                                        }}
+                                        onSubmit={(value, {setSubmitting}) => {
+                                            let sendEmail = {
+                                                email: value.email
+                                            }
+                                            Swal.fire({
+                                                title: 'Reset password already',
+                                                text: 'Please check your email to get new password',
+                                                icon: 'success',
+                                                confirmButtonText: 'OK'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    window.location.reload();
+                                                }
+                                            });
+                                            const url = "http://localhost:8080/reset-password";
+                                            axios
+                                                .post(url, sendEmail)
+                                                .then(() => {
+
+                                            })
+                                                .catch((err) => {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Oops...',
+                                                        text: 'Email does not exist',
+                                                    })
+                                                    console.log(err)
+                                                })
+                                            setSubmitting(false);
+                                        }}
+                                        enableReinitialize={true}
+                                    >
+                                        {({errors, touched, isSubmitting}) => (
+                                            <Form>
+                                                {/* row */}
+                                                <div className="row g-3">
+                                                    {/* col */}
+                                                    <div className="col-12">
+                                                        {/* input */}
+                                                        <Field
+                                                            type="text"
+                                                            id="email"
+                                                            name="email"
+                                                            className="form-control"
+                                                            placeholder="Email"
+                                                        />
+                                                        {errors.email && touched.email && (
+                                                            <div className="error-message">{errors.email}</div>
+                                                        )}
+                                                    </div>
+                                                    {/* btn */}
+                                                    <div className="col-12 d-grid gap-2">
+                                                        <button
+                                                            type="submit"
+                                                            className="btn btn-primary"
+                                                            disabled={isSubmitting}
+                                                            >
+                                                            Reset Password
+                                                        </button>
+
+                                                        <Link to={"/signin"} className="btn btn-light">
+                                                            Back
+                                                        </Link>
+                                                    </div>
+                                                </div>
+
+                                            </Form>
+                                        )}
+                                    </Formik>
+
                                 </div>
                             </div>
                         </div>

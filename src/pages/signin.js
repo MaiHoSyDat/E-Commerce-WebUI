@@ -5,6 +5,9 @@ import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css';
+import {LoginSocialFacebook, LoginSocialGoogle} from "reactjs-social-login";
+import {Field, Form, Formik} from "formik";
+
 const SignIn = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useState({
@@ -16,9 +19,6 @@ const SignIn = () => {
         const { name, value } = event.target;
         setAccount({ ...account, [name]: value });
     };
-    const handleError = () => {
-
-    }
     const handleLogin = () => {
         axios
             .post('http://localhost:8080/login', account)
@@ -42,8 +42,158 @@ const SignIn = () => {
         }
     }, []);
 
+
+
+    const handleLoginFailure = () => {
+        // Xử lý khi đăng nhập thất bại
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+        })
+    };
+    const [accountlogin , setAccountlogin] = useState({})
+
+    const handleLoginSuccess = (data) => {
+        setAccountlogin( {
+            username: data.email,
+            name: data.name,
+            email: data.email,
+        })
+        callApi(data)
+    };
+
+    const callApi = ((resp) => {
+        let account ={
+            username: resp.email,
+            name: resp.name,
+            email: resp.email,
+        }
+        axios
+            .post('http://localhost:8080/login/email', account)
+            .then((response) => {
+                console.log(response.data)
+                if (response.data == "new account") {
+                    console.log("create")
+                    window.$("#abc").modal("show");
+                } else {
+                    localStorage.setItem('token', 'Bearer ' + response.data.token);
+                    localStorage.setItem('account', JSON.stringify(response.data));
+                    navigate("/")
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+
+            });
+
+    })
     return (
         <>
+            <div
+                className="modal fade"
+                id="abc"
+                tabIndex={-1}
+                aria-labelledby="userCustomerModal"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content p-4">
+                        <div className="modal-header border-0">
+                            <h5 className="modal-title fs-3 fw-bold" id="userCustomerModal">
+                                Role
+                            </h5>
+                        </div>
+                        <div className="modal-body">
+                            <Formik
+                                initialValues={{
+                                    role: '2'
+                                }}
+                                validate={values => {
+                                    const errors = {};
+                                    // Kiểm tra các trường dữ liệu
+
+                                    return errors;
+                                }}
+                                onSubmit={(values, {setSubmitting}) => {
+                                    const ACTIVE = "1";
+                                    const SHOP_PENDING = "4";
+                                    let status = ACTIVE;
+                                    if (values.role != "2") {
+                                        status = SHOP_PENDING;
+                                    }
+                                    let newAccount = {... accountlogin ,  role: {
+                                            id: values.role
+                                        },
+                                        status: {
+                                            id: status
+                                        }}
+                                    console.log(newAccount)
+                                    axios
+                                        .post('http://localhost:8080/login/email', newAccount)
+                                        .then((response) => {
+                                            localStorage.setItem('token', 'Bearer ' + response.data.token);
+                                            localStorage.setItem('account', JSON.stringify(response.data));
+                                            navigate("/index")
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: 'Something went wrong!',
+                                            })
+
+                                        });
+
+                                    setSubmitting(false);
+                                }}
+                            >
+                                {({isSubmitting}) => (
+                                    <Form>
+                                        <div className="row g-3">
+
+                                            <div className="col-12">
+                                                <Field name="role"
+                                                       as="select"
+                                                       className="form-control"
+                                                >
+                                                    <option value="2">
+                                                        Customer
+                                                    </option>
+                                                    <option value="3">
+                                                        Shop
+                                                    </option>
+                                                    ))
+                                                </Field>
+                                            </div>
+                                            <div className="col-12 d-grid">
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-primary"
+                                                    disabled={isSubmitting}
+                                                    data-bs-dismiss="modal"
+                                                >
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </Form>
+                                )}
+                            </Formik>
+
+                        </div>
+                        <div className="modal-footer border-0 justify-content-center">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="border-bottom shadow-sm">
                 <nav className="navbar navbar-light py-2">
                     <div className="container justify-content-center justify-content-lg-between">
@@ -56,9 +206,6 @@ const SignIn = () => {
                             />
                         </a>
                         </Link>
-                        <span className="navbar-text">
-          Already have an account? <a href="signin.html">Sign in</a>
-        </span>
                     </div>
                 </nav>
             </div>
@@ -135,7 +282,7 @@ const SignIn = () => {
                                             </div>
                                             <div>
                                                 {" "}
-                                                Forgot password? <a href="forgot-password.html">Reset It</a>
+                                                Forgot password? <Link to={"/forgot-password"}>Reset It</Link>
                                             </div>
                                         </div>
                                         {/* btn */}
@@ -149,6 +296,54 @@ const SignIn = () => {
                                             Don’t have an account? <Link to={"/signup"}> Sign Up</Link>
                                         </div>
                                     </div>
+                               <div className="row">
+                                   <div className="col-1"></div>
+                                   <div className="col-5">
+                                       <LoginSocialGoogle
+                                           scope="email"
+                                           client_id={"1019879807561-qdd2356b4o39mo4r9174hv2dpp9097n7.apps.googleusercontent.com"}
+                                           onReject={handleLoginFailure}
+                                           onResolve={({provider, data}) => handleLoginSuccess(data)}
+
+
+                                       >
+                                           <a
+                                               className="login100-social-item bg3"
+                                               style={{
+                                                   display: "inline-block",
+                                                   backgroundColor: "#dc4e41",
+                                                   color: "#fff",
+                                                   padding: "10px",
+                                                   borderRadius: "4px",
+                                                   textDecoration: "none"
+                                               }}
+                                           >
+                                               Login with Google
+                                           </a>
+                                       </LoginSocialGoogle>
+                                   </div>
+                                   <div className="col-5">
+                                       <LoginSocialFacebook
+                                           appId={"987657502490133"}
+                                           onReject={handleLoginFailure}
+                                           onResolve={({provider, data}) => handleLoginSuccess(data)}>
+                                           <a
+                                               className="login100-social-item bg1"
+                                               style={{
+                                                   display: "inline-block",
+                                                   backgroundColor: "#3b5998",
+                                                   color: "#fff",
+                                                   padding: "10px",
+                                                   borderRadius: "4px",
+                                                   textDecoration: "none"
+                                               }}
+                                           >
+                                               Login with Facebook
+                                           </a>
+                                       </LoginSocialFacebook>
+                                   </div>
+
+                               </div>
                             </div>
                         </div>
                     </div>

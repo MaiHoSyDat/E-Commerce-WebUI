@@ -20,32 +20,31 @@ const CustomerSetting = () => {
         setImage1(URL.createObjectURL(file));
         setImageUpload(file)
     };
-    useEffect(()=>{
-        axios .get("http://localhost:8080/customer/customerDetail/"+account.id,  {
+    useEffect(() => {
+        axios.get("http://localhost:8080/customer/customerDetail/" + account.id, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             },
-        }).then((resp)=>{
+        }).then((resp) => {
             setCustomer(resp.data)
             setImage1(resp.data.avatar)
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err)
         })
 
-    },[])
+    }, [])
 
     useEffect(() => {
         if (imageUpload !== null) {
-                const imageRef = ref(storage, `customer/${imageUpload.name + v4()}`);
-                uploadBytes(imageRef, imageUpload).then((snapshot) => {
-                    getDownloadURL(snapshot.ref).then((url) => {
-                        setImageUrls(url)
-                    });
+            const imageRef = ref(storage, `customer/${imageUpload.name + v4()}`);
+            uploadBytes(imageRef, imageUpload).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    setImageUrls(url)
                 });
-            }
+            });
+        }
 
     }, [imageUpload])
-
 
 
     return (
@@ -78,7 +77,7 @@ const CustomerSetting = () => {
                                         address: customer.address,
                                         phone: customer.phone,
                                         gender: customer.gender
-                                }}
+                                    }}
                                     validate={values => {
                                         const errors = {};
                                         // Kiểm tra các trường dữ liệu
@@ -106,7 +105,7 @@ const CustomerSetting = () => {
                                     }}
                                     onSubmit={(values, {setSubmitting}) => {
                                         let newCustomer = {
-                                            id:customer.id,
+                                            id: customer.id,
                                             birthday: values.birthday,
                                             avatar: imageUrls,
                                             address: values.address,
@@ -114,7 +113,7 @@ const CustomerSetting = () => {
                                             gender: values.gender,
                                         }
 
-                                        axios.post("http://localhost:8080/customer/edit", newCustomer,{
+                                        axios.post("http://localhost:8080/customer/edit", newCustomer, {
                                             headers: {
                                                 'Authorization': localStorage.getItem('token')
                                             },
@@ -142,89 +141,94 @@ const CustomerSetting = () => {
                                         <Form>
 
                                             <div className="row g-3">
-                                                    <div className="col-12">
-                                                        <p>Address</p>
-                                                        <Field
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder="Address"
-                                                            name="address"
-                                                        />
-                                                        {errors.address && touched.address && (
-                                                            <div className="error-message" style={{color:"red"}}>{errors.address}</div>
-                                                        )}
-                                                    </div>
-                                                    <div className="col-12">
-                                                        <p>Phone Number</p>
-                                                        <Field
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder="Phone Number"
-                                                            name="phone"
-                                                        />
-                                                        {errors.phone && touched.phone && (
-                                                            <div className="error-message" style={{color:"red"}}>{errors.phone}</div>
-                                                        )}
-                                                    </div>
-                                                    <div className="col-12">
-                                                        <p>Date of Birth</p>
-                                                        <Field
-                                                            type="date"
-                                                            className="form-control"
-                                                            placeholder="Date of Birth"
-                                                            name="birthday"
-                                                        />
-                                                        {errors.birthday && touched.birthday && (
-                                                            <div className="error-message" style={{color:"red"}}>{errors.birthday}</div>
-                                                        )}
-                                                    </div>
+                                                <div className="col-12">
+                                                    <p>Address</p>
+                                                    <Field
+                                                        type="text"
+                                                        className="form-control"
+                                                        placeholder="Address"
+                                                        name="address"
+                                                    />
+                                                    {errors.address && touched.address && (
+                                                        <div className="error-message"
+                                                             style={{color: "red"}}>{errors.address}</div>
+                                                    )}
+                                                </div>
+                                                <div className="col-12">
+                                                    <p>Phone Number</p>
+                                                    <Field
+                                                        type="text"
+                                                        className="form-control"
+                                                        placeholder="Phone Number"
+                                                        name="phone"
+                                                    />
+                                                    {errors.phone && touched.phone && (
+                                                        <div className="error-message"
+                                                             style={{color: "red"}}>{errors.phone}</div>
+                                                    )}
+                                                </div>
+                                                <div className="col-12">
+                                                    <p>Date of Birth</p>
+                                                    <Field
+                                                        type="date"
+                                                        className="form-control"
+                                                        placeholder="Date of Birth"
+                                                        name="birthday"
+                                                    />
+                                                    {errors.birthday && touched.birthday && (
+                                                        <div className="error-message"
+                                                             style={{color: "red"}}>{errors.birthday}</div>
+                                                    )}
+                                                </div>
 
-                                                    <div className="col-12">
-                                                        <div className="form-check form-check-inline">
-                                                            <Field
-                                                                type="radio"
-                                                                className="form-check-input"
-                                                                name="gender"
-                                                                value="1"
-                                                            />
-                                                            <label className="form-check-label">Male</label>
-                                                        </div>
-                                                        <div className="form-check form-check-inline">
-                                                            <Field
-                                                                type="radio"
-                                                                className="form-check-input"
-                                                                name="gender"
-                                                                value="2"
-                                                            />
-                                                            <label className="form-check-label">Female</label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-12">
+                                                <div className="col-12">
+                                                    <div className="form-check form-check-inline">
                                                         <Field
-                                                            name="files"
-                                                            type="file"
-                                                            id="avatar"
-                                                            onChange={handleFileChange}
-                                                            hidden={true}
+                                                            type="radio"
+                                                            className="form-check-input"
+                                                            name="gender"
+                                                            value="1"
                                                         />
-                                                        <label className={"btn btn-outline-danger"} htmlFor={"avatar"}>Choose File</label>
-                                                        {errors.thumbnail && touched.thumbnail && (
-                                                            <div className="error-message" style={{color:"red"}}>{errors.thumbnail}</div>
-                                                        )}
+                                                        <label className="form-check-label">Male</label>
                                                     </div>
-
-
-                                                    <div className="col-12 d-grid">
-                                                        <button
-                                                            type="submit"
-                                                            className="btn btn-primary"
-                                                            disabled={isSubmitting}
-                                                        >
-                                                            Update
-                                                        </button>
+                                                    <div className="form-check form-check-inline">
+                                                        <Field
+                                                            type="radio"
+                                                            className="form-check-input"
+                                                            name="gender"
+                                                            value="2"
+                                                        />
+                                                        <label className="form-check-label">Female</label>
                                                     </div>
                                                 </div>
+
+                                                <div className="col-12">
+                                                    <Field
+                                                        name="files"
+                                                        type="file"
+                                                        id="avatar"
+                                                        onChange={handleFileChange}
+                                                        hidden={true}
+                                                    />
+                                                    <label className={"btn btn-outline-danger"} htmlFor={"avatar"}>Choose
+                                                        File</label>
+                                                    {errors.thumbnail && touched.thumbnail && (
+                                                        <div className="error-message"
+                                                             style={{color: "red"}}>{errors.thumbnail}</div>
+                                                    )}
+                                                </div>
+
+
+                                                <div className="col-12 d-grid">
+                                                    <button
+                                                        type="submit"
+                                                        className="btn btn-primary"
+                                                        disabled={isSubmitting}
+                                                    >
+                                                        Update
+                                                    </button>
+                                                </div>
+                                            </div>
 
 
                                         </Form>
@@ -232,168 +236,153 @@ const CustomerSetting = () => {
                                 </Formik>
                             </div>
                             <div className='col-2'></div>
-                                <div className='col-4' style={{textAlign :"center"}}>
-                                    <br/>
-                                    <div style={{display: 'flex'}}>
-                                            <div  style={{
-                                                marginRight: '10px',
-                                                position: 'relative'
-                                            }}>
-                                                <img
-                                                    src={image1}
-                                                    alt={`Selected Image `}
-                                                    style={{width: '200px', height: 'auto'}}
-                                                />
-                                            </div>
+                            <div className='col-4' style={{textAlign: "center"}}>
+                                <br/>
+                                <div style={{display: 'flex'}}>
+                                    <div style={{
+                                        marginRight: '10px',
+                                        position: 'relative'
+                                    }}>
+                                        <img
+                                            src={image1}
+                                            alt={`Selected Image `}
+                                            style={{width: '200px', height: 'auto'}}
+                                        />
                                     </div>
                                 </div>
+                            </div>
 
 
                         </div>
-
                     </div>
+
                     <hr className="my-10"/>
                     <div className="pe-lg-14">
                         {/* heading */}
                         <h5 className="mb-4">Password</h5>
                         <div className='col-6'>
-                        <Formik
-                            initialValues={{
-                                youPass: '',
-                                newPass: '',
-                                retypePass: '',
+                            <Formik
+                                initialValues={{
+                                    youPass: '',
+                                    newPass: '',
+                                    retypePass: '',
 
-                            }}
-                            validate={values => {
-                                const errors = {};
-                                // Kiểm tra các trường dữ liệu
+                                }}
+                                validate={values => {
+                                    const errors = {};
+                                    // Kiểm tra các trường dữ liệu
 
-                                if (!values.youPass) {
-                                    errors.youPass = 'You password is required';
-                                }
+                                    if (!values.youPass) {
+                                        errors.youPass = 'You password is required';
+                                    }
 
-                                if (!values.newPass) {
-                                    errors.newPass = 'New password is required';
-                                }else if (values.newPass.length < 6) {
-                                    errors.newPass = 'New password must be at least 6 characters long';
-                                }
+                                    if (!values.newPass) {
+                                        errors.newPass = 'New password is required';
+                                    } else if (values.newPass.length < 6) {
+                                        errors.newPass = 'New password must be at least 6 characters long';
+                                    }
 
-                                if (!values.retypePass) {
-                                    errors.retypePass = 'Current password is required';
-                                }
-                                if (values.newPass !== values.retypePass) {
-                                    errors.retypePass = 'Re-type new password does not match new password';
-                                }
+                                    if (!values.retypePass) {
+                                        errors.retypePass = 'Current password is required';
+                                    }
+                                    if (values.newPass !== values.retypePass) {
+                                        errors.retypePass = 'Re-type new password does not match new password';
+                                    }
 
-                                return errors;
-                            }}
-                            onSubmit={(values, {setSubmitting,resetForm} ) => {
-                                let setPass = {
-                                    accountId: account.id,
-                                    pass:values.youPass,
-                                    newPass:values.newPass,
-                                    retypePass:values.retypePass
-                                };
-                                axios.post("http://localhost:8080/account/editPass", setPass,{
-                                    headers: {
-                                        'Authorization': localStorage.getItem('token')
-                                    },
-                                }).then(() => {
-                                    Swal.fire(
-                                        '',
-                                        'Update successful',
-                                        'success'
-                                    )
-                                }).catch(() => {
-                                    Swal.fire(
-                                        'Update failed ?',
-                                        'Incorrect password ?',
-                                        'question'
-                                    )
-                                })
-                                resetForm();
-                                setSubmitting(false);
-                            }}
-                            enableReinitialize={true}
-                        >
-                            {({errors, touched, isSubmitting}) => (
-                                <Form className=" row row-cols-1 row-cols-lg-1">
+                                    return errors;
+                                }}
+                                onSubmit={(values, {setSubmitting, resetForm}) => {
+                                    let setPass = {
+                                        accountId: account.id,
+                                        pass: values.youPass,
+                                        newPass: values.newPass,
+                                        retypePass: values.retypePass
+                                    };
+                                    axios.post("http://localhost:8080/account/editPass", setPass, {
+                                        headers: {
+                                            'Authorization': localStorage.getItem('token')
+                                        },
+                                    }).then(() => {
+                                        Swal.fire(
+                                            '',
+                                            'Update successful',
+                                            'success'
+                                        )
+                                    }).catch(() => {
+                                        Swal.fire(
+                                            'Update failed ?',
+                                            'Incorrect password ?',
+                                            'question'
+                                        )
+                                    })
+                                    resetForm();
+                                    setSubmitting(false);
+                                }}
+                                enableReinitialize={true}
+                            >
+                                {({errors, touched, isSubmitting}) => (
+                                    <Form className=" row row-cols-1 row-cols-lg-1">
+                                        {/* input */}
+                                        <div className="mb-3  col">
+                                            <label className="form-label">You Password</label>
+                                            <Field
+                                                type="password"
+                                                className="form-control"
+                                                placeholder="**********"
+                                                name='youPass'
+                                            />
+                                            {errors.youPass && touched.youPass && (
+                                                <div className="error-message"
+                                                     style={{color: "red"}}>{errors.youPass}</div>
+                                            )}
+                                        </div>
+                                        {/* input */}
+                                        <div className="mb-3 col">
+                                            <label className="form-label">New Password</label>
+                                            <Field
+                                                type="password"
+                                                className="form-control"
+                                                placeholder="**********"
+                                                name='newPass'
 
+                                            />
+                                            {errors.newPass && touched.newPass && (
+                                                <div className="error-message"
+                                                     style={{color: "red"}}>{errors.newPass}</div>
+                                            )}
+                                        </div>
+                                        {/* input */}
+                                        <div className="mb-3 col">
+                                            <label className="form-label">Re-type New Password</label>
+                                            <Field
+                                                type="password"
+                                                className="form-control"
+                                                placeholder="**********"
+                                                name='retypePass'
 
-                                    {/* input */}
-                                    <div className="mb-3  col">
-                                        <label className="form-label">You Password</label>
-                                        <Field
-                                            type="password"
-                                            className="form-control"
-                                            placeholder="**********"
-                                            name='youPass'
-                                        />
-                                        {errors.youPass && touched.youPass && (
-                                            <div className="error-message" style={{color:"red"}}>{errors.youPass}</div>
-                                        )}
-                                    </div>
-                                    {/* input */}
-                                    <div className="mb-3 col">
-                                        <label className="form-label">New Password</label>
-                                        <Field
-                                            type="password"
-                                            className="form-control"
-                                            placeholder="**********"
-                                            name='newPass'
-
-                                        />
-                                        {errors.newPass && touched.newPass && (
-                                            <div className="error-message" style={{color:"red"}}>{errors.newPass}</div>
-                                        )}
-                                    </div>
-                                    {/* input */}
-                                    <div className="mb-3 col">
-                                        <label className="form-label">Re-type New Password</label>
-                                        <Field
-                                            type="password"
-                                            className="form-control"
-                                            placeholder="**********"
-                                            name='retypePass'
-
-                                        />
-                                        {errors.retypePass && touched.retypePass && (
-                                            <div className="error-message" style={{color:"red"}}>{errors.retypePass}</div>
-                                        )}
-                                    </div>
-                                    {/* input */}
-                                    <div className="col-12">
-                                     <br/>
-                                        <button
-                                            type="submit"
-                                            className="btn btn-primary"
-                                            disabled={isSubmitting}
-                                        >
-                                            Update
-                                        </button>
-
-                                    </div>
-
-
-                                </Form>
-                            )}
-                        </Formik>
+                                            />
+                                            {errors.retypePass && touched.retypePass && (
+                                                <div className="error-message"
+                                                     style={{color: "red"}}>{errors.retypePass}</div>
+                                            )}
+                                        </div>
+                                        {/* input */}
+                                        <div className="col-12">
+                                            <br/>
+                                            <button
+                                                type="submit"
+                                                className="btn btn-primary"
+                                                disabled={isSubmitting}
+                                            >
+                                                Update
+                                            </button>
+                                        </div>
+                                    </Form>
+                                )}
+                            </Formik>
                         </div>
                     </div>
-                    <hr className="my-10"/>
-                    <div>
-                        {/* heading */}
-                        <h5 className="mb-4">Delete Account</h5>
-                        <p className="mb-2">Would you like to delete your account?</p>
-                        <p className="mb-5">
-                            This account contain 12 orders, Deleting your account will remove all
-                            the order details associated with it.
-                        </p>
-                        {/* btn */}
-                        <a href="#" className="btn btn-outline-danger">
-                            I want to delete my account
-                        </a>
-                    </div>
+
                 </div>
             </div>
 

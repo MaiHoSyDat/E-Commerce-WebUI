@@ -6,15 +6,17 @@ import ShopSingleView from "../../components/shop/shopSingleView";
 import ShopSingleFilterView from "../../components/shop/shopSingleFilterView";
 import ShopSingleFilter from "../../components/shop/shopSingleFilter";
 import ShopSingleDetail from "../../components/shop/shopSingleDetail";
-import {useParams} from "react-router-dom";
+import {Outlet, useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {getShopDTO} from "../../service/shopService";
+import {getShopDTO, saveIdShop} from "../../service/shopService";
 import {setFilterIdStatus, setFilterShopSingle} from "../../service/inputService";
+import ShopSingleChat from "../../components/shop/shopSingleChat";
 
 const ShopSingle = () => {
     const {idShop} = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
+        dispatch(saveIdShop(idShop));
         const fetchData = async () => {
             await dispatch(getShopDTO(idShop));
             await dispatch(setFilterShopSingle(idShop));

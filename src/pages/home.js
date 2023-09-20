@@ -27,14 +27,21 @@ const Home = () => {
     useEffect(() => {
         let account = JSON.parse(localStorage.getItem('account'))
 
-        if (account && account.status.id === 3 && account.role.name === "ROLE_CUSTOMER") {
+        if (account && account.status.id === 3 && account.role.id == 2) {
             window.$("#statusModal").modal("show");
         }
-        if (account && account.status.id === 3 && account.role.name === "ROLE_SHOP") {
+        if (account && account.status.id === 3 && account.role.id == 3) {
             window.$("#shopInformationModal").modal("show");
         }
-        if (account && account.status.id === 4 && account.role.name === "ROLE_SHOP") {
-            Swal.fire('Need confirm from Admin. Please Waiting...')
+        if (account && account.status.id === 4 && account.role.id == 3) {
+            localStorage.removeItem('account');
+            localStorage.removeItem('token');
+            Swal.fire({
+                text: 'Login successful, You need to waiting response from admin. Thank you',
+                didClose: () => {
+                    window.location.href = "http://localhost:3000/signin";
+                }
+            });
         }
         if (account && account.status.id === 3 && account.role.name === "ROLE_EMPLOYEE") {
             window.$("#employeeModal").modal("show");
@@ -70,8 +77,6 @@ const Home = () => {
         address: Yup.string().required('Address is required'),
         phone: Yup.string().required('Phone is required'),
     })
-
-    console.log(imageUpload)
 
     return (
         <>
@@ -136,29 +141,29 @@ const Home = () => {
                                         }
                                     }
 
-                                axios.post("http://localhost:8080/customer/save",customer,{
-                                    headers: {
-                                        'Authorization': localStorage.getItem('token')
-                                    },
-                                }).
-                                then((rep)=>{
-                                    window.$("#statusModal").modal("hide");
-                                    Swal.fire(
-                                        '',
-                                        'Update successful',
-                                        'success'
-                                    )
-                                    account.status.id =1;
-                                    localStorage.setItem("account" , JSON.stringify(account))
-                                }).catch((err)=>{
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: ' Update failed ',
+                                    axios.post("http://localhost:8080/customer/save",customer,{
+                                        headers: {
+                                            'Authorization': localStorage.getItem('token')
+                                        },
+                                    }).
+                                    then((rep)=>{
+                                        window.$("#statusModal").modal("hide");
+                                        Swal.fire(
+                                            '',
+                                            'Update successful',
+                                            'success'
+                                        )
+                                        account.status.id =1;
+                                        localStorage.setItem("account" , JSON.stringify(account))
+                                    }).catch((err)=>{
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: ' Update failed ',
+                                        })
+                                        window.$("#statusModal").modal("show");
+                                        console.log(err)
                                     })
-                                    window.$("#statusModal").modal("show");
-                                    console.log(err)
-                                })
 
 
                                     setSubmitting(false);
@@ -607,10 +612,10 @@ const Home = () => {
             </div>
 
             {account === null && <Navbar></Navbar>}
-            {account && account.role.name === "ROLE_CUSTOMER" && <NavbarCustomer></NavbarCustomer>}
-            {account && account.role.name === "ROLE_ADMIN" && <NavbarAdmin></NavbarAdmin>}
-            {account && account.role.name === "ROLE_SHOP" && <NavbarShop></NavbarShop>}
-            {account && account.role.name === "ROLE_EMPLOYEE" && <NavbarEmployee></NavbarEmployee>}
+            {account && account.role.id == 2 && <NavbarCustomer></NavbarCustomer>}
+            {account && account.role.id == 1 && <NavbarAdmin></NavbarAdmin>}
+            {account && account.role.id == 3 && <NavbarShop></NavbarShop>}
+            {account && account.role.id == 4 && <NavbarEmployee></NavbarEmployee>}
             <main>
                 <Index></Index>
             </main>

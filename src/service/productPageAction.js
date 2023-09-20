@@ -17,7 +17,11 @@ import axios from "axios";
 export const getProductPage = createAsyncThunk(
     'product/pageAll',
     async (page) => {
-        const res = await axios.get(`http://localhost:8080/products/page?page=` + page);
+        const res = await axios.get(`http://localhost:8080/products/page?page=` + page, {
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            },
+        });
         console.log(res)
         return res.data.content;
     }

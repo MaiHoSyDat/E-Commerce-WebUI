@@ -7,7 +7,11 @@ import {
 export const fetchProductDetail = (productId) => async (dispatch) => {
         try {
             dispatch(fetchProductDetailRequest());
-            const response = await fetch(`http://localhost:8080/products/${productId}`);
+            const response = await fetch(`http://localhost:8080/products/${productId}`, {
+                headers: {
+                    'Authorization': localStorage.getItem('token'),
+                },
+            });
             if (!response.ok) {
                 throw new Error("Request failed");
             }
@@ -21,7 +25,11 @@ export const fetchProductDetail = (productId) => async (dispatch) => {
 export const productDetail = (productId) => async (dispatch) => {
         try {
             dispatch(fetchProductDetailRequest());
-            const response = await fetch(`http://localhost:8080/products/productDetail/${productId}`);
+            const response = await fetch(`http://localhost:8080/products/productDetail/${productId}`, {
+                headers: {
+                    'Authorization': localStorage.getItem('token'),
+                },
+            });
             if (!response.ok) {
                 throw new Error("Request failed");
             }
