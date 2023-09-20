@@ -129,6 +129,8 @@ function App() {
                 <Route path="address" element={<ShopAddress/>}/>
                 <Route path="notification" element={<ShopNotification/>}/>
                 <Route path="message" element={<ShopMessage/>}/>
+                <Route path="setting" element={<ShopSetting/>}/>
+
             </Route>
             <Route path="employee" element={<Employee/>}>
                 <Route path="setting" element={<EmployeeSetting/>}/>

@@ -22,9 +22,6 @@ const DashboardIndex = () => {
                                 <p>
                                     FreshCart is simple &amp; clean design for developer and designer.
                                 </p>
-                                <a href="#" className="btn btn-primary">
-                                    Create Product
-                                </a>
                             </div>
                         </div>
                     </div>

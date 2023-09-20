@@ -14,11 +14,9 @@ const ProductDetailRelatedItems = () => {
         return state.product.fiveMostPurchasedProducts;
     })
     const customerLogin = useSelector(state => {
-        console.log(state.customer.customerLogin)
         return state.customer.customerLogin;
     })
     const wishlistByCustomer = useSelector(state => {
-        console.log(state)
         return state.wishlist.wishlistByCustomer;
     })
     useEffect(() => {
