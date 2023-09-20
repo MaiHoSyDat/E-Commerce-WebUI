@@ -51,47 +51,6 @@ const DashboardMenu = () => {
                                 </a>
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <a
-                                    className="nav-link   collapsed "
-                                    href="#"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navCategoriesOrders"
-                                    aria-expanded="false"
-                                    aria-controls="navCategoriesOrders"
-                                >
-                                    <div className="d-flex align-items-center">
-                <span className="nav-link-icon">
-                  {" "}
-                    <i className="bi bi-bag"/>
-                </span>
-                                        <span className="nav-link-text">Orders</span>
-                                    </div>
-                                </a>
-                                <div
-                                    id="navCategoriesOrders"
-                                    className="collapse "
-                                    data-bs-parent="#sideNavbar"
-                                >
-                                    <ul className="nav flex-column">
-                                        <li className="nav-item ">
-                                            <Link to={"/dashboard/order"}>
-                                            <a className="nav-link " href="/dashboard/order">
-                                                List
-                                            </a>
-                                            </Link>
-                                        </li>
-                                        {/* Nav item */}
-                                        <li className="nav-item ">
-                                            <Link to={"/dashboard/orderDetail"}>
-                                            <a className="nav-link " href="/dashboard/orderDetail">
-                                                Single
-                                            </a>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
 
                             <li className="nav-item">
                                 <a
@@ -173,17 +132,6 @@ const DashboardMenu = () => {
                                 </Link>
                             </li>
                             <li className="nav-item ">
-                                <Link to={"/dashboard/review"}>
-                                <a className="nav-link " href="/dashboard/review">
-                                    <div className="d-flex align-items-center">
-                <span className="nav-link-icon">
-                  {" "}
-                    <i className="bi bi-star"/>
-                </span>
-                                        <span className="nav-link-text">Reviews</span>
-                                    </div>
-                                </a>
-                                </Link>
                             </li>
                             <li className="nav-item ">
                                 <Link to={"/dashboard/salary"}>
@@ -257,43 +205,6 @@ const DashboardMenu = () => {
                                         <span className="nav-link-text">Categories</span>
                                     </div>
                                 </a>
-                            </li>
-                            <li className="nav-item">
-                                <a
-                                    className="nav-link   collapsed "
-                                    href="#"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#navOrders"
-                                    aria-expanded="false"
-                                    aria-controls="navOrders"
-                                >
-                                    <div className="d-flex align-items-center">
-                <span className="nav-link-icon">
-                  {" "}
-                    <i className="bi bi-bag"/>
-                </span>
-                                        <span className="nav-link-text">Orders</span>
-                                    </div>
-                                </a>
-                                <div
-                                    id="navOrders"
-                                    className="collapse "
-                                    data-bs-parent="#sideNavbar"
-                                >
-                                    <ul className="nav flex-column">
-                                        <li className="nav-item ">
-                                            <a className="nav-link " href="order-list.html">
-                                                List
-                                            </a>
-                                        </li>
-                                        {/* Nav item */}
-                                        <li className="nav-item ">
-                                            <a className="nav-link " href="order-single.html">
-                                                Single
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                             <li className="nav-item ">
                                 <a className="nav-link " href="vendor-grid.html">

@@ -18,19 +18,15 @@ const ProductDetailInformation = ({product}) => {
     let account = JSON.parse(localStorage.getItem("account"));
     const dispatch = useDispatch();
     const customerLogin = useSelector(state => {
-        console.log(state.customer.customerLogin)
         return state.customer.customerLogin;
     })
     const shopLogin = useSelector(state => {
-        console.log(state)
         return state.shop.shopLogin;
     })
     const shopProducts = useSelector(state => {
-        console.log(state)
         return state.product.shopProducts;
     })
     const allFeedbackByProduct = useSelector(state => {
-        console.log(state)
         return state.feedback.allFeedbackByProduct;
     })
     const {productId} = useParams();
@@ -51,17 +47,13 @@ const ProductDetailInformation = ({product}) => {
     };
     // end
     const [start, setStart] = useState([])
-    console.log(reviews)
     const productDetail = useSelector(state => {
-        console.log(state)
         return state.product.product;
     })
     const productsByCustomerBuy = useSelector(state => {
-        console.log(state)
         return state.product.productsByCustomerBuy;
     })
     const reviewsByProductAndCustomer = useSelector(state => {
-        console.log(state)
         return state.review.reviewsByProductAndCustomer;
     })
     useEffect(() => {
@@ -101,7 +93,6 @@ const ProductDetailInformation = ({product}) => {
         dispatch(getAllReviewsByProductAndCustomer([productDetail.id, customerLogin.id]));
     },[customerLogin,productDetail])
     const totalStart = (data) => {
-        console.log(data[1].rating)
         let arr = []
         for (let i = 0; i < data.length; i++) {
             arr.push(data[i].rating)

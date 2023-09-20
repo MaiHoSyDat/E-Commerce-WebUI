@@ -41,7 +41,7 @@ const ShopMenu = () => {
                         </li>
                         {/* nav item */}
                         <li className="nav-item">
-                            <Link to={"/shop/setting"}>
+                            <Link to={"/shop-manager/setting"}>
                                 <a className="nav-link " href="">
                                     <i className="feather-icon icon-settings me-2" />
                                     Settings
