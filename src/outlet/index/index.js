@@ -5,6 +5,7 @@ import {getFilterProducts, getTenProductsToIndex, getThreeProductsMaxRating} fro
 import {getCustomerByAccountLogin} from "../../service/customerService";
 import {getWishlistByCustomerId, updateWishlist} from "../../service/wishlistService";
 import Swal from "sweetalert2";
+import {setFilterCategory} from "../../service/inputService";
 
 const Index = () => {
     let account = JSON.parse(localStorage.getItem("account"));
@@ -28,12 +29,12 @@ const Index = () => {
         if (account != null) {
             dispatch(getCustomerByAccountLogin(account.id));
         }
-    },[]);
+    }, []);
     useEffect(() => {
         dispatch(getWishlistByCustomerId(customerLogin.id));
         dispatch(getTenProductsToIndex());
         dispatch(getThreeProductsMaxRating());
-    },[customerLogin]);
+    }, [customerLogin]);
     const handleAddProductToWishlist = (idProduct) => {
         if (account != null) {
             if (account.role.name == "ROLE_CUSTOMER") {
@@ -44,7 +45,7 @@ const Index = () => {
                 // }
                 let newProducts = [...wishlistByCustomer.products]
                 if (!checkId) {
-                    newProducts.push({id:idProduct});
+                    newProducts.push({id: idProduct});
                     let newWishlist = {
                         id: wishlistByCustomer.id,
                         products: newProducts,
@@ -72,7 +73,8 @@ const Index = () => {
                             Swal.fire('The product already exists in the wishlist!')
                         })
                         .catch(err => {
-                            console.log(err)})
+                            console.log(err)
+                        })
 
                 }
             }
@@ -106,7 +108,7 @@ const Index = () => {
                                     home delivery.
                                 </p>
                                 <a href="#!" className="btn btn-dark mt-3">
-                                    Shop Now <i className="feather-icon icon-arrow-right ms-1" />
+                                    Shop Now <i className="feather-icon icon-arrow-right ms-1"/>
                                 </a>
                             </div>
                         </div>
@@ -123,117 +125,117 @@ const Index = () => {
                     </div>
                     <div className="row">
                         <div className="item col-2">
-                            <Link to={"/product/filter"}>
-                            <a
-                                href="pages/shop-grid.html"
-                                className="text-decoration-none text-inherit"
-                            >
-                                <div className="card card-product mb-lg-4">
-                                    <div className="card-body text-center py-8">
-                                        <img
-                                            src="assets/images/category/category-dairy-bread-eggs.jpg"
-                                            alt="Grocery Ecommerce Template"
-                                            className="mb-3 img-fluid"
-                                        />
-                                        <div className="text-truncate">Dairy, Bread &amp; Eggs</div>
+                            <Link to={"/product/filter"} onClick={() => {setFilterCategory("Dairy, Bread & Eggs")}}>
+                                <a
+                                    href="pages/shop-grid.html"
+                                    className="text-decoration-none text-inherit"
+                                >
+                                    <div className="card card-product mb-lg-4">
+                                        <div className="card-body text-center py-8">
+                                            <img
+                                                src="assets/images/category/category-dairy-bread-eggs.jpg"
+                                                alt="Grocery Ecommerce Template"
+                                                className="mb-3 img-fluid"
+                                            />
+                                            <div className="text-truncate">Dairy, Bread &amp; Eggs</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
                             </Link>
                         </div>
                         <div className="item col-2">
-                            <Link to={"/product/filter"}>
-                            <a
-                                href="pages/shop-grid.html"
-                                className="text-decoration-none text-inherit"
-                            >
-                                <div className="card card-product mb-lg-4">
-                                    <div className="card-body text-center py-8">
-                                        <img
-                                            src="assets/images/category/category-snack-munchies.jpg"
-                                            alt="Grocery Ecommerce Template"
-                                            className="mb-3"
-                                        />
-                                        <div className="text-truncate">Snack &amp; Munchies</div>
+                            <Link to={"/product/filter"} onClick={() => {setFilterCategory("Snacks & Munchies")}}>
+                                <a
+                                    href="pages/shop-grid.html"
+                                    className="text-decoration-none text-inherit"
+                                >
+                                    <div className="card card-product mb-lg-4">
+                                        <div className="card-body text-center py-8">
+                                            <img
+                                                src="assets/images/category/category-snack-munchies.jpg"
+                                                alt="Grocery Ecommerce Template"
+                                                className="mb-3"
+                                            />
+                                            <div className="text-truncate">Snack &amp; Munchies</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
                             </Link>
                         </div>
                         <div className="item col-2">
-                            <Link to={"/product/filter"}>
-                            <a
-                                href="pages/shop-grid.html"
-                                className="text-decoration-none text-inherit"
-                            >
-                                <div className="card card-product mb-lg-4">
-                                    <div className="card-body text-center py-8">
-                                        <img
-                                            src="assets/images/category/category-bakery-biscuits.jpg"
-                                            alt="Grocery Ecommerce Template"
-                                            className="mb-3"
-                                        />
-                                        <div className="text-truncate">Bakery &amp; Biscuits</div>
+                            <Link to={"/product/filter"} onClick={() => {setFilterCategory("Bakery & Biscuits")}}>
+                                <a
+                                    href="pages/shop-grid.html"
+                                    className="text-decoration-none text-inherit"
+                                >
+                                    <div className="card card-product mb-lg-4">
+                                        <div className="card-body text-center py-8">
+                                            <img
+                                                src="assets/images/category/category-bakery-biscuits.jpg"
+                                                alt="Grocery Ecommerce Template"
+                                                className="mb-3"
+                                            />
+                                            <div className="text-truncate">Bakery &amp; Biscuits</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
                             </Link>
                         </div>
                         <div className="item col-2">
-                            <Link to={"/product/filter"}>
-                            <a
-                                href="pages/shop-grid.html"
-                                className="text-decoration-none text-inherit"
-                            >
-                                <div className="card card-product mb-lg-4">
-                                    <div className="card-body text-center py-8">
-                                        <img
-                                            src="assets/images/category/category-instant-food.jpg"
-                                            alt="Grocery Ecommerce Template"
-                                            className="mb-3"
-                                        />
-                                        <div className="text-truncate">Instant Food</div>
+                            <Link to={"/product/filter"} onClick={() => {setFilterCategory("Breakfast & Instant Food")}}>
+                                <a
+                                    href="pages/shop-grid.html"
+                                    className="text-decoration-none text-inherit"
+                                >
+                                    <div className="card card-product mb-lg-4">
+                                        <div className="card-body text-center py-8">
+                                            <img
+                                                src="assets/images/category/category-instant-food.jpg"
+                                                alt="Grocery Ecommerce Template"
+                                                className="mb-3"
+                                            />
+                                            <div className="text-truncate">Instant Food</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
                             </Link>
                         </div>
                         <div className="item col-2">
-                            <Link to={"/product/filter"}>
-                            <a
-                                href="pages/shop-grid.html"
-                                className="text-decoration-none text-inherit"
-                            >
-                                <div className="card card-product mb-lg-4">
-                                    <div className="card-body text-center py-8">
-                                        <img
-                                            src="assets/images/category/category-tea-coffee-drinks.jpg"
-                                            alt="Grocery Ecommerce Template"
-                                            className="mb-3"
-                                        />
-                                        <div className="text-truncate">Tea, Coffee &amp; Drinks</div>
+                            <Link to={"/product/filter"} onClick={() => {setFilterCategory("Cold Drinks & Juices")}}>
+                                <a
+                                    href="pages/shop-grid.html"
+                                    className="text-decoration-none text-inherit"
+                                >
+                                    <div className="card card-product mb-lg-4">
+                                        <div className="card-body text-center py-8">
+                                            <img
+                                                src="assets/images/category/category-tea-coffee-drinks.jpg"
+                                                alt="Grocery Ecommerce Template"
+                                                className="mb-3"
+                                            />
+                                            <div className="text-truncate">Tea, Coffee &amp; Drinks</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
                             </Link>
                         </div>
                         <div className="item col-2">
-                            <Link to={"/product/filter"}>
-                            <a
-                                href="pages/shop-grid.html"
-                                className="text-decoration-none text-inherit"
-                            >
-                                <div className="card card-product mb-lg-4">
-                                    <div className="card-body text-center py-8">
-                                        <img
-                                            src="assets/images/category/category-atta-rice-dal.jpg"
-                                            alt="Grocery Ecommerce Template"
-                                            className="mb-3"
-                                        />
-                                        <div className="text-truncate">Atta, Rice &amp; Dal</div>
+                            <Link to={"/product/filter"} onClick={() => {setFilterCategory("Fruits & Vegetables")}}>
+                                <a
+                                    href="pages/shop-grid.html"
+                                    className="text-decoration-none text-inherit"
+                                >
+                                    <div className="card card-product mb-lg-4">
+                                        <div className="card-body text-center py-8">
+                                            <img
+                                                src="assets/images/category/category-atta-rice-dal.jpg"
+                                                alt="Grocery Ecommerce Template"
+                                                className="mb-3"
+                                            />
+                                            <div className="text-truncate">Atta, Rice &amp; Dal</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
                             </Link>
                         </div>
 
@@ -309,42 +311,19 @@ const Index = () => {
                                         <div className="card-body">
                                             <div className="text-center position-relative ">
                                                 <div className=" position-absolute top-0 start-0">
-                                                    {dto.product.status && <span className="badge bg-danger">{dto.product.status.name}</span>}
+                                                    {dto.product.status &&
+                                                        <span className="badge bg-danger">{dto.product.status.name}</span>}
                                                 </div>
                                                 <a href="#">
                                                     {" "}
                                                     <img
+                                                        style={{width:"184px", height:"184px"}}
                                                         src={dto.product.thumbnail}
                                                         alt="Grocery Ecommerce Template"
                                                         className="mb-3 img-fluid"
                                                     />
                                                 </a>
-                                                <div className="card-product-action">
-                                                    <Link to={"/product/detail/" + dto.product.id}>
-                                                    <a
-                                                        href=""
-                                                        className="btn-action"
-                                                        data-bs-toggle=""
-                                                        data-bs-target=""
-                                                    >
-                                                        <i
-                                                            className="bi bi-eye"
-                                                            data-bs-toggle=""
-                                                            data-bs-html=""
-                                                            title="Quick View"
-                                                        />
-                                                    </a>
-                                                    </Link>
-                                                    {account != null && account.role.name == "ROLE_CUSTOMER" && <button style={{ border: "none" }}
-                                                                                                     className="btn-action"
-                                                                                                     data-bs-toggle=""
-                                                                                                     data-bs-html=""
-                                                                                                     title="Wishlist"
-                                                                                                     onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
-                                                    >
-                                                        <i className="bi bi-heart" />
-                                                    </button>}
-                                                </div>
+
                                             </div>
                                             <div className="text-small mb-1">
                                                 <a href="#!" className="text-decoration-none text-muted">
@@ -353,47 +332,81 @@ const Index = () => {
                                             </div>
                                             <h2 className="fs-6">
                                                 <Link to={"/product/detail/" + dto.product.id}>
-                                                <a
-                                                    href=""
-                                                    className="text-inherit text-decoration-none"
-                                                >
-                                                    {dto.product.name}
-                                                </a>
+                                                    <a
+                                                        href=""
+                                                        className="text-inherit text-decoration-none"
+                                                    >
+                                                        {dto.product.name}
+                                                    </a>
                                                 </Link>
                                             </h2>
                                             <div>
                                                 {" "}
                                                 <small className="text-warning">
                                                     {numbers.map((i) => (
-                                                        i <= Math.floor(dto.average_rating) ? (<i className="bi bi-star-fill"/>) : (<i className="bi bi-star"/>)
-                                                        ))}
+                                                        i <= Math.floor(dto.average_rating) ? (
+                                                            <i className="bi bi-star-fill"/>) : (
+                                                            <i className="bi bi-star"/>)
+                                                    ))}
                                                 </small>
                                                 {" "}
-                                                <span className="text-muted small">{dto.average_rating}({dto.total_reviews} reviews)</span>
+                                                <span
+                                                    className="text-muted small">{dto.average_rating}({dto.total_reviews} reviews)</span>
                                             </div>
                                             <div className="d-flex justify-content-between align-items-center mt-3">
                                                 <div>
                                                     <span className="text-dark">${dto.product.price}</span>{" "}
                                                 </div>
+                                                {/*<div>*/}
+                                                {/*    <a href="#!" className="btn btn-primary btn-sm">*/}
+                                                {/*        <svg*/}
+                                                {/*            xmlns="http://www.w3.org/2000/svg"*/}
+                                                {/*            width={16}*/}
+                                                {/*            height={16}*/}
+                                                {/*            viewBox="0 0 24 24"*/}
+                                                {/*            fill="none"*/}
+                                                {/*            stroke="currentColor"*/}
+                                                {/*            strokeWidth={2}*/}
+                                                {/*            strokeLinecap="round"*/}
+                                                {/*            strokeLinejoin="round"*/}
+                                                {/*            className="feather feather-plus"*/}
+                                                {/*        >*/}
+                                                {/*            <line x1={12} y1={5} x2={12} y2={19} />*/}
+                                                {/*            <line x1={5} y1={12} x2={19} y2={12} />*/}
+                                                {/*        </svg>*/}
+                                                {/*        Add*/}
+                                                {/*    </a>*/}
+                                                {/*</div>*/}
+
+
                                                 <div>
-                                                    <a href="#!" className="btn btn-primary btn-sm">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width={16}
-                                                            height={16}
-                                                            viewBox="0 0 24 24"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            strokeWidth={2}
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            className="feather feather-plus"
+                                                    <Link to={"/product/detail/" + dto.product.id}>
+                                                        <a
+                                                            href=""
+                                                            className="btn-action"
+                                                            data-bs-toggle=""
+                                                            data-bs-target=""
                                                         >
-                                                            <line x1={12} y1={5} x2={12} y2={19} />
-                                                            <line x1={5} y1={12} x2={19} y2={12} />
-                                                        </svg>
-                                                        Add
-                                                    </a>
+                                                            <i
+                                                                className="bi bi-eye"
+                                                                data-bs-toggle=""
+                                                                data-bs-html=""
+                                                                title="Quick View"
+                                                            />
+                                                        </a>
+                                                    </Link>
+                                                    {account != null && account.role.name == "ROLE_CUSTOMER" &&
+                                                        <button style={{border: "none"}}
+                                                                className="btn-action"
+                                                                data-bs-toggle=""
+                                                                data-bs-html=""
+                                                                title="Wishlist"
+                                                                onClick={() => {
+                                                                    handleAddProductToWishlist(dto.product.id)
+                                                                }}
+                                                        >
+                                                            <i className="bi bi-heart"/>
+                                                        </button>}
                                                 </div>
                                             </div>
                                         </div>
@@ -432,7 +445,7 @@ const Index = () => {
                                         </h3>
                                         <p className="text-white">Get the best deal before close.</p>
                                         <a href="#!" className="btn btn-primary">
-                                            Shop Now <i className="feather-icon icon-arrow-right ms-1" />
+                                            Shop Now <i className="feather-icon icon-arrow-right ms-1"/>
                                         </a>
                                     </div>
                                 </div>
@@ -443,40 +456,44 @@ const Index = () => {
                                         <div className="card-body">
                                             <div className="text-center  position-relative ">
                                                 <div className=" position-absolute top-0 start-0">
-                                                    {dto.product.status && <span className="badge bg-danger">{dto.product.status.name}</span>}
+                                                    {dto.product.status && <span
+                                                        className="badge bg-danger">{dto.product.status.name}</span>}
                                                 </div>
                                                 <a href="pages/shop-single.html">
                                                     <img
                                                         src={dto.product.thumbnail}
                                                         alt="Grocery Ecommerce Template"
                                                         className="mb-3 img-fluid"
+                                                        style={{width: "184px", height: "184px"}}
                                                     />
                                                 </a>
                                                 <div className="card-product-action">
                                                     <Link to={"/product/detail/" + dto.product.id}>
-                                                    <a
-                                                        href="#"
-                                                        className="btn-action"
-                                                        data-bs-toggle=""
-                                                        data-bs-target=""
-                                                    >
-                                                        <i
-                                                            className="bi bi-eye"
+                                                        <a
+                                                            href="#"
+                                                            className="btn-action"
+                                                            data-bs-toggle=""
+                                                            data-bs-target=""
+                                                        >
+                                                            <i
+                                                                className="bi bi-eye"
+                                                                data-bs-toggle=""
+                                                                data-bs-html=""
+                                                                title="Quick View"
+                                                            />
+                                                        </a>
+                                                    </Link>
+                                                    <button style={{border: "none"}}
+                                                            onClick={() => {
+                                                                handleAddProductToWishlist(dto.product.id)
+                                                            }}
+                                                            className="btn-action"
                                                             data-bs-toggle=""
                                                             data-bs-html=""
-                                                            title="Quick View"
-                                                        />
-                                                    </a>
-                                                    </Link>
-                                                    <button style={{ border: "none" }}
-                                                        onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
-                                                        className="btn-action"
-                                                        data-bs-toggle=""
-                                                        data-bs-html=""
-                                                        title="Wishlist"
+                                                            title="Wishlist"
 
                                                     >
-                                                        <i className="bi bi-heart" />
+                                                        <i className="bi bi-heart"/>
                                                     </button>
                                                 </div>
                                             </div>
@@ -487,12 +504,12 @@ const Index = () => {
                                             </div>
                                             <h2 className="fs-6">
                                                 <Link to={"/product/detail/" + dto.product.id}>
-                                                <a
-                                                    href=""
-                                                    className="text-inherit text-decoration-none"
-                                                >
-                                                    {dto.product.name}
-                                                </a>
+                                                    <a
+                                                        href=""
+                                                        className="text-inherit text-decoration-none"
+                                                    >
+                                                        {dto.product.name}
+                                                    </a>
                                                 </Link>
                                             </h2>
                                             <div className="d-flex justify-content-between align-items-center mt-3">
@@ -503,7 +520,9 @@ const Index = () => {
                                                     {" "}
                                                     <small className="text-warning">
                                                         {numbers.map((i) => (
-                                                            i <= Math.round(dto.average_rating) ? (<i className="bi bi-star-fill"/>) : (<i className="bi bi-star"/>)
+                                                            i <= Math.round(dto.average_rating) ? (
+                                                                <i className="bi bi-star-fill"/>) : (
+                                                                <i className="bi bi-star"/>)
                                                         ))}
                                                     </small>
                                                     {" "}
@@ -526,8 +545,8 @@ const Index = () => {
                                                         strokeLinejoin="round"
                                                         className="feather feather-plus"
                                                     >
-                                                        <line x1={12} y1={5} x2={12} y2={19} />
-                                                        <line x1={5} y1={12} x2={19} y2={12} />
+                                                        <line x1={12} y1={5} x2={12} y2={19}/>
+                                                        <line x1={5} y1={12} x2={19} y2={12}/>
                                                     </svg>
                                                     Add to cart{" "}
                                                 </a>
@@ -552,7 +571,7 @@ const Index = () => {
                         <div className="col-md-6 col-lg-3">
                             <div className="mb-8 mb-xl-0">
                                 <div className="mb-6">
-                                    <img src="assets/images/icons/clock.svg" alt="" />
+                                    <img src="assets/images/icons/clock.svg" alt=""/>
                                 </div>
                                 <h3 className="h5 mb-3">10 minute grocery now</h3>
                                 <p>
@@ -564,7 +583,7 @@ const Index = () => {
                         <div className="col-md-6  col-lg-3">
                             <div className="mb-8 mb-xl-0">
                                 <div className="mb-6">
-                                    <img src="assets/images/icons/gift.svg" alt="" />
+                                    <img src="assets/images/icons/gift.svg" alt=""/>
                                 </div>
                                 <h3 className="h5 mb-3">Best Prices &amp; Offers</h3>
                                 <p>
@@ -576,7 +595,7 @@ const Index = () => {
                         <div className="col-md-6 col-lg-3">
                             <div className="mb-8 mb-xl-0">
                                 <div className="mb-6">
-                                    <img src="assets/images/icons/package.svg" alt="" />
+                                    <img src="assets/images/icons/package.svg" alt=""/>
                                 </div>
                                 <h3 className="h5 mb-3">Wide Assortment</h3>
                                 <p>
@@ -588,7 +607,7 @@ const Index = () => {
                         <div className="col-md-6 col-lg-3">
                             <div className="mb-8 mb-xl-0">
                                 <div className="mb-6">
-                                    <img src="assets/images/icons/refresh-cw.svg" alt="" />
+                                    <img src="assets/images/icons/refresh-cw.svg" alt=""/>
                                 </div>
                                 <h3 className="h5 mb-3">Easy Returns</h3>
                                 <p>

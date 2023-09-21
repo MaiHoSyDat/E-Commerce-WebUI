@@ -225,6 +225,7 @@ const ShopSingleFilterLogin = ({product}) => {
                                         },
                                         images: imageUrls
                                     }
+                                    console.log(productNew)
                                     axios
                                         .post('http://localhost:8080/shops/' + account.id + '/products/create', productNew,
                                             {
@@ -241,6 +242,7 @@ const ShopSingleFilterLogin = ({product}) => {
                                             document.getElementById("image").value = null
                                             dispatch(getAllProductsByShop(shopLogin.id));
                                             dispatch(setFilterCategory("All Categories"));
+                                            dispatch(getFilterProducts(filterParam));
                                             resetForm();
                                             Swal.fire(
                                                 'Good...!',

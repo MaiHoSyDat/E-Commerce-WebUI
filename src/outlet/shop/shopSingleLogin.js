@@ -30,7 +30,6 @@ const ShopSingleLogin = () => {
     const handleEditProduct = (product) => {
         setProduct(product)
     };
-    console.log(shopLogin)
     return (
         <>
             {shopLogin && <section className="mb-lg-14 mb-8 mt-8">

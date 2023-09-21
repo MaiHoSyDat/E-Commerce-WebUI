@@ -22,6 +22,7 @@ const ShopSingleView = () => {
                     src={shopDTO.shop.logo}
                     alt=""
                     className="img-fluid"
+                    width="100" height="100"
                 />
             </div>}
 

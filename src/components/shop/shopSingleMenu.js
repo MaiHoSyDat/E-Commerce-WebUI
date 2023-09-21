@@ -15,7 +15,6 @@ const ShopSingleMenu = () => {
         return state.category.tenCategoriesPage;
     })
     const idShopView = useSelector(state => {
-        console.log(state.shop.idShop)
         return state.shop.idShop;
     })
     const {idShop} = useParams();

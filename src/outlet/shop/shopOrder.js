@@ -18,20 +18,21 @@ const ShopOrder = () => {
         return state.order.ordersByShop;
     })
     const statusOrder = useSelector(state => {
+        console.log(state.status.statusOrder)
         return state.status.statusOrder;
     })
     useEffect(() => {
         dispatch(getAllStatusOrder())
         dispatch(getShopByAccountLogin(account.id));
-    },[])
+    }, [])
     useEffect(() => {
         dispatch(getAllOrdersByShop(shopLogin.id));
-    },[shopLogin])
+    }, [shopLogin])
     const [filterItems, setFilterItems] = useState([]);
-    useEffect(() =>{
+    useEffect(() => {
         setFilterItems([...ordersByShop])
-    },[ordersByShop])
-    const handleFilterStatus = () =>{
+    }, [ordersByShop])
+    const handleFilterStatus = () => {
         let statusName = document.getElementById("filterStatus").value;
         if (statusName == "All") setFilterItems([...ordersByShop]);
         else {
@@ -63,10 +64,11 @@ const ShopOrder = () => {
                         <div className="col-6"><h2 className="mb-6">Orders </h2></div>
                         <div className="col-2"><h2 className="mb-6">Status: </h2></div>
                         <div className="col-4">
-                            <select className="form-select" aria-label="Default select example" style={{width:"200px"}} id={"filterStatus"} onClick={handleFilterStatus}>
-                                <option value="All" >All</option>
+                            <select className="form-select" aria-label="Default select example" style={{width: "200px"}}
+                                    id={"filterStatus"} onClick={handleFilterStatus}>
+                                <option value="All">All</option>
                                 {statusOrder && statusOrder.map(status => (
-                                    <option value={status.name} >{status.name}</option>
+                                    <option value={status.name}>{status.name}</option>
                                 ))}
                             </select>
                         </div>
@@ -82,14 +84,14 @@ const ShopOrder = () => {
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Amount</th>
-                                <th />
+                                <th/>
                             </tr>
                             </thead>
                             <tbody>
                             {currentProducts && currentProducts.map(order => (
                                 <tr>
                                     <td className="align-middle border-top-0 w-0">
-                                        <i className="feather-icon icon-clipboard" style={{ color: "blue" }} />
+                                        <i className="feather-icon icon-clipboard" style={{color: "blue"}}/>
                                     </td>
                                     <td className="align-middle border-top-0">
                                         <a href="#" className="text-inherit">
@@ -98,21 +100,28 @@ const ShopOrder = () => {
                                     </td>
                                     <td className="align-middle border-top-0">{order.date_create}</td>
                                     <td className="align-middle border-top-0">
-                                        <select className="form-select" aria-label="Default select example" id={"statusOrder" + order.id} onClick={() => {
+                                        <select className="form-select" aria-label="Default select example"
+                                                id={"statusOrder" + order.id} onClick={() => {
                                             //change status
                                             let status = JSON.parse(document.getElementById("statusOrder" + order.id).value);
+                                            console.log(status)
                                             if (status.id != order.status.id) {
-                                                let newOrder = {...order, status:{id: status.id}}
+                                                let newOrder = {...order, status: {id: status.id}}
+                                                console.log(newOrder)
                                                 //notification
                                                 let name = "Order";
                                                 let context = "Status change to " + status.name;
                                                 let sender = shopLogin.account;
                                                 let receiver = order.user.account;
-                                                let notification = {name: name, context: context,
-                                                    sender: sender, receiver: receiver};
+                                                let notification = {
+                                                    name: name, context: context,
+                                                    sender: sender, receiver: receiver
+                                                };
                                                 const fetchData = async () => {
-                                                    await dispatch(addNotification(notification));
-                                                    await dispatch(updateOrder([order.id, newOrder]));
+                                                    let x = await dispatch(addNotification(notification));
+                                                    console.log(x)
+                                                    let y = await dispatch(updateOrder([order.id, newOrder]));
+                                                    console.log(y)
                                                     await dispatch(getAllOrdersByShop(shopLogin.id))
                                                         .then(Swal.fire(
                                                             'Success!',
@@ -125,8 +134,11 @@ const ShopOrder = () => {
                                         }}>
                                             {statusOrder && statusOrder.map(status => (
                                                 <>
-                                                    {status.name == order.status.name && <option value={JSON.stringify(status)} selected >{status.name}</option>}
-                                                    {status.name != order.status.name && <option value={JSON.stringify(status)} >{status.name}</option>}
+                                                    {status.name == order.status.name &&
+                                                        <option value={JSON.stringify(status)}
+                                                                selected>{status.name}</option>}
+                                                    {status.name != order.status.name &&
+                                                        <option value={JSON.stringify(status)}>{status.name}</option>}
                                                 </>
                                             ))}
 
@@ -142,7 +154,7 @@ const ShopOrder = () => {
                                                 data-bs-placement="top"
                                                 data-bs-title="View"
                                             >
-                                                <i className="feather-icon icon-eye" />
+                                                <i className="feather-icon icon-eye"/>
                                             </a>
                                         </Link>
                                     </td>
@@ -160,13 +172,15 @@ const ShopOrder = () => {
                         <nav>
                             <ul className="pagination">
                                 <li className="page-item">
-                                    <a className="page-link  mx-1 " aria-label="Previous" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-                                        <i className="feather-icon icon-chevron-left" />
+                                    <a className="page-link  mx-1 " aria-label="Previous"
+                                       onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                                        <i className="feather-icon icon-chevron-left"/>
                                     </a>
                                 </li>
-                                {Array.from({ length: totalPages }, (_, index) => (
+                                {Array.from({length: totalPages}, (_, index) => (
                                     <li className="page-item">
-                                        <a className="page-link mx-1 text-body" key={index} onClick={() => handlePageChange(index + 1)}>
+                                        <a className="page-link mx-1 text-body" key={index}
+                                           onClick={() => handlePageChange(index + 1)}>
                                             {index + 1}
                                         </a>
                                     </li>
@@ -192,8 +206,10 @@ const ShopOrder = () => {
                                 {/*    </a>*/}
                                 {/*</li>*/}
                                 <li className="page-item">
-                                    <a className="page-link mx-1 text-body" aria-label="Next" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-                                        <i className="feather-icon icon-chevron-right" />
+                                    <a className="page-link mx-1 text-body" aria-label="Next"
+                                       onClick={() => handlePageChange(currentPage + 1)}
+                                       disabled={currentPage === totalPages}>
+                                        <i className="feather-icon icon-chevron-right"/>
                                     </a>
                                 </li>
                             </ul>

@@ -104,34 +104,14 @@ const ShopSingleFilterView = () => {
                                     </div>
                                     <Link to={"/product/detail/" + dto.product.id}>
                                         <img
+                                            style={{width:"184px" , height:"184px"}}
                                             src={dto.product.thumbnail}
                                             alt="Grocery Ecommerce Template"
                                             className="mb-3 img-fluid"
                                         />
                                     </Link>
                                     {/* action btn */}
-                                    <div className="card-product-action">
-                                        <Link
-                                            to={"/product/detail/" + dto.product.id}
-                                            className="btn-action"
-                                        >
-                                            <i
-                                                className="bi bi-eye"
-                                                data-bs-toggle=""
-                                                data-bs-html=""
-                                                title="Quick View"
-                                            />
-                                        </Link>
-                                        {account != null && account.role.name == "ROLE_CUSTOMER" && <button style={{ border: "none" }}
-                                                                                                            className="btn-action"
-                                                                                                            data-bs-toggle=""
-                                                                                                            data-bs-html=""
-                                                                                                            title="Wishlist"
-                                                                                                            onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
-                                        >
-                                            <i className="bi bi-heart" />
-                                        </button>}
-                                    </div>
+
                                 </div>
                                 {/* heading */}
                                 <div className="text-small mb-1">
@@ -165,25 +145,47 @@ const ShopSingleFilterView = () => {
                                         <span className="text-dark">${dto.product.price}</span>{" "}
                                     </div>
                                     {/* btn */}
-                                    <div>
-                                        <a href="#!" className="btn btn-primary btn-sm">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width={16}
-                                                height={16}
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth={2}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="feather feather-plus"
-                                            >
-                                                <line x1={12} y1={5} x2={12} y2={19} />
-                                                <line x1={5} y1={12} x2={19} y2={12} />
-                                            </svg>
-                                            Add
-                                        </a>
+                                    {/*<div>*/}
+                                    {/*    <a href="#!" className="btn btn-primary btn-sm">*/}
+                                    {/*        <svg*/}
+                                    {/*            xmlns="http://www.w3.org/2000/svg"*/}
+                                    {/*            width={16}*/}
+                                    {/*            height={16}*/}
+                                    {/*            viewBox="0 0 24 24"*/}
+                                    {/*            fill="none"*/}
+                                    {/*            stroke="currentColor"*/}
+                                    {/*            strokeWidth={2}*/}
+                                    {/*            strokeLinecap="round"*/}
+                                    {/*            strokeLinejoin="round"*/}
+                                    {/*            className="feather feather-plus"*/}
+                                    {/*        >*/}
+                                    {/*            <line x1={12} y1={5} x2={12} y2={19} />*/}
+                                    {/*            <line x1={5} y1={12} x2={19} y2={12} />*/}
+                                    {/*        </svg>*/}
+                                    {/*        Add*/}
+                                    {/*    </a>*/}
+                                    {/*</div>*/}
+                                    <div >
+                                        <Link
+                                            to={"/product/detail/" + dto.product.id}
+                                            className="btn-action"
+                                        >
+                                            <i
+                                                className="bi bi-eye"
+                                                data-bs-toggle=""
+                                                data-bs-html=""
+                                                title="Quick View"
+                                            />
+                                        </Link>
+                                        {account != null && account.role.name == "ROLE_CUSTOMER" && <button style={{ border: "none" }}
+                                                                                                            className="btn-action"
+                                                                                                            data-bs-toggle=""
+                                                                                                            data-bs-html=""
+                                                                                                            title="Wishlist"
+                                                                                                            onClick={()=>{handleAddProductToWishlist(dto.product.id)}}
+                                        >
+                                            <i className="bi bi-heart" />
+                                        </button>}
                                     </div>
                                 </div>
                             </div>
